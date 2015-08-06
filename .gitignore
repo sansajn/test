@@ -1,0 +1,23 @@
+// build
+*.o
+
+// outputs
+out/
+*.log
+
+// scons
+.sconsign.dblite
+
+// creator project files
+*.creator
+*.creator.user
+*.config
+*.files
+*.includes
+
+// doc
+doc/html/
+
+// os
+.directory
+

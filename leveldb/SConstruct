@@ -1,0 +1,6 @@
+env = Environment(
+	CXXFLAGS=['-std=c++14', '-g', '-O0', '-Wall', '-Wno-sign-compare'],
+	LIBS=['leveldb'])
+
+env.Program(['hello.cpp'])
+
