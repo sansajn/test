@@ -1,0 +1,6 @@
+env = Environment()
+env.Append(
+	CCFLAGS=['-std=c++11'], 
+	LIBS=['boost_filesystem', 'boost_system', 'pthread'])
+env.Program('daytime1.cpp')
+
