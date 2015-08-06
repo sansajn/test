@@ -1,0 +1,9 @@
+env = Environment()
+env['CXX'] = 'clang++'
+env.Append(
+	CXXFLAGS=['-std=c++11'],
+	CCFLAGS=['-Wall'],
+	LIBS=['boost_filesystem', 'boost_system'])
+env.Program('hello.cpp')
+env.Program('compare.cpp')
+env.Program('relative.cpp')
