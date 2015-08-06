@@ -1,0 +1,5 @@
+env = Environment()
+env.Append(CPPFLAGS=['-std=c++11', '-g', '-O0'], CPPDEFINES=['GLM_FORCE_RADIANS'])
+env.Program('lookat.cpp')
+env.Program('sample.cpp')
+env.Program('projection.cpp')
