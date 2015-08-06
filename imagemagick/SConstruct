@@ -1,0 +1,9 @@
+env = Environment()
+env.ParseConfig('pkg-config --cflags --libs Magick++')
+env.Append(CPPFLAGS=['-std=c++11'], CCFLAGS=['-g', '-O0'])
+
+env.Program('hello.cpp')
+env.Program('pixel_color.cpp')
+env.Program('pixels.cpp')
+env.Program('attributes.cpp')
+env.Program('file_vs_memory.cpp')
