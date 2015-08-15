@@ -1,6 +1,7 @@
-env = Environment()
-env.Append(
-	CCFLAGS=['-std=c++11'], 
-	LIBS=['boost_filesystem', 'boost_system', 'pthread'])
-env.Program('daytime1.cpp')
+env = Environment(
+	CXXFLAGS=['-std=c++14'], 
+	LIBS=['boost_filesystem', 'boost_system', 'boost_thread', 'pthread'])
 
+env.Program('daytime1.cpp')
+env.Program('tcp_sync_echo_client.cpp')
+env.Program('tcp_sync_echo_server.cpp')
