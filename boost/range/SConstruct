@@ -1,6 +1,7 @@
-env = Environment()
-env.Append(CXXFLAGS='-std=c++11')
+env = Environment(CXXFLAGS=['-std=c++14'])
 env['CXX'] = 'clang++'
+
 env.Program('custom_range.cpp')
 env.Program('filter_like.cpp')
 env.Program('arrayrgn.cpp')
+env.Program('integer_range.cpp')
