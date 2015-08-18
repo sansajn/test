@@ -1,0 +1,10 @@
+// vyrenderuj prikazom: $ dot -Tpng dfs.gv -o dfs.png
+digraph G {
+	node [shape=circle];
+	u -> {v, x};
+	x -> v;
+	y -> x;
+	v -> y;
+	w -> {y, z};
+	z -> z;
+}

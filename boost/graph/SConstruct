@@ -1,0 +1,12 @@
+import os
+
+env = Environment(
+	CXXFLAGS=['-std=c++14'],
+	CFLAGS=['-Wall'],
+	LIBS=[],
+	CXX='clang++')
+
+env['ENV']['TERM'] = os.environ['TERM']  # enable colors in clang output
+
+env.Program(['dfs_example.cpp'])
+env.Program(['topo_sort_file_dep.cpp'])
