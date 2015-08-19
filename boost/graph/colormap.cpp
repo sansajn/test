@@ -1,12 +1,4 @@
-/* prechod grafom pomocou DFS algoritmu, graf G je definovany takto
-
-	digraph G {
-		a -> {b,c};
-		b -> d;
-		e -> {d,f,g};
-	}
-
-*/
+// vytvorenie externej color-mapy
 #include <vector>
 #include <utility>
 #include <boost/graph/adjacency_list.hpp>
@@ -40,10 +32,10 @@ int main(int argc, char * argv[])
 	graph_t grp{edge_array, edge_array + sizeof(edge_array) / sizeof(E), N};
 
 	// release dfs
-	custom_visitor vis;
 	using colormap_t = vector<default_color_type>;
 	colormap_t cmap{N};
 
+	custom_visitor vis;
 	depth_first_search(grp, vis,
 		iterator_property_map<colormap_t::iterator, identity_property_map>{cmap.begin()});
 
