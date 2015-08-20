@@ -1,12 +1,12 @@
 import os
 
 env = Environment(
-	CXXFLAGS=['-std=c++14'],
-	CFLAGS=['-Wall', '-g', '-O0'],
+	CXXFLAGS=['-std=c++14', '-g', '-O0', '-Wall'],
 	LIBS=[],
 	CXX='clang++')
 
-env['ENV']['TERM'] = os.environ['TERM']  # enable colors in clang output
+if 'ENV' in env and 'TERM' in env['ENV']:  # enable colors for clang output
+	env['ENV']['TERM'] = os.environ['TERM']
 
 env.Program(['dfs_example.cpp'])
 env.Program(['topo_sort_file_dep.cpp'])
@@ -22,3 +22,4 @@ env.Program(['property_as_map.cpp'])
 env.Program(['colormap.cpp'])
 env.Program(['list_vec_graph.cpp'])
 env.Program(['topological_sort.cpp'])
+env.Program(['vector_as_graph.cpp'])
