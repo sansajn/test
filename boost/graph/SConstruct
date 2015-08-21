@@ -5,8 +5,7 @@ env = Environment(
 	LIBS=[],
 	CXX='clang++')
 
-if 'ENV' in env and 'TERM' in env['ENV']:  # enable colors for clang output
-	env['ENV']['TERM'] = os.environ['TERM']
+env['ENV']['TERM'] = os.environ['TERM']  # enable colors for clang output
 
 env.Program(['dfs_example.cpp'])
 env.Program(['topo_sort_file_dep.cpp'])
@@ -25,3 +24,4 @@ env.Program(['topological_sort.cpp'])
 env.Program(['vector_as_graph.cpp'])
 env.Program(['vector_vector_as_graph.cpp'])
 env.Program(['vector_set_as_graph.cpp'])
+env.Program(['kevin_bacon.cpp'])
