@@ -1,0 +1,4 @@
+env = Environment(CPPPATH='.')
+lib_foo = SConscript('foo/SConscript', exports={'env':env})
+lib_goo = SConscript('goo/SConscript', exports={'env':env})
+env.Program('multiplelib', 'main.cpp', LIBS=[lib_foo, lib_goo])
