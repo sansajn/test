@@ -1,0 +1,2 @@
+lib_b = Library('b.cpp')
+Program('a.cpp', LIBS=[lib_b], LIBPATH=['.'])
