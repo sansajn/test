@@ -1,0 +1,4 @@
+env = Environment()
+foo_objs = env.Object(Glob('foo/*.cpp'))
+goo_objs = env.Object(Glob('goo/*.cpp'))
+env.Program('main', ['main.cpp', foo_objs, goo_objs])
