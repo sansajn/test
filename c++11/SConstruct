@@ -6,8 +6,7 @@ env.Program('uniqueptr.cpp')
 env.Program('move_hier.cpp')
 env.Program('rrefopt.cpp')
 #env.Program('fstream_move.cpp')
-
 env.Program('constexpr.cpp')
 env.Program('memfunc_ptr.cpp')
-
 env.Program('function.cpp')
+env.Program('remove_reference.cpp')
