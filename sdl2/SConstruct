@@ -1,0 +1,3 @@
+env = Environment(CXXFLAGS=['-std=c++11'])
+env.ParseConfig('pkg-config --cflags --libs sdl2')
+env.Program(['hello.cpp'])
