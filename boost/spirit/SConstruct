@@ -15,3 +15,4 @@ env.Program(['16_parsed_values_in_structures.cpp'])
 
 env.Program(['parse_date_time1.cpp'])
 env.Program(['parse_date_time2.cpp'])
+env.Program(['parsing_input.cpp'])
