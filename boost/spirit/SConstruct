@@ -1,0 +1,8 @@
+env = Environment(CXXFLAGS=['-std=c++14'], CXX='clang++')
+env.Program(['1_parse.cpp'])
+env.Program(['2_phrase_parse.cpp'])
+env.Program(['5_two_digits.cpp'])
+env.Program(['6_lexeme.cpp'])
+env.Program(['7_similar_to_regex.cpp'])
+env.Program(['8_integer.cpp'])
+env.Program(['9_actions.cpp'])
