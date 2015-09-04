@@ -12,3 +12,6 @@ env.Program(['13_rules.cpp'])
 env.Program(['14_nesting_rules.cpp'])
 env.Program(['15_grammar.cpp'])
 env.Program(['16_parsed_values_in_structures.cpp'])
+
+env.Program(['parse_date_time1.cpp'])
+env.Program(['parse_date_time2.cpp'])
