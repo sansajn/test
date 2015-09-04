@@ -1,9 +1,5 @@
 /* Example 11.1. Using boost::spirit::qi::parse() 
-
-	http://theboostcpplibraries.com/boost.spirit-api
-
-*/
-
+http://theboostcpplibraries.com/boost.spirit-api */
 #include <string>
 #include <iostream>
 #include <boost/spirit/include/qi.hpp>
