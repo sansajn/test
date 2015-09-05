@@ -35,4 +35,4 @@ env.Program(['list_of_doubles.cpp'])
 env.Program(['list_of_doubles_attrib.cpp'])
 env.Program(['display_attribute_type.cpp'])
 
-#env.Program(['triplet.cpp'])
+env.Program(['triplet.cpp'])
