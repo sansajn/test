@@ -1,7 +1,8 @@
 env = Environment(CXXFLAGS=['-std=c++14'], CXX='clang++')
 
 import os
-env['ENV']['TERM'] = os.environ['TERM']  # enable color output
+if 'TERM' in os.environ:
+	env['ENV']['TERM'] = os.environ['TERM']  # enable color output
 
 #
 env.Program(['1_parse.cpp'])
@@ -23,5 +24,15 @@ env.Program(['parse_date_time1.cpp'])
 env.Program(['parse_date_time2.cpp'])
 env.Program(['parsing_input.cpp'])
 
+
 # oficilny tutorial
 env.Program(['num_list1.cpp'])
+env.Program(['num_list2.cpp'])
+
+# moje testy
+env.Program(['two_int_action.cpp'])
+env.Program(['list_of_doubles.cpp'])
+env.Program(['list_of_doubles_attrib.cpp'])
+env.Program(['display_attribute_type.cpp'])
+
+#env.Program(['triplet.cpp'])
