@@ -1,0 +1,7 @@
+env = Environment(
+	CXX='clang++', CXXFLAGS=['-std=c++14'])
+
+env.Program(['1_tuples.cpp'])
+env.Program(['2_foreach.cpp'])
+env.Program(['3_filter_view.cpp'])
+env.Program(['4_iterators.cpp'])
