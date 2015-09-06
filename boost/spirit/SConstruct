@@ -4,7 +4,7 @@ import os
 if 'TERM' in os.environ:
 	env['ENV']['TERM'] = os.environ['TERM']  # enable color output
 
-#
+# theboostcpplibraries.com
 env.Program(['1_parse.cpp'])
 env.Program(['2_phrase_parse.cpp'])
 env.Program(['5_two_digits.cpp'])
@@ -19,7 +19,7 @@ env.Program(['14_nesting_rules.cpp'])
 env.Program(['15_grammar.cpp'])
 env.Program(['16_parsed_values_in_structures.cpp'])
 
-#
+# boost cookbook
 env.Program(['parse_date_time1.cpp'])
 env.Program(['parse_date_time2.cpp'])
 env.Program(['parsing_input.cpp'])
@@ -34,5 +34,6 @@ env.Program(['two_int_action.cpp'])
 env.Program(['list_of_doubles.cpp'])
 env.Program(['list_of_doubles_attrib.cpp'])
 env.Program(['display_attribute_type.cpp'])
-
 env.Program(['triplet.cpp'])
+env.Program(['qstring.cpp'])
+env.Program(['joint_record.cpp'])

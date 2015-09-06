@@ -6,6 +6,7 @@
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
 #include <boost/fusion/include/vector.hpp>
+#include <boost/fusion/adapted/std_tuple.hpp>
 
 using namespace boost::spirit;
 using boost::spirit::qi::_1;
@@ -71,7 +72,7 @@ void action_fce_fusion_vector3(fusion::vector3<double, double, double> & v)
 	std::cout << "{" << fusion::at_c<0>(v) << ", " << fusion::at_c<1>(v) << ", " << fusion::at_c<2>(v) << "}\n";
 }
 
-void foo()
+void vector3_action_func()
 {
 	std::string s = "(-12.45 11.12 4)";
 	auto it = s.begin();
@@ -79,7 +80,24 @@ void foo()
 		'(' >> (double_ >> double_ >> double_)[action_fce_fusion_vector3] >> ')', ascii::space);
 	if (!match || it != s.end())
 		throw std::logic_error{std::string{"Unable to parse '"} + std::string{it, s.end()} + "' expression"};
-	std::cout << "foo(): done!\n";
+	std::cout << "vector3_action_func(): done!\n";
+}
+
+void using_rule()
+{
+	std::string s = "(-12.45 11.12 4)";
+
+	qi::rule<std::string::iterator, std::tuple<double, double, double>(), ascii::space_type> r =
+		'(' >> double_ >> double_ >> double_ >> ')';
+
+	std::tuple<double, double, double> result;
+	auto it = s.begin();
+	bool match = qi::phrase_parse(it, s.end(), r, ascii::space, result);
+	if (!match || it != s.end())
+		throw std::logic_error{std::string{"unable to parse an '"} + std::string{it, s.end()} + "' expression"};
+
+	std::cout << "{" << std::get<0>(result) << ", " << std::get<1>(result) << ", " << std::get<2>(result) << "}\n";
+	std::cout << "using_rule(): done!\n";
 }
 
 int main(int argc, char * argv[])
@@ -87,6 +105,7 @@ int main(int argc, char * argv[])
 	just_parse();
 	store_using_actions();
 	forward_to_action_func();
-	foo();
+	vector3_action_func();
+	using_rule();
 	return 0;
 }
