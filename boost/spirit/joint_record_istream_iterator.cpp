@@ -55,24 +55,24 @@ int main(int argc, char * argv[])
 	using iterator_type = boost::spirit::istream_iterator;
 	iterator_type it{in}, end;
 
-	qi::rule<iterator_type, std::string(), ascii::blank_type> qstring =
+	qi::rule<iterator_type, std::string(), ascii::space_type> qstring =
 		qi::lexeme[
 			'"' >> *(char_ - '"') >> '"'
 		];
 
-	qi::rule<iterator_type, triplet_type(), ascii::blank_type> triplet =
+	qi::rule<iterator_type, triplet_type(), ascii::space_type> triplet =
 		'(' >> float_ >> float_ >> float_ >> ')';
 
-	qi::rule<iterator_type, joint_record(), ascii::blank_type> joint_row =
+	qi::rule<iterator_type, joint_record(), ascii::space_type> joint_row =
 		qstring >> int_ >> triplet >> triplet;
 
 	std::vector<joint_record> joints;
 
 	bool match = qi::phrase_parse(it, end,
 		(
-			joint_row % qi::eol >> *qi::eol
+			+joint_row
 		)
-		, ascii::blank, joints);
+		, ascii::space, joints);
 
 	if (!match || it != end)
 		throw std::logic_error{std::string{"unable to parse an expression"}};
