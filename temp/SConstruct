@@ -1,7 +1,0 @@
-env = Environment()
-env.ParseConfig('pkg-config --cflags --libs freetype2 Magick++')
-env.Append(CPPFLAGS=['-std=c++11'], CCFLAGS=['-O0', '-g'])
-
-env.Program('hello.cpp')
-env.Program('glyph.cpp')
-env.Program('word.cpp')
