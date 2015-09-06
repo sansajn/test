@@ -1,4 +1,5 @@
-env = Environment(CXXFLAGS=['-std=c++14'], CXX='clang++')
+env = Environment(
+	CXXFLAGS=['-std=c++14'], CCFLAGS=['-Wall'], CXX='clang++')
 
 import os
 if 'TERM' in os.environ:
@@ -36,8 +37,11 @@ env.Program(['list_of_doubles_attrib.cpp'])
 env.Program(['display_attribute_type.cpp'])
 env.Program(['triplet.cpp'])
 env.Program(['qstring.cpp'])
+env.Program(['number_pair.cpp'])
+env.Program(['debug_parse.cpp'])
 env.Program(['joint_record.cpp'])
 env.Program(['joint_record_vector.cpp'])
 env.Program(['joint_record_from_file.cpp'])
 env.Program(['joint_record_istream_iterator.cpp'])
-env.Program(['number_pair.cpp'])
+env.Program(['joint_section.cpp'])
+env.Program(['mesh_section.cpp'])

@@ -24,10 +24,13 @@ R"(12 1.4;
 
 	std::vector<std::pair<int, double>> pairs;
 
+	qi::rule<std::string::iterator, std::pair<int, double>(), ascii::space_type> number_pair = int_ >> double_;
+	BOOST_SPIRIT_DEBUG_NODE(number_pair);
+
 	auto it = s.begin();
 	bool match = qi::phrase_parse(it, s.end(),
 		(
-			*(int_ >> double_ >> -qi::lit(';'))
+			*(number_pair >> -qi::lit(';'))
 		)
 		, ascii::space, pairs);
 
