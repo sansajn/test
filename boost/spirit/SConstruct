@@ -1,5 +1,5 @@
 env = Environment(
-	CXXFLAGS=['-std=c++14'], CCFLAGS=['-Wall'], CXX='clang++')
+	CXXFLAGS=['-std=c++14'], CCFLAGS=['-Wall', '-O0'], CXX='clang++')
 
 import os
 if 'TERM' in os.environ:
@@ -25,10 +25,12 @@ env.Program(['parse_date_time1.cpp'])
 env.Program(['parse_date_time2.cpp'])
 env.Program(['parsing_input.cpp'])
 
-
 # oficilny tutorial
 env.Program(['num_list1.cpp'])
 env.Program(['num_list2.cpp'])
+env.Program(['mini_xml1.cpp'])
+env.Program(['mini_xml2.cpp'])
+env.Program(['mini_xml3.cpp'])
 
 # moje testy
 env.Program(['two_int_action.cpp'])
@@ -45,3 +47,4 @@ env.Program(['joint_record_from_file.cpp'])
 env.Program(['joint_record_istream_iterator.cpp'])
 env.Program(['joint_section.cpp'])
 env.Program(['mesh_section.cpp'])
+env.Program(['parse_comment.cpp'])
