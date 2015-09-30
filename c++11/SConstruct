@@ -4,9 +4,12 @@ env.Append(CPPFLAGS=['-std=c++11', '-O0', '-g', '-Wall'])
 env.Program('rand_gen.cpp')
 env.Program('uniqueptr.cpp')
 env.Program('move_hier.cpp')
-env.Program('rrefopt.cpp')
 #env.Program('fstream_move.cpp')
 env.Program('constexpr.cpp')
 env.Program('memfunc_ptr.cpp')
 env.Program('function.cpp')
 env.Program('remove_reference.cpp')
+
+# right-reference
+env.Program('rrefopt.cpp')
+env.Program('rref_test.cpp')
