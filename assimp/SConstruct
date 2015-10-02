@@ -1,0 +1,7 @@
+env = Environment(
+	CCFLAGS=['-g','-O0', '-Wall'])
+
+env.ParseConfig('pkg-config --libs --cflags assimp')
+
+env.Program(['material.cpp'])
+env.Program(['texture_name.cpp'])
