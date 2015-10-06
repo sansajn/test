@@ -1,4 +1,5 @@
 env = Environment(CXXFLAGS=['-std=c++11'])
-env.ParseConfig('pkg-config --cflags --libs sdl2')
+env.ParseConfig('pkg-config --cflags --libs sdl2 SDL2_mixer')
 env.Program(['hello.cpp'])
 env.Program(['audio.cpp'])
+env.Program(['mixer.cpp'])
