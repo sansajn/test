@@ -1,5 +1,13 @@
-env = Environment()
-env.Append(CPPFLAGS=['-std=c++11', '-g', '-O0'], CPPDEFINES=['GLM_FORCE_RADIANS'])
+import os
+
+env = Environment(
+	CXX=['clang++'],
+	CPPFLAGS=['-std=c++11', '-g', '-O0'], 
+	CPPDEFINES=['GLM_FORCE_RADIANS'])
+
+env['ENV']['TERM'] = os.environ['TERM']
+
 env.Program('lookat.cpp')
 env.Program('sample.cpp')
 env.Program('projection.cpp')
+env.Program('quatmat.cpp')
