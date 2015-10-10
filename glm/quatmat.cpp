@@ -7,20 +7,28 @@ using std::ostream;
 using std::cout;
 using glm::vec3;
 using glm::quat;
+using glm::mat3;
 using glm::angleAxis;
 using glm::radians;
 using glm::conjugate;
 using glm::length;
+using glm::mat3_cast;
 
 ostream & operator<<(ostream & o, quat const & q)
 {
-	o << "[" << q.x << ", " << q.y << ", " << q.z << ", " << q.w << "]";
+	o << "[(" << q.x << ", " << q.y << ", " << q.z << "), " << q.w << "]";
 	return o;
 }
 
 ostream & operator<<(ostream & o, vec3 const & v)
 {
-	o << "[" << v.x << ", " << v.y << ", " << v.z << "]";
+	o << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+	return o;
+}
+
+ostream & operator<<(ostream & o, mat3 const & m)
+{
+	o << "[" << m[0] << ", " << m[1] << ", " << m[2] << "]";
 	return o;
 }
 
@@ -42,6 +50,15 @@ int main(int argc, char * argv[])
 
 	quat t = quat{1,2,3,4};
 	cout << "length(" << t << ") : " << length(t) << "\n";
+
+	t = quat{};
+	cout << "default quaternion t = " << t << "\n";
+	v = vec3{1,1,1};
+	u = t*v;
+	cout << "u = t*v = " << u << "\n";
+
+	mat3 M3 = mat3_cast(t);
+	cout << M3 << "\n";
 
 	return 0;
 }
