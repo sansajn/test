@@ -45,8 +45,6 @@ struct state_machine
 {
 	using state_descriptor = Desc;
 	
-	state_machine() {}
-	
 	void update(float dt) {
 		state_descriptor s = impl()->to_ref(_cur).update(dt);
 		if (s != Impl::invalid_descriptor)

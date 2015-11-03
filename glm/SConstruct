@@ -1,13 +1,15 @@
-import os
-
 env = Environment(
 	CXX=['clang++'],
 	CPPFLAGS=['-std=c++11', '-g', '-O0'], 
 	CPPDEFINES=['GLM_FORCE_RADIANS'])
 
-env['ENV']['TERM'] = os.environ['TERM']
+import os
+if 'TERM' in os.environ:
+	env['ENV']['TERM'] = os.environ['TERM']
 
 env.Program('lookat.cpp')
 env.Program('sample.cpp')
 env.Program('projection.cpp')
 env.Program('quatmat.cpp')
+env.Program('rotations.cpp')
+env.Program('matconcat.cpp')
