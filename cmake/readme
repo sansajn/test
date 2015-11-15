@@ -1,2 +1,5 @@
 library: vygeneruje statickú knižnicu (add_library)
+library_output: statická knižnica zo zmeneným výstupom (LIBRARY_OUTPUT_PATH)
+
+
 library_install: knižnica umožnujúca inštaláciu
