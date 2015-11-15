@@ -1,5 +1,8 @@
 library: vygeneruje statickú knižnicu (add_library)
+
 library_output: statická knižnica zo zmeneným výstupom (LIBRARY_OUTPUT_PATH)
 
+shared_library: zdielatelná knižnica (add_library)
 
 library_install: knižnica umožnujúca inštaláciu
+
