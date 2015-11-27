@@ -27,10 +27,6 @@ int main(int argc, char * argv[])
 	}
 	
 	png_init_io(png, fp);
-	
-	unsigned sig_read = 0;
-	png_set_sig_bytes(png, sig_read);
-
 	png_read_png(png, info, 0, png_voidp_NULL);
 
 	// data su dostupne ako ukazatele na riadky (data nie su kontinualne)

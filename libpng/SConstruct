@@ -1,3 +1,4 @@
-env = Environment(CXXFLAGS=['-std=c++11'])
+env = Environment(CXXFLAGS=['-std=c++11', '-O0', '-g'])
 env.ParseConfig('pkg-config --libs --cflags libpng12')
 env.Program('read.cpp')
+env.Program('read_as_rgba.cpp')
