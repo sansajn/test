@@ -1,0 +1,3 @@
+env = Environment(CXXFLAGS=['-std=c++11'])
+env.ParseConfig('pkg-config --libs --cflags libpng12')
+env.Program('read.cpp')
