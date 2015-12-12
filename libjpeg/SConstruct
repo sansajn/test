@@ -1,0 +1,5 @@
+env = Environment(
+	CXXFLAGS = ['-std=c++11', '-O0', '-g'], 
+	LIBS=['jpeg'])
+
+env.Program('read.cpp')
