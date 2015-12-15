@@ -39,6 +39,12 @@ inline std::ostream & operator<<(std::ostream & o, glm::quat const & q)
 	return o;
 }
 
+inline std::ostream & operator<<(std::ostream & o, glm::vec2 const & v)
+{
+	o << "(" << v.x << ", " << v.y << ")";
+	return o;
+}
+
 inline std::ostream & operator<<(std::ostream & o, glm::vec3 const & v)
 {
 	o << "(" << v.x << ", " << v.y << ", " << v.z << ")";
