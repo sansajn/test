@@ -6,3 +6,5 @@ shared_library: zdielatelná knižnica (add_library)
 
 library_install: knižnica umožnujúca inštaláciu
 
+extern_compiled_library: externá knižnica skompilovaná zo zdrojakov
+
