@@ -15,10 +15,10 @@ class directory_iterator
 {
 public:
 	directory_iterator() noexcept;
-	directory_iterator(directory_iterator const & other) = delete;
+	directory_iterator(directory_iterator const & other);
 	explicit directory_iterator(char const * dirpath);
 	~directory_iterator();
-	directory_iterator & operator=(directory_iterator const &) = delete;
+	directory_iterator & operator=(directory_iterator const & rhs);
 	directory_iterator & operator++();  // pre-increment operator
 	directory_entry operator*();
 	bool operator==(directory_iterator const & rhs) const;
@@ -38,6 +38,10 @@ directory_iterator::directory_iterator() noexcept
 	: _dir{nullptr}, _entry{nullptr}
 {}
 
+directory_iterator::directory_iterator(directory_iterator const & other)
+	: _dir{other._dir}, _entry{other._entry}
+{}
+
 directory_iterator::directory_iterator(char const * dirpath)
 {
 	_dir = opendir(dirpath);
@@ -50,6 +54,13 @@ directory_iterator::directory_iterator(char const * dirpath)
 directory_iterator::~directory_iterator()
 {
 	closedir(_dir);
+}
+
+directory_iterator & directory_iterator::operator=(directory_iterator const & rhs)
+{
+	_dir = rhs._dir;
+	_entry = rhs._entry;
+	return *this;
 }
 
 directory_iterator & directory_iterator::operator++()

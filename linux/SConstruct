@@ -1,3 +1,4 @@
 env = Environment(CXX='clang++', CPPFLAGS=['-std=c++11'])
 env.Program('ls.cpp')
 env.Program('dirit.cpp')
+env.Program('reentrant_ls.cpp')
