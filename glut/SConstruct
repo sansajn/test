@@ -1,0 +1,8 @@
+env = Environment(
+	CCFLAGS=['-Wall', '-g', '-O0'],
+	CPPFLAGS=['-std=c++11'],
+	LIBS=['glut'])
+
+env.ParseConfig('pkg-config --libs --cflags glew')
+
+env.Program('simple_window.cpp')
