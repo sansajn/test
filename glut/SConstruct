@@ -6,3 +6,4 @@ env = Environment(
 env.ParseConfig('pkg-config --libs --cflags glew')
 
 env.Program('simple_window.cpp')
+env.Program('window_layer.cpp')

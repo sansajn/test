@@ -1,3 +1,4 @@
+// vytvorenie okna v glute
 #include <stdexcept>
 #include <cassert>
 #include <GL/glew.h>
