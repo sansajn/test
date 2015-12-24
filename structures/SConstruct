@@ -1,0 +1,9 @@
+env = Environment(
+	CXX='clang++',
+	CPPFLAGS=['-std=c++11'])
+
+import os  # pridaj farbu ak pouzivam clang
+if 'TERM' in os.environ:
+	env['ENV']['TERM'] = os.environ['TERM']
+
+env.Program('forward_list.cpp')
