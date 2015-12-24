@@ -1,5 +1,4 @@
 env = Environment(
-	#CXX='clang++',
 	CPPFLAGS=['-std=c++11'],
 	CCFLAGS=['-Wall'],
 	LIBS=['gtest', 'gtest_main', 'pthread']
@@ -10,3 +9,4 @@ if 'TERM' in os.environ:
 	env['ENV']['TERM'] = os.environ['TERM']
 
 env.Program('test_forward_list.cpp')
+env.Program('touches.cpp')
