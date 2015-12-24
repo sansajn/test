@@ -1,0 +1,8 @@
+env = Environment(
+	CXX='clang++',
+	CPPFLAGS=['-std=c++11'],
+	CCFLAGS=['-Wall'],
+	LIBS=['gtest', 'pthread']
+)
+
+env.Program('basic_test.cpp')
