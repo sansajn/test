@@ -2,10 +2,12 @@
 #include <algorithm>
 #include <list>
 #include <stdexcept>
+#include <string>
 #include <iostream>
 #include <glm/vec2.hpp>
 
 using std::list;
+using std::string;
 using std::find_if;
 using std::cout;
 using glm::ivec2;
@@ -34,6 +36,7 @@ public:
 	using iterator = std::list<finger>::iterator;
 	
 	void insert(touch_event const & te);
+	iterator erase(iterator pos) {return _fingers.erase(pos);}
 	iterator begin() {return _fingers.begin();}
 	iterator end() {return _fingers.end();}
 	
@@ -46,21 +49,22 @@ void touch_list::insert(touch_event const & te)
 	auto it = find_if(_fingers.begin(), _fingers.end(), 
 		[&te](finger const & f){return f.id == te.finger_id;});
 	
-	if (it == _fingers.end())  // unikatny event
-	{
-		finger f;
-		f.position = te.position;
-		f.id = te.finger_id;
-		f.state = touch_list_finger_cast(te.action);
-		_fingers.push_back(f);
-	}
-	else  // uz existujuci event
+	if (it != _fingers.end())  // uz existujuci event
 	{
 		if (te.action == touch_event::up)  // ak je action up, zmaz event
 			_fingers.erase(it);
 		else
+		{
 			it->state |= touch_list_finger_cast(te.action);  // inak uprav stav
+			return;
+		}
 	}
+
+	finger f;
+	f.position = te.position;
+	f.id = te.finger_id;
+	f.state = touch_list_finger_cast(te.action);
+	_fingers.push_back(f);
 }
 
 class touch_input 
@@ -68,11 +72,23 @@ class touch_input
 public:
 	touch_list & fingers() {return _touches;}
 
+	void update();
 	void touch_performed(int x, int y, int finger_id, int action);  //!< internl use only
 	
 private:
 	touch_list _touches;
 };
+
+void touch_input::update()
+{
+	for (auto it = _touches.begin(); it != _touches.end(); ++it)
+	{
+		if (it->state & touch_list::finger::up)
+			it = _touches.erase(it);
+		else
+			it->state = it->state & ~touch_list::finger::move;
+	}
+}
 
 void touch_input::touch_performed(int x, int y, int finger_id, int action)
 {
@@ -110,17 +126,46 @@ struct user_input
 
 user_input in;
 
+string state_to_str(int state)
+{
+	string result;
+	if (state & touch_list::finger::down)
+		result += "down,";
+	if (state & touch_list::finger::move)
+		result += "move,";
+	if (state & touch_list::finger::up)
+		result += "up,";
+	if (state & touch_list::finger::canceled)
+		result += "canceled,";
+	return result;
+}
+
 void input()
 {
 	for (touch_list::finger & f : in.touch.fingers())
-		if (f.state & (touch_list::finger::down|touch_list::finger::move))
-			cout << "finger down or move" << std::endl;
+		cout << "finger_id:" << f.id << ", state:" << state_to_str(f.state) << "\n";
 }
 
 
 int main(int argc, char * argv[])
 {
 	in.touch.touch_performed(0,0,0,(int)touch_event::down);
+	in.touch.touch_performed(0,0,1,(int)touch_event::down);
+	in.touch.touch_performed(0,0,2,(int)touch_event::down);
+	in.touch.touch_performed(0,0,0,(int)touch_event::move);
+	in.touch.touch_performed(0,0,2,(int)touch_event::move);
+	in.touch.touch_performed(0,0,0,(int)touch_event::up);
+
 	input();
+	cout << "update" << std::endl;
+	in.touch.update();
+	input();
+
+	in.touch.update();
+	in.touch.update();
+
+	cout << "update" << std::endl;
+	input();
+
 	return 0;
 }
