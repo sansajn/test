@@ -1,0 +1,6 @@
+env = Environment(
+	CXX='clang++',
+	CPPFLAGS=['-std=c++11'],
+	CCFLAGS=['-Wall'])
+
+env.Program('list_erase.cpp')
