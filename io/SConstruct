@@ -1,0 +1,6 @@
+env = Environment(
+	CXX='clang++',
+	CPPFLAGS=['-std=c++11'])
+env.Program('redirect.cpp')
+env.Program('ostrbuf_iter.cpp')
+
