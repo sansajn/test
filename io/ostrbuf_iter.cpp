@@ -1,4 +1,4 @@
-// test vystupneho prudoveho iteratora (ostreambuf_iterator)
+// test vystupneho iteratora vyrovnavacej pamati (ostreambuf_iterator)
 #include <iterator>
 #include <string>
 #include <algorithm>
