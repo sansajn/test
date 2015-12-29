@@ -1,6 +1,11 @@
 env = Environment(
-	CXX='clang++',
-	CPPFLAGS=['-std=c++11'])
+	#CXX='clang++',
+	CPPFLAGS=['-std=c++11'],
+	CCFLAGS=['-Wall', '-g', '-O0'])
+
 env.Program('redirect.cpp')
 env.Program('ostrbuf_iter.cpp')
 env.Program('charcat2.cpp')
+env.Program('outbuf1.cpp')
+env.Program('outbuf2.cpp')
+env.Program('log_streambuf.cpp')
