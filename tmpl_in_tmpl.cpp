@@ -1,3 +1,5 @@
+// sablona ako sablonovy parameter
+
 template <typename T>
 struct A
 {};
