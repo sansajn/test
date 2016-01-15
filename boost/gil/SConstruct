@@ -1,0 +1,6 @@
+env = Environment(
+	CPPFLAGS=['-std=c++11', '-g', '-O0'])
+
+env.Program('gradient.cpp')
+env.Program('interleaved_view.cpp')
+env.Program('rgba8_from_raw.cpp')
