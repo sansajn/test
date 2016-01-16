@@ -1,0 +1,7 @@
+env = Environment(
+	CPPFLAGS=['-std=c++11'],
+	CCFLAGS=['-g', '-O0']
+)
+
+env.Program('terminate.cpp')
+env.Program('verbose_terminate.cpp')
