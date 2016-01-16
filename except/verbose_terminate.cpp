@@ -1,3 +1,4 @@
+// implementacia terminate-handlera
 #include <exception>
 #include <typeindex>
 #include <iostream>
