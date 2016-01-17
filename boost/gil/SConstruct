@@ -1,6 +1,9 @@
 env = Environment(
-	CPPFLAGS=['-std=c++11', '-g', '-O0'])
+	CPPFLAGS=['-std=c++11', '-g', '-O0', '-Wall'])
+
+env.ParseConfig('pkg-config --cflags --libs Magick++')
 
 env.Program('gradient.cpp')
 env.Program('interleaved_view.cpp')
 env.Program('rgba8_from_raw.cpp')
+env.Program('gil_vs_imagick.cpp')
