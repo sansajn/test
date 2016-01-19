@@ -1,6 +1,6 @@
 // implementacia terminate-handlera
 #include <exception>
-#include <typeindex>
+#include <typeinfo>
 #include <iostream>
 #include <cstdlib>
 #include <cxxabi.h>
