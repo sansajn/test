@@ -27,11 +27,15 @@ struct foo
 	int _n;
 };
 
+void fault_funct()
+{
+	foo * f = nullptr;
+	f->func();  // Segmentation fault (core dumped)
+}
+
 int main(int argc,char * argv[])
 {
 	signal(SIGSEGV, custom_handler);
-	
-	foo * f = nullptr;
-	f->func();  // Segmentation fault (core dumped)
+	fault_funct();
 	return 0;
 }
