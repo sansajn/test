@@ -1,3 +1,4 @@
+// ziska data s flipnuteho obrazka
 #include <iostream>
 #include <boost/gil/gil_all.hpp>
 #include <boost/gil/extension/io/png_io.hpp>
