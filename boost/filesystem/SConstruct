@@ -1,9 +1,13 @@
-env = Environment()
-env['CXX'] = 'clang++'
-env.Append(
+env = Environment(
+	CXX = 'clang++',
 	CXXFLAGS=['-std=c++11'],
 	CCFLAGS=['-Wall'],
-	LIBS=['boost_filesystem', 'boost_system'])
+	LIBS=['boost_filesystem', 'boost_system']
+)
+
 env.Program('hello.cpp')
 env.Program('compare.cpp')
 env.Program('relative.cpp')
+env.Program('path_iter.cpp')
+#env.Program('playground.cpp')
+env.Program('path_test.cpp')
