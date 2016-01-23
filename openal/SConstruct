@@ -1,0 +1,10 @@
+env = Environment(
+	CPPFLAGS=['-std=c++11'],
+	CCFLAGS=['-Wall', '-g', '-O0'])
+
+env.ParseConfig('pkg-config --cflags --libs openal freealut')
+
+#env.Program('compressed.cpp')
+#env.Program('stream.cpp')
+#env.Program('playwav.cpp')
+env.Program('hello_alut.cpp')
