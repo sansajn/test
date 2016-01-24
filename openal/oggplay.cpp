@@ -1,3 +1,4 @@
+// precita a prehraje ogg subor
 #include <thread>
 #include <vector>
 #include <iostream>
@@ -20,20 +21,20 @@ int main(int argc, char * argv[])
 	assert(ret == 0 && "ov_open() failed");
 	
 	vorbis_info * vi = ov_info(&vf, -1);
+	int bits_per_sample = 16;  // konvertovane s floatu
 	
 	cout << "channels:" << vi->channels << ", freq:" << vi->rate << "\n";
 	cout << "length:" << ov_pcm_total(&vf, -1) << " samples\n";
 	cout << "encoded by: " << ov_comment(&vf, -1)->vendor << "\n";
-	// TODO: ako ziskam bits-per-sample
 	
-	size_t pcm_size = ov_pcm_total(&vf, -1) * 2;  // 16 >> 3 = 2
+	size_t pcm_size = ov_pcm_total(&vf, -1) * (bits_per_sample >> 3);
 	uint8_t * data = new uint8_t[pcm_size];
 	size_t off = 0;
 	int current_section = 0;
 	bool eof = false;
 	while (!eof)
 	{
-		long bytes_read = ov_read(&vf, (char *)data + off, 4096, 0 /*little endian*/, 2, 1, &current_section);
+		long bytes_read = ov_read(&vf, (char *)data + off, 4096, 0 /*little endian*/, bits_per_sample >> 3, 1, &current_section);
 		if (bytes_read == 0)
 			eof = true;
 		assert(bytes_read >= 0 && "corrupt bitstream section");
