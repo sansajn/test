@@ -1,4 +1,4 @@
-// streamovanie pomocou fronty a dvoch buffrou (pool metoda)
+// streamovanie pomocou fronty buffrou (pool metoda)
 #include <thread>
 #include <iostream>
 #include <cassert>
