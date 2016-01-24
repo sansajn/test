@@ -26,6 +26,9 @@ int main(int argc, char * argv[])
 	alBufferData(buffer, format, data, size, freq);
 	assert(alGetError() == AL_NO_ERROR && "unable to fill a buffer");
 	
+	// unload data
+	free(data);
+	
 	// source
 	ALuint source;
 	alGenSources(1, &source);
@@ -36,7 +39,13 @@ int main(int argc, char * argv[])
 	alSourcePlay(source);
 	
 	cout << "playing ..." << std::endl;
-	alutSleep(10);  // wait
+	
+	int state;
+	do {
+		alutSleep(1);
+		alGetSourcei(source, AL_SOURCE_STATE, &state);
+	}
+	while (state == AL_PLAYING);
 	
 	alDeleteSources(1, &source);
 	alDeleteBuffers(1, &buffer);
