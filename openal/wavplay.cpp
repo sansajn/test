@@ -2,6 +2,7 @@
 #include <iostream>
 #include <thread>
 #include <cstdio>
+#include <cstdint>
 #include <cassert>
 #include <AL/al.h>
 #include <AL/alc.h>
@@ -10,23 +11,22 @@ char const * sound_path = "test_clip.wav";
 
 using std::cout;
 
-
 #pragma pack(push, 1)
 struct __attribute__( ( packed, aligned( 1 ) ) ) wav_header
 {
-	unsigned char    RIFF[4];
-	unsigned long    Size;  // filesize-8 bytes
-	unsigned char    WAVE[4];
-	unsigned char    FMT[4];
-	unsigned int     SizeFmt;
-	unsigned short   FormatTag;
-	unsigned short   Channels;
-	unsigned int     SampleRate;
-	unsigned int     AvgBytesPerSec;
-	unsigned short   nBlockAlign;
-	unsigned short   nBitsperSample;
-	unsigned char    Reserved[4];
-	unsigned long    DataSize;
+	uint8_t riff[4];
+	uint32_t size;  // filesize-8 bytes
+	uint8_t wave[4];
+	uint8_t fmt[4];
+	uint32_t size_fmt;
+	uint16_t format_tag;
+	uint16_t channels;
+	uint32_t sample_rate;
+	uint32_t avg_bytes_per_sec;
+	uint16_t block_align;
+	uint16_t bits_per_sample;
+	uint8_t reserved[4];
+	uint32_t data_size;
 };
 #pragma pack(pop)
 
@@ -47,8 +47,11 @@ int main(int argc, char * argv[])
 	
 	wav_header header;
 	fread((void *)&header, sizeof(wav_header), 1, fin);
+
+	cout << "channels:" << header.channels << ", sample-rate:" << header.sample_rate << ", size:"
+		<< header.size << "\n";
 	
-	int size = header.Size - sizeof(wav_header) + 8;
+	int size = header.size - sizeof(wav_header) + 8;
 	uint8_t * data = new uint8_t[size];
 	size_t read_bytes = fread((void *)data, 1, size, fin);
 	assert(read_bytes == size && "not all bytes read");
@@ -57,14 +60,14 @@ int main(int argc, char * argv[])
 	
 	// create buffer
 	ALenum format;
-	if (header.Channels > 1)
-		format = (header.nBitsperSample == 16 ? AL_FORMAT_STEREO16 : AL_FORMAT_STEREO8);
+	if (header.channels > 1)
+		format = (header.bits_per_sample == 16 ? AL_FORMAT_STEREO16 : AL_FORMAT_STEREO8);
 	else
-		format = (header.nBitsperSample == 16 ? AL_FORMAT_MONO16 : AL_FORMAT_MONO8);
+		format = (header.bits_per_sample == 16 ? AL_FORMAT_MONO16 : AL_FORMAT_MONO8);
 	
 	ALuint buffer;
 	alGenBuffers(1, &buffer);
-	alBufferData(buffer, format, (ALvoid *)data, size, header.SampleRate);
+	alBufferData(buffer, format, (ALvoid *)data, size, header.sample_rate);
 	assert(alGetError() == AL_NO_ERROR && "unable to fill a buffer");
 	
 	delete [] data;

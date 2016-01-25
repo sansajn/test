@@ -17,19 +17,19 @@ using std::cout;
 #pragma pack(push, 1)
 struct __attribute__( ( packed, aligned( 1 ) ) ) wav_header
 {
-	unsigned char    RIFF[4];
-	unsigned long    Size;  // filesize-8 bytes
-	unsigned char    WAVE[4];
-	unsigned char    FMT[4];
-	unsigned int     SizeFmt;
-	unsigned short   FormatTag;
-	unsigned short   Channels;
-	unsigned int     SampleRate;
-	unsigned int     AvgBytesPerSec;
-	unsigned short   nBlockAlign;
-	unsigned short   nBitsperSample;
-	unsigned char    Reserved[4];
-	unsigned long    DataSize;
+	uint8_t riff[4];
+	uint32_t size;  // filesize-8 bytes
+	uint8_t wave[4];
+	uint8_t fmt[4];
+	uint32_t size_fmt;
+	uint16_t format_tag;
+	uint16_t channels;
+	uint32_t sample_rate;
+	uint32_t avg_bytes_per_sec;
+	uint16_t block_align;
+	uint16_t bits_per_sample;
+	uint8_t reserved[4];
+	uint32_t data_size;
 };
 #pragma pack(pop)
 
