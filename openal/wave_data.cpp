@@ -225,7 +225,7 @@ int main(int argc, char * argv[])
 	int state;
 	do
 	{
-		//std::this_thread::sleep_for(std::chrono::milliseconds(BUFFER_TIME_MS/2));
+		std::this_thread::sleep_for(std::chrono::milliseconds(BUFFER_TIME_MS/2));
 		
 		alGetSourcei(source, AL_SOURCE_STATE, &state);
 		
