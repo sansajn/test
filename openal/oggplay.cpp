@@ -13,7 +13,9 @@ using std::cout;
 
 int main(int argc, char * argv[])
 {
-	FILE * fin = fopen(sound_path, "r");
+	char const * fname = (argc > 1) ? argv[1] : sound_path;
+	
+	FILE * fin = fopen(fname, "r");
 	assert(fin && "unable to open input file");
 	
 	OggVorbis_File vf;
@@ -27,7 +29,7 @@ int main(int argc, char * argv[])
 	cout << "length:" << ov_pcm_total(&vf, -1) << " samples\n";
 	cout << "encoded by: " << ov_comment(&vf, -1)->vendor << "\n";
 	
-	size_t pcm_size = ov_pcm_total(&vf, -1) * (bits_per_sample >> 3);
+	size_t pcm_size = ov_pcm_total(&vf, -1) * (bits_per_sample >> 3) * vi->channels;
 	uint8_t * data = new uint8_t[pcm_size];
 	size_t off = 0;
 	int current_section = 0;

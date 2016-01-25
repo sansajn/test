@@ -4,11 +4,10 @@ env = Environment(
 
 env.ParseConfig('pkg-config --cflags --libs openal freealut vorbisfile')
 
-#env.Program('compressed.cpp')
-#env.Program('stream.cpp')
 env.Program('hello_alut.cpp')
 env.Program('wavplay_alut.cpp')
 env.Program('wavplay.cpp')
 env.Program('oggplay.cpp')
 env.Program('two_sounds.cpp')
 env.Program('stream.cpp')
+env.Program('wave_data.cpp')
