@@ -1,0 +1,8 @@
+env = Environment(
+	CPPFLAGS=['-std=c++11'],
+	CCFLAGS=['-Wall', '-g', '-O0'])
+
+env.ParseConfig('pkg-config --cflags --libs openal vorbisfile')
+
+env.Program('oggplay.cpp')
+env.Program('stream.cpp')
