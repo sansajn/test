@@ -124,36 +124,6 @@ int main(int argc, char * argv[])
 	return 0;
 }
 
-size_t vorbis_read(OggVorbis_File & vf, uint8_t * data, size_t size, int bits_per_sample)
-{
-	int current_section = 0;
-	size_t total_read_bytes = 0;
-	while (size > 0)
-	{
-		size_t read_bytes = ov_read(&vf, (char *)data + total_read_bytes, size, 0, bits_per_sample >> 3, 1, &current_section);
-		if (read_bytes == 0)
-			break;  // eof
-		total_read_bytes += read_bytes;
-		size -= read_bytes;
-	}
-	return total_read_bytes;
-}
-
-size_t vorbis_read_samples(OggVorbis_File & vf, uint8_t * data, size_t sample_count, int bits_per_sample)
-{
-	int current_section = 0;
-	size_t total_read_bytes = 0;
-	size_t size = sample_count * (bits_per_sample >> 3);
-	while (size > 0)
-	{
-		size_t read_bytes = ov_read(&vf, (char *)data + total_read_bytes, size, 0, bits_per_sample >> 3, 1, &current_section);
-		if (read_bytes == 0)
-			break;  // eof
-		total_read_bytes += read_bytes;
-		size -= read_bytes;
-	}
-	return total_read_bytes / (bits_per_sample >> 3);
-}
 
 size_t vorbis_read_samples(OggVorbis_File & vf, size_t offset, uint8_t * data, size_t sample_count, int sample_width, int channels)
 {
