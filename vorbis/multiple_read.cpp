@@ -29,10 +29,10 @@ int main(int argc, char * argv[])
 	cout << "pcm_size:" << pcm_size << "\n";
 	uint8_t * data1 = new uint8_t[pcm_size];
 	size_t off = 0;
-	int current_section = 0;
 	bool eof = false;
 	while (!eof)
 	{
+		int current_section = 0;
 		long bytes_read = ov_read(&vf, (char *)data1 + off, 4096, 0 /*little endian*/, bits_per_sample >> 3, 1, &current_section);
 		if (bytes_read == 0)
 			eof = true;
@@ -51,6 +51,7 @@ int main(int argc, char * argv[])
 	eof = false;
 	while (!eof)
 	{
+		int current_section = 0;
 		long bytes_read = ov_read(&vf, (char *)data2 + off, 4096, 0 /*little endian*/, bits_per_sample >> 3, 1, &current_section);
 		if (bytes_read == 0)
 			eof = true;
@@ -64,6 +65,8 @@ int main(int argc, char * argv[])
 	bool equal = true;
 	for (size_t i = 0; i < pcm_size; ++i)
 	{
+		uint8_t __a = data1[i], __b = data2[i];
+
 		if (data1[i] != data2[i])
 		{
 			equal = false;
