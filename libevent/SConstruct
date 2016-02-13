@@ -7,3 +7,5 @@ env.ParseConfig('pkg-config --cflags --libs libevent')
 
 env.Program('hello_server.cpp')
 env.Program('hello_multithread_server.cpp')
+env.Program('simple_example.cpp')
+
