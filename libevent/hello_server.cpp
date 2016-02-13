@@ -1,3 +1,4 @@
+// single thread http server (http://kukuruku.co/hub/cpp/lightweight-http-server-in-less-than-40-lines-on-libevent-and-c-11)
 #include <memory>
 #include <cstdint>
 #include <iostream>
