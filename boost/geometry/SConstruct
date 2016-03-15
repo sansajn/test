@@ -3,4 +3,5 @@ env.Append(CXXFLAGS=['-std=c++11'])
 env.Program('quick_start.cpp')
 env.Program('custom_point.cpp')
 env.Program('expand.cpp')
+env.Program('centroid_box.cpp')
  

@@ -1,3 +1,4 @@
+// vypocet ohranicenia
 #include <iostream>
 #include <list>
 #include <boost/geometry.hpp>
@@ -11,9 +12,10 @@ using box = boost::geometry::model::box<point>;
 
 int main(int argc, char * argv[])
 {
-	box b = boost::geometry::make_inverse<box>();  // aky box toto vytvori ?
+	box b = boost::geometry::make_inverse<box>();  // ((2147483647, 2147483647), (-2147483648, -2147483648))
+	std::cout << boost::geometry::dsv(b) << std::endl;
 
-	expand(b, point{0,0});
+	expand(b, point{0,0});  // ((0,0), (0,0))
 	expand(b, point{1,2});
 	expand(b, point{5,4});
 	expand(b, boost::geometry::make<box>(3,3, 5,5));
