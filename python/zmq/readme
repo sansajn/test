@@ -1,0 +1,18 @@
+ 
+{push/pull pattern}
+
+programy: pp_producer.py pp_consumer.py, pp_resultcollector.py
+
+spusti prikazom:
+	
+	$ python pp_resultcollector.py
+	$ python pp_consumer.py
+	$ python pp_consumer.py
+	$ python pp_producer.py
+	
+
+na výstupe očakávam distribúciu sprav posunutých conzumermi v tvare
+
+	{   3362: 233,
+		 9312: 767
+	}
