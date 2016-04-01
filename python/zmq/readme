@@ -16,3 +16,15 @@ na výstupe očakávam distribúciu sprav posunutých conzumermi v tvare
 	{   3362: 233,
 		 9312: 767
 	}
+
+
+{queue}
+
+spusti príkazom:
+
+	$ python queue_device.py
+	$ python queue_server.py
+	$ python queue_server.py
+	$ python queue_client.py
+	$ python queue_client.py
+
