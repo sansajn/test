@@ -1,0 +1,58 @@
+{Ako na nodejs modul v c++}
+
+Nainštaluj npm (https://www.npmjs.com/)
+
+	$ sudo apt-get install npm
+
+kde npm predstavuje nodejs package manager. Ďalej nainštaluj node-gyp, príkazom
+
+	$ sudo npm install -g node-gyp
+
+kde node-gyp je: node-gyp is a cross-platform command-line tool
+written in Node.js for compiling native addon modules for Node.js.
+
+  https://github.com/nodejs/node-gyp
+
+\note Celé to je o tom, ako skompilovať node.js modul v c++.
+
+Vytvor súbor hello.cpp [Ukážka:
+
+  #include <node.h>
+  #include <v8.h>
+
+  using namespace v8;
+
+  Handle<Value> Method(const Arguments & args)
+  {
+	  HandleScope scope;
+	  return scope.Close(String::New("world"));
+  }
+
+  void init(Handle<Object> target)
+  {
+	  target->Set(String::NewSymbol("hello"), 
+		  FunctionTemplate::New(Method)->GetFunction());
+  }
+
+  NODE_MODULE(hello, init)
+
+--- koniec ukážky].
+
+ďalej súbor binding.gyp [Ukážka:
+
+  {
+	  "targets": [
+		  {
+			  "target_name": "hello",
+			  "sources": ["hello.cpp"]
+		  }
+	  ]
+  }
+
+--- koniec ukážky].
+
+a ukážku hello.cpp buildni príkazom
+
+	$ node-gyp configure build
+
+výsledok sa buildne do build/Release ako hello.node.
