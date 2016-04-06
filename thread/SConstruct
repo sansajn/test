@@ -1,0 +1,8 @@
+env = Environment(
+	CCFLAGS=['-std=c++11'],
+	LIBS=['pthread']
+)
+
+#env.Program('condition_var.cpp') 
+env.Program('thread_use.cpp') 
+
