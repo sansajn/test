@@ -45,11 +45,14 @@ int main(int argc, char * argv[])
 	background_task_with_func f2;
 	thread t5{&background_task_with_func::run, &f2};
 
+	thread t6{&background_task_with_func::run, background_task_with_func{}};
+
 	t1.join();
 	t2.join();
 	t3.join();
 	t4.join();
 	t5.join();
+	t6.join();
 
 	return 0;
 } 
