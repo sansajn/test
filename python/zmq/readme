@@ -28,3 +28,6 @@ spusti príkazom:
 	$ python queue_client.py
 	$ python queue_client.py
 
+
+{request/replay}
+
