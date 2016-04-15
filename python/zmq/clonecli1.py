@@ -8,8 +8,10 @@ def main():
 	updates.linger = 0
 	updates.setsockopt(zmq.SUBSCRIBE, '')
 	updates.connect('tcp://localhost:5556')
+
 	kvmap = {}
 	sequence = 0
+
 	while True:
 		try:
 			kvmsg = KVMsg.recv(updates)
@@ -17,6 +19,7 @@ def main():
 			break  # interrupted
 		kvmsg.store(kvmap)
 		sequence += 1
+
 	print 'Interrupted\n%d messages in' % sequence
 
 if __name__ == '__main__':

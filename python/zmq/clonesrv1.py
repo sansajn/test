@@ -8,10 +8,11 @@ def main():
 	publisher = ctx.socket(zmq.PUB)
 	publisher.bind('tcp://*:5556')
 	time.sleep(0.2)
-	sequence = 0
 	random.seed(time.time())
+
 	kvmap = {}
-	
+	sequence = 0
+
 	try:
 		while True:
 			# distribute as key-value message

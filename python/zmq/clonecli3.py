@@ -18,7 +18,6 @@ def main():
 	publisher.linger = 0
 	publisher.connect('tcp://localhost:5558')
 	
-	
 	random.seed(time.time())
 	kvmap = {}
 	
@@ -26,7 +25,7 @@ def main():
 	sequence = 0
 	snapshot.send('ICANHAZ?')
 	
-	while True:
+	while True:  # prijme snapshot, celu kv-mapu (jedna sprava, jeden riadok)
 		try:
 			kvmsg = KVMsg.recv(snapshot)
 		except:
@@ -38,7 +37,7 @@ def main():
 			break
 		
 		kvmsg.store(kvmap)
-		
+
 	poller = zmq.Poller()
 	poller.register(subscriber, zmq.POLLIN)
 	
@@ -58,8 +57,8 @@ def main():
 			sequence = kvmsg.sequence
 			kvmsg.store(kvmap)
 			print('I: received update=%d' % sequence)
-			
-		if time.time() > alarm:
+
+		if time.time() > alarm:  # kazdu 1s vytvorim novy kluc a uploadnem ho na server (PUSH socket)
 			kvmsg = KVMsg(0)
 			kvmsg.key = '%d' % random.randint(1, 10000)
 			kvmsg.body = '%d' % random.randint(1, 1000000)
