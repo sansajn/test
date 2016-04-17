@@ -1,0 +1,4 @@
+Všetky C sample používajú knižnicu czmq, inštaláciu realizuje príkaz
+
+	$ sudo apt-get install libczmq-dev 
+
