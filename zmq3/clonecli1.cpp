@@ -1,3 +1,4 @@
+// clone client model one (see figure 58 from zguide)
 #include <czmq.h>
 #include "kvsimple.h"
 

@@ -2,3 +2,7 @@ Všetky C sample používajú knižnicu czmq, inštaláciu realizuje príkaz
 
 	$ sudo apt-get install libczmq-dev 
 
+C++ binding knižnica je v repozitároch ako
+
+	libzmqpp-dev
+

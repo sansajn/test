@@ -1,4 +1,4 @@
-// clone server model one
+// clone server model one (see figure 58 from zguide)
 #include <czmq.h>
 #include "kvsimple.h"
 
@@ -21,6 +21,7 @@ int main(int argc, char * argv[])
 		kvmsg_fmt_body(kvmsg, "%d", randof(1000000));
 		kvmsg_send(kvmsg, publisher);
 		kvmsg_store(&kvmsg, kvmap);
+		// TODO: destroy ?
 	}
 
 	printf(" Interrupted\n%d messages out\n", (int)sequence);

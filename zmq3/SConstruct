@@ -8,3 +8,5 @@ objs = env.Object(['kvsimple.c'])
 # clone pattern
 env.Program(['clonesrv1.cpp', objs])
 env.Program(['clonecli1.cpp', objs])
+env.Program(['clonesrv2.cpp', objs])
+env.Program(['clonecli2.cpp', objs])
