@@ -13,3 +13,6 @@ env.Program('remove_reference.cpp')
 # right-reference
 env.Program('rrefopt.cpp')
 env.Program('rref_test.cpp')
+
+# time
+env.Program('utc_time.cpp')
