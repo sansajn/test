@@ -1,4 +1,4 @@
-env = Environment()
+env = Environment(CPPFLAGS=['-std=c++11'])
 
 # dependencies libzmq3, libczmq
 env.ParseConfig('pkg-config --cflags --libs libzmq libczmq')
@@ -12,3 +12,8 @@ env.Program(['clonesrv2.cpp', objs])
 env.Program(['clonecli2.cpp', objs])
 env.Program(['clonesrv3.cpp', objs])
 env.Program(['clonecli3.cpp', objs])
+
+
+# zmqpp pure c++ samples
+env.Program(['zmqpp/hwserver.cpp', objs])
+env.Program(['zmqpp/hwclient.cpp', objs])
