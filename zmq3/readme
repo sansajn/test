@@ -1,4 +1,6 @@
-Všetky C sample používajú knižnicu czmq, inštaláciu realizuje príkaz
+zmq.h a zmq.hpp sú štandardnou súčasťou libzmq knižnice
+
+niektore C sample používajú knižnicu czmq, inštaláciu realizuje príkaz
 
 	$ sudo apt-get install libczmq-dev 
 

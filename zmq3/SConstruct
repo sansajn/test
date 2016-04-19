@@ -17,3 +17,8 @@ env.Program(['clonecli3.cpp', objs])
 # zmqpp pure c++ samples
 env.Program(['zmqpp/hwserver.cpp', objs])
 env.Program(['zmqpp/hwclient.cpp', objs])
+
+
+# pure zmq
+env.Program('router_dealer_client.cpp')
+env.Program('router_dealer_server.cpp')
