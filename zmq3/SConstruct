@@ -22,3 +22,4 @@ env.Program(['zmqpp/hwclient.cpp', objs])
 # pure zmq
 env.Program('router_dealer_client.cpp')
 env.Program('router_dealer_server.cpp')
+env.Program('router_dealer_server_msg.cpp')
