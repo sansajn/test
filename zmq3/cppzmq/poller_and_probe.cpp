@@ -48,12 +48,12 @@ void probe::recv()
 {
 	zmq_msg_t msg;
 	zmq_msg_init(&msg);
-	int rc = zmq_msg_recv(&msg, _sock, 0);
+	int rc = zmq_msg_recv(&msg, (void *)_sock, 0);
 	assert(rc != -1);
 	assert(zmq_msg_more(&msg));
 	uint16_t event = *(uint16_t *)zmq_msg_data(&msg);
 
-	rc = zmq_msg_recv(&msg, _sock, 0);
+	rc = zmq_msg_recv(&msg, (void *)_sock, 0);
 	assert(rc != -1);
 	assert(!zmq_msg_more(&msg));
 
@@ -130,12 +130,12 @@ int main(int argc, char * argv[])
 		{
 			zmq_msg_t msg;
 			zmq_msg_init(&msg);
-			rc = zmq_msg_recv(&msg, responder, 0);
+			rc = zmq_msg_recv(&msg, (void *)responder, 0);
 			assert(rc != -1);
 			cout << "received: " << string((char *)zmq_msg_data(&msg), zmq_msg_size(&msg)) << std::endl;
 			zmq_msg_close(&msg);
 
-			zmq_send(responder, "world", 5, 0);
+			zmq_send((void *)responder, "world", 5, 0);
 		}
 
 		if (items.has_input(1))  // responder_probe

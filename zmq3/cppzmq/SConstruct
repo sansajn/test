@@ -9,5 +9,5 @@ env.ParseConfig('pkg-config --cflags --libs libzmq')
 env.Program('rrserv.cpp')
 env.Program('rrclient.cpp')
 env.Program('rrserv_mon.cpp')
-
+env.Program('rrclient_mon.cpp')
 env.Program('poller_and_probe.cpp')
