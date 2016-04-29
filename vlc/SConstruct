@@ -1,0 +1,6 @@
+env = Environment(
+	CCFLAGS=['-std=c++11', '-Wall', '-O0', '-g']
+)
+
+env.ParseConfig('pkg-config --cflags --libs libvlc')
+env.Program('simple_play.cpp')
