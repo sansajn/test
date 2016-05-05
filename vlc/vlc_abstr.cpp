@@ -4,44 +4,59 @@
 #include <string>
 #include <iostream>
 #include <cassert>
+#include <thread>
 #include <vlc/vlc.h>
 #include <SDL2/SDL.h>
 
 using std::string;
 using std::cout;
+using std::clog;
 
-int const WIDTH = 640;
-int const HEIGHT = 480;
-int const VIDEO_WIDTH = WIDTH;
-int const VIDEO_HEIGHT = HEIGHT;
+int const WIDTH = 800;
+int const HEIGHT = 600;
 
 
 char const * default_media_path = "ball.mp4";
+
 
 class vlc_player
 {
 public:
 	vlc_player();
+	vlc_player(unsigned w, unsigned h);
 	~vlc_player();
 	void open(string const & fname);
 	void play();
+	unsigned width() const {return _width;}
+	unsigned height() const {return _height;}
 
 protected:
 	virtual void lock(void ** pixels) = 0;
 	virtual void unlock(void * const * pixels) = 0;
 	virtual void render() = 0;
+	virtual unsigned setup(char * chroma, unsigned * width, unsigned * height, unsigned * pitches, unsigned * lines);
+	void cleanup();
 
 private:
+	// vlc callbacks
 	static void * lock_cb(void * data, void ** pixels);
 	static void unlock_cb(void * data, void * id, void * const * pixels);
 	static void display_cb(void * data, void * id);
+	static unsigned format_cb(void ** opaque, char * chroma, unsigned * width, unsigned * height, unsigned * pitches, unsigned * lines);
+	static void cleanup_cb(void * opaque);
+	static void handle_event(libvlc_event_t const * event, void * user_data);
 
 	libvlc_instance_t * _vlc;
+	libvlc_media_t * _media;
 	libvlc_media_player_t * _player;
+	unsigned _width, _height;
 };
 
-vlc_player::vlc_player()
-	: _player{nullptr}
+vlc_player::vlc_player() : vlc_player(0, 0)
+{}
+
+vlc_player::vlc_player(unsigned w, unsigned h)
+	: _media{nullptr}, _player{nullptr}, _width{w}, _height{h}
 {
 	_vlc = libvlc_new(0, nullptr);
 }
@@ -50,33 +65,53 @@ vlc_player::~vlc_player()
 {
 	if (_player)
 		libvlc_media_player_release(_player);
+
 	libvlc_release(_vlc);
 }
 
 void vlc_player::open(string const & fname)
 {
-	libvlc_media_t * media = libvlc_media_new_path(_vlc, fname.c_str());
-	assert(media);
+	_media = libvlc_media_new_path(_vlc, fname.c_str());
+	assert(_media);
 
-	if (_player)
-	{
-		libvlc_media_player_stop(_player);
-		libvlc_media_player_release(_player);
-	}
-
-	_player = libvlc_media_player_new_from_media(media);
+	_player = libvlc_media_player_new_from_media(_media);
 	assert(_player);
 
 	libvlc_video_set_callbacks(_player, lock_cb, unlock_cb, display_cb, (void *)this);
-	libvlc_video_set_format(_player, "RV16", VIDEO_WIDTH, VIDEO_HEIGHT, VIDEO_WIDTH * 2);
-
-	libvlc_media_release(media);
+	libvlc_video_set_format_callbacks(_player, format_cb, cleanup_cb);
 }
 
 void vlc_player::play()
 {
 	libvlc_media_player_play(_player);
 }
+
+unsigned vlc_player::setup(char * chroma, unsigned * width, unsigned * height, unsigned * pitches, unsigned * lines)
+{
+	if (_width != *width || _height != *height)
+		clog << "warning: video geometry doesn't match (" << _width << ", " << _height << ") vs (" << *width << ", " << *height << "), resize required" << std::endl;
+
+	strncpy(chroma, "RV16", 4);  // TODO: force to RV16 just for now
+
+	if (_width != 0 && _height != 0)
+	{
+		*width = _width;
+		*height = _height;
+	}
+	else
+	{
+		_width = *width;
+		_height = *height;
+	}
+
+	*pitches = *width * 2;  // RV16 are 2 bytes wide
+
+	return 1;  // vytvorim iba jeden buffer
+}
+
+void vlc_player::cleanup()
+{}
+
 
 void * vlc_player::lock_cb(void * data, void ** pixels)
 {
@@ -97,34 +132,75 @@ void vlc_player::display_cb(void * data, void * id)
 	self->render();
 }
 
+unsigned vlc_player::format_cb(void ** opaque, char * chroma, unsigned * width, unsigned * height, unsigned * pitches, unsigned * lines)
+{
+	vlc_player * self = (vlc_player *)*opaque;
+	return self->setup(chroma, width, height, pitches, lines);
+}
+
+void vlc_player::cleanup_cb(void * opaque)
+{
+	vlc_player * self = (vlc_player *)opaque;
+	self->cleanup();
+}
+
+void vlc_player::handle_event(libvlc_event_t const * event, void * user_data)
+{
+	vlc_player * player = (vlc_player *)user_data;
+
+	switch (event->type)
+	{
+		case libvlc_MediaParsedChanged:
+			cout << "parsed-changed, width():" << player->width() << ", height():" << player->height() << std::endl;
+			break;
+
+		default:
+			break;
+	}
+}
+
 
 class sdl_player : public vlc_player
 {
 public:
-	sdl_player(SDL_Window * wnd);
+	sdl_player(SDL_Window * wnd, unsigned width, unsigned height);
 	~sdl_player();
 
 protected:
 	void lock(void ** pixels) override;
 	void unlock(void * const * pixels) override;
 	void render() override;
+	unsigned setup(char * chroma, unsigned * width, unsigned * height, unsigned * pitches, unsigned * lines) override;
 
 private:
+	SDL_Window * _window;
 	SDL_Renderer * _rendr;
 	SDL_Texture * _tex;
 	SDL_mutex * _lock;
 };
 
-sdl_player::sdl_player(SDL_Window * wnd)
+unsigned sdl_player::setup(char * chroma, unsigned * width, unsigned * height, unsigned * pitches, unsigned * lines)
+{
+	unsigned rv = vlc_player::setup(chroma, width, height, pitches, lines);
+
+	if (_tex)
+		SDL_DestroyTexture(_tex);
+	_tex = SDL_CreateTexture(_rendr, SDL_PIXELFORMAT_BGR565/*RV16*/, SDL_TEXTUREACCESS_STREAMING, *width, *height);
+	assert(_tex);
+
+	SDL_SetWindowSize(_window, *width, *height);
+
+	return rv;
+}
+
+sdl_player::sdl_player(SDL_Window * wnd, unsigned width, unsigned height)
+	: vlc_player{width, height}, _window{wnd}, _tex{nullptr}
 {
 	_rendr = SDL_CreateRenderer(wnd, -1, 0);
 	assert(_rendr);
 
-	_tex = SDL_CreateTexture(_rendr, SDL_PIXELFORMAT_BGR565,
-		SDL_TEXTUREACCESS_STREAMING, VIDEO_WIDTH, VIDEO_HEIGHT);
-	assert(_tex);
-
 	_lock = SDL_CreateMutex();
+	assert(_lock);
 }
 
 sdl_player::~sdl_player()
@@ -150,8 +226,8 @@ void sdl_player::unlock(void * const * pixels)
 void sdl_player::render()
 {
 	SDL_Rect rect;
-	rect.w = VIDEO_WIDTH;
-	rect.h = VIDEO_HEIGHT;
+	rect.w = width();
+	rect.h = height();
 	rect.x = 0;
 	rect.y = 0;
 
@@ -162,71 +238,6 @@ void sdl_player::render()
 }
 
 
-struct context
-{
-	SDL_Renderer * renderer;
-	SDL_Texture * texture;
-	SDL_mutex * mutex;
-	int n;
-};
-
-// vlc prepares to render a video frame
-void * lock(void * data, void ** pixels)
-{
-	context * ctx = (context *)data;
-	SDL_LockMutex(ctx->mutex);
-
-	int pitch;
-	SDL_LockTexture(ctx->texture, nullptr, pixels, &pitch);
-
-	return nullptr;
-}
-
-// vlc just rendered a video frame
-void unlock(void * data, void * id, void * const * pixels)
-{
-	context * ctx = (context *)data;
-	uint16_t * pixbuf = (uint16_t *)*pixels;
-
-	// render ...
-	for (int y = 10; y < 40; ++y)
-	{
-		for (int x = 10; x < 40; ++x)
-		{
-			if (x < 13 || y < 13 || x > 36 || y > 36)
-				pixbuf[y * VIDEO_WIDTH + x] = 0xffff;
-			else
-				pixbuf[y * VIDEO_WIDTH + x] = 0x02ff;
-		}
-	}
-
-	SDL_UnlockTexture(ctx->texture);
-	SDL_UnlockMutex(ctx->mutex);
-}
-
-// vlc wants to display a video frame
-void display(void * data, void * id)
-{
-	context * ctx = (context *)data;
-
-	SDL_Rect rect;
-	rect.w = VIDEO_WIDTH;
-	rect.h = VIDEO_HEIGHT;
-	rect.x = (int)((1. + .5 * sin(0.03 * ctx->n)) * (WIDTH - VIDEO_WIDTH) / 2);
-	rect.y = (int)((1. + .5 * cos(0.03 * ctx->n)) * (HEIGHT - VIDEO_HEIGHT) / 2);
-
-	SDL_SetRenderDrawColor(ctx->renderer, 0, 80, 0, 255);
-	SDL_RenderClear(ctx->renderer);
-	SDL_RenderCopy(ctx->renderer, ctx->texture, nullptr, &rect);
-	SDL_RenderPresent(ctx->renderer);
-}
-
-void quit(int c)
-{
-	SDL_Quit();
-	exit(c);
-}
-
 int main(int argc, char * argv[])
 {
 	string media_path(argc > 1 ? argv[1] : default_media_path);
@@ -235,45 +246,21 @@ int main(int argc, char * argv[])
 		assert(0 && "sdl init failed");
 
 	SDL_Window * window = SDL_CreateWindow("player",
-		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT,
-		SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE);
+		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE);
 	assert(window);
 
-	sdl_player player{window};
+	sdl_player player{window, 1280, 720};
 	player.open(media_path);
 	player.play();
 
-	int done = 0;
-	SDL_Event event;
-
-	while (!done)
+	SDL_Event event = {};
+	while (SDL_WaitEvent(&event) >= 0)
 	{
-		int action = 0;
-
-		while (SDL_PollEvent(&event))
-		{
-			switch (event.type)
-			{
-				case SDL_QUIT:
-					done = 1;
-					break;
-				case SDL_KEYDOWN:
-					action = event.key.keysym.sym;
-					break;
-			}
-
-			switch (action)
-			{
-				case SDLK_ESCAPE:
-				case SDLK_q:
-					done = 1;
-					break;
-			}
-
-			SDL_Delay(1000/10);
-		}
+		if (event.type == SDL_QUIT)
+			break;
 	}
 
-	quit(0);
+	SDL_Quit();  // clenup
+
 	return 0;
 }
