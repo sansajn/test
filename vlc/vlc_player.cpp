@@ -5,7 +5,6 @@
 
 using std::string;
 using std::clog;
-using std::cout;
 
 vlc_player::vlc_player() : vlc_player(0, 0)
 {}
@@ -18,14 +17,14 @@ vlc_player::vlc_player(unsigned w, unsigned h)
 
 vlc_player::~vlc_player()
 {
-	if (_player)
-		libvlc_media_player_release(_player);
-
+	stop();
 	libvlc_release(_vlc);
 }
 
 void vlc_player::open(string const & fname)
 {
+	stop();
+
 	_media = libvlc_media_new_path(_vlc, fname.c_str());
 	assert(_media);
 
@@ -41,12 +40,23 @@ void vlc_player::play()
 	libvlc_media_player_play(_player);
 }
 
+void vlc_player::stop()
+{
+	if (_player)
+	{
+		if (libvlc_media_player_is_playing(_player))
+			libvlc_media_player_stop(_player);
+		libvlc_media_player_release(_player);
+	}
+
+	if (_media)
+		libvlc_media_release(_media);
+}
+
 unsigned vlc_player::setup(char * chroma, unsigned * width, unsigned * height, unsigned * pitches, unsigned * lines)
 {
 	if (_width != *width || _height != *height)
 		clog << "warning: video geometry doesn't match (" << _width << ", " << _height << ") vs (" << *width << ", " << *height << "), resize required" << std::endl;
-
-	strncpy(chroma, "RV16", 4);  // TODO: force to RV16 just for now
 
 	if (_width != 0 && _height != 0)
 	{
@@ -59,9 +69,12 @@ unsigned vlc_player::setup(char * chroma, unsigned * width, unsigned * height, u
 		_height = *height;
 	}
 
-	*pitches = *width * 2;  // RV16 are 2 bytes wide
+	int depth = 4;  // RV32:4 bytes, RV15:2 bytes
+	strncpy(chroma, "RV32", 4);  // let vlc do the conversion to 0xffrrggbb
 
-	return 1;  // vytvorim iba jeden buffer
+	*pitches = *width * depth;
+
+	return 1;  // only one buffer created (shoul I create more buffers ?)
 }
 
 void vlc_player::cleanup()
@@ -97,19 +110,4 @@ void vlc_player::cleanup_cb(void * opaque)
 {
 	vlc_player * self = (vlc_player *)opaque;
 	self->cleanup();
-}
-
-void vlc_player::handle_event(libvlc_event_t const * event, void * user_data)
-{
-	vlc_player * player = (vlc_player *)user_data;
-
-	switch (event->type)
-	{
-		case libvlc_MediaParsedChanged:
-			cout << "parsed-changed, width():" << player->width() << ", height():" << player->height() << std::endl;
-			break;
-
-		default:
-			break;
-	}
 }

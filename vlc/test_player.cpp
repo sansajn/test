@@ -27,6 +27,7 @@ protected:
 	void unlock(void * const * pixels) override;
 	void render() override;
 	unsigned setup(char * chroma, unsigned * width, unsigned * height, unsigned * pitches, unsigned * lines) override;
+	void cleanup() override;
 
 private:
 	SDL_Window * _window;
@@ -39,14 +40,18 @@ unsigned sdl_player::setup(char * chroma, unsigned * width, unsigned * height, u
 {
 	unsigned rv = vlc_player::setup(chroma, width, height, pitches, lines);
 
-	if (_tex)
-		SDL_DestroyTexture(_tex);
 	_tex = SDL_CreateTexture(_rendr, SDL_PIXELFORMAT_BGR565/*RV16*/, SDL_TEXTUREACCESS_STREAMING, *width, *height);
 	assert(_tex);
 
 	SDL_SetWindowSize(_window, *width, *height);
 
 	return rv;
+}
+
+void sdl_player::cleanup()
+{
+	SDL_DestroyTexture(_tex);
+	_tex = nullptr;
 }
 
 sdl_player::sdl_player(SDL_Window * wnd, unsigned width, unsigned height)
@@ -61,7 +66,6 @@ sdl_player::sdl_player(SDL_Window * wnd, unsigned width, unsigned height)
 
 sdl_player::~sdl_player()
 {
-	SDL_DestroyTexture(_tex);
 	SDL_DestroyMutex(_lock);
 	SDL_DestroyRenderer(_rendr);
 }

@@ -10,6 +10,7 @@ public:
 	~vlc_player();
 	void open(std::string const & fname);
 	void play();
+	void stop();
 	unsigned width() const {return _width;}
 	unsigned height() const {return _height;}
 
@@ -18,7 +19,7 @@ protected:
 	virtual void unlock(void * const * pixels) = 0;
 	virtual void render() = 0;
 	virtual unsigned setup(char * chroma, unsigned * width, unsigned * height, unsigned * pitches, unsigned * lines);
-	void cleanup();
+	virtual void cleanup();
 
 private:
 	// vlc callbacks
@@ -27,7 +28,6 @@ private:
 	static void display_cb(void * data, void * id);
 	static unsigned format_cb(void ** opaque, char * chroma, unsigned * width, unsigned * height, unsigned * pitches, unsigned * lines);
 	static void cleanup_cb(void * opaque);
-	static void handle_event(libvlc_event_t const * event, void * user_data);
 
 	libvlc_instance_t * _vlc;
 	libvlc_media_t * _media;
