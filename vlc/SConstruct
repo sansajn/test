@@ -4,7 +4,10 @@ env = Environment(
 
 env.ParseConfig('pkg-config --cflags --libs libvlc sdl2')
 
-objs = env.Object(['vlc_player.cpp'])
+objs = env.Object([
+	'vlc_player.cpp',
+	'sdl2_player.cpp'
+])
 
 env.Program('simple_play.cpp')
 env.Program('sdl_render.cpp')
