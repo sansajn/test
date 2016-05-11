@@ -1,0 +1,8 @@
+env = Environment(CCFLAGS=['-std=c++11'])
+
+env.Program('date.cpp')
+env.Program('getting_date.cpp')
+env.Program('duration.cpp')
+env.Program('posix_time_time_period.cpp')
+env.Program('posix_time.cpp')
+env.Program('custom_date_format.cpp')
