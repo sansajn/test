@@ -1,0 +1,2 @@
+env = Environment(CCFLAGS=['-std=c++11', '-Wall'])
+env.Program('hello.cpp')
