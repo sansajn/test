@@ -1,3 +1,4 @@
 env = Environment(CCFLAGS=['-std=c++11', '-Wall'])
 env.ParseConfig('pkg-config --libs --cflags gtk+-3.0')
 env.Program('hello.cpp')
+env.Program('button.cpp')
