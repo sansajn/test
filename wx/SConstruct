@@ -1,0 +1,6 @@
+env = Environment(
+	CCFLAGS=['-std=c++11', '-Wall', '-g', '-O0'])
+
+env.ParseConfig('wx-config --cflags --libs')
+
+env.Program('hello.cpp')
