@@ -1,2 +1,13 @@
 python-gi-dev
 libgtk-3-dev
+
+
+ui
+
+	* box_example.py
+
+
+kreslenie
+
+	* lines.py
+	* fill_and_stroke.py
