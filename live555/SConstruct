@@ -1,0 +1,3 @@
+env = Environment(CXXFLAGS='-std=c++11')
+env.ParseConfig('pkg-config --cflags --libs live555')
+env.Program('rtsp_on_demand.cpp')
