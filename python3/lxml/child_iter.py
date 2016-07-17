@@ -1,6 +1,5 @@
 '''iteracia potomkami elementu'''
 from lxml import etree
-from io import StringIO
 
 file_name = 'simple2.html'
 
