@@ -1,3 +1,4 @@
-env = Environment(CXXFLAGS='-std=c++11')
+env = Environment(CXXFLAGS=['-std=c++11', '-Wall', '-g', '-O0'])
 env.ParseConfig('pkg-config --cflags --libs live555')
 env.Program('rtsp_on_demand.cpp')
+env.Program('unicast_h264.cpp')
