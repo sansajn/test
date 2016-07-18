@@ -1,4 +1,7 @@
 env = Environment(CXXFLAGS=['-std=c++11', '-Wall', '-g', '-O0'])
 env.ParseConfig('pkg-config --cflags --libs live555')
-env.Program('rtsp_on_demand.cpp')
-env.Program('unicast_h264.cpp')
+env.Program('rtsp_on_demand.cpp')  # unicast sample
+env.Program('multicast_h264.cpp')
+env.Program('multicast_h264_no_rtcp.cpp')
+env.Program('multicast_h264_on_demand.cpp')
+env.Program('multicast_h264_static_address.cpp')

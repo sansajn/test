@@ -14,6 +14,8 @@ RTPSink * video_sink = nullptr;
 
 void play();
 void after_playing(void *);
+string gethostname();
+
 
 int main(int argc, char * argv[])
 {
@@ -46,13 +48,10 @@ int main(int argc, char * argv[])
 	assert(video_sink);
 
 	// create (and start) a RTCP instance for this RTP sink
+	string host_name = gethostname();
 	unsigned const estimated_session_bandwidth = 500;  // in kbps; for RTCP b/w share
-	unsigned const max_CNAME_len = 100;
-	unsigned char CNAME[max_CNAME_len+1];
-	gethostname((char *)CNAME, max_CNAME_len);
-	CNAME[max_CNAME_len] = '\n';  // just in case (see gethostname())
 	RTCPInstance * rtcp = RTCPInstance::createNew(*env, &rtcp_group, estimated_session_bandwidth,
-		CNAME, video_sink, NULL /*we're a server*/, True /*we're a SSM source */);
+		(unsigned char const *)host_name.c_str(), video_sink, NULL /*we're a server*/, True /*we're a SSM source */);
 	assert(rtcp);
 	// note: this starts RTCP running automatically
 
@@ -103,4 +102,15 @@ void after_playing(void *)
 
 	// start playing one again
 	play();
+}
+
+string gethostname()
+{
+	int const SIZE = 1024;
+	char buf[SIZE];
+	int res = gethostname(buf, SIZE);
+	if (res != 0)
+		throw std::runtime_error{"gethostname() failed"};
+	buf[SIZE-1] = '\0';
+	return string{buf};
 }

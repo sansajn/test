@@ -1,8 +1,12 @@
 // on demand h264 server, minimalna ukazka
+#include <string>
+#include <stdexcept>
 #include <cassert>
 #include <liveMedia/liveMedia.hh>
 #include <liveMedia/H265VideoFileServerMediaSubsession.hh>
 #include <BasicUsageEnvironment/BasicUsageEnvironment.hh>
+
+using std::string;
 
 char const * video_path = "test.264";
 char const * stream_name = "h264TestStream";
@@ -18,7 +22,9 @@ int main(int argc, char * argv[])
 	UserAuthenticationDatabase * udb = nullptr;
 	// access control implementation comes there ...
 
-	RTSPServer * serv = RTSPServer::createNew(*env, 8552, udb);
+	RTSPServer * serv = RTSPServer::createNew(*env, 8554, udb);
+	if (!serv)
+		throw std::runtime_error{string{"unable to create a RTSPServer, reason:"} + env->getResultMsg()};
 	assert(serv);
 
 	char const * desc = "streamed by livemedia library";
