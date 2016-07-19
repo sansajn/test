@@ -1,12 +1,15 @@
 /* implementacia multicast streamera */
 #include <string>
+#include <memory>
 #include <stdexcept>
 #include <cassert>
+#include <arpa/inet.h>
 #include <liveMedia/liveMedia.hh>
 #include <BasicUsageEnvironment/BasicUsageEnvironment.hh>
 #include <groupsock/GroupsockHelper.hh>
 
 using std::string;
+using std::unique_ptr;
 
 char const * input_file_name = "test.264";
 H264VideoStreamFramer * video_source = nullptr;
@@ -58,9 +61,7 @@ int main(int argc, char * argv[])
 	sms->addSubsession(PassiveServerMediaSubsession::createNew(*video_sink));
 	rtsp_serv->addServerMediaSession(sms);
 
-	char * url = rtsp_serv->rtspURL(sms);
-	*env << "Play this stream using the URL '" << url << "'\n";
-	delete [] url;
+	*env << "Play this stream using the URL '" << unique_ptr<char>{rtsp_serv->rtspURL(sms)}.get() << "'\n";
 
 	// start the streaming
 	*env << "Beginning streaming ...\n";
