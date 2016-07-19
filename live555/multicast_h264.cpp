@@ -27,7 +27,7 @@ int main(int argc, char * argv[])
 
 	// groupsock
 	in_addr dest_address;
-	dest_address.s_addr = chooseRandomIPv4SSMAddress(*env);
+	dest_address.s_addr = chooseRandomIPv4SSMAddress(*env);  // toto nastavuje adresu na ktoru sa poslu data (destination adresu), alternativne mozem pouzit inet_addr() funkciu
 
 	unsigned short const rtp_port_num = 18888;
 	unsigned short const rtcp_port_num = rtp_port_num + 1;

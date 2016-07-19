@@ -1,2 +1,4 @@
 rtsp_on_demand
-unicast_h264
+multicast_h264
+multicast_h264_no_rtcp
+multicast_h264_static_address

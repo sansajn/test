@@ -27,7 +27,8 @@ int main(int argc, char * argv[])
 
 	// groupsock
 	in_addr dest_address;
-	dest_address.s_addr = chooseRandomIPv4SSMAddress(*env);
+//	dest_address.s_addr = chooseRandomIPv4SSMAddress(*env);
+	dest_address.s_addr = inet_addr("239.0.0.16");
 
 	unsigned short const rtp_port_num = 18888;
 	unsigned short const rtcp_port_num = rtp_port_num + 1;
