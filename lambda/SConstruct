@@ -1,0 +1,11 @@
+import os
+
+env = Environment(
+	CXX='clang++',
+	CXXFLAGS=['-std=c++14', '-Wall']) 
+
+if 'TERM' in os.environ:  # color support
+	env['ENV']['TERM'] = os.environ['TERM']
+
+env.Program('copy.cpp')
+env.Program('default_by_value_capture.cpp')
