@@ -1,0 +1,5 @@
+env = Environment(CXXFLAGS=['-std=c++11', '-Wall', '-g'])
+
+env.ParseConfig('pkg-config --cflags --libs gstreamer-1.0')
+
+env.Program('initialization.cpp')
