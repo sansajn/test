@@ -6,3 +6,5 @@ env.ParseConfig('pkg-config --cflags --libs gstreamer-1.0 gstreamer-rtsp-server-
 env.Program('initialization.cpp')
 env.Program('test-readme.c')
 env.Program('test-mp4.c')
+env.Program('test-multicast.c')
+env.Program('test-multicast2.c')
