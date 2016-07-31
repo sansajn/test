@@ -1,5 +1,8 @@
-env = Environment(CXXFLAGS=['-std=c++11', '-Wall', '-g'])
+env = Environment(
+	CXXFLAGS=['-std=c++11', '-Wall', '-g'])
 
-env.ParseConfig('pkg-config --cflags --libs gstreamer-1.0')
+env.ParseConfig('pkg-config --cflags --libs gstreamer-1.0 gstreamer-rtsp-server-1.0')
 
 env.Program('initialization.cpp')
+env.Program('test-readme.c')
+env.Program('test-mp4.c')
