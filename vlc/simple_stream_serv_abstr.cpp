@@ -36,10 +36,11 @@ private:
 	string _stream_name;
 	std::mutex _vlc_mutex;
 	std::condition_variable _end_reached;
+	bool _playing;
 };
 
 stream_server::stream_server()
-	: _vlc{nullptr}, _player{nullptr}, _player_events{nullptr}, _port{0}
+	: _vlc{nullptr}, _player{nullptr}, _player_events{nullptr}, _port{0}, _playing{false}
 {}
 
 void stream_server::close()
@@ -103,12 +104,15 @@ void stream_server::play(string const & file_name)
 	libvlc_media_release(media);
 
 	libvlc_media_player_play(_player);  // start playing
+
+	_playing = true;
 }
 
 void stream_server::stop()
 {
 	if (_player)
 		libvlc_media_player_stop(_player);
+	_playing = false;
 }
 
 string stream_server::rtsp_url() const
@@ -118,7 +122,7 @@ string stream_server::rtsp_url() const
 
 void stream_server::join()
 {
-	if (_player && libvlc_media_player_is_playing(_player))
+	if (_player && (_playing || libvlc_media_player_is_playing(_player)))
 		wait_end_reached();
 }
 
@@ -139,6 +143,7 @@ void stream_server::handle_event(libvlc_event_t const * event, void * user_data)
 
 void stream_server::notify_end_reached()
 {
+	_playing = false;
 	std::unique_lock<std::mutex> lock{_vlc_mutex};
 	_end_reached.notify_all();
 }
@@ -159,8 +164,8 @@ int main(int argc, char * argv[])
 
 	cout << "streaming '" << file_name << "' at " << serv.rtsp_url() << std::endl;
 
-	std::this_thread::sleep_for(std::chrono::seconds{30});  // wait 30s and then stop streaming
-	serv.stop();
+//	std::this_thread::sleep_for(std::chrono::seconds{30});  // wait 30s and then stop streaming
+//	serv.stop();
 
 	serv.join();  // wait for server
 
