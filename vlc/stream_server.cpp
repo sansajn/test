@@ -33,7 +33,7 @@ int main(int argc, char * argv[])
 
 	// create a new item
 	libvlc_media_t * media = libvlc_media_new_path(vlc, media_path.c_str());
-	assert(vlc);
+	assert(media);
 
 	// create a media player environment
 	libvlc_media_player_t * player = libvlc_media_player_new_from_media(media);
