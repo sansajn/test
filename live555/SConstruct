@@ -1,9 +1,19 @@
 env = Environment(
-	CXXFLAGS=['-std=c++11', '-Wall', '-g', '-O0'])
+	CXXFLAGS=['-std=c++11', '-Wall', '-g', '-O0'],
+	LIBS=['pthread', 'liveMedia', 'groupsock', 'BasicUsageEnvironment', 'UsageEnvironment'],
+	LIBPATH=['/usr/local/lib'],
+	CPPPATH=[
+		'/usr/local/include/liveMedia',
+		'/usr/local/include/groupsock',
+		'/usr/local/include/BasicUsageEnvironment',
+		'/usr/local/include/UsageEnvironment'
+	]
+)
 
-env.ParseConfig('pkg-config --cflags --libs live555')
+#env.ParseConfig('pkg-config --cflags --libs live555')
 
-env.Program('rtsp_on_demand.cpp')  # unicast sample
-env.Program('multicast_h264.cpp')
-env.Program('multicast_h264_no_rtcp.cpp')
-env.Program('multicast_h264_static_address.cpp')
+#env.Program('rtsp_on_demand.cpp')  # unicast sample
+#env.Program('multicast_h264.cpp')
+#env.Program('multicast_h264_no_rtcp.cpp')
+#env.Program('multicast_h264_static_address.cpp')
+env.Program('loadable_multicast.cpp')
