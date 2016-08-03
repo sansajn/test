@@ -1,5 +1,6 @@
 // stream server vo vlc 
 #include <thread>
+#include <condition_variable>
 #include <string>
 #include <iostream>
 #include <cassert>
@@ -9,6 +10,14 @@ char const * default_media_path = "benny.ogg";
 
 using std::string;
 using std::cout;
+
+void handle_event(libvlc_event_t const * event, void * user_data);
+
+// sync helpers
+std::mutex vlc_mutex;
+std::condition_variable end_reached;
+void wait_end_reached();
+void notify_end_reached();
 
 int main(int argc, char * argv[])
 {
@@ -30,14 +39,19 @@ int main(int argc, char * argv[])
 	libvlc_media_player_t * player = libvlc_media_player_new_from_media(media);
 	assert(player);
 
+	libvlc_event_manager_t * player_events = libvlc_media_player_event_manager(player);
+	assert(player_events);
+	libvlc_event_attach(player_events, libvlc_MediaPlayerOpening, handle_event, nullptr);
+	libvlc_event_attach(player_events, libvlc_MediaPlayerEndReached, handle_event, nullptr);
+
 	libvlc_media_release(media);  // release media (not needed anymore)
 
 	libvlc_media_player_play(player);  // start playing
 
+	cout << "vlc: " << libvlc_get_version() << "\n";
 	cout << "streaming '" << media_path << "' at rtps://localhost:8554/testStream" << std::endl;
 
-	// TODO: how to wait for player ends ?
-	std::this_thread::sleep_for(std::chrono::seconds{60});
+	wait_end_reached();
 
 	libvlc_media_player_stop(player);  // stop playing
 
@@ -49,3 +63,31 @@ int main(int argc, char * argv[])
 	return 0;
 }
 
+void handle_event(libvlc_event_t const * event, void * user_data)
+{
+	switch (event->type)
+	{
+		case libvlc_MediaPlayerOpening:
+			cout << "MediaPlayerOpening" << std::endl;
+			break;
+
+		case libvlc_MediaPlayerEndReached:
+		{
+			cout << "MediaPlayerEndReached" << std::endl;
+			notify_end_reached();
+			break;
+		}
+	}
+}
+
+void wait_end_reached()
+{
+	std::unique_lock<std::mutex> lock{vlc_mutex};
+	end_reached.wait(lock);
+}
+
+void notify_end_reached()
+{
+	std::unique_lock<std::mutex> lock{vlc_mutex};
+	end_reached.notify_all();
+}

@@ -12,7 +12,7 @@ objs = env.Object([
 env.Program('simple_play.cpp')
 env.Program('sdl_render.cpp')
 env.Program('vlc_abstr.cpp')
-#env.Program('events.cpp')
+env.Program('events.cpp')
 env.Program('track_info.cpp')
 env.Program(['test_player.cpp', objs])
 env.Program(['stream_server.cpp'])

@@ -83,11 +83,13 @@ void vlc_player::open(string const & fname)
 	libvlc_event_attach(_player_events, libvlc_MediaPlayerLengthChanged, handle_event, nullptr);
 	libvlc_event_attach(_player_events, libvlc_MediaPlayerVout, handle_event, nullptr);
 	libvlc_event_attach(_player_events, libvlc_MediaPlayerScrambledChanged, handle_event, nullptr);
+/*
 	libvlc_event_attach(_player_events, libvlc_MediaPlayerCorked, handle_event, nullptr);
 	libvlc_event_attach(_player_events, libvlc_MediaPlayerUncorked, handle_event, nullptr);
 	libvlc_event_attach(_player_events, libvlc_MediaPlayerMuted, handle_event, nullptr);
 	libvlc_event_attach(_player_events, libvlc_MediaPlayerUnmuted, handle_event, nullptr);
 	libvlc_event_attach(_player_events, libvlc_MediaPlayerAudioVolume, handle_event, nullptr);
+*/
 }
 
 void vlc_player::play()
@@ -102,7 +104,7 @@ int main(int argc, char * argv[])
 	vlc_player player;
 	player.open("ball.mp4");
 	player.play();
-	std::this_thread::sleep_for(std::chrono::seconds{3});
+	std::this_thread::sleep_for(std::chrono::seconds{5});
 	return 0;
 }
 
@@ -224,25 +226,25 @@ void handle_event(libvlc_event_t const * event, void * user_data)
 //		case libvlc_MediaPlayerESDeleted:
 //		case libvlc_MediaPlayerESSelected:
 
-		case libvlc_MediaPlayerCorked:
-			cout << "MediaPlayerCorked" << std::endl;
-			break;
+//		case libvlc_MediaPlayerCorked:
+//			cout << "MediaPlayerCorked" << std::endl;
+//			break;
 
-		case libvlc_MediaPlayerUncorked:
-			cout << "MediaPlayerUncorked" << std::endl;
-			break;
+//		case libvlc_MediaPlayerUncorked:
+//			cout << "MediaPlayerUncorked" << std::endl;
+//			break;
 
-		case libvlc_MediaPlayerMuted:
-			cout << "MediaPlayerMuted" << std::endl;
-			break;
+//		case libvlc_MediaPlayerMuted:
+//			cout << "MediaPlayerMuted" << std::endl;
+//			break;
 
-		case libvlc_MediaPlayerUnmuted:
-			cout << "MediaPlayerUnmuted" << std::endl;
-			break;
+//		case libvlc_MediaPlayerUnmuted:
+//			cout << "MediaPlayerUnmuted" << std::endl;
+//			break;
 
-		case libvlc_MediaPlayerAudioVolume:
-			cout << "MediaPlayerAudioVolum" << std::endl;
-			break;
+//		case libvlc_MediaPlayerAudioVolume:
+//			cout << "MediaPlayerAudioVolum" << std::endl;
+//			break;
 
 //		case libvlc_MediaPlayerAudioDevice
 //		case libvlc_MediaPlayerChapterChanged
