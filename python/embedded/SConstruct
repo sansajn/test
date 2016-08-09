@@ -1,0 +1,9 @@
+# TODO: move to c++14
+
+env = Environment(
+	CXXFLAGS=['-std=c++14', '-Wall', '-g', '-O0'])
+
+env.ParseConfig('pkg-config --cflags --libs python2')
+
+env.Program('call_function.cpp')
+env.Program('call_function_with_args.cpp')
