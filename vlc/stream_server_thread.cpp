@@ -1,4 +1,4 @@
-// stream server vo vlc 
+// vlc stream server vo vlakne
 #include <thread>
 #include <condition_variable>
 #include <string>
@@ -19,20 +19,18 @@ std::condition_variable end_reached;
 void wait_end_reached();
 void notify_end_reached();
 
-int main(int argc, char * argv[])
+void stream_task(string const & fname)
 {
-	string media_path = argc > 1 ? argv[1] : default_media_path;
-
 	// creates streaming server
 	char const * vlc_argv[] = {
-		"--sout", "#transcode{vcodec=h264,acodec=mpga,ab=128,channels=2,samplerate=44100}:rtp{sdp=rtsp://:8554/testStream}"
+		"--sout", "#transcode{vcodec=h264,acodec=mpga,ab=128,channels=2,samplerate=44100}:rtp{sdp=rtsp://:8154/testStream}"
 	};
 
 	libvlc_instance_t * vlc = libvlc_new(2, vlc_argv);  // load the vlc engine
 	assert(vlc);
 
 	// create a new item
-	libvlc_media_t * media = libvlc_media_new_path(vlc, media_path.c_str());
+	libvlc_media_t * media = libvlc_media_new_path(vlc, fname.c_str());
 	assert(media);
 
 	// create a media player environment
@@ -49,7 +47,7 @@ int main(int argc, char * argv[])
 	libvlc_media_player_play(player);  // start playing
 
 	cout << "vlc: " << libvlc_get_version() << "\n";
-	cout << "streaming '" << media_path << "' at rtsp://localhost:8554/testStream" << std::endl;
+	cout << "streaming '" << fname << "' at rtsp://localhost:8154/testStream" << std::endl;
 
 	wait_end_reached();
 
@@ -57,6 +55,16 @@ int main(int argc, char * argv[])
 
 	libvlc_media_player_release(player);
 	libvlc_release(vlc);
+
+	cout << "streaming done" << std::endl;
+}
+
+int main(int argc, char * argv[])
+{
+	string media_path = argc > 1 ? argv[1] : default_media_path;
+
+	std::thread t{stream_task, media_path};
+	t.join();
 
 	cout << "done\n";
 

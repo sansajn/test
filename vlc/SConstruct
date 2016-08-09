@@ -1,5 +1,6 @@
 env = Environment(
-	CCFLAGS=['-std=c++11', '-Wall', '-O0', '-g']
+	CCFLAGS=['-std=c++11', '-Wall', '-O0', '-g'],
+	LIBS=['pthread']
 )
 
 env.ParseConfig('pkg-config --cflags --libs libvlc sdl2')
@@ -12,9 +13,10 @@ objs = env.Object([
 env.Program('simple_play.cpp')
 env.Program('sdl_render.cpp')
 env.Program('vlc_abstr.cpp')
-env.Program('events.cpp')
+#env.Program('events.cpp')
 env.Program('track_info.cpp')
 env.Program(['test_player.cpp', objs])
 env.Program(['stream_server.cpp'])
 env.Program(['simple_stream_serv_abstr.cpp'])
 env.Program(['stream_client.cpp'])
+env.Program(['stream_server_thread.cpp'])
