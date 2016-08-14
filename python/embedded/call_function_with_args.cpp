@@ -51,7 +51,6 @@ int main(int argc, char * argv[])
 	Py_DECREF(module);
 	Py_DECREF(name);
 	Py_DECREF(env);
-	Py_DECREF(func);
 	Py_DECREF(args);
 
 	Py_Finalize();
