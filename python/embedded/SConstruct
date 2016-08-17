@@ -3,6 +3,8 @@ env = Environment(
 
 env.ParseConfig('pkg-config --cflags --libs python2')
 
+env.Program('simple.cpp')
+env.Program('simple_from_file.cpp')
 env.Program('call_function.cpp')
 env.Program('call_function_with_args.cpp')
 env.Program('multiple_call_function.cpp')
