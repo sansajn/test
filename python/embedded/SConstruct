@@ -1,5 +1,6 @@
 env = Environment(
-	CXXFLAGS=['-std=c++14', '-Wall', '-g', '-O0'])
+	CXXFLAGS=['-std=c++14', '-Wall', '-g', '-O0'],
+	LIBS=['pthread'])
 
 env.ParseConfig('pkg-config --cflags --libs python2')
 
@@ -10,3 +11,4 @@ env.Program('call_function.cpp')
 env.Program('call_function_with_args.cpp')
 env.Program('multiple_call_function.cpp')
 env.Program('args_decode.cpp')
+env.Program('abort.cpp')
