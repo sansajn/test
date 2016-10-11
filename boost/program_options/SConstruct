@@ -1,0 +1,6 @@
+env = Environment(
+	CCFLAGS=['-std=c++11', '-Wall', '-g', '-O0'],
+	LIBS=['boost_program_options']
+)
+
+env.Program('hello.cpp')
