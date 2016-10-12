@@ -4,3 +4,4 @@ env = Environment(
 )
 
 env.Program('hello.cpp')
+env.Program('unknown_options.cpp')
