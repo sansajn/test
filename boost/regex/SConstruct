@@ -1,0 +1,7 @@
+env = Environment(
+	CCFLAGS=['-std=c++14', '-Wall'],
+	LIBS=['boost_regex']
+)
+
+env.Program('regex_groups.cpp')
+env.Program('regex_named_groups.cpp')

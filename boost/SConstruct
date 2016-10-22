@@ -4,7 +4,6 @@ env.Append(
 	CXXFLAGS=['-std=c++11'],
 	CCFLAGS=['-O0', '-Wall'],
 	LIBS=['boost_filesystem', 'boost_system', 'boost_regex'])
+
 env.Program('rename.cpp')
 env.Program('tokenizer.cpp')
-env.Program('regex_groups.cpp')
-env.Program('regex_named_groups.cpp')

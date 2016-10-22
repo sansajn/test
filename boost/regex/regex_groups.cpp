@@ -8,13 +8,12 @@ using std::cout;
 int main(int argc, char * argv[])
 {
 	string t = "Jane,33";
-	boost::regex e{R"((?'name'\w+),(?'year'\d+))"};
+	boost::regex e{R"((\w+),(\d+))"};
 	boost::smatch what;
 	if (boost::regex_match(t, what, e))
 	{
-		string name = what["name"];  // what[] vracia sub_match
-		string year = what["year"];		
-		cout << "(" << name << ", " << year << ")\n";
+		for (size_t i = 0; i < what.size(); ++i)
+			cout << "  $" << i+1 << "=" << what[i] << "\n";
 	}
 	return 0;
 }
