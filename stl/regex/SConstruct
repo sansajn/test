@@ -5,3 +5,4 @@ env = Environment(
 env.Program('match.cpp')
 env.Program('search.cpp')
 env.Program('groups.cpp')
+env.Program('replace.cpp')
