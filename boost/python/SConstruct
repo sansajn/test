@@ -1,8 +1,10 @@
 env = Environment(
-	CCFLAGS=['-std=c++11', '-Wall', '-g', '-O0'])
+	CCFLAGS=['-std=c++11', '-Wall', '-g', '-O0'],
+	LIBS=['boost_python']
+)
 
 env.ParseConfig('pkg-config --libs --cflags python-2.7')
 
-env.Append(LIBS=['boost_python-mt'])
-
 env.Program('hello.cpp')
+
+env.SharedLibrary('hello.so', ['hellomodule.cpp'])
