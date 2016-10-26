@@ -6,5 +6,7 @@ env = Environment(
 env.ParseConfig('pkg-config --libs --cflags python-2.7')
 
 env.Program('hello.cpp')
+env.Program('expose_struct.cpp')
 
+# TODO: how to name so files hello.so, not libhello.so ?
 env.SharedLibrary('hello.so', ['hellomodule.cpp'])
