@@ -9,7 +9,10 @@ env.ParseConfig('pkg-config --libs --cflags python-2.7')
 env.Program('hello.cpp')
 env.Program('expose_struct.cpp')
 env.Program('struct_with_ctors.cpp')
-env.Program('expose_struct_data_memebers.cpp')
+env.Program('expose_struct_data_members.cpp')
+
+# embedding
+env.Program('read_variable.cpp')
 
 # TODO: how to name so files hello.so, not libhello.so ?
 env.SharedLibrary('hello.so', ['hellomodule.cpp'])
