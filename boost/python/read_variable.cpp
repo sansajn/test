@@ -1,4 +1,4 @@
-// simple configuration reading sample
+// read python variable
 #include <iostream>
 #include <boost/python.hpp>
 

@@ -13,6 +13,7 @@ env.Program('expose_struct_data_members.cpp')
 
 # embedding
 env.Program('read_variable.cpp')
+env.Program('read_config.cpp')
 
 # TODO: how to name so files hello.so, not libhello.so ?
 env.SharedLibrary('hello.so', ['hellomodule.cpp'])
