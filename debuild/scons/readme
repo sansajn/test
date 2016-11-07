@@ -1,0 +1,3 @@
+balicek buildnem prikazom
+
+	$ debuild -us -uc 
