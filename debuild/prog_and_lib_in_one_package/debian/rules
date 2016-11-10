@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_install:
+	cp libfoo.so $$(pwd)/debian/helloshared/usr/local/bin/libfoo.so
+	install -D -m 0755 helloshared $$(pwd)/debian/helloshared/usr/local/bin/helloshared
+
+override_dh_usrlocal:
+	# do nothing ...
