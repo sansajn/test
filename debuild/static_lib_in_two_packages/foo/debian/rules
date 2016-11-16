@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+
+LIB_NAME=libstaticfoo
+
+%:
+	dh $@
+
+override_dh_auto_install:
+	install -D -m 0755 ${LIB_NAME}.a $$(pwd)/debian/${LIB_NAME}/usr/local/lib/${LIB_NAME}.so
+
+override_dh_usrlocal:
+	# do nothing ...

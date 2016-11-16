@@ -1,0 +1,9 @@
+# generate program using share library
+prog_env = Environment(
+	CPPFLAGS=['-std=c++11'],
+	LIBS=['foo'],
+	LIBPATH=['.'],
+	LINKFLAGS=['-Wl,-rpath,.']
+)
+
+prog_env.Program('helloshared', ['main.cpp'])

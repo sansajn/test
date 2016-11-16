@@ -1,0 +1,12 @@
+Source: libfoo
+Maintainer: Adam Hlavatovic <adam.hlavatovic@protonmail.ch>
+Build-Depends: debhelper (>=9), scons
+Standards-Version: 3.9.5
+Section: utils
+
+Package: libfoo
+Priority: extra
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: a simple package
+	Just prints "Hi", it's very useful.

@@ -1,0 +1,3 @@
+# generate static library
+lib_env = Environment(CPPFLAGS=['-std=c++11'])
+lib_env.StaticLibrary('libstaticfoo', ['foo.cpp'])

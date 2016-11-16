@@ -1,0 +1,12 @@
+Source: hellostatic
+Maintainer: Adam Hlavatovic <adam.hlavatovic@protonmail.ch>
+Build-Depends: debhelper (>= 9), scons, libfoo
+Standards-Version: 3.9.5
+Section: utils
+
+Package: hellostatic
+Priority: extra
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: a simple package
+	Just prints "Hi", it's very useful.

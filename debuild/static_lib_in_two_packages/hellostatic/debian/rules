@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+
+APP_NAME=hellostatic
+
+%:
+	dh $@
+
+override_dh_auto_install:
+	install -D -m 0755 ${APP_NAME} $$(pwd)/debian/${APP_NAME}/usr/local/bin/${APP_NAME}
+
+override_dh_usrlocal:
+	# do nothing ...

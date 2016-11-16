@@ -1,0 +1,3 @@
+# generate shared library
+lib_env = Environment(CPPFLAGS=['-std=c++11'])
+lib_env.SharedLibrary('foo.cpp')
