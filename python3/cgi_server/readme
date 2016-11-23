@@ -1,0 +1,9 @@
+server spusti prikazom
+
+	./serv.py
+
+do prehliadaca daj 'http://localhost:8000/test_cgi.py' a mal by som vydiet stranku s textom 
+
+	Hello World!
+
+poznamka: aba skripty serv.py aj test_cgi.py musia byt spustitelne (+x).
