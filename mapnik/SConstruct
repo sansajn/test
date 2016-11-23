@@ -1,0 +1,8 @@
+env = Environment(
+	CXXFLAGS=['-std=c++11', '-Wall'],
+)
+
+env.ParseConfig('mapnik-config --includes --defines --cxxflags --dep-includes --libs --dep-libs --ldflags')
+
+env.Program('hello.cpp') 
+env.Program('rundemo.cpp')
