@@ -1,7 +1,7 @@
 # downloads osm tiles
 import urllib2, os
 
-DEPTH=4
+DEPTH=5
 
 def main():
 	if not os.path.exists('tiles'):
