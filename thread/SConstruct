@@ -5,4 +5,5 @@ env = Environment(
 
 #env.Program('condition_var.cpp') 
 env.Program('thread_use.cpp') 
+env.Program('terminate.cpp') 
 
