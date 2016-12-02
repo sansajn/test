@@ -12,6 +12,10 @@ kreslenie
 	* lines.py
 	* fill_and_stroke.py
 
+mys:
+
+	* motion_notify_event.py
+
 
 kreslenie do okna
 
