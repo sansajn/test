@@ -5,8 +5,7 @@ source: http://zetcode.com/gfx/pycairo/basicdrawing/
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk
-import cairo
-import math
+import cairo, math
 
 class Example(Gtk.Window):
 	def __init__(self):

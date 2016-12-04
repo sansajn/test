@@ -11,6 +11,7 @@ kreslenie
 
 	* lines.py
 	* fill_and_stroke.py
+	* bezier.py
 
 mys:
 
