@@ -1,3 +1,4 @@
+ 
 import osmium
 
 class CounterHandler(osmium.SimpleHandler):
@@ -7,7 +8,8 @@ class CounterHandler(osmium.SimpleHandler):
 
 	def node(self, n):
 		self.num_nodes += 1
-		print(n.tags['atm'])
+		loc = n.location
+		print('lat:%f, lon:%f' % (loc.lat, loc.lon))
 
 def main():
 	h = CounterHandler()
