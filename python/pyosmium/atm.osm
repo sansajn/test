@@ -1,0 +1,2364 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<osm version="0.6" generator="Osmosis 0.44.1">
+  <bounds minlon="14.22207" minlat="49.94058" maxlon="14.71052" maxlat="50.18018" origin="0.44.1"/>
+  <node id="71666954" version="6" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="50.0996132" lon="14.3960451">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="2"/>
+    <tag k="addr:postcode" v="16000"/>
+    <tag k="addr:street" v="Vítězné náměstí"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="operator" v="MONETA Money Bank, a.s."/>
+  </node>
+  <node id="71667029" version="4" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29401690" lat="50.1000925" lon="14.3915988">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Banskobystrická"/>
+    <tag k="addr:postcode" v="16000"/>
+    <tag k="addr:housenumber" v="11"/>
+  </node>
+  <node id="130236917" version="5" timestamp="2016-12-15T14:55:56Z" uid="290680" user="wheelmap_visitor" changeset="19270565" lat="50.1353069" lon="14.5029724">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="137524879" version="4" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.1045959" lon="14.483084">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="137525643" version="4" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.1052155" lon="14.4847251">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="246340226" version="3" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0934104" lon="14.543488">
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="248417049" version="4" timestamp="2016-12-15T14:55:56Z" uid="656127" user="unavensluncem" changeset="11262366" lat="50.0675053" lon="14.5085106">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="257812432" version="3" timestamp="2016-12-15T14:55:56Z" uid="190711" user="Zulu" changeset="9972163" lat="50.1081979" lon="14.577428">
+    <tag k="atm" v="yes"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká Spořitelna"/>
+  </node>
+  <node id="257812434" version="3" timestamp="2016-12-15T14:55:56Z" uid="190711" user="Zulu" changeset="9972163" lat="50.1083557" lon="14.5771947">
+    <tag k="atm" v="yes"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční Banka"/>
+  </node>
+  <node id="282086433" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="30397518" lat="50.0821899" lon="14.425735">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Václavské náměstí"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="32"/>
+  </node>
+  <node id="282546216" version="3" timestamp="2016-12-15T14:55:56Z" uid="290680" user="wheelmap_visitor" changeset="9424500" lat="50.0912961" lon="14.4385146">
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="wheelchair" v="no"/>
+  </node>
+  <node id="282546218" version="3" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0903541" lon="14.4369072">
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="282741156" version="5" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="25325958" lat="50.0719995" lon="14.4043442">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="283619691" version="4" timestamp="2016-12-15T14:55:56Z" uid="665336" user="Minimalis" changeset="12699578" lat="50.0060301" lon="14.4172991">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="285327294" version="3" timestamp="2016-12-15T14:55:56Z" uid="665336" user="Minimalis" changeset="34226964" lat="50.1108129" lon="14.5004183">
+    <tag k="name" v="eBanka"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="285339604" version="2" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="50.1252455" lon="14.4937602">
+    <tag k="amenity" v="bank"/>
+    <tag k="created_by" v="Potlatch 0.10b"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="operator" v="MONETA Money Bank, a.s."/>
+  </node>
+  <node id="287757492" version="3" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0706077" lon="14.4043706">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="287757494" version="3" timestamp="2016-12-15T14:55:56Z" uid="364739" user="j123b567" changeset="14527609" lat="50.0707171" lon="14.4043261">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Airbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Airbank"/>
+  </node>
+  <node id="287757496" version="3" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0708319" lon="14.4042505">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+  </node>
+  <node id="288056909" version="5" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="29721546" lat="50.098292" lon="14.3995606">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+  </node>
+  <node id="288056985" version="7" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="29721546" lat="50.0988802" lon="14.3646383">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Evropská"/>
+    <tag k="addr:postcode" v="16000"/>
+    <tag k="addr:housenumber" v="136"/>
+  </node>
+  <node id="288138940" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="33472778" lat="49.9846816" lon="14.3642286">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční Banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční Banka"/>
+  </node>
+  <node id="290034576" version="4" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="30398829" lat="50.079312" lon="14.419874">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Spálená"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="4"/>
+  </node>
+  <node id="290034578" version="5" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="30398829" lat="50.0790149" lon="14.4205325">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Lazarská"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="6"/>
+  </node>
+  <node id="290037178" version="4" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0996305" lon="14.396899">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="290931631" version="1" timestamp="2016-12-15T14:55:56Z" uid="8612" user="Kubajz" changeset="398032" lat="50.0867602" lon="14.4286451">
+    <tag k="name" v="Česká národní banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="created_by" v="Potlatch 0.10b"/>
+  </node>
+  <node id="291610674" version="3" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0739465" lon="14.4909029">
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="291621343" version="2" timestamp="2016-12-15T14:55:56Z" uid="748291" user="Prot D" changeset="18330506" lat="50.0777439" lon="14.4384194">
+    <tag k="name" v="mBank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="opening_hours" v="Mo-Fr 10:00-20:00"/>
+  </node>
+  <node id="292178309" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="40990410" lat="50.0898053" lon="14.4349835">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+  </node>
+  <node id="292178545" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39772911" lat="50.0893256" lon="14.4322317">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="15"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:street" v="Havlíčkova"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="295168426" version="6" timestamp="2016-12-15T14:55:56Z" uid="4796883" user="Nadav Netzer" changeset="43259546" lat="50.0904894" lon="14.3995583">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:country" v="CZ"/>
+    <tag k="addr:place" v="Hradčany"/>
+    <tag k="addr:postcode" v="11900"/>
+    <tag k="addr:suburb" v="Praha 1"/>
+    <tag k="atm" v="yes"/>
+    <tag k="email" v="info@hrad.cz"/>
+    <tag k="information" v="office"/>
+    <tag k="name" v="Pražský hrad"/>
+    <tag k="name:cs" v="Pražský hrad"/>
+    <tag k="name:en" v="Prague Castle"/>
+    <tag k="name:he" v="טירה בפראג"/>
+    <tag k="opening_hours" v="Mo-Su 09:00-16:00"/>
+    <tag k="phone" v="+420 224 372 434"/>
+    <tag k="tourism" v="information"/>
+    <tag k="website" v="https://www.hrad.cz/"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="296365778" version="5" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="49.9918338" lon="14.6574419">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="296370342" version="4" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="49.9927544" lon="14.657175">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="296537194" version="3" timestamp="2016-12-15T14:55:56Z" uid="4774126" user="Ron Wielgus" changeset="43127122" lat="50.0873255" lon="14.4065668">
+    <tag k="addr:conscriptionnumber" v="53"/>
+    <tag k="addr:housenumber" v="53/4"/>
+    <tag k="addr:postcode" v="11800"/>
+    <tag k="addr:street" v="Mostecká"/>
+    <tag k="addr:streetnumber" v="4"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="name:en" v="סגוואי"/>
+    <tag k="source:addr" v="uir_adr"/>
+    <tag k="uir_adr:ADRESA_KOD" v="21694591"/>
+  </node>
+  <node id="296684785" version="5" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.094127" lon="14.4511335">
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+    <tag k="addr:street" v="Sokolovská"/>
+    <tag k="source:addr" v="uir_adr"/>
+    <tag k="addr:postcode" v="18600"/>
+    <tag k="addr:housenumber" v="38/87"/>
+    <tag k="addr:streetnumber" v="87"/>
+    <tag k="uir_adr:ADRESA_KOD" v="22348905"/>
+    <tag k="addr:conscriptionnumber" v="38"/>
+  </node>
+  <node id="296704202" version="5" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="49.9756279" lon="14.3932385">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="addr:street" v="Zbraslavské náměstí"/>
+    <tag k="source:addr" v="uir_adr"/>
+    <tag k="addr:postcode" v="15600"/>
+    <tag k="addr:housenumber" v="459"/>
+    <tag k="uir_adr:ADRESA_KOD" v="22134816"/>
+    <tag k="addr:conscriptionnumber" v="459"/>
+  </node>
+  <node id="296783672" version="5" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="49.9757806" lon="14.3940362">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+    <tag k="addr:street" v="Zbraslavské náměstí"/>
+    <tag k="source:addr" v="uir_adr"/>
+    <tag k="addr:postcode" v="15600"/>
+    <tag k="addr:housenumber" v="463"/>
+    <tag k="uir_adr:ADRESA_KOD" v="22134859"/>
+    <tag k="addr:conscriptionnumber" v="463"/>
+  </node>
+  <node id="296867186" version="4" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29381497" lat="50.0574468" lon="14.434488">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisen Bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Na Pankráci"/>
+    <tag k="source:addr" v="uir_adr"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="79"/>
+    <tag k="addr:streetnumber" v="79"/>
+    <tag k="uir_adr:ADRESA_KOD" v="22746650"/>
+    <tag k="addr:conscriptionnumber" v="875"/>
+  </node>
+  <node id="302861849" version="2" timestamp="2016-12-15T14:55:56Z" uid="62296" user="NoName0815" changeset="774210" lat="50.132599" lon="14.5138193">
+    <tag k="atm" v="yes"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="303400312" version="5" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="30398484" lat="50.081593" lon="14.4255263">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Vodičkova"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="38"/>
+  </node>
+  <node id="303400740" version="4" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="30398484" lat="50.0796138" lon="14.4224908">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Vodičkova"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="9"/>
+  </node>
+  <node id="303880973" version="6" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="29721325" lat="50.0722182" lon="14.404232">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+  </node>
+  <node id="304155337" version="4" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29401849" lat="50.1011497" lon="14.3966086">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Vítězné náměstí"/>
+    <tag k="addr:postcode" v="16000"/>
+    <tag k="addr:housenumber" v="9"/>
+  </node>
+  <node id="304155377" version="3" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0996875" lon="14.3961327">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="304868341" version="2" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="50.0776761" lon="14.461474">
+    <tag k="amenity" v="bank"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="operator" v="MONETA Money Bank, a.s."/>
+  </node>
+  <node id="304868345" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0776908" lon="14.4618624">
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+  </node>
+  <node id="305303908" version="5" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39589673" lat="50.0825073" lon="14.4188506">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="1"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:street" v="Na Perštýně"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="305304260" version="4" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="29721325" lat="50.0810666" lon="14.4198788">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+  </node>
+  <node id="305307827" version="5" timestamp="2016-12-15T14:55:56Z" uid="633286" user="VladaK" changeset="11148150" lat="50.031245" lon="14.5287881">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="305791612" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="31315699" lat="50.0816364" lon="14.4192688">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Spálená"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="51"/>
+  </node>
+  <node id="305813927" version="5" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39340632" lat="50.0755392" lon="14.4349702">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+    <tag k="source" v="local knowledge"/>
+  </node>
+  <node id="306639799" version="3" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0917968" lon="14.4746628">
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="307204291" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="25773007" lat="50.0897229" lon="14.4646361">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="309103001" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.1054266" lon="14.5380872">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="309103006" version="3" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.1054399" lon="14.5382467">
+    <tag k="atm" v="no"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="309110021" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.1116116" lon="14.5027015">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+  </node>
+  <node id="309297812" version="5" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="32048387" lat="50.0985182" lon="14.4335303">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Sberbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Sberbank"/>
+    <tag k="addr:city" v="Praha 7"/>
+    <tag k="addr:street" v="Dukelských hrdinů"/>
+    <tag k="addr:postcode" v="17000"/>
+    <tag k="addr:housenumber" v="10"/>
+  </node>
+  <node id="309312811" version="6" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0991251" lon="14.4336266">
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="310118387" version="1" timestamp="2016-12-15T14:55:56Z" uid="8007" user="vrabcak" changeset="685486" lat="50.085356" lon="14.4310835">
+    <tag k="name" v="Fio"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="310121111" version="5" timestamp="2016-12-15T14:55:56Z" uid="3516" user="BiIbo" changeset="704118" lat="50.0315137" lon="14.5287481">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisen Bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="created_by" v="Potlatch 0.10f"/>
+  </node>
+  <node id="310523981" version="3" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0311862" lon="14.5308714">
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="310523983" version="5" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="50.0312844" lon="14.5317906">
+    <tag k="amenity" v="bank"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="operator" v="MONETA Money Bank, a.s."/>
+  </node>
+  <node id="311405366" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="25989638" lat="50.0583462" lon="14.4212617">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Podolská"/>
+    <tag k="addr:postcode" v="14700"/>
+    <tag k="addr:housenumber" v="138"/>
+  </node>
+  <node id="311405373" version="5" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="25989638" lat="50.0579484" lon="14.4211785">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Nedvědovo náměstí"/>
+    <tag k="addr:postcode" v="14700"/>
+    <tag k="addr:housenumber" v="1"/>
+  </node>
+  <node id="316827139" version="5" timestamp="2016-12-15T14:55:56Z" uid="2397215" user="Ladislav Jeník" changeset="26995412" lat="50.1034252" lon="14.4497021">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="website" v="www.csob.cz"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Komunardů"/>
+    <tag k="addr:postcode" v="17000"/>
+    <tag k="addr:housenumber" v="1130/25"/>
+  </node>
+  <node id="316827256" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.1031375" lon="14.4501871">
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+  </node>
+  <node id="317868365" version="5" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="33681888" lat="50.0724439" lon="14.4042024">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+  </node>
+  <node id="317874197" version="3" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="25479755" lat="50.0749253" lon="14.4042354">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="317881227" version="3" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="25326098" lat="50.0762189" lon="14.4042806">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="318514998" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29381497" lat="50.0573315" lon="14.4335412">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Na Pankráci"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="60"/>
+  </node>
+  <node id="318779318" version="4" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29401849" lat="50.1009546" lon="14.3969127">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Vítězné náměstí"/>
+    <tag k="addr:postcode" v="16000"/>
+    <tag k="addr:housenumber" v="10"/>
+  </node>
+  <node id="318781945" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="32048199" lat="50.0756402" lon="14.4304414">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Commerzbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Jugoslávská"/>
+    <tag k="addr:postcode" v="12000"/>
+    <tag k="addr:housenumber" v="1"/>
+  </node>
+  <node id="319864035" version="3" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="25474122" lat="50.0774489" lon="14.4568999">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="320046485" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0776227" lon="14.4543029">
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+  </node>
+  <node id="320054832" version="7" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="42807739" lat="50.0770828" lon="14.4501346">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:conscriptionnumber" v="988"/>
+    <tag k="addr:country" v="CZ"/>
+    <tag k="addr:housenumber" v="988/19"/>
+    <tag k="addr:place" v="Vinohrady"/>
+    <tag k="addr:postcode" v="13000"/>
+    <tag k="addr:street" v="Nitranská"/>
+    <tag k="addr:streetnumber" v="19"/>
+    <tag k="addr:suburb" v="Praha 3"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="phone" v="+420 296 338 011"/>
+    <tag k="ref:ruian:addr" v="21760560"/>
+    <tag k="shop" v="grocery"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="source:addr" v="cuzk:ruian"/>
+    <tag k="website" v="https://www.rb.cz/"/>
+  </node>
+  <node id="320077533" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0772821" lon="14.4538303">
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="320089974" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0772092" lon="14.4525031">
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="320099297" version="4" timestamp="2016-12-15T14:55:56Z" uid="520239" user="Gutsycat" changeset="34912870" lat="50.103151" lon="14.4740108">
+    <tag k="addr:city" v="Praha 8"/>
+    <tag k="addr:housenumber" v="13"/>
+    <tag k="addr:postcode" v="18000"/>
+    <tag k="addr:street" v="Zenklova"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="opening_hours" v="09:00-17:00"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="320233156" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29402072" lat="50.0876477" lon="14.405105">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Mostecká"/>
+    <tag k="addr:postcode" v="11800"/>
+    <tag k="addr:housenumber" v="26"/>
+  </node>
+  <node id="320245517" version="5" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="25772826" lat="50.0824253" lon="14.4585599">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="321689983" version="3" timestamp="2016-12-15T14:55:56Z" uid="71631" user="andrewsh" changeset="16454376" lat="50.0772233" lon="14.4395535">
+    <tag k="name" v="Sberbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Sberbank"/>
+  </node>
+  <node id="322434253" version="3" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.1044433" lon="14.4733257">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+  </node>
+  <node id="330269366" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="31393466" lat="50.0851477" lon="14.4296787">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Senovážné náměstí"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="25"/>
+  </node>
+  <node id="330269382" version="1" timestamp="2016-12-15T14:55:56Z" uid="8007" user="vrabcak" changeset="757200" lat="50.086" lon="14.4307316">
+    <tag k="name" v="Moravský Peněžní Ústav"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="330627518" version="7" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="31365681" lat="50.0816355" lon="14.4154939">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Národní"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="9"/>
+  </node>
+  <node id="332224335" version="3" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.1037092" lon="14.3953472">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="332316876" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0603988" lon="14.5057964">
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="332424433" version="6" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="43487480" lat="50.0878815" lon="14.4048091">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:conscriptionnumber" v="37"/>
+    <tag k="addr:country" v="CZ"/>
+    <tag k="addr:housenumber" v="37/23"/>
+    <tag k="addr:place" v="Malá Strana"/>
+    <tag k="addr:postcode" v="11800"/>
+    <tag k="addr:street" v="Malostranské náměstí"/>
+    <tag k="addr:streetnumber" v="23"/>
+    <tag k="addr:suburb" v="Praha 1"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="operator" v="Komerční banka"/>
+    <tag k="ref:ruian:addr" v="21694419"/>
+    <tag k="source" v="survey"/>
+    <tag k="source:addr" v="cuzk:ruian"/>
+    <tag k="website" v="https://www.kb.cz/"/>
+  </node>
+  <node id="333633760" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0894533" lon="14.4681189">
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="333717505" version="7" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="30396739" lat="50.0833221" lon="14.421826">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Perlová"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="opening_hours" v="Mo-Fr 09:00-17:00"/>
+    <tag k="contact:website" v="http://www.csob.cz/cz/kontakty/hlavni-mesto-praha/stranky/retsme-praha-1-perlova-5.aspx"/>
+    <tag k="addr:housenumber" v="5"/>
+  </node>
+  <node id="334349273" version="5" timestamp="2016-12-15T14:55:56Z" uid="530151" user="TimoHe" changeset="35146843" lat="50.081309" lon="14.4282239">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="43"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:street" v="Václavské náměstí"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="wheelchair" v="limited"/>
+  </node>
+  <node id="334354726" version="6" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="42774990" lat="50.0853417" lon="14.443108">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:conscriptionnumber" v="995"/>
+    <tag k="addr:country" v="CZ"/>
+    <tag k="addr:housenumber" v="995/29"/>
+    <tag k="addr:place" v="Žižkov"/>
+    <tag k="addr:postcode" v="13000"/>
+    <tag k="addr:street" v="Seifertova"/>
+    <tag k="addr:streetnumber" v="29"/>
+    <tag k="addr:suburb" v="Praha 3"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+    <tag k="ref:ruian:addr" v="21777063"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="source:addr" v="cuzk:ruian"/>
+  </node>
+  <node id="334400412" version="3" timestamp="2016-12-15T14:55:56Z" uid="190711" user="Zulu" changeset="28222100" lat="50.0312702" lon="14.4916159">
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="337893776" version="1" timestamp="2016-12-15T14:55:56Z" uid="8007" user="vrabcak" changeset="840160" lat="50.1109274" lon="14.5011121">
+    <tag k="name" v="Poštovní spořitelna"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="337893781" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.1105395" lon="14.5011471">
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="337893785" version="3" timestamp="2016-12-15T14:55:56Z" uid="245252" user="Washek" changeset="14471626" lat="50.1106158" lon="14.5016142">
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="339043225" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0758452" lon="14.4041829">
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+  </node>
+  <node id="339049070" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0835367" lon="14.4628953">
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="340050861" version="2" timestamp="2016-12-15T14:55:56Z" uid="8007" user="vrabcak" changeset="19782089" lat="50.0777451" lon="14.4043678">
+    <tag k="name" v="Evropsko-ruská banka"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="340060729" version="6" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="33503338" lat="50.0795864" lon="14.4049986">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="341365526" version="4" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="42774990" lat="50.089076" lon="14.4688866">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:conscriptionnumber" v="1768"/>
+    <tag k="addr:country" v="CZ"/>
+    <tag k="addr:housenumber" v="1768/18"/>
+    <tag k="addr:place" v="Žižkov"/>
+    <tag k="addr:postcode" v="13000"/>
+    <tag k="addr:street" v="Jana Želivského"/>
+    <tag k="addr:streetnumber" v="18"/>
+    <tag k="addr:suburb" v="Praha 3"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="phone" v="+420 225 374 600"/>
+    <tag k="ref:ruian:addr" v="21786399"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="source:addr" v="cuzk:ruian"/>
+    <tag k="website" v="https://www.rb.cz/"/>
+  </node>
+  <node id="342317172" version="3" timestamp="2016-12-15T14:55:56Z" uid="366321" user="Peter Bremer" changeset="42257266" lat="50.0781283" lon="14.4610921">
+    <tag k="addr:unit" v="201"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="level" v="-1"/>
+    <tag k="name" v="E-darky"/>
+    <tag k="operator" v="UniCredit Bank"/>
+  </node>
+  <node id="343682811" version="6" timestamp="2016-12-15T14:55:56Z" uid="153719" user="Matej Cepl" changeset="43266948" lat="50.0844998" lon="14.450535">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="drive_through" v="no"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="opening_hours" v="mo, we 09:00-12:30, 13:30-18:00; tu, fr 09:00-12:30, 13:30-16:00; th 09:00-12:30, 13:30-17:00"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="phone" v="+420 956 720 540"/>
+  </node>
+  <node id="343684024" version="4" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="50.0778262" lon="14.4192378">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="operator" v="MONETA Money Bank, a.s."/>
+  </node>
+  <node id="345830672" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29400781" lat="50.0952557" lon="14.3389339">
+    <tag k="name" v="Citibank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Evropská"/>
+    <tag k="addr:postcode" v="16000"/>
+    <tag k="addr:housenumber" v="178"/>
+  </node>
+  <node id="345837156" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0453809" lon="14.3229272">
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="345837160" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0449449" lon="14.321287">
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="345837167" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0447143" lon="14.3221904">
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="347123976" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0648008" lon="14.3081358">
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="350561662" version="2" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="33355017" lat="50.0908907" lon="14.4275417">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Era"/>
+    <tag k="phone" v="+420 800 210 210"/>
+    <tag k="source" v="local knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="website" v="https://www.erasvet.cz/"/>
+  </node>
+  <node id="351188689" version="5" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="42774990" lat="50.0821441" lon="14.456653">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:conscriptionnumber" v="16"/>
+    <tag k="addr:country" v="CZ"/>
+    <tag k="addr:housenumber" v="16/24"/>
+    <tag k="addr:place" v="Žižkov"/>
+    <tag k="addr:postcode" v="13000"/>
+    <tag k="addr:street" v="Táboritská"/>
+    <tag k="addr:streetnumber" v="24"/>
+    <tag k="addr:suburb" v="Praha 3"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="ref:ruian:addr" v="21767297"/>
+    <tag k="source:addr" v="cuzk:ruian"/>
+  </node>
+  <node id="353718586" version="4" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="41131065" lat="50.0752701" lon="14.4325668">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+  </node>
+  <node id="353736233" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="24782053" lat="50.0734641" lon="14.4154626">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Na Moráni"/>
+    <tag k="addr:postcode" v="12800"/>
+    <tag k="addr:housenumber" v="3"/>
+  </node>
+  <node id="354578955" version="6" timestamp="2016-12-15T14:55:56Z" uid="1711673" user="c327e" changeset="17314087" lat="50.1000913" lon="14.4212861">
+    <tag k="atm" v="yes"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="addr:street" v="Korunovační"/>
+    <tag k="addr:suburb" v="Pobočka Praha 7"/>
+    <tag k="source:addr" v="http://openstreetview.org/?lat=50.100073&amp;lon=14.4213778&amp;zoom=21"/>
+    <tag k="addr:country" v="CZ"/>
+    <tag k="addr:postcode" v="17000"/>
+    <tag k="addr:housenumber" v="310/2"/>
+  </node>
+  <node id="354692390" version="3" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="29721325" lat="50.0904655" lon="14.4359764">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+  </node>
+  <node id="354693058" version="3" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0872182" lon="14.4538671">
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="354693059" version="4" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="50.0879376" lon="14.4579389">
+    <tag k="amenity" v="bank"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="operator" v="MONETA Money Bank, a.s."/>
+  </node>
+  <node id="354984727" version="2" timestamp="2016-12-15T14:55:56Z" uid="17615" user="Petr Dlouhý" changeset="805209" lat="50.0997606" lon="14.3965353">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Oberbank"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="354984736" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0991728" lon="14.3984317">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="354984754" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0983781" lon="14.400221">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+  </node>
+  <node id="354984762" version="4" timestamp="2016-12-15T14:55:56Z" uid="71631" user="andrewsh" changeset="16454376" lat="50.0982286" lon="14.4006161">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Sberbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Sberbank"/>
+  </node>
+  <node id="354984764" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0980034" lon="14.4003548">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="357980312" version="6" timestamp="2016-12-15T14:55:56Z" uid="2397215" user="Ladislav Jeník" changeset="26995412" lat="50.1033837" lon="14.451515">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="website" v="www.csas.cz"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Dělnická"/>
+    <tag k="addr:postcode" v="17000"/>
+    <tag k="addr:housenumber" v="1222/49a"/>
+  </node>
+  <node id="359900561" version="3" timestamp="2016-12-15T14:55:56Z" uid="3516" user="BiIbo" changeset="7604194" lat="50.0769272" lon="14.4314868">
+    <tag k="name" v="mBank"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="359900733" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="32048199" lat="50.0751613" lon="14.4297847">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Oberbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="náměstí I. P. Pavlova"/>
+    <tag k="addr:postcode" v="12000"/>
+    <tag k="addr:housenumber" v="5"/>
+  </node>
+  <node id="359916977" version="3" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="25326146" lat="50.0739634" lon="14.4330792">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+  </node>
+  <node id="359953944" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0752227" lon="14.4460546">
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="360639072" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0834895" lon="14.3631849">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="360643842" version="3" timestamp="2016-12-15T14:55:56Z" uid="661742" user="nemca" changeset="33006089" lat="50.084239" lon="14.3671203">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="source" v="norc.cz"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="360643846" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.083886" lon="14.367621">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="360656973" version="3" timestamp="2016-12-15T14:55:56Z" uid="661742" user="nemca" changeset="33006529" lat="50.0837902" lon="14.3703154">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="norc.cz"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+  </node>
+  <node id="361241035" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0859301" lon="14.4266096">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="361241036" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0864216" lon="14.4266641">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="361241045" version="3" timestamp="2016-12-15T14:55:56Z" uid="290680" user="wheelmap_visitor" changeset="15364244" lat="50.0870581" lon="14.4276035">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+    <tag k="wheelchair" v="limited"/>
+  </node>
+  <node id="365476974" version="4" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39340632" lat="50.0760203" lon="14.4351501">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="operator" v="Komerční banka"/>
+    <tag k="phone" v="+420 800 521 521"/>
+    <tag k="source" v="local knowledge"/>
+    <tag k="website" v="http://www.kb.cz/"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="366263171" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="30350781" lat="50.080198" lon="14.430615">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Washingtonova"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="5"/>
+  </node>
+  <node id="366263761" version="4" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39388529" lat="50.0804328" lon="14.4294816">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="53"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:street" v="Václavské náměstí"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+  </node>
+  <node id="366277844" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="30397176" lat="50.0831058" lon="14.4245831">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Václavské náměstí"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="16"/>
+  </node>
+  <node id="370319940" version="4" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="25878067" lat="50.044728" lon="14.4473603">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Olbrachtova"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="9"/>
+  </node>
+  <node id="370923477" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0821245" lon="14.5003833">
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="393460089" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0465155" lon="14.4757604">
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="394693191" version="4" timestamp="2016-12-15T14:55:56Z" uid="1708065" user="Salamandr" changeset="28036329" lat="50.0441524" lon="14.4497434">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="394693195" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29381308" lat="50.0442076" lon="14.448085">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Olbrachtova"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="62"/>
+  </node>
+  <node id="407155834" version="2" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="50.1272969" lon="14.4687572">
+    <tag k="amenity" v="bank"/>
+    <tag k="name" v="MONETA Money Bank"/>
+  </node>
+  <node id="407155837" version="4" timestamp="2016-12-15T14:55:56Z" uid="100163" user="Hlav" changeset="42654222" lat="50.1274875" lon="14.4686641">
+    <tag k="amenity" v="bank"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="opening_hours" v="Mo-Fr 09:00-16:00"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="407155844" version="3" timestamp="2016-12-15T14:55:56Z" uid="100163" user="Hlav" changeset="10072337" lat="50.1273773" lon="14.469149">
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="website" v="www.kb.cz"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="410428096" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.1052746" lon="14.4730897">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="412271541" version="3" timestamp="2016-12-15T14:55:56Z" uid="2169558" user="JandaM" changeset="43864835" lat="50.0316668" lon="14.5996452">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČS"/>
+  </node>
+  <node id="415654791" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39648577" lat="50.0888442" lon="14.428092">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="416151116" version="6" timestamp="2016-12-15T14:55:56Z" uid="101738" user="Kuki" changeset="15114563" lat="50.0584663" lon="14.3883437">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+    <tag k="wheelchair" v="yes"/>
+    <tag k="addr:street" v="Radlická"/>
+    <tag k="addr:postcode" v="15057"/>
+    <tag k="addr:alternate" v="333"/>
+    <tag k="addr:housenumber" v="333/150"/>
+    <tag k="addr:streetnumber" v="150"/>
+  </node>
+  <node id="427203812" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39773160" lat="50.0883912" lon="14.4294525">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="3a"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:street" v="Náměstí Republiky"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+  </node>
+  <node id="428890182" version="4" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="24782053" lat="50.0740982" lon="14.4184405">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Karlovo náměstí"/>
+    <tag k="addr:postcode" v="12000"/>
+    <tag k="addr:housenumber" v="4"/>
+  </node>
+  <node id="431111512" version="4" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0254527" lon="14.5179972">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="457719601" version="5" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39302411" lat="50.0789724" lon="14.4214081">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="8"/>
+    <tag k="addr:postcode" v="12000"/>
+    <tag k="addr:street" v="Lazarská"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Sberbank"/>
+    <tag k="operator" v="Sberbank"/>
+  </node>
+  <node id="518162930" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29368223" lat="50.0642984" lon="14.439952">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Boleslavova"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="42"/>
+  </node>
+  <node id="524515731" version="3" timestamp="2016-12-15T14:55:56Z" uid="100163" user="Hlav" changeset="36565524" lat="50.0938267" lon="14.4513024">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="opening_hours" v="Mo-Tu 09:00-17:00; We 09:00-18:00; Th 09:00-17:00; Fr 09:00-16:00"/>
+    <tag k="operator" v="UniCredit Bank"/>
+  </node>
+  <node id="529132217" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="40990410" lat="50.0895736" lon="14.4336278">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="539160753" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="32080274" lat="50.070736" lon="14.479547">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Kubánské náměstí"/>
+    <tag k="addr:postcode" v="10000"/>
+    <tag k="addr:housenumber" v="15"/>
+  </node>
+  <node id="539833278" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.1166548" lon="14.619533">
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="544356373" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="49.9649641" lon="14.4590659">
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="654586292" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.118202" lon="14.4998531">
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="654586293" version="4" timestamp="2016-12-15T14:55:56Z" uid="3003739" user="r00tcz" changeset="44068791" lat="50.1184647" lon="14.4997325">
+    <tag k="amenity" v="bank"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+  </node>
+  <node id="679185183" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="31316351" lat="50.0827293" lon="14.4220047">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Jungmannova"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="31"/>
+  </node>
+  <node id="693944433" version="6" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0996172" lon="14.4329829">
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+  </node>
+  <node id="693944441" version="5" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0995174" lon="14.4329775">
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="714161959" version="3" timestamp="2016-12-15T14:55:56Z" uid="177221" user="reki" changeset="16833433" lat="50.1008997" lon="14.4335726">
+    <tag k="name" v="Oberbank"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="718329749" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0999187" lon="14.4275731">
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="772356866" version="3" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="26705304" lat="50.0889498" lon="14.3441189">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="821163078" version="5" timestamp="2016-12-15T14:55:56Z" uid="255254" user="majkaz" changeset="44177116" lat="50.0853978" lon="14.4213969">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="19"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:street" v="Havelská"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+  </node>
+  <node id="856638002" version="3" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="50.1073062" lon="14.5804985">
+    <tag k="amenity" v="bank"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="operator" v="MONETA Money Bank, a.s."/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="860222285" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="49.975745" lon="14.3936852">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="860465477" version="5" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="34169142" lat="50.0756614" lon="14.4272704">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Fio"/>
+    <tag k="phone" v="+420 224 346 895"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="website" v="http://www.fio.cz/"/>
+  </node>
+  <node id="871205090" version="3" timestamp="2016-12-15T14:55:56Z" uid="1720282" user="Prcek1" changeset="17468526" lat="50.0758607" lon="14.6611942">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="884554616" version="4" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="29721546" lat="50.0992609" lon="14.4317964">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+  </node>
+  <node id="889343772" version="3" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="50.0481231" lon="14.4539636">
+    <tag k="amenity" v="bank"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="operator" v="MONETA Money Bank, a.s."/>
+  </node>
+  <node id="924174222" version="1" timestamp="2016-12-15T14:55:56Z" uid="37137" user="Derick Rethans" changeset="5863225" lat="50.1356236" lon="14.38106">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Ceska"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="924190017" version="3" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0284329" lon="14.4934826">
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="933734099" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0063168" lon="14.4172872">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="933734101" version="3" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="50.0059738" lon="14.4173135">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="operator" v="MONETA Money Bank, a.s."/>
+  </node>
+  <node id="933734103" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0062592" lon="14.4179268">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="951444045" version="1" timestamp="2016-12-15T14:55:56Z" uid="356781" user="pastorius" changeset="6056773" lat="50.0922772" lon="14.4874888">
+    <tag k="atm" v="no"/>
+    <tag k="name" v="Pojišťovna Kooperativa"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="995953376" version="1" timestamp="2016-12-15T14:55:56Z" uid="245252" user="Washek" changeset="6413415" lat="50.0698556" lon="14.4029987">
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Creditas"/>
+  </node>
+  <node id="995953416" version="4" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="32048361" lat="50.0700306" lon="14.4029407">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Sberbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Sberbank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Karla Engliše"/>
+    <tag k="addr:postcode" v="15000"/>
+    <tag k="addr:housenumber" v="1"/>
+  </node>
+  <node id="1073642230" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="31393287" lat="50.0405249" lon="14.4399751">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Antala Staška"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="32"/>
+  </node>
+  <node id="1135012780" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="30398003" lat="50.0813801" lon="14.426718">
+    <tag k="name" v="LBBW"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Václavské náměstí"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="40"/>
+  </node>
+  <node id="1157799664" version="3" timestamp="2016-12-15T14:55:56Z" uid="330199" user="zhulda" changeset="37537374" lat="50.05807" lon="14.449822">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="603"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:street" v="Nuselská"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="1198882695" version="4" timestamp="2016-12-15T14:55:56Z" uid="1942179" user="CzechAddress" changeset="21942820" lat="50.1615797" lon="14.3916284">
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="1198882706" version="3" timestamp="2016-12-15T14:55:56Z" uid="390243" user="Marsmafia" changeset="9208793" lat="50.1610436" lon="14.3915265">
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="1258869796" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="32230323" lat="50.0867368" lon="14.4209575">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Staroměstské náměstí"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="24"/>
+  </node>
+  <node id="1259692868" version="2" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="50.089217" lon="14.4682231">
+    <tag k="amenity" v="bank"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="operator" v="MONETA Money Bank, a.s."/>
+  </node>
+  <node id="1268273559" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="30398829" lat="50.0792935" lon="14.4203064">
+    <tag k="name" v="Equa Bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Equa Bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Lazarská"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="3"/>
+  </node>
+  <node id="1268273565" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39302411" lat="50.0792861" lon="14.4206819">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="no"/>
+    <tag k="name" v="Modrá pyramida"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="1272392410" version="2" timestamp="2016-12-15T14:55:56Z" uid="29717" user="eumiro" changeset="9050746" lat="50.0691803" lon="14.4700897">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+  </node>
+  <node id="1272903677" version="3" timestamp="2016-12-15T14:55:56Z" uid="708176" user="xkubikx" changeset="11952807" lat="50.0343903" lon="14.3765286">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká Spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="1272903713" version="1" timestamp="2016-12-15T14:55:56Z" uid="449434" user="kungpao" changeset="8055679" lat="50.0344218" lon="14.3765083">
+    <tag k="atm" v="yes"/>
+    <tag k="amenity" v="post_office"/>
+  </node>
+  <node id="1287153536" version="4" timestamp="2016-12-15T14:55:56Z" uid="290680" user="wheelmap_visitor" changeset="38402162" lat="50.0736351" lon="14.4033816">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="1297120482" version="4" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="32048331" lat="50.0507604" lon="14.4408623">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Na Pankráci"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="1724/129"/>
+  </node>
+  <node id="1297120486" version="5" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="32048331" lat="50.0510394" lon="14.4406264">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Sberbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Sberbank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Na Pankráci"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="1724/129"/>
+  </node>
+  <node id="1297120487" version="4" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="50.0512082" lon="14.440468">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="1724/129"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:street" v="Na Pankráci"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="operator" v="MONETA Money Bank, a.s."/>
+  </node>
+  <node id="1408727054" version="3" timestamp="2016-12-15T14:55:56Z" uid="100163" user="Hlav" changeset="36565524" lat="50.124221" lon="14.4518403">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="opening_hours" v="Mo-Tu 09:00-17:00; We 09:00-18:00; Th 09:00-17:00; Fr 09:00-16:00"/>
+    <tag k="wheelchair" v="no"/>
+  </node>
+  <node id="1408745454" version="2" timestamp="2016-12-15T14:55:56Z" uid="100163" user="Hlav" changeset="40390641" lat="50.1225617" lon="14.4556942">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="1420885138" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="30397176" lat="50.0836701" lon="14.4235436">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Václavské náměstí"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="4"/>
+  </node>
+  <node id="1426550134" version="1" timestamp="2016-12-15T14:55:56Z" uid="5547" user="voda" changeset="9241227" lat="50.1016567" lon="14.3977028">
+    <tag k="atm" v="no"/>
+    <tag k="name" v="Českomoravská stavební spořitelna"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="1428590851" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29401849" lat="50.0997157" lon="14.3973723">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká Spořitelna"/>
+    <tag k="phone" v="+420 800 207 207"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="website" v="www.csas.cz"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Dejvická"/>
+    <tag k="addr:postcode" v="16000"/>
+    <tag k="opening_hours" v="Mo-Th 09:00-18:00;Tu,Fr 09:00-14:00"/>
+    <tag k="addr:housenumber" v="50"/>
+  </node>
+  <node id="1428686641" version="1" timestamp="2016-12-15T14:55:56Z" uid="5547" user="voda" changeset="9260625" lat="50.1032615" lon="14.3980347">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Wüstenrot stavební spořitelna"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="1430122833" version="2" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="29721546" lat="50.0982918" lon="14.4004233">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+  </node>
+  <node id="1493547960" version="2" timestamp="2016-12-15T14:55:56Z" uid="708176" user="xkubikx" changeset="11952807" lat="50.0344707" lon="14.3762451">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="1494661565" version="1" timestamp="2016-12-15T14:55:56Z" uid="5547" user="voda" changeset="9769421" lat="50.0989363" lon="14.4001133">
+    <tag k="name" v="Raiffeisen stavební spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisen stavební spořitelna"/>
+  </node>
+  <node id="1505885811" version="1" timestamp="2016-12-15T14:55:56Z" uid="342261" user="mila-p" changeset="9850872" lat="50.1282102" lon="14.4694792">
+    <tag k="name" v="Kooperativa"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="1520998971" version="2" timestamp="2016-12-15T14:55:56Z" uid="100163" user="Hlav" changeset="44252939" lat="50.1220483" lon="14.4557109">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+  </node>
+  <node id="1571266505" version="1" timestamp="2016-12-15T14:55:56Z" uid="217051" user="lpechacek" changeset="10255457" lat="49.9984004" lon="14.6586548">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="source" v="survey"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="ČSOB"/>
+  </node>
+  <node id="1636467717" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="43736361" lat="50.0638875" lon="14.4407347">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="10"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:street" v="náměstí Bratří Synků"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="name" v="Oberbank"/>
+  </node>
+  <node id="1682373723" version="2" timestamp="2016-12-15T14:55:56Z" uid="633286" user="VladaK" changeset="12719243" lat="50.046896" lon="14.487101">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB Hlavni"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="website" v="www.csob.cz"/>
+    <tag k="operator" v="ČSOB"/>
+    <tag k="opening_hours" v="Mo-Fr 09:00-12:30; Mo-Tu 13:30-17:00; We 13:30-18:00; Th 13:30-17:00, Fr 13:30-16:00"/>
+  </node>
+  <node id="1719924574" version="4" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="28604894" lat="50.0743886" lon="14.4185972">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Karlovo náměstí"/>
+    <tag k="addr:postcode" v="12000"/>
+    <tag k="addr:housenumber" v="5"/>
+  </node>
+  <node id="1776086630" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="32202409" lat="50.0748232" lon="14.4327266">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Bělehradská"/>
+    <tag k="addr:postcode" v="12000"/>
+    <tag k="addr:housenumber" v="110"/>
+  </node>
+  <node id="1781419774" version="2" timestamp="2016-12-15T14:55:56Z" uid="684284" user="Kewar" changeset="11902563" lat="50.0242021" lon="14.4343185">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="1781427560" version="2" timestamp="2016-12-15T14:55:56Z" uid="684284" user="Kewar" changeset="11902563" lat="50.0244847" lon="14.434576">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="1814659183" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29368223" lat="50.0640184" lon="14.4418679">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Nuselská"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="1"/>
+  </node>
+  <node id="1835864619" version="3" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="29721325" lat="50.0645778" lon="14.44">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="náměstí Bratří Synků"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="15"/>
+  </node>
+  <node id="1854985749" version="1" timestamp="2016-12-15T14:55:56Z" uid="633286" user="VladaK" changeset="12639291" lat="50.0688" lon="14.4663351">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="1864835294" version="4" timestamp="2016-12-15T14:55:56Z" uid="10353" user="gorn" changeset="16518263" lat="50.0469301" lon="14.48727">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="website" v="www.csas.cz"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="opening_hours" v="Mo 09:00-12:30,13:30-18:00; Tu 9:00-14:00; We-Tu 9:00-12:30,13:30-18:00; Fr 9:00-14:00"/>
+  </node>
+  <node id="1948155744" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29402072" lat="50.0874584" lon="14.4047402">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="1948155812" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="40993899" lat="50.0899978" lon="14.435767">
+    <tag k="amenity" v="bank"/>
+    <tag k="name" v="Hypoteční banka"/>
+  </node>
+  <node id="2003075647" version="2" timestamp="2016-12-15T14:55:56Z" uid="1131136" user="djerabkova" changeset="14264006" lat="50.1235387" lon="14.4968495">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna, a.s."/>
+  </node>
+  <node id="2033193942" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39113858" lat="50.0470332" lon="14.4463662">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Fio banka"/>
+    <tag k="operator" v="FIO banka"/>
+  </node>
+  <node id="2039966722" version="1" timestamp="2016-12-15T14:55:56Z" uid="690042" user="Lugen" changeset="14087003" lat="50.1319623" lon="14.3763499">
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="KB"/>
+  </node>
+  <node id="2125021798" version="2" timestamp="2016-12-15T14:55:56Z" uid="100163" user="Hlav" changeset="29753173" lat="50.1272146" lon="14.4685515">
+    <tag k="name" v="Poštovní spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="2133657226" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="36069588" lat="50.0502377" lon="14.3403816">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="33"/>
+    <tag k="addr:postcode" v="15800"/>
+    <tag k="addr:street" v="Petržílkova"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="operator" v="UniCredit Bank"/>
+  </node>
+  <node id="2144344349" version="1" timestamp="2016-12-15T14:55:56Z" uid="1221719" user="xjoska" changeset="14936841" lat="49.9914724" lon="14.6567752">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="2144344350" version="2" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="49.9916707" lon="14.6573975">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="operator" v="MONETA Money Bank, a.s."/>
+  </node>
+  <node id="2153258815" version="1" timestamp="2016-12-15T14:55:56Z" uid="507276" user="FuckOSMFandODbL" changeset="15018818" lat="50.0305741" lon="14.5318129">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="2197125390" version="1" timestamp="2016-12-15T14:55:56Z" uid="1261547" user="B@bik" changeset="15336888" lat="50.0508339" lon="14.4364239">
+    <tag k="name" v="mBank"/>
+    <tag k="source" v="personal"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:street" v="Hvězdova"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="2a/1689"/>
+  </node>
+  <node id="2203172415" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="32048331" lat="50.0519809" lon="14.4398173">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká Spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Na Pankráci"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="1683/127"/>
+  </node>
+  <node id="2213334776" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="36895859" lat="50.0689163" lon="14.4543795">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="10"/>
+    <tag k="addr:postcode" v="10100"/>
+    <tag k="addr:street" v="Na Kovárně"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+  </node>
+  <node id="2213334777" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="36895859" lat="50.0691474" lon="14.4563259">
+    <tag k="addr:city" v="Praha 10"/>
+    <tag k="addr:housenumber" v="43"/>
+    <tag k="addr:postcode" v="10100"/>
+    <tag k="addr:street" v="Moskevská"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+  </node>
+  <node id="2213334782" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="36895859" lat="50.0692232" lon="14.455581">
+    <tag k="addr:city" v="Praha 10"/>
+    <tag k="addr:housenumber" v="39"/>
+    <tag k="addr:postcode" v="10100"/>
+    <tag k="addr:street" v="Moskevská"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+  </node>
+  <node id="2213334810" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="36895859" lat="50.0693035" lon="14.4540834">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="25"/>
+    <tag k="addr:postcode" v="10100"/>
+    <tag k="addr:street" v="Moskevská"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+  </node>
+  <node id="2260242082" version="4" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="42800474" lat="50.0687796" lon="14.4572841">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:conscriptionnumber" v="268"/>
+    <tag k="addr:country" v="CZ"/>
+    <tag k="addr:housenumber" v="268/53"/>
+    <tag k="addr:place" v="Vršovice"/>
+    <tag k="addr:postcode" v="10100"/>
+    <tag k="addr:street" v="Moskevská"/>
+    <tag k="addr:streetnumber" v="53"/>
+    <tag k="addr:suburb" v="Praha 10"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Fio"/>
+    <tag k="phone" v="+420 224 346 753"/>
+    <tag k="ref:ruian:addr" v="22657355"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="source:addr" v="cuzk:ruian"/>
+    <tag k="website" v="http://www.fio.cz/"/>
+  </node>
+  <node id="2358373567" version="2" timestamp="2016-12-15T14:55:56Z" uid="2612072" user="Stromovka" changeset="28937778" lat="50.1000682" lon="14.4260999">
+    <tag k="name" v="KB"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="2358393440" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="26386148" lat="50.0998814" lon="14.4242764">
+    <tag k="name" v="Era"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="2394463812" version="1" timestamp="2016-12-15T14:55:56Z" uid="1671500" user="Denor" changeset="17067913" lat="50.0755871" lon="14.4335171">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="2394464792" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39340873" lat="50.0762086" lon="14.433657">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+  </node>
+  <node id="2395877154" version="1" timestamp="2016-12-15T14:55:56Z" uid="100163" user="Hlav" changeset="17084095" lat="50.0621871" lon="14.4274765">
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+  </node>
+  <node id="2410348754" version="1" timestamp="2016-12-15T14:55:56Z" uid="748291" user="Prot D" changeset="17259209" lat="50.0772471" lon="14.4531965">
+    <tag k="name" v="BIDV - Vietnamská investiční a rozvojová banka"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="2414220367" version="1" timestamp="2016-12-15T14:55:56Z" uid="100163" user="Hlav" changeset="17299598" lat="50.0860522" lon="14.4312411">
+    <tag k="name" v="Equa bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="opening_hours" v="Mo-Fr 08:00-18:30"/>
+  </node>
+  <node id="2448240162" version="1" timestamp="2016-12-15T14:55:56Z" uid="1714030" user="Bablowski" changeset="17705798" lat="50.0829201" lon="14.4405208">
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="2745082145" version="3" timestamp="2016-12-15T14:55:56Z" uid="661742" user="nemca" changeset="41631664" lat="50.0841651" lon="14.3746932">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="operator" v="MONETA Money Bank"/>
+  </node>
+  <node id="2792031907" version="1" timestamp="2016-12-15T14:55:56Z" uid="100163" user="Hlav" changeset="21704394" lat="50.1276215" lon="14.4175381">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="2794223735" version="2" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="50.0871325" lon="14.4332977">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="brand" v="MONETA Money Bank"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="opening_hours" v="Mo 09:00-18:00; Tu-Th 09:00-17:00; Fr 09:00-16:00"/>
+    <tag k="operator" v="MONETA Money Bank, a.s."/>
+  </node>
+  <node id="2801269887" version="3" timestamp="2016-12-15T14:55:56Z" uid="718054" user="Piskvor" changeset="44261378" lat="50.0513622" lon="14.4300809">
+    <tag k="addr:conscriptionnumber" v="1718"/>
+    <tag k="addr:housenumber" v="1718/8"/>
+    <tag k="addr:place" v="Nusle"/>
+    <tag k="addr:postcode" v="14023"/>
+    <tag k="addr:street" v="Na Hřebenech II"/>
+    <tag k="addr:streetnumber" v="10"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="name" v="Wüstenrot"/>
+    <tag k="ref:ruian:addr" v="27530621"/>
+  </node>
+  <node id="2888025012" version="1" timestamp="2016-12-15T14:55:56Z" uid="2098654" user="Opensmap08" changeset="22626749" lat="50.0810491" lon="14.4225623">
+    <tag k="name" v="Jungmanka"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="2965486643" version="1" timestamp="2016-12-15T14:55:56Z" uid="2189326" user="tslavik" changeset="24174431" lat="50.0905208" lon="14.3089004">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Bankomat KB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="opening_hours" v="Nepřetržitě"/>
+  </node>
+  <node id="3066243904" version="2" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="42824872" lat="50.1006675" lon="14.4014599">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:conscriptionnumber" v="785"/>
+    <tag k="addr:country" v="CZ"/>
+    <tag k="addr:housenumber" v="785/22"/>
+    <tag k="addr:place" v="Bubeneč"/>
+    <tag k="addr:postcode" v="16000"/>
+    <tag k="addr:street" v="Čs. armády"/>
+    <tag k="addr:streetnumber" v="22"/>
+    <tag k="addr:suburb" v="Praha 6"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Fio"/>
+    <tag k="phone" v="+420 224 346 759"/>
+    <tag k="ref:ruian:addr" v="22182411"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="source:addr" v="cuzk:ruian"/>
+    <tag k="website" v="http://www.fio.cz/"/>
+  </node>
+  <node id="3079656951" version="1" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="25472095" lat="50.0755789" lon="14.4337627">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+  </node>
+  <node id="3104085027" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="25772683" lat="50.0800878" lon="14.4236323">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Air Bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Vodičkova"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="24"/>
+  </node>
+  <node id="3134202355" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="26151462" lat="50.0427607" lon="14.4501623">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Antala Staška"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="80b"/>
+  </node>
+  <node id="3166565087" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="26549180" lat="50.106051" lon="14.2708638">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Aviatická"/>
+    <tag k="addr:postcode" v="16100"/>
+    <tag k="addr:housenumber" v="12"/>
+  </node>
+  <node id="3183501719" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="32048073" lat="50.0865411" lon="14.4276441">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Na Příkopě"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="24"/>
+  </node>
+  <node id="3183501720" version="3" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="32048073" lat="50.0866186" lon="14.4277862">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Sberbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Na Příkopě"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="24"/>
+  </node>
+  <node id="3202878686" version="4" timestamp="2016-12-15T14:55:56Z" uid="3003739" user="r00tcz" changeset="34700225" lat="50.104938" lon="14.449446">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="website" v="www.kb.cz"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="U Průhonu"/>
+    <tag k="addr:postcode" v="17000"/>
+    <tag k="addr:housenumber" v="1516/32"/>
+  </node>
+  <node id="3202977618" version="3" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="29721546" lat="50.1029286" lon="14.4497598">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="website" v="www.rb.cz"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Komunardů"/>
+    <tag k="addr:postcode" v="17000"/>
+    <tag k="addr:housenumber" v="1045/21"/>
+  </node>
+  <node id="3206663008" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39116870" lat="50.0664499" lon="14.4225356">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="2b"/>
+    <tag k="addr:postcode" v="12800"/>
+    <tag k="addr:street" v="Na Slupi"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="brand" v="ČS a. s."/>
+    <tag k="name" v="Česká spořitelna"/>
+  </node>
+  <node id="3215377353" version="2" timestamp="2016-12-15T14:55:56Z" uid="100163" user="Hlav" changeset="40339271" lat="50.1225593" lon="14.4561614">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="email" v="praha.klapkova@fio.cz"/>
+    <tag k="name" v="Fio bank"/>
+    <tag k="opening_hours" v="Mo-Th 08:30-18:00; Fr 08:30-17:00"/>
+    <tag k="phone" v="+420 224 346 437"/>
+    <tag k="website" v="www.fio.cz"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="3250113550" version="1" timestamp="2016-12-15T14:55:56Z" uid="1708065" user="Salamandr" changeset="27660288" lat="50.0504867" lon="14.4360942">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank, a.s."/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="3295692444" version="1" timestamp="2016-12-15T14:55:56Z" uid="190711" user="Zulu" changeset="28222100" lat="50.0313693" lon="14.4918881">
+    <tag k="name" v="KB"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="3343392553" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="28767881" lat="50.0885773" lon="14.4168696">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Sberbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Valentinská"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="10"/>
+  </node>
+  <node id="3343392557" version="2" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="29721325" lat="50.088234" lon="14.4162687">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Valentinská"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="9"/>
+  </node>
+  <node id="3348581374" version="2" timestamp="2016-12-15T14:55:56Z" uid="1708065" user="Salamandr" changeset="30819734" lat="50.0406717" lon="14.5593853">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="brand" v="ČS a.s."/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="wheelchair" v="yes"/>
+    <tag k="opening_hours" v="Mo-Th 09:00-12:30,13:30-18:00; Tu,Fr 09:00-14:00"/>
+  </node>
+  <node id="3364070149" version="2" timestamp="2016-12-15T14:55:56Z" uid="384084" user="Kostik" changeset="33067577" lat="50.0475296" lon="14.455234">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+    <tag k="addr:city" v="Praha 4"/>
+    <tag k="wheelchair" v="yes"/>
+    <tag k="addr:street" v="Vyskočilova"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="opening_hours" v="09:00-19:00"/>
+    <tag k="addr:housenumber" v="2"/>
+  </node>
+  <node id="3391168801" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29368223" lat="50.0637618" lon="14.4416668">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Nuselská"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="4"/>
+  </node>
+  <node id="3392375437" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29381497" lat="50.0576879" lon="14.4331711">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="UniCredit Bank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Na Pankráci"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="58"/>
+  </node>
+  <node id="3392375438" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29381497" lat="50.0575708" lon="14.4341742">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Hradeckých"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="1"/>
+  </node>
+  <node id="3393539683" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29401690" lat="50.0997863" lon="14.3883641">
+    <tag k="name" v="PPF banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Evropská"/>
+    <tag k="addr:postcode" v="16000"/>
+    <tag k="addr:housenumber" v="17"/>
+  </node>
+  <node id="3393539684" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29401690" lat="50.0998861" lon="14.3886189">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Evropská"/>
+    <tag k="addr:postcode" v="16000"/>
+    <tag k="addr:housenumber" v="17"/>
+  </node>
+  <node id="3413954377" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="29672996" lat="50.0969814" lon="14.404526">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Milady Horákové"/>
+    <tag k="addr:postcode" v="16000"/>
+    <tag k="addr:housenumber" v="109"/>
+  </node>
+  <node id="3417082874" version="1" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="29721325" lat="50.0766167" lon="14.4889918">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Raiffeisenbank"/>
+  </node>
+  <node id="3417082876" version="2" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="42774990" lat="50.0930815" lon="14.4516859">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:conscriptionnumber" v="118"/>
+    <tag k="addr:country" v="CZ"/>
+    <tag k="addr:housenumber" v="118/17"/>
+    <tag k="addr:place" v="Karlín"/>
+    <tag k="addr:postcode" v="18600"/>
+    <tag k="addr:street" v="Thámova"/>
+    <tag k="addr:streetnumber" v="17"/>
+    <tag k="addr:suburb" v="Praha 8"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="phone" v="+420 234 720 911"/>
+    <tag k="ref:ruian:addr" v="22349758"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="source:addr" v="cuzk:ruian"/>
+    <tag k="website" v="https://www.rb.cz/"/>
+  </node>
+  <node id="3419672499" version="3" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="42824872" lat="50.0678342" lon="14.4686413">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:conscriptionnumber" v="1527"/>
+    <tag k="addr:country" v="CZ"/>
+    <tag k="addr:housenumber" v="1527/68b"/>
+    <tag k="addr:place" v="Vršovice"/>
+    <tag k="addr:postcode" v="10000"/>
+    <tag k="addr:street" v="Vršovická"/>
+    <tag k="addr:streetnumber" v="68b"/>
+    <tag k="addr:suburb" v="Praha 10"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="layer" v="0"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="phone" v="+420 225 282 911"/>
+    <tag k="ref:ruian:addr" v="26224135"/>
+    <tag k="source" v="local_knowledge"/>
+    <tag k="source:addr" v="cuzk:ruian"/>
+    <tag k="website" v="https://www.rb.cz/"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="3455223308" version="1" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="30205902" lat="50.0756193" lon="14.4188065">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="source" v="local knowledge"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="3459226915" version="2" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="42824872" lat="50.0677766" lon="14.4686841">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:conscriptionnumber" v="1527"/>
+    <tag k="addr:country" v="CZ"/>
+    <tag k="addr:place" v="Vršovice"/>
+    <tag k="addr:postcode" v="10000"/>
+    <tag k="addr:street" v="U Slavie"/>
+    <tag k="addr:suburb" v="Praha 10"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="layer" v="0"/>
+    <tag k="name" v="Air Bank"/>
+    <tag k="phone" v="+420 606 024 242"/>
+    <tag k="website" v="https://www.airbank.cz/"/>
+  </node>
+  <node id="3470883146" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="30397518" lat="50.0827321" lon="14.4251596">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Václavské náměstí"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="26"/>
+  </node>
+  <node id="3470917439" version="2" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="33097355" lat="50.0810277" lon="14.4272318">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Václavské náměstí"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="42"/>
+  </node>
+  <node id="3470917449" version="3" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="50.0795152" lon="14.4293976">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="62"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:street" v="Václavské náměstí"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="operator" v="MONETA Money Bank, a.s."/>
+  </node>
+  <node id="3470944138" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="30398484" lat="50.0811914" lon="14.4251409">
+    <tag k="name" v="Česká exportní banka"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Vodičkova"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="34"/>
+  </node>
+  <node id="3474538094" version="2" timestamp="2016-12-15T14:55:56Z" uid="1558400" user="Klaudian" changeset="43010480" lat="50.0886127" lon="14.3444049">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:conscriptionnumber" v="438"/>
+    <tag k="addr:country" v="CZ"/>
+    <tag k="addr:housenumber" v="438/3"/>
+    <tag k="addr:place" v="Veleslavín"/>
+    <tag k="addr:postcode" v="16200"/>
+    <tag k="addr:street" v="Křenova"/>
+    <tag k="addr:streetnumber" v="3"/>
+    <tag k="addr:suburb" v="Praha 6"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Fio"/>
+    <tag k="phone" v="+420 224 346 471"/>
+    <tag k="ref:ruian:addr" v="22758127"/>
+    <tag k="source" v="local knowledge"/>
+    <tag k="source:addr" v="cuzk:ruian"/>
+    <tag k="website" v="http://www.fio.cz/"/>
+  </node>
+  <node id="3499776182" version="1" timestamp="2016-12-15T14:55:56Z" uid="1708065" user="Salamandr" changeset="30820529" lat="50.0410995" lon="14.5604621">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="brand" v="KB"/>
+    <tag k="phone" v="+420 955 546 561, +420 955 511 111"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Komerční banka"/>
+    <tag k="wheelchair" v="yes"/>
+    <tag k="opening_hours" v="Mo,We 09:00-12:00,13:00-18:00; Tu,Th 09:00-12:00,13:00-17:00; Fr 09:00-12:00,13:00-16:00"/>
+  </node>
+  <node id="3529312601" version="2" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="50.0504201" lon="14.3407651">
+    <tag k="amenity" v="bank"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="operator" v="MONETA Money Bank, a.s."/>
+    <tag k="source" v="bing;cuzk:km"/>
+  </node>
+  <node id="3529312603" version="1" timestamp="2016-12-15T14:55:56Z" uid="229590" user="xificurk" changeset="31299597" lat="50.0504387" lon="14.3455397">
+    <tag k="name" v="Česká spořitelna"/>
+    <tag k="source" v="Bing;cuzk:km"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Česká spořitelna"/>
+  </node>
+  <node id="3530775059" version="2" timestamp="2016-12-15T14:55:56Z" uid="2966436" user="TOMats3" changeset="32215239" lat="50.0816007" lon="14.4199812">
+    <tag k="name" v="Era - Poštovní spořitelna"/>
+    <tag k="level" v="1"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Spálená"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="22"/>
+  </node>
+  <node id="3544018244" version="1" timestamp="2016-12-15T14:55:56Z" uid="2940319" user="Serhatko" changeset="31441121" lat="50.1028655" lon="14.4565905">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Fio Bank"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="3602307839" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="32048073" lat="50.0861711" lon="14.4272713">
+    <tag k="name" v="Landesbank Berlin AG"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Na Příkopě"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:housenumber" v="22"/>
+  </node>
+  <node id="3602336139" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="32048199" lat="50.0758462" lon="14.4299264">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Sberbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="náměstí I. P. Pavlova"/>
+    <tag k="addr:postcode" v="12000"/>
+    <tag k="addr:housenumber" v="3"/>
+  </node>
+  <node id="3602339759" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="32048331" lat="50.0517688" lon="14.440375">
+    <tag k="name" v="Barclays"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Na Pankráci"/>
+    <tag k="addr:postcode" v="14000"/>
+    <tag k="addr:housenumber" v="1683/127"/>
+  </node>
+  <node id="3602393668" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="32048405" lat="50.1078005" lon="14.5833503">
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Sberbank"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:street" v="Chlumecká"/>
+    <tag k="addr:postcode" v="19800"/>
+    <tag k="addr:housenumber" v="765/6"/>
+  </node>
+  <node id="3644762498" version="2" timestamp="2016-12-15T14:55:56Z" uid="1182568" user="Marián Kyral" changeset="42810718" lat="50.0689979" lon="14.453719">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="MONETA Money Bank"/>
+    <tag k="operator" v="MONETA Money Bank, a.s."/>
+  </node>
+  <node id="3684665391" version="2" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39649473" lat="50.0902538" lon="14.4253799">
+    <tag k="addr:city" v="Praha 1"/>
+    <tag k="addr:housenumber" v="34"/>
+    <tag k="addr:postcode" v="11000"/>
+    <tag k="addr:street" v="Dlouhá"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční banka"/>
+    <tag k="operator" v="Komerční banka"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="3740677346" version="2" timestamp="2016-12-15T14:55:56Z" uid="457772" user="darkwish" changeset="33989461" lat="50.0926605" lon="14.4524104">
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="3749523730" version="1" timestamp="2016-12-15T14:55:56Z" uid="64876" user="Andreeeee" changeset="34107937" lat="50.0444506" lon="14.4490274">
+    <tag k="name" v="ČSOB"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="3749523731" version="1" timestamp="2016-12-15T14:55:56Z" uid="64876" user="Andreeeee" changeset="34107937" lat="50.0444372" lon="14.449064">
+    <tag k="name" v="Raiffeisenbank"/>
+    <tag k="amenity" v="bank"/>
+  </node>
+  <node id="3821150000" version="1" timestamp="2016-12-15T14:55:56Z" uid="2818662" user="eclass" changeset="35130750" lat="50.1044012" lon="14.4887995">
+    <tag k="amenity" v="bank"/>
+    <tag k="name" v="ČSOB"/>
+  </node>
+  <node id="3849799164" version="1" timestamp="2016-12-15T14:55:56Z" uid="665336" user="Minimalis" changeset="35496528" lat="50.081291" lon="14.2556605">
+    <tag k="amenity" v="bank"/>
+    <tag k="bic" v="GIBACZPX"/>
+    <tag k="brand" v="Česká spořitelna"/>
+    <tag k="name" v="Česká spořitelna, Hostivice"/>
+    <tag k="opening_hours" v="Mo,We,Th 09:00-12:30,13:30-18:00;Tu,Fr 09:00-14:00"/>
+    <tag k="operator" v="Česká spořitelna a.s."/>
+    <tag k="source" v="ceska_sporitelna_gpx"/>
+  </node>
+  <node id="3893248528" version="1" timestamp="2016-12-15T14:55:56Z" uid="10353" user="gorn" changeset="35964357" lat="50.0896449" lon="14.4227">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="brand" v="Česká spořitelna"/>
+    <tag k="name" v="Česká spořitelna"/>
+  </node>
+  <node id="3904951022" version="1" timestamp="2016-12-15T14:55:56Z" uid="100163" user="Hlav" changeset="36108700" lat="50.1272622" lon="14.4679397">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisen bank"/>
+    <tag k="wheelchair" v="yes"/>
+  </node>
+  <node id="3973478448" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="36854496" lat="50.0716349" lon="14.4007411">
+    <tag k="amenity" v="bank"/>
+    <tag k="name" v="Erste Bank"/>
+  </node>
+  <node id="3977751601" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="36896034" lat="50.0695671" lon="14.4512279">
+    <tag k="addr:city" v="Praha"/>
+    <tag k="addr:housenumber" v="8"/>
+    <tag k="addr:postcode" v="10100"/>
+    <tag k="addr:street" v="Vršovické náměstí"/>
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Česká spořitelna"/>
+  </node>
+  <node id="4009231861" version="1" timestamp="2016-12-15T14:55:56Z" uid="254133" user="wizz" changeset="37243734" lat="50.0915937" lon="14.4399585">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="ČSOB"/>
+  </node>
+  <node id="4107304129" version="1" timestamp="2016-12-15T14:55:56Z" uid="100163" user="Hlav" changeset="38400262" lat="50.0952381" lon="14.3388246">
+    <tag k="amenity" v="bank"/>
+    <tag k="operator" v="Citibank"/>
+  </node>
+  <node id="4111466821" version="1" timestamp="2016-12-15T14:55:56Z" uid="254133" user="wizz" changeset="38448452" lat="50.1086529" lon="14.584504">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="no"/>
+    <tag k="name" v="kiosek mBank"/>
+  </node>
+  <node id="4167240651" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39117004" lat="50.0708706" lon="14.4187356">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="no"/>
+    <tag k="name" v="Wüstenrot"/>
+  </node>
+  <node id="4167452118" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39119322" lat="50.0756669" lon="14.4319633">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Equa Bank"/>
+  </node>
+  <node id="4223405692" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39772911" lat="50.0886122" lon="14.4322859">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Equa Bank"/>
+  </node>
+  <node id="4223445627" version="1" timestamp="2016-12-15T14:55:56Z" uid="2037651" user="Francois555" changeset="39773760" lat="50.0899442" lon="14.4282035">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Raiffeisenbank"/>
+  </node>
+  <node id="4244815548" version="2" timestamp="2016-12-15T14:55:56Z" uid="2966436" user="TOMats3" changeset="40049730" lat="50.0531943" lon="14.2853116">
+    <tag k="amenity" v="bank"/>
+    <tag k="level" v="0"/>
+    <tag k="name" v="Raiffeisenbank"/>
+  </node>
+  <node id="4332480090" version="1" timestamp="2016-12-15T14:55:56Z" uid="3782689" user="Ftigr" changeset="41194480" lat="50.0312335" lon="14.491655">
+    <tag k="amenity" v="bank"/>
+    <tag k="name" v="Air bank"/>
+    <tag k="website" v="http://www.airbank.cz"/>
+  </node>
+  <node id="4368535237" version="1" timestamp="2016-12-15T14:55:56Z" uid="3003739" user="r00tcz" changeset="41722942" lat="50.1200715" lon="14.4987701">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="name" v="Komerční Banka"/>
+  </node>
+  <node id="4530704026" version="1" timestamp="2016-12-15T14:55:56Z" uid="3003739" user="r00tcz" changeset="44068791" lat="50.1190596" lon="14.5008055">
+    <tag k="amenity" v="bank"/>
+    <tag k="atm" v="yes"/>
+    <tag k="brand" v="Moneta"/>
+    <tag k="name" v="Moneta"/>
+  </node>
+</osm>
