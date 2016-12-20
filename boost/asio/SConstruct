@@ -5,3 +5,4 @@ env = Environment(
 env.Program('daytime1.cpp')
 env.Program('tcp_sync_echo_client.cpp')
 env.Program('tcp_sync_echo_server.cpp')
+env.Program('deadline_timer.cpp')
