@@ -1,8 +1,20 @@
 env = Environment(
-	CXXFLAGS=['-std=c++14'], 
-	LIBS=['boost_filesystem', 'boost_system', 'boost_thread', 'pthread'])
+	CC='clang',
+	CXX='clang++',
+	CXXFLAGS=['-std=c++14', '-Wall'], 
+	LIBS=[
+		'boost_filesystem', 
+		'boost_system', 
+		'boost_thread',
+		'boost_chrono',
+		'pthread'
+	]
+)
 
 env.Program('daytime1.cpp')
 env.Program('tcp_sync_echo_client.cpp')
 env.Program('tcp_sync_echo_server.cpp')
 env.Program('deadline_timer.cpp')
+env.Program('simple_timer.cpp')
+env.Program('singlethread_events.cpp')
+env.Program('multithread_events.cpp')
