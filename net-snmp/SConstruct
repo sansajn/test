@@ -1,0 +1,9 @@
+env = Environment(
+	CC='clang',
+	CXX='clang++',
+	CXXFLAGS=['-std=c++14', '-Wall', '-O0']
+)
+
+env.ParseConfig('net-snmp-config --cflags --libs')
+
+env.Program('sync_app.cpp')
