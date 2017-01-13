@@ -1,0 +1,6 @@
+env = Environment(
+	CXXFLAGS=['-std=c++14', '-Wall'],
+	LIBS=['b64']
+)
+
+env.Program('hello.cpp')
