@@ -5,3 +5,4 @@ env = Environment(
 
 env.Program('hello.cpp')
 env.Program('unknown_options.cpp')
+env.Program('positional_options.cpp')
