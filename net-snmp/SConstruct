@@ -7,3 +7,4 @@ env = Environment(
 env.ParseConfig('net-snmp-config --cflags --libs')
 
 env.Program('sync_app.cpp')
+env.Program('send_trap.cpp')
