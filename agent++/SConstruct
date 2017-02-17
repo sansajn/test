@@ -1,4 +1,8 @@
-env = Environment()
+env = Environment(
+	CXXFLAGS=['-O0', '-g', '-Wall']
+)
+
 env.ParseConfig('pkg-config --cflags --libs agent++-4')
+
 env.Program('static_table.cpp')
 env.Program('hello.cpp')
