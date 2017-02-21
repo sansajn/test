@@ -1,8 +1,10 @@
 env = Environment(
-	CXXFLAGS=['-O0', '-g', '-Wall']
+	CXXFLAGS=['-O0', '-g', '-Wall', '--std=c++11']
 )
 
 env.ParseConfig('pkg-config --cflags --libs agent++-4')
 
 env.Program('static_table.cpp')
 env.Program('hello.cpp')
+env.Program('dynamic_table.cpp')
+env.Program('custom_variables.cpp')
