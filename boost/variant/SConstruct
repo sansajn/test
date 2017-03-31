@@ -1,0 +1,9 @@
+env = Environment()
+env['CXX'] = 'clang++'
+env.Append(
+	CXXFLAGS=['-std=c++11'],
+	CCFLAGS=['-O0', '-Wall'],
+)
+
+env.Program('hello.cpp')
+env.Program('in_colection.cpp')
