@@ -1,4 +1,4 @@
-// inicializuje serverm neposkytuje ziaden obsah
+// inicializuje server, ale neposkytuje ziaden obsah
 
 #include <gst/gst.h>
 #include <gst/rtsp-server/rtsp-server.h>
