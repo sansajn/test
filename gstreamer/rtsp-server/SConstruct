@@ -5,4 +5,11 @@ env.ParseConfig('pkg-config --cflags --libs gstreamer-1.0 gstreamer-rtsp-server-
 
 env.Program('server_init.cpp')
 env.Program('hello.cpp')
-env.Program('rtsp_serv.cpp')
+
+
+# rtsp-serv
+rtsp_serv_env = env.Clone()
+rtsp_serv_env.Append(
+	LIBS=['boost_program_options']
+)
+rtsp_serv_env.Program('rtsp_serv.cpp')
