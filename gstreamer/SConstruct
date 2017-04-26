@@ -12,3 +12,4 @@ env.Program('test-multicast2.c')
 # oficial tutorial
 env.Program('basic_tutorial_1.cpp')
 env.Program('basic_tutorial_2.cpp')
+env.Program('basic_tutorial_3.cpp')
