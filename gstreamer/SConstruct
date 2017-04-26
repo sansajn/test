@@ -14,3 +14,7 @@ env.Program('basic_tutorial_1.cpp')
 env.Program('basic_tutorial_2.cpp')
 env.Program('basic_tutorial_3.cpp')
 env.Program('basic_tutorial_4.cpp')
+
+
+# tests
+env.Program('play.cpp')
