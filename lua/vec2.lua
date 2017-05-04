@@ -30,7 +30,7 @@ function vec2:normalize()
 end
 
 function vec2:length()
-	return math.sqrt(vec2:length2())
+	return math.sqrt(self:length2())
 end
 
 function vec2:length2()
@@ -42,7 +42,7 @@ function vec2:distance(v)
 end
 
 function vec2:roteted(ang)
-	return vec2:clone():rotate(ang)
+	return self:clone():rotate(ang)
 end
 
 function vec2:rotate(ang)
