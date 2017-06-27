@@ -5,3 +5,4 @@ env.ParseConfig('pkg-config --cflags --libs xcb')
 
 env.Program('hello.cpp')
 env.Program('basics.cpp')
+env.Program('no_decoration.cpp')
