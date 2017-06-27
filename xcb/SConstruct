@@ -1,0 +1,6 @@
+env = Environment(
+	CXXFLAGS=['-std=c++11', '-Wall', '-O0', '-g'])
+
+env.ParseConfig('pkg-config --cflags --libs xcb')
+
+env.Program('hello.cpp')
