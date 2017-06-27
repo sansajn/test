@@ -28,9 +28,10 @@ int main(int argc, char * argv[])
 	foo f;
 
 	vector<function_t> funcs{
-		function_t{g},
-		function_t{hoo{}},
-		function_t{bind(&foo::call_me, &f)}
+		function_t{g},                           // playin old function call
+		function_t{hoo{}},                       // member operator() call
+		function_t{bind(&foo::call_me, &f)},     // member function call
+		function_t{[](){cout << "lambda()\n";}}  // lambda function call
 	};
 
 	for (auto f : funcs)  // call every function
