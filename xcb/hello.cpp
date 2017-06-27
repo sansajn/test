@@ -1,3 +1,4 @@
+// vytvori okno (bez prekreslovania)
 #include <unistd.h>
 #include <xcb/xcb.h>
 
