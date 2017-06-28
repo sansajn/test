@@ -1,0 +1,75 @@
+# linux 64bit build script
+
+env = Environment(
+	CCFLAGS=['-std=c++11', '-m64', '-fPIC', '-Wall'],
+	
+	CPPDEFINES=[
+		'-DSOCKLEN_T=socklen_t', 
+		'-D_LARGEFILE_SOURCE=1', 
+		'-D_FILE_OFFSET_BITS=64'],
+		
+	CPPPATH=[
+		'.',
+		'groupsock/include',
+		'UsageEnvironment/include', 
+		'BasicUsageEnvironment/include',
+		'liveMedia/include'
+	]
+)
+
+groupsock_objs = env.Object([Glob('groupsock/*.cpp'), Glob('groupsock/*.c')])
+
+usage_env_objs = env.Object([
+	Glob('UsageEnvironment/*cpp'),
+	Glob('BasicUsageEnvironment/*.cpp')
+])
+
+live_media_objs = env.Object([
+	Glob('liveMedia/*.cpp'), 
+	Glob('liveMedia/*.c')
+])
+
+live555_lib = env.StaticLibrary('live555', [
+	groupsock_objs,
+	usage_env_objs,
+	live_media_objs
+])
+
+
+# media server
+env.Program('mediaServer/live555MediaServer', [Glob('mediaServer/*.cpp'), live555_lib])
+
+# proxy server
+env.Program(['proxyServer/live555ProxyServer.cpp', live555_lib])
+
+# test programs
+env.Program(['testProgs/c.cpp', live555_lib])
+env.Program(['testProgs/MPEG2TransportStreamIndexer.cpp', live555_lib])
+env.Program(['testProgs/playCommon.cpp', 'testProgs/openRTSP.cpp', live555_lib])
+env.Program(['testProgs/registerRTSPStream.cpp', live555_lib])
+env.Program(['testProgs/sapWatch.cpp', live555_lib])
+env.Program(['testProgs/testAMRAudioStreamer.cpp', live555_lib])
+#env.Program(['testProgs/testGSMStreamer.cpp', live555_lib])
+env.Program(['testProgs/testH264VideoStreamer.cpp', live555_lib])
+env.Program(['testProgs/testH264VideoToTransportStream.cpp', live555_lib])
+env.Program(['testProgs/testH265VideoStreamer.cpp', live555_lib])
+env.Program(['testProgs/testH265VideoToTransportStream.cpp', live555_lib])
+env.Program(['testProgs/testMKVStreamer.cpp', live555_lib])
+env.Program(['testProgs/testMP3Receiver.cpp', live555_lib])
+env.Program(['testProgs/testMP3Streamer.cpp', live555_lib])
+env.Program(['testProgs/testMPEG1or2AudioVideoStreamer.cpp', live555_lib])
+env.Program(['testProgs/testMPEG1or2ProgramToTransportStream.cpp', live555_lib])
+env.Program(['testProgs/testMPEG1or2Splitter.cpp', live555_lib])
+env.Program(['testProgs/testMPEG1or2VideoReceiver.cpp', live555_lib])
+env.Program(['testProgs/testMPEG1or2VideoStreamer.cpp', live555_lib])
+env.Program(['testProgs/testMPEG2TransportReceiver.cpp', live555_lib])
+env.Program(['testProgs/testMPEG2TransportStreamer.cpp', live555_lib])
+env.Program(['testProgs/testMPEG2TransportStreamTrickPlay.cpp', live555_lib])
+env.Program(['testProgs/testMPEG4VideoStreamer.cpp', live555_lib])
+env.Program(['testProgs/testOggStreamer.cpp', live555_lib])
+env.Program(['testProgs/testOnDemandRTSPServer.cpp', live555_lib])
+env.Program(['testProgs/testRelay.cpp', live555_lib])
+env.Program(['testProgs/testReplicator.cpp', live555_lib])
+env.Program(['testProgs/testRTSPClient.cpp', live555_lib])
+env.Program(['testProgs/testWAVAudioStreamer.cpp', live555_lib])
+env.Program(['testProgs/vobStreamer.cpp', live555_lib])
