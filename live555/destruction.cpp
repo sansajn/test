@@ -1,0 +1,133 @@
+#include <string>
+#include <stdexcept>
+#include <thread>
+#include <iostream>
+#include <cassert>
+#include <liveMedia.hh>
+#include <BasicUsageEnvironment.hh>
+#include <GroupsockHelper.hh>
+
+using std::string;
+using std::clog;
+
+string h264_input_file = "test.264";
+H264VideoStreamFramer * video_source = nullptr;
+UsageEnvironment * env = nullptr;
+RTPSink * video_sink = nullptr;
+
+void play();
+void after_playing(void *);
+string gethostname();
+
+char quit_loop = 0;
+
+
+int main(int argc, char * argv[])
+{
+	if (argc > 1)
+		h264_input_file = argv[1];
+
+	TaskScheduler * sched = BasicTaskScheduler::createNew();
+	assert(sched);
+
+	env = BasicUsageEnvironment::createNew(*sched);
+	assert(env);
+
+	// groupsock
+	in_addr dest_address;
+	dest_address.s_addr = chooseRandomIPv4SSMAddress(*env);  // toto nastavuje adresu na ktoru sa poslu data (destination adresu), alternativne mozem pouzit inet_addr() funkciu
+//	dest_address.s_addr = inet_addr("172.28.70.228");
+
+	unsigned short const rtp_port_num = 18888;
+	unsigned short const rtcp_port_num = rtp_port_num + 1;
+	unsigned char const ttl = 255;
+
+	Port const rtp_port{rtp_port_num};
+	Port const rtcp_port{rtcp_port_num};
+
+	Groupsock rtp_group{*env, dest_address, rtp_port, ttl};
+	rtp_group.multicastSendOnly();  // we're a SSM source TODO: co je SSM ?
+
+	Groupsock rtcp_group{*env, dest_address, rtcp_port, ttl};
+	rtcp_group.multicastSendOnly();
+
+	// create a h264 video RTP sink from the RTP group
+	OutPacketBuffer::maxSize = 100000;
+	video_sink = H264VideoRTPSink::createNew(*env, &rtp_group, 96);
+	assert(video_sink);
+
+	// create (and start) a RTCP instance for this RTP sink
+	string host_name = gethostname();
+	unsigned const estimated_session_bandwidth = 500;  // in kbps; for RTCP b/w share
+	RTCPInstance * rtcp = RTCPInstance::createNew(*env, &rtcp_group, estimated_session_bandwidth,
+		(unsigned char const *)host_name.c_str(), video_sink, NULL /*we're a server*/, True /*we're a SSM source */);
+	assert(rtcp);
+	// note: this starts RTCP running automatically
+
+	RTSPServer * rtsp_serv = RTSPServer::createNew(*env, 8554);
+	if (!rtsp_serv)
+		throw std::runtime_error{string{"failed to create RTSP server: "} + string{env->getResultMsg()}};
+
+	ServerMediaSession * sms = ServerMediaSession::createNew(*env, "testStream",
+		h264_input_file.c_str(), "Session streamed by 'unicast_h264' streamer", True /*SSM*/);
+	assert(sms);
+	sms->addSubsession(PassiveServerMediaSubsession::createNew(*video_sink, rtcp));
+	rtsp_serv->addServerMediaSession(sms);
+
+	char * url = rtsp_serv->rtspURL(sms);
+	clog << "Play this stream using the URL '" << url << "'\n";
+	delete [] url;
+
+	// start the streaming
+	clog << "Beginning streaming ..." << std::endl;
+	play();
+
+	std::thread close_handler_thread{
+		[](){
+			std::this_thread::sleep_for(std::chrono::seconds{10});
+			quit_loop = 1;
+		}};
+
+	env->taskScheduler().doEventLoop(&quit_loop);  // does not return
+
+	close_handler_thread.join();
+
+	return 0;
+}
+
+void play()
+{
+	// open the input file as a 'byte stream file source'
+	ByteStreamFileSource * file_source = ByteStreamFileSource::createNew(*env, h264_input_file.c_str());
+	if (!file_source)
+		throw std::runtime_error{string{"Unable to open file '"} + h264_input_file + "' as a byte-stream file source"};
+
+	FramedSource * video_es = file_source;
+	video_source = H264VideoStreamFramer::createNew(*env, video_es);  // create a framer for the video elementary stream
+
+	// finally, start playing
+	clog << "Beginning to read from file ..." << std::endl;
+	video_sink->startPlaying(*video_source, after_playing, video_sink);
+}
+
+void after_playing(void *)
+{
+	clog << "... done reading from file" << std::endl;
+	video_sink->stopPlaying();
+	Medium::close(video_source);
+	// note that this also ocloses the input file that this source read from.
+
+	// start playing one again
+	play();
+}
+
+string gethostname()
+{
+	int const SIZE = 1024;
+	char buf[SIZE];
+	int res = gethostname(buf, SIZE);
+	if (res != 0)
+		throw std::runtime_error{"gethostname() failed"};
+	buf[SIZE-1] = '\0';
+	return string{buf};
+}

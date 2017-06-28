@@ -1,6 +1,10 @@
 env = Environment(
 	CXXFLAGS=['-std=c++11', '-Wall', '-g', '-O0'],
-	LIBS=['pthread', 'liveMedia', 'groupsock', 'BasicUsageEnvironment', 'UsageEnvironment'],
+	LIBS=[
+		'pthread',
+		'liveMedia', 'groupsock', 'BasicUsageEnvironment', 'UsageEnvironment',
+		'jpeg'
+	],
 	LIBPATH=['/usr/local/lib'],
 	CPPPATH=[
 		'/usr/local/include/liveMedia',
@@ -10,10 +14,38 @@ env = Environment(
 	]
 )
 
-#env.ParseConfig('pkg-config --cflags --libs live555')
+env.ParseConfig('pkg-config --cflags --libs live555')
 
 #env.Program('rtsp_on_demand.cpp')  # unicast sample
 #env.Program('multicast_h264.cpp')
 #env.Program('multicast_h264_no_rtcp.cpp')
 #env.Program('multicast_h264_static_address.cpp')
-env.Program('loadable_multicast.cpp')
+#env.Program('loadable_multicast.cpp')
+#env.Program('stream_image.cpp')
+
+
+# dectruction
+liblive555_static_env = Environment(
+	CCFLAGS=['-std=c++11', '-m64', '-fPIC', '-Wall'],
+	CPPDEFINES=['-DSOCKLEN_T=socklen_t', '-D_LARGEFILE_SOURCE=1', '-D_FILE_OFFSET_BITS=64'],
+	CPPPATH=['.', 'live/groupsock/include', 'live/UsageEnvironment/include', 'live/BasicUsageEnvironment/include', 'live/liveMedia/include'],
+)
+
+groupsock_objs = liblive555_static_env.Object([Glob('live/groupsock/*.cpp'), Glob('live/groupsock/*.c')])
+usage_env_objs = liblive555_static_env.Object([Glob('live/UsageEnvironment/*cpp'), Glob('live/BasicUsageEnvironment/*.cpp')])
+live_media_objs = liblive555_static_env.Object([Glob('live/liveMedia/*.cpp'), Glob('live/liveMedia/*.c')])
+live555_lib = liblive555_static_env.StaticLibrary('live/live555', [groupsock_objs, usage_env_objs, live_media_objs])
+
+local_liblive555_env = Environment(
+	CXXFLAGS=['-std=c++11', '-Wall', '-g', '-O0'],
+	CPPPATH=[
+		'.',
+		'live/groupsock/include',
+		'live/UsageEnvironment/include', 
+		'live/BasicUsageEnvironment/include',
+		'live/liveMedia/include'
+	],
+	LIBS=['pthread']
+)
+
+local_liblive555_env.Program(['destruction.cpp', live555_lib])
