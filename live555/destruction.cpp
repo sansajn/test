@@ -10,7 +10,7 @@
 using std::string;
 using std::clog;
 
-string h264_input_file = "test.264";
+string h264_input_file = "moto_3s.264";
 H264VideoStreamFramer * video_source = nullptr;
 UsageEnvironment * env = nullptr;
 RTPSink * video_sink = nullptr;
@@ -82,15 +82,7 @@ int main(int argc, char * argv[])
 	clog << "Beginning streaming ..." << std::endl;
 	play();
 
-	std::thread close_handler_thread{
-		[](){
-			std::this_thread::sleep_for(std::chrono::seconds{10});
-			quit_loop = 1;
-		}};
-
 	env->taskScheduler().doEventLoop(&quit_loop);  // does not return
-
-	close_handler_thread.join();
 
 	Medium::close(video_sink);
 	Medium::close(video_source);
@@ -119,11 +111,7 @@ void after_playing(void *)
 {
 	clog << "... done reading from file" << std::endl;
 	video_sink->stopPlaying();
-	Medium::close(video_source);
-	// note that this also ocloses the input file that this source read from.
-
-	// start playing one again
-	play();
+	quit_loop = 1;
 }
 
 string gethostname()
