@@ -7,7 +7,7 @@
 
 using std::string;
 
-char const * input_file_name = "test.264";
+string h264_input_file = "test.264";
 H264VideoStreamFramer * video_source = nullptr;
 UsageEnvironment * env = nullptr;
 RTPSink * video_sink = nullptr;
@@ -19,6 +19,9 @@ string gethostname();
 
 int main(int argc, char * argv[])
 {
+	if (argc > 1)
+		h264_input_file = argv[1];
+
 	TaskScheduler * sched = BasicTaskScheduler::createNew();
 	assert(sched);
 
@@ -28,6 +31,7 @@ int main(int argc, char * argv[])
 	// groupsock
 	in_addr dest_address;
 	dest_address.s_addr = chooseRandomIPv4SSMAddress(*env);  // toto nastavuje adresu na ktoru sa poslu data (destination adresu), alternativne mozem pouzit inet_addr() funkciu
+//	dest_address.s_addr = inet_addr("172.28.70.228");
 
 	unsigned short const rtp_port_num = 18888;
 	unsigned short const rtcp_port_num = rtp_port_num + 1;
@@ -60,7 +64,7 @@ int main(int argc, char * argv[])
 		throw std::runtime_error{string{"failed to create RTSP server: "} + string{env->getResultMsg()}};
 
 	ServerMediaSession * sms = ServerMediaSession::createNew(*env, "testStream",
-		input_file_name, "Session streamed by 'unicast_h264' streamer", True /*SSM*/);
+		h264_input_file.c_str(), "Session streamed by 'unicast_h264' streamer", True /*SSM*/);
 	assert(sms);
 	sms->addSubsession(PassiveServerMediaSubsession::createNew(*video_sink, rtcp));
 	rtsp_serv->addServerMediaSession(sms);
@@ -75,15 +79,20 @@ int main(int argc, char * argv[])
 
 	env->taskScheduler().doEventLoop();  // does not return
 
+	Medium::close(video_sink);
+	Medium::close(video_source);
+	Medium::close(rtsp_serv);
+	Medium::close(rtcp);
+
 	return 0;
 }
 
 void play()
 {
 	// open the input file as a 'byte stream file source'
-	ByteStreamFileSource * file_source = ByteStreamFileSource::createNew(*env, input_file_name);
+	ByteStreamFileSource * file_source = ByteStreamFileSource::createNew(*env, h264_input_file.c_str());
 	if (!file_source)
-		throw std::runtime_error{string{"Unable to open file '"} + input_file_name + "' as a byte-stream file source"};
+		throw std::runtime_error{string{"Unable to open file '"} + h264_input_file + "' as a byte-stream file source"};
 
 	FramedSource * video_es = file_source;
 	video_source = H264VideoStreamFramer::createNew(*env, video_es);  // create a framer for the video elementary stream

@@ -92,6 +92,11 @@ int main(int argc, char * argv[])
 
 	close_handler_thread.join();
 
+	Medium::close(video_sink);
+	Medium::close(video_source);
+	Medium::close(rtsp_serv);
+	Medium::close(rtcp);
+
 	return 0;
 }
 

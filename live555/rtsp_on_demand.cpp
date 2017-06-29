@@ -13,6 +13,10 @@ char const * stream_name = "h264TestStream";
 
 int main(int argc, char * argv[])
 {
+	string h264_file = video_path;
+	if (argc > 1)
+		h264_file = argv[1];
+
 	TaskScheduler * sched = BasicTaskScheduler::createNew();
 	assert(sched);
 
@@ -30,12 +34,12 @@ int main(int argc, char * argv[])
 	char const * desc = "streamed by livemedia library";
 
 	ServerMediaSession * sms = ServerMediaSession::createNew(*env, stream_name, stream_name, desc);
-	sms->addSubsession(H264VideoFileServerMediaSubsession::createNew(*env, video_path, false));
+	sms->addSubsession(H264VideoFileServerMediaSubsession::createNew(*env, h264_file.c_str(), false));
 
 	serv->addServerMediaSession(sms);
 
 	// announce
-	*env << stream_name << " stream, from the file " << video_path << "\n"
+	*env << stream_name << " stream, from the file " << h264_file.c_str() << "\n"
 		<< "Play this stream using the URL " << serv->rtspURL(sms) << "\n";
 
 	env->taskScheduler().doEventLoop();  // does not return
