@@ -1,5 +1,8 @@
-env = Environment(CXX='clang++')
-env.Append(CPPFLAGS=['-std=c++11', '-O0', '-g', '-Wall'])
+env = Environment(
+	CXX='clang++',
+	CPPFLAGS=['-std=c++11', '-O0', '-g', '-Wall'],
+	LIBS=['pthread']
+)
 
 env.Program('rand_gen.cpp')
 env.Program('uniqueptr.cpp')
@@ -9,6 +12,7 @@ env.Program('constexpr.cpp')
 env.Program('memfunc_ptr.cpp')
 env.Program('function.cpp')
 env.Program('remove_reference.cpp')
+env.Program('union.cpp')
 
 # right-reference
 env.Program('rrefopt.cpp')
@@ -16,3 +20,6 @@ env.Program('rref_test.cpp')
 
 # time
 env.Program('utc_time.cpp')
+
+# thread
+env.Program('joinable_thread.cpp')
