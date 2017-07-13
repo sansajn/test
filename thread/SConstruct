@@ -7,4 +7,5 @@ env = Environment(
 env.Program('thread_use.cpp') 
 env.Program('terminate.cpp') 
 env.Program('atomic_counter.cpp') 
-
+env.Program('lock_in_loop.cpp') 
+env.Program('thread_joinable.cpp')
