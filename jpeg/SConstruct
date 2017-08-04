@@ -4,7 +4,8 @@
 
 env = Environment(
 	CXXFLAGS = ['-std=c++11', '-O0', '-g', '-Wall'],
-	LIBS=['jpeg'])
+	LIBS=['jpeg', 'boost_program_options']
+)
 
 env.ParseConfig('pkg-config --cflags --libs Magick++')
 
@@ -12,3 +13,4 @@ env.Program('read.cpp')
 env.Program('write.cpp')
 env.Program('header_info.cpp')
 env.Program('rawread.cpp')
+env.Program('reencode.cpp')
