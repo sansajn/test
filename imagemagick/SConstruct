@@ -1,6 +1,12 @@
-env = Environment()
+# dependencies:
+#   libmagick++-dev (ubuntu 15.10, 6.8.9.9)
+
+env = Environment(
+	CXXFLAGS=['-std=c++11'], 
+	CCFLAGS=['-g', '-O0', '-Wall']
+)
+
 env.ParseConfig('pkg-config --cflags --libs Magick++')
-env.Append(CPPFLAGS=['-std=c++11'], CCFLAGS=['-g', '-O0'])
 
 env.Program('hello.cpp')
 env.Program('pixel_color.cpp')
