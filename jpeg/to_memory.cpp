@@ -10,6 +10,14 @@ using std::cout;
 
 uint8_t * read_image(uint8_t * data, size_t size, size_t & w, size_t & h);  //!< read from memory
 
+/*! write jpeg image to memory
+\param[in] pixels RGB pixel data
+\param[in] w image width
+\param[in] h image height
+\param[in] q compression quality 0 (worst) to 100 (best)
+\param[out] size size of the image in bytes
+\return returns pointer to a data, use free() to release the data */
+uint8_t * write_image(uint8_t * pixels, size_t w, size_t h, int q, size_t & size);
 
 int main(int argc, char * argv[])
 {
@@ -26,12 +34,30 @@ int main(int argc, char * argv[])
 	fclose(fimg);
 	fimg = nullptr;
 
+	cout << "read from memory\n";
 	size_t w, h;
 	uint8_t * pixels = read_image(data, size, w, h);
 
 	cout << "w:" << w << ", h:" << h << "\n";
 
-	delete [] data;
+	{
+		cout << "write to memory\n";
+		size_t size;
+		uint8_t * data = write_image(pixels, w, h, 80, size);
+
+		cout << "read from memory\n";
+		size_t w, h;
+		uint8_t * pixels = read_image(data, size, w, h);
+		cout << "w:" << w << ", h:" << h << "\n";
+		delete [] pixels;
+
+		free(data);
+	}
+
+
+	delete [] pixels;
+
+	free(data);
 
 	return 0;
 }
@@ -79,4 +105,56 @@ uint8_t * read_image(uint8_t * data, size_t size, size_t & w, size_t & h)
 	jpeg_destroy_decompress(&cinfo);
 
 	return pixels;
+}
+
+uint8_t * write_image(uint8_t * pixels, size_t w, size_t h, int q, size_t & size)
+{
+	jpeg_compress_struct cinfo;
+
+	jpeg_error_mgr jerr;
+	JSAMPROW row_pointer[1];      // pointer to JSAMPLE row[s]
+	int row_stride;               // physical row width in image buffer
+
+	// Step 1: allocate and initialize JPEG compression object
+	cinfo.err = jpeg_std_error(&jerr);
+
+	jpeg_create_compress(&cinfo);
+
+	// Step 2: specify data destination
+	uint8_t * data = nullptr;
+	jpeg_mem_dest(&cinfo, &data, &size);
+
+	// Step 3: set parameters for compression
+
+	cinfo.image_width = w;                // image width and height, in pixels
+	cinfo.image_height = h;
+	cinfo.input_components = 3;           // # of color components per pixel
+	cinfo.in_color_space = JCS_RGB;       // colorspace of input image
+
+	jpeg_set_defaults(&cinfo);
+
+	jpeg_set_quality(&cinfo, q, TRUE /* limit to baseline-JPEG values */);
+
+	// Step 4: Start compressor
+	jpeg_start_compress(&cinfo, TRUE);
+
+	// Step 5: while (scan lines remain to be written)
+	//           jpeg_write_scanlines(...); */
+	row_stride = w * 3; // JSAMPLEs per row in image_buffer
+
+	while (cinfo.next_scanline < cinfo.image_height)
+	{
+		row_pointer[0] = &pixels[cinfo.next_scanline * row_stride];
+		jpeg_write_scanlines(&cinfo, row_pointer, 1);
+	}
+
+	// Step 6: Finish compression
+
+	jpeg_finish_compress(&cinfo);
+
+	// Step 7: release JPEG compression object
+
+	jpeg_destroy_compress(&cinfo);
+
+	return data;
 }
