@@ -35,10 +35,13 @@ local_liblive555_env = Environment(
 		'live/BasicUsageEnvironment/include',
 		'live/liveMedia/include'
 	],
-	LIBS=['pthread']
+	CPPDEFINES=['BOOST_LOG_DYN_LINK'],
+	LIBS=['pthread', 'boost_log']
 )
 
 local_liblive555_env.Program(['destruction.cpp', live555_lib])
+local_liblive555_env.Program(['mkv_demux.cpp', live555_lib])
+local_liblive555_env.Program(['testMKVStreamer.cpp', live555_lib])
 
 
 # locally installed environment, NOT USED now
