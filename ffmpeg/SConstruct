@@ -7,3 +7,6 @@ env.ParseConfig(
 
 env.Program('metadata.cpp')
 env.Program('video_geometry.cpp')
+env.Program('extract_from_mp4.cpp')
+env.Program('read_n_frames.cpp')
+env.Program('list_input_formats.cpp')
