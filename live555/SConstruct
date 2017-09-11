@@ -7,7 +7,6 @@ env = Environment(
 env.ParseConfig('pkg-config --cflags --libs live555')
 
 #env.Program('rtsp_on_demand.cpp')  # unicast sample
-env.Program('multicast_h264.cpp')
 env.Program('multicast_h264_no_rtcp.cpp')
 env.Program('multicast_h264_static_address.cpp')
 #env.Program('loadable_multicast.cpp')
@@ -17,8 +16,9 @@ env.Program('multicast_h264_static_address.cpp')
 # dectruction sample build statically against local (not installed) live555
 liblive555_static_env = Environment(
 	CCFLAGS=['-std=c++11', '-m64', '-fPIC', '-Wall', '-g', '-O0'],
-	CPPDEFINES=['-DSOCKLEN_T=socklen_t', '-D_LARGEFILE_SOURCE=1', '-D_FILE_OFFSET_BITS=64'],
+	CPPDEFINES=['-DSOCKLEN_T=socklen_t', '-D_LARGEFILE_SOURCE=1', '-D_FILE_OFFSET_BITS=64', 'BOOST_LOG_DYN_LINK'],
 	CPPPATH=['.', 'live/groupsock/include', 'live/UsageEnvironment/include', 'live/BasicUsageEnvironment/include', 'live/liveMedia/include'],
+	LIBS=['pthread', 'boost_log']
 )
 
 groupsock_objs = liblive555_static_env.Object([Glob('live/groupsock/*.cpp'), Glob('live/groupsock/*.c')])
@@ -36,12 +36,20 @@ local_liblive555_env = Environment(
 		'live/liveMedia/include'
 	],
 	CPPDEFINES=['BOOST_LOG_DYN_LINK'],
-	LIBS=['pthread', 'boost_log']
+	LIBS=['pthread', 'boost_log', 'boost_filesystem', 'boost_system']
 )
 
 local_liblive555_env.Program(['destruction.cpp', live555_lib])
 local_liblive555_env.Program(['mkv_demux.cpp', live555_lib])
 local_liblive555_env.Program(['testMKVStreamer.cpp', live555_lib])
+local_liblive555_env.Program(['smooth_transition.cpp', live555_lib])
+local_liblive555_env.Program(['multicast_h264.cpp', live555_lib])
+local_liblive555_env.Program(['jpeg_no_new_source_stream.cpp', live555_lib])
+local_liblive555_env.Program(['simple_jpeg_streaming.cpp', live555_lib])
+local_liblive555_env.Program(['jpeg_one_frame.cpp', live555_lib])
+local_liblive555_env.Program(['jpeg_stream.cpp', live555_lib])
+local_liblive555_env.Program(['jpeg_multiple_source_stream.cpp', live555_lib])
+local_liblive555_env.Program(['openRTSP.cpp', 'playCommon.cpp', live555_lib])
 
 
 # locally installed environment, NOT USED now

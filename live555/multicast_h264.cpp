@@ -1,9 +1,9 @@
 #include <string>
 #include <stdexcept>
 #include <cassert>
-#include <liveMedia/liveMedia.hh>
-#include <BasicUsageEnvironment/BasicUsageEnvironment.hh>
-#include <groupsock/GroupsockHelper.hh>
+#include <liveMedia.hh>
+#include <BasicUsageEnvironment.hh>
+#include <GroupsockHelper.hh>
 
 using std::string;
 

@@ -17,6 +17,7 @@ using std::pair;
 
 string input_filename = "test.mkv";
 
+void dump_track_info(MatroskaTrack * track, string const & indent);
 string gethostname();
 
 class player_server  //!< blocking player implementation
@@ -114,66 +115,6 @@ void player_server::play(string const & file_name)
 {
 	MatroskaFile::createNew(*_env, file_name.c_str(), on_matroska_file_creation,
 		this, "eng");
-}
-
-void dump_track_info(MatroskaTrack * track, string const & indent)
-{
-	cout << indent << "trackNumber: " << track->trackNumber << "\n";
-
-	cout << indent << "trackType: ";
-	switch (track->trackType)
-	{
-		case MATROSKA_TRACK_TYPE_VIDEO:
-			cout << "video";
-			break;
-		case MATROSKA_TRACK_TYPE_AUDIO:
-			cout << "audio";
-			break;
-
-		case MATROSKA_TRACK_TYPE_SUBTITLE:
-			cout << "subtitle";
-			break;
-
-		case MATROSKA_TRACK_TYPE_OTHER:
-			cout << "other";
-			break;
-
-		default:
-			cout << "UNKNOWN";
-	}
-	cout << " (" << (int)track->trackType << ")\n";
-
-	cout << indent << "isEnabled, isDefault, isForced: " << (int)track->isEnabled << ", " << (int)track->isDefault << ", " << (int)track->isForced << "\n"
-		<< indent << "defaultDuration: " << track->defaultDuration << "\n";
-
-	cout << indent << "name: ";
-	if (track->name)
-		cout << track->name << "\n";
-	else
-		cout << "UNKNOWN\n";
-
-	cout << indent << "language: ";
-	if (track->language)
-		cout << track->language << "\n";
-	else
-		cout << "UNKNOWN\n";
-
-	cout << indent << "codecID: ";
-	if (track->codecID)
-		cout << track->codecID << "\n";
-	else
-		cout << "UNKNOWN\n";
-
-	cout << indent << "samplingFrequency: " << track->samplingFrequency << "\n"
-		<< indent << "numChannels: " << track->numChannels << "\n";
-
-	cout << indent << "mimeType: ";
-	if (track->mimeType)
-		cout << track->mimeType << "\n";
-	else
-		cout << "UNKNOWN\n";
-
-	cout << indent << "subframeSizeSize: " << track->subframeSizeSize << "\n";
 }
 
 void player_server::on_matroska_file_creation(MatroskaFile * new_file, void * data)
@@ -356,6 +297,66 @@ int main(int argc, char * argv[])
 	p.run();
 
 	return 0;
+}
+
+void dump_track_info(MatroskaTrack * track, string const & indent)
+{
+	cout << indent << "trackNumber: " << track->trackNumber << "\n";
+
+	cout << indent << "trackType: ";
+	switch (track->trackType)
+	{
+		case MATROSKA_TRACK_TYPE_VIDEO:
+			cout << "video";
+			break;
+		case MATROSKA_TRACK_TYPE_AUDIO:
+			cout << "audio";
+			break;
+
+		case MATROSKA_TRACK_TYPE_SUBTITLE:
+			cout << "subtitle";
+			break;
+
+		case MATROSKA_TRACK_TYPE_OTHER:
+			cout << "other";
+			break;
+
+		default:
+			cout << "UNKNOWN";
+	}
+	cout << " (" << (int)track->trackType << ")\n";
+
+	cout << indent << "isEnabled, isDefault, isForced: " << (int)track->isEnabled << ", " << (int)track->isDefault << ", " << (int)track->isForced << "\n"
+		<< indent << "defaultDuration: " << track->defaultDuration << "\n";
+
+	cout << indent << "name: ";
+	if (track->name)
+		cout << track->name << "\n";
+	else
+		cout << "UNKNOWN\n";
+
+	cout << indent << "language: ";
+	if (track->language)
+		cout << track->language << "\n";
+	else
+		cout << "UNKNOWN\n";
+
+	cout << indent << "codecID: ";
+	if (track->codecID)
+		cout << track->codecID << "\n";
+	else
+		cout << "UNKNOWN\n";
+
+	cout << indent << "samplingFrequency: " << track->samplingFrequency << "\n"
+		<< indent << "numChannels: " << track->numChannels << "\n";
+
+	cout << indent << "mimeType: ";
+	if (track->mimeType)
+		cout << track->mimeType << "\n";
+	else
+		cout << "UNKNOWN\n";
+
+	cout << indent << "subframeSizeSize: " << track->subframeSizeSize << "\n";
 }
 
 string gethostname()
