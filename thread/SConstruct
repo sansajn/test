@@ -1,7 +1,9 @@
 env = Environment(
-	CCFLAGS=['-std=c++11'],
+	CXXFLAGS=['-std=c++11', '-Wall', '-g', '-O0'],
 	LIBS=['pthread']
 )
+
+env.ParseConfig('pkg-config --cflags --libs Magick++')
 
 #env.Program('condition_var.cpp') 
 env.Program('thread_use.cpp') 
@@ -9,3 +11,5 @@ env.Program('terminate.cpp')
 env.Program('atomic_counter.cpp') 
 env.Program('lock_in_loop.cpp') 
 env.Program('thread_joinable.cpp')
+env.Program('async.cpp')
+env.Program('async_perlin_noise.cpp')
