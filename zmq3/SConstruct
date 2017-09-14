@@ -1,34 +1,41 @@
-env = Environment(CPPFLAGS=['-std=c++11', '-g', '-O0'], LIBS=['pthread'])
+env = Environment(
+	CPPFLAGS=['-std=c++11', '-g', '-O0', '-Wall'],
+	LIBS=['pthread']
+)
 
 # dependencies libzmq3, libczmq
-env.ParseConfig('pkg-config --cflags --libs libzmq libczmq')
+#env.ParseConfig('pkg-config --cflags --libs libzmq libczmq')
 
-objs = env.Object(['kvsimple.c'])
+#objs = env.Object(['kvsimple.c'])
 
 # clone pattern
-env.Program(['clonesrv1.cpp', objs])
-env.Program(['clonecli1.cpp', objs])
-env.Program(['clonesrv2.cpp', objs])
-env.Program(['clonecli2.cpp', objs])
-env.Program(['clonesrv3.cpp', objs])
-env.Program(['clonecli3.cpp', objs])
+#env.Program(['clonesrv1.cpp', objs])
+#env.Program(['clonecli1.cpp', objs])
+#env.Program(['clonesrv2.cpp', objs])
+#env.Program(['clonecli2.cpp', objs])
+#env.Program(['clonesrv3.cpp', objs])
+#env.Program(['clonecli3.cpp', objs])
 
 
 # zmqpp pure c++ samples
-env.Program(['zmqpp/hwserver.cpp', objs])
-env.Program(['zmqpp/hwclient.cpp', objs])
+#env.Program(['zmqpp/hwserver.cpp', objs])
+#env.Program(['zmqpp/hwclient.cpp', objs])
 
 
 # pure zmq
-env.Program('router_dealer_client.cpp')
-env.Program('router_dealer_server.cpp')
-env.Program('router_dealer_server_msg.cpp')
-env.Program('router_dealer_server_pp.cpp')
-env.Program('mtserver.cpp')
-env.Program('mtclient.cpp')
-env.Program('rrserv_mon.cpp')
+zmq_env = env.Clone()
+zmq_env.ParseConfig('pkg-config --cflags --libs libzmq')
+
+#zmq_env.Program('router_dealer_client.cpp')
+#zmq_env.Program('router_dealer_server.cpp')
+#zmq_env.Program('router_dealer_server_msg.cpp')
+#zmq_env.Program('router_dealer_server_pp.cpp')
+#zmq_env.Program('mtserver.cpp')
+#zmq_env.Program('mtclient.cpp')
+#zmq_env.Program('rrserv_mon.cpp')
+zmq_env.Program('publisher_subscriber.cpp')
 
 # cppzmq (zmq.hpp)
-env.Program('cppzmq/rrserv.cpp')
-env.Program('cppzmq/rrclient.cpp')
-env.Program('cppzmq/rrserv_mon.cpp')
+#env.Program('cppzmq/rrserv.cpp')
+#env.Program('cppzmq/rrclient.cpp')
+#env.Program('cppzmq/rrserv_mon.cpp')
