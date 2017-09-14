@@ -25,6 +25,9 @@ int main(int argc, char * argv[])
 	if (extract_part(boost::string_ref{s}).front() == 't')
 		cout << "verified, it is Patric\n";
 
+	if (extract_part(s).front() == 't')
+		cout << "it is still Patric\n";
+
 	cout << "done.\n";
 
 	return 0;
