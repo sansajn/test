@@ -1,4 +1,4 @@
-// pouzitie std::function
+// pouzitie std::function aka. funktor
 #include <functional>
 #include <vector>
 #include <iostream>
