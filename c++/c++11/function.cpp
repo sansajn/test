@@ -29,6 +29,11 @@ struct hoo
 	void operator()() const {cout << "hoo::operator()\n";}
 };
 
+void invoke(function<void ()> f)
+{
+	f();
+}
+
 
 int main(int argc, char * argv[]) 
 {	
@@ -49,7 +54,14 @@ int main(int argc, char * argv[])
 	for (auto f : funcs)  // call every function
 		f();
 
-
+	invoke([](){cout << "hello from inline lambda invoked by invoke()\n";});
+	
+	vector<function_t> direct_functs{
+		g,
+		hoo{},
+		[](){cout << "lambda()\n";}
+	};
+	
 	using function_with_arg_t = function<void (bool)>;
 	
 	vector<function_with_arg_t> functs_with_arg{
@@ -62,6 +74,7 @@ int main(int argc, char * argv[])
 	
 	for (auto f : functs_with_arg)
 		f(true);
+	
 
 	return 0;
 }
