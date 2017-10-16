@@ -1,6 +1,5 @@
 env = Environment(
-	CPPFLAGS=['-std=c++11', '-g', '-O0', '-Wall'],
-	LIBS=['pthread']
+	CPPFLAGS=['-std=c++11', '-g', '-O0', '-Wall'], LIBS=['pthread']
 )
 
 # dependencies libzmq3, libczmq
@@ -16,11 +15,9 @@ env = Environment(
 #env.Program(['clonesrv3.cpp', objs])
 #env.Program(['clonecli3.cpp', objs])
 
-
 # zmqpp pure c++ samples
 #env.Program(['zmqpp/hwserver.cpp', objs])
 #env.Program(['zmqpp/hwclient.cpp', objs])
-
 
 # pure zmq
 zmq_env = env.Clone()
@@ -34,6 +31,7 @@ zmq_env.ParseConfig('pkg-config --cflags --libs libzmq')
 #zmq_env.Program('mtclient.cpp')
 #zmq_env.Program('rrserv_mon.cpp')
 zmq_env.Program('publisher_subscriber.cpp')
+zmq_env.Program('sighandling.cpp')
 
 # cppzmq (zmq.hpp)
 #env.Program('cppzmq/rrserv.cpp')
