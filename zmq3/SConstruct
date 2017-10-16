@@ -32,6 +32,7 @@ zmq_env.ParseConfig('pkg-config --cflags --libs libzmq')
 #zmq_env.Program('rrserv_mon.cpp')
 zmq_env.Program('publisher_subscriber.cpp')
 zmq_env.Program('sighandling.cpp')
+zmq_env.Program('sighandling_mt.cpp')
 
 # cppzmq (zmq.hpp)
 #env.Program('cppzmq/rrserv.cpp')
