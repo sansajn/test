@@ -1,5 +1,5 @@
 env = Environment(
-	CXXFLAGS = ['-std=c++14', '-g', '-Wall', '-O0'],
+	CXXFLAGS = ['-std=c++17', '-Wall', '-g', '-O0'],
 	LIBS = ['pthread', 'boost_system', 'boost_regex']
 )
 
@@ -8,5 +8,8 @@ env.ParseConfig('pkg-config --cflags --libs libzmq')
 env.Program('hello.cpp')
 #env.Program('spawn.cpp')
 env.Program('pair_pair.cpp')
-env.Program('publisher_subscriber.cpp')
 env.Program('router_dealer_async_thread.cpp')
+env.Program('publisher_subscriber.cpp')
+env.Program('router_dealer.cpp')
+env.Program('buffer.cpp')
+env.Program('pull_push.cpp')

@@ -1,3 +1,9 @@
 /hello
 /spawn
 /pair_pair
+/publisher_subscriber
+/router_dealer
+/router_dealer_async_thread
+/buffer
+/pull_push
+
