@@ -1,0 +1,8 @@
+env = Environment(
+	CPPFLAGS=['-std=c++14', '-Wall']
+)
+
+env.ParseConfig('pkg-config gtkmm-3.0 --cflags --libs')
+
+env.Program('base.cpp')
+env.Program('17.2.1_myarea.cpp')
