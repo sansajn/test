@@ -1,8 +1,9 @@
 env = Environment(
-	CPPFLAGS=['-std=c++14', '-Wall']
+	CPPFLAGS=['-std=c++14', '-Wall', '-g', '-O0']
 )
 
 env.ParseConfig('pkg-config gtkmm-3.0 --cflags --libs')
 
 env.Program('base.cpp')
 env.Program('17.2.1_myarea.cpp')
+env.Program('17.2.3_thin_line.cpp')
