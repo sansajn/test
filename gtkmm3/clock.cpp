@@ -122,13 +122,14 @@ bool Clock::on_draw(Cairo::RefPtr<Cairo::Context> const & cr)
 bool Clock::on_timeout()
 {
 	// force redraw the entire clock
-	auto win = get_window();
+	Glib::RefPtr<Gdk::Window> win = get_window();
 	if (win)
 	{
 		Gtk::Allocation alloc = get_allocation();
 		Gdk::Rectangle r{0, 0, alloc.get_width(), alloc.get_height()};
 		win->invalidate_rect(r, false);
 	}
+	return true;
 }
 
 
