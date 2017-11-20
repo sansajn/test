@@ -15,3 +15,4 @@ env.Program('23.2.1_keyboard_events_propagation.cpp')
 
 # my
 env.Program('paint.cpp')
+env.Program('point_representation.cpp')
