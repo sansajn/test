@@ -1,6 +1,8 @@
 // mouse events example
 #include <vector>
 #include <iostream>
+#include <boost/geometry/geometries/point_xy.hpp>
+#include <boost/geometry/algorithms/distance.hpp>
 #include <boost/format.hpp>
 #include <gtkmm.h>
 #include <gdkmm.h>
@@ -8,13 +10,19 @@
 #include <sigc++/sigc++.h>
 #include <gdk/gdkkeysyms.h>
 
+namespace bg = boost::geometry;
 
 using std::vector;
 using std::cout;
 
+using bg::get;
+using bg::distance;
+using point_xy = bg::model::d2::point_xy<double>;
+
+
 struct line
 {
-	double x1, y1, x2, y2;
+	point_xy p1, p2;
 };
 
 class example_window : public Gtk::Window
@@ -33,19 +41,19 @@ private:
 
 	vector<line> _lines;
 	bool _new_line;
-	double _x, _y;
-	double _cur_x, _cur_y;
+	point_xy _line_begin;
+	point_xy _curpos;
 	bool _near_line_point;
-	double _npoint_x, _npoint_y;
+	point_xy _nearpos;
 	Gtk::DrawingArea _canvas;
 };
 
 example_window::example_window()
 	: _new_line{true}
-	, _x{0.0}, _y{0.0}
-	, _cur_x{0.0}, _cur_y{0.0}
+	, _line_begin{0.0, 0.0}
+	, _curpos{0.0, 0.0}
 	, _near_line_point{false}
-	, _npoint_x{0.0}, _npoint_y{0.0}
+	, _nearpos{0.0, 0.0}
 {
 	set_title("Paint");
 
@@ -69,41 +77,19 @@ bool example_window::canvas_button_press_event(GdkEventButton * event)
 
 bool example_window::canvas_button_release_event(GdkEventButton * event)
 {
-	if (event->button != 1 || event->type != Gdk::BUTTON_RELEASE)
+	if (event->button != 1)
 		return false;  // allow propagate
 
 	if (_new_line)
 	{
-		if (_near_line_point)
-		{
-			_x = _npoint_x;
-			_y = _npoint_y;
-		}
-		else
-		{
-			_x = event->x;
-			_y = event->y;
-		}
-
+		_line_begin = _near_line_point ? _nearpos : point_xy{event->x, event->y};
 		_new_line = false;
 	}
 	else
 	{
-		double x, y;
-		if (_near_line_point)
-		{
-			x = _npoint_x;
-			y = _npoint_y;
-		}
-		else
-		{
-			x = event->x;
-			y = event->y;
-		}
-
-		_lines.push_back(line{_x, _y, x, y});
-		_x = x;
-		_y = y;
+		point_xy line_end = _near_line_point ? _nearpos : point_xy{event->x, event->y};
+		_lines.push_back(line{_line_begin, line_end});
+		_line_begin = line_end;
 	}
 
 	force_redraw();
@@ -116,8 +102,7 @@ bool example_window::canvas_motion_notify_event(GdkEventMotion * event)
 	set_title(boost::str(boost::format{
 		"example window (%1%,%2%)"} % event->x % event->y));
 
-	_cur_x = event->x;
-	_cur_y = event->y;
+	_curpos = point_xy{event->x, event->y};
 
 	find_nearest_line_point();
 
@@ -132,22 +117,25 @@ bool example_window::on_key_press_event(GdkEventKey * event)
 	{
 		_new_line = true;
 		force_redraw();
+		return true;
 	}
+
+	return false;  // allow propagate
 }
 
 bool example_window::canvas_draw(Cairo::RefPtr<Cairo::Context> const & cr)
 {
 	for (line const & l : _lines)   // draw lines
 	{
-		cr->move_to(l.x1, l.y1);
-		cr->line_to(l.x2, l.y2);
+		cr->move_to(get<0>(l.p1), get<1>(l.p1));
+		cr->line_to(get<0>(l.p2), get<1>(l.p2));
 		cr->stroke();
 	}
 
 	if (!_new_line)  // draw scatch
 	{
-		cr->move_to(_x, _y);
-		cr->line_to(_cur_x, _cur_y);
+		cr->move_to(get<0>(_line_begin), get<1>(_line_begin));
+		cr->line_to(get<0>(_curpos), get<1>(_curpos));
 		cr->stroke();
 	}
 
@@ -155,18 +143,16 @@ bool example_window::canvas_draw(Cairo::RefPtr<Cairo::Context> const & cr)
 	{
 		// constexptr ?
 		double const HIGHLIGHT_WIDTH = 8.0;
-		cr->rectangle(_npoint_x - HIGHLIGHT_WIDTH/2.0, _npoint_y - HIGHLIGHT_WIDTH/2.0, HIGHLIGHT_WIDTH, HIGHLIGHT_WIDTH);
+		cr->rectangle(get<0>(_nearpos) - HIGHLIGHT_WIDTH/2.0, get<1>(_nearpos) - HIGHLIGHT_WIDTH/2.0, HIGHLIGHT_WIDTH, HIGHLIGHT_WIDTH);
 		cr->stroke();
 	}
 
 	return true;
 }
 
-bool near(double x1, double y1, double x2, double y2)
+bool near(point_xy const & p1, point_xy const & p2)
 {
-	double dx = x1 - x2;
-	double dy = y1 - y2;
-	return (dx*dx + dy*dy) <= 16.0;
+	return distance(p1, p2) < 4.0;
 }
 
 void example_window::find_nearest_line_point()
@@ -174,24 +160,22 @@ void example_window::find_nearest_line_point()
 	_near_line_point = false;
 
 	// ignore newly created points
-	if (!_new_line && near(_x, _y, _cur_x, _cur_y))
+	if (!_new_line && near(_line_begin, _curpos))
 		return;
 
 	for (line const & l : _lines)
 	{
-		if (near(l.x1, l.y1, _cur_x, _cur_y))
+		if (near(l.p1, _curpos))
 		{
 			_near_line_point = true;
-			_npoint_x = l.x1;
-			_npoint_y = l.y1;
+			_nearpos = l.p1;
 			return;  // onnly one end point can be highlighted
 		}
 
-		if (near(l.x2, l.y2, _cur_x, _cur_y))
+		if (near(l.p2, _curpos))
 		{
 			_near_line_point = true;
-			_npoint_x = l.x2;
-			_npoint_y = l.y2;
+			_nearpos = l.p2;
 			return;
 		}
 	}
