@@ -15,7 +15,6 @@ out/
 *.creator.user
 *.config
 *.files
-*.includes
 
 // doc
 doc/html/
