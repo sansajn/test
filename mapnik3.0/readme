@@ -1,0 +1,13 @@
+{c++}
+
+render_tile_to_file.cpp: renderuje mapu sveta do dlaždíc pomocou visitora, metóda používaná v python-mapnik.
+
+renred_tile.cpp: renderuje mapu do dlaždíc priamo použitím renderer
+konštruktora.
+
+
+{python}
+
+mapnik3_sample.py
+
+
