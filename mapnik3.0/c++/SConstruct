@@ -1,0 +1,8 @@
+env = Environment(
+	CCFLAGS=['-std=c++17', '-Wall', '-O0', '-g']
+)
+
+env.ParseConfig('mapnik-config --libs --cflags')
+
+env.Program('render_tile_to_file.cpp')
+env.Program('render_tile.cpp')
