@@ -1,4 +1,4 @@
-# taken from https://github.com/mapnik/mapnik/wiki/GettingStartedInPython
+# python2.7+, taken from https://github.com/mapnik/mapnik/wiki/GettingStartedInPython
 
 import mapnik
 
@@ -23,7 +23,7 @@ s.rules.append(r)
 m.append_style('My Style', s)
 
 # create datasource
-ds = mapnik.Shapefile(file='assets/TM_WORLD_BORDERS-0.3.shp')
+ds = mapnik.Shapefile(file='../data/TM_WORLD_BORDERS-0.3.shp')
 
 # create a layer
 layer = mapnik.Layer('world')  # a new layer called world
