@@ -165,7 +165,7 @@ int main(int argc, char * argv[])
 	}
 
 	for (auto & e : futures)
-		e.get();  // naco volam get funkciu ?
+		e.get();  // cakaj na vysledok
 
 	auto end = std::chrono::steady_clock::now();
 
