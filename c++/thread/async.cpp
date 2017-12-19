@@ -1,5 +1,6 @@
 // pouzitie std::async funkcie
 #include <future>
+#include <thread>
 #include <iostream>
 
 using std::future;
