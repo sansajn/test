@@ -1,7 +1,9 @@
 env = Environment(
 	#CXX='clang++',
 	CCFLAGS=['-g', '-O0', '-rdynamic'],
-	CPPFLAGS=['-std=c++11'])
+	CPPFLAGS=['-std=c++11'],
+	LIBS=['pthread']
+)
 
 env.Program('ls.cpp')
 env.Program('dirit.cpp')
@@ -9,3 +11,4 @@ env.Program('reentrant_ls.cpp')
 env.Program('sighandler.cpp')
 env.Program('backtrace.cpp')
 env.Program('hostname.cpp')
+env.Program('sigint_in_multithread_app.cpp')

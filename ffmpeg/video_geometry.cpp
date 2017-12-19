@@ -1,5 +1,7 @@
-// shows video geometry (libav* 2.7.6, ubuntu 15.10)
+// shows video geometry (libav* 2.7.6, ubuntu 15.10, 16.04)
 #include <string>
+#include <utility>
+#include <mutex>
 #include <iostream>
 #include <cassert>
 
@@ -13,24 +15,41 @@ extern "C" {
 
 using std::cout;
 using std::string;
+using std::pair;
+using std::once_flag;
+using std::call_once;
+using std::make_pair;
 
-int open_codec_context(AVFormatContext * fmt_ctx, AVMediaType type)
+once_flag __av_init_flag;
+
+
+pair<int, int> media_geometry(string const & fname)
 {
-	int stream_idx = av_find_best_stream(fmt_ctx, type, -1, -1, nullptr, 0);
-	if (stream_idx < 0)
-		return stream_idx;
+	pair<int, int> result{0, 0};
 
-	AVStream * st = fmt_ctx->streams[stream_idx];
+	call_once(__av_init_flag, av_register_all);
 
-	// find decoder for the stream
-	AVCodecContext * dec_ctx = st->codec;
-	AVCodec * dec = avcodec_find_decoder(dec_ctx->codec_id);
-	assert(dec);
-
-	int ret = avcodec_open2(dec_ctx, dec, nullptr);
+	// open file
+	AVFormatContext * fmt_ctx = nullptr;
+	int ret = avformat_open_input(&fmt_ctx, fname.c_str(), nullptr, nullptr);
 	assert(ret >= 0);
 
-	return stream_idx;
+	// retrieve stream information
+	ret = avformat_find_stream_info(fmt_ctx, nullptr);
+	assert(ret >= 0);
+
+	// find stream
+	int stream_idx = av_find_best_stream(fmt_ctx, AVMEDIA_TYPE_VIDEO, -1, -1, nullptr, 0);
+	assert(stream_idx >= 0);
+	AVStream * video_stream = fmt_ctx->streams[stream_idx];
+
+	AVCodecContext * dec_ctx = video_stream->codec;  // stream decoder
+
+	result = make_pair(dec_ctx->width, dec_ctx->height);
+
+	avformat_close_input(&fmt_ctx);
+
+	return result;
 }
 
 int main(int argc, char * argv[])
@@ -39,28 +58,15 @@ int main(int argc, char * argv[])
 	if (argc > 1)
 		input_file = argv[1];
 
-	av_register_all();
-
-	// open file
-	AVFormatContext * fmt_ctx = nullptr;
-	int ret = avformat_open_input(&fmt_ctx, input_file.c_str(), nullptr, nullptr);
-	assert(ret >= 0);
-
-	// retrieve stream information
-	ret = avformat_find_stream_info(fmt_ctx, nullptr);
-	assert(ret >= 0);
-
-	int stream_idx = open_codec_context(fmt_ctx, AVMEDIA_TYPE_VIDEO);
-	if (stream_idx >= 0)
+	for (int i = 0; i < 100; ++i)
 	{
-		AVStream * video_stream = fmt_ctx->streams[stream_idx];
-		AVCodecContext * video_dec_ctx = video_stream->codec;
-		cout << "w:" << video_dec_ctx->width << ", h:" << video_dec_ctx->height << "\n";
+		int w, h;
+		std::tie(w, h) = media_geometry(input_file);
+		cout << "width:" << w << ", height:" << h << "\n";
 	}
-	else
-		cout << "no video found\n";
 
-	avformat_close_input(&fmt_ctx);
+	cout << "press enter to end";
+	getchar();
 
 	return 0;
 }
