@@ -1,7 +1,12 @@
-env = Environment()
-env.Append(
-	LIBS=['boost_log', 'boost_system', 'boost_thread', 'pthread'], 
-	CCFLAGS=['-DBOOST_LOG_DYN_LINK', '-g', '-O0', '-std=c++11'])
+env = Environment(
+	CCFLAGS=['-std=c++14', '-Wall', '-g', '-O0'],
+	LIBS=['boost_log', 'boost_system', 'boost_thread', 'pthread'],
+	CPPDEFINES=['BOOST_LOG_DYN_LINK']
+)
+
 env.Program('trivial.cpp')
 env.Program('trivial_filters.cpp')
 env.Program('tofile.cpp')
+env.Program('custom_backend_sink.cpp')
+env.Program('console_log.cpp')
+env.Program('custom_attribute.cpp')

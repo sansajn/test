@@ -1,3 +1,4 @@
+// severity sample
 #include <boost/log/trivial.hpp>
 #include <boost/log/expressions.hpp>
 

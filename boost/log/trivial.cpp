@@ -1,3 +1,4 @@
+// the most trivial logging ussage
 #include <boost/log/trivial.hpp>
 
 int main(int argc, char * argv[])
