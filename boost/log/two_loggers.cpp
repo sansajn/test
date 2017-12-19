@@ -24,9 +24,10 @@ enum class error_code
 	file_not_found
 };
 
+using snmp_logger = sources::severity_logger_mt<logging::trivial::severity_level>;
+
 #define _LOG1(lvl)\
 	BOOST_LOG_STREAM_WITH_PARAMS(::boost::log::trivial::logger::get(),\
-	(set_get_attrib("ErrorCode", error_code::ok))\
 	(::boost::log::keywords::severity = ::boost::log::trivial::lvl))
 
 #define _LOG2(lvl, ec)\
@@ -69,6 +70,7 @@ int main(int argc, char * argv[])
 
 	logging::core::get()->add_thread_attribute("ErrorCode", attrs::mutable_constant<error_code>{error_code::ok});
 
+/*
 	logging::add_console_log(std::clog,
 		keywords::format = (
 			expr::stream
@@ -78,6 +80,7 @@ int main(int argc, char * argv[])
 				<< expr::smessage
 		)
 	);
+*/
 
 	LOG(warning, out_of_range) << "Hello!!";
 
