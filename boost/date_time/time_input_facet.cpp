@@ -14,7 +14,7 @@ int main(int argc, char * argv[])
 	bt::ptime pt;
 	stringstream is{"2016-03-14-18-12-39"};
 	is.imbue(custom_loc);
-	is >> pt;
+	is >> pt;  // local time
 	
 	cout << pt << std::endl;
 	
