@@ -14,7 +14,6 @@ struct count_handler : public osmium::handler::Handler
 {
 	uint64_t count = 0;
 	void node(osmium::Node const & n);
-	void tag_list(osmium::TagList const & tags);
 };
 
 void count_handler::node(osmium::Node const & n)
@@ -34,11 +33,6 @@ void count_handler::node(osmium::Node const & n)
 
 //	for (auto const & t : n.tags())
 //		cout << "key:" << t.key() << ", value:" << t.value() << "\n";
-}
-
-void count_handler::tag_list(osmium::TagList const & tags)
-{
-	cout << "tag_list\n";
 }
 
 
