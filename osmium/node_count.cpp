@@ -13,9 +13,34 @@ string const default_osm_input = "atm.osm";
 struct count_handler : public osmium::handler::Handler
 {
 	uint64_t count = 0;
-
-	void node(osmium::Node const & n) {count += 1;}
+	void node(osmium::Node const & n);
+	void tag_list(osmium::TagList const & tags);
 };
+
+void count_handler::node(osmium::Node const & n)
+{
+	++count;
+
+	osmium::Location const & loc = n.location();
+	cout << "(" << loc.lat() << ", " << loc.lon() << ")";
+
+	// also show tag-name
+	osmium::TagList const & tags = n.tags();
+	char const * val = tags["name"];
+	if (val)
+		cout << ", " << val;
+
+	cout << "\n";
+
+//	for (auto const & t : n.tags())
+//		cout << "key:" << t.key() << ", value:" << t.value() << "\n";
+}
+
+void count_handler::tag_list(osmium::TagList const & tags)
+{
+	cout << "tag_list\n";
+}
+
 
 int main(int argc, char * argv[])
 {
@@ -30,7 +55,8 @@ int main(int argc, char * argv[])
 	reader.close();
 
 	cout << "nodes:" << node_counter.count << "\n"
-		<< "done.";
+		<< "done.\n";
 
 	return 0;
 }
+
