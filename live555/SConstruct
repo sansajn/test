@@ -50,7 +50,7 @@ local_liblive555_env.Program(['jpeg_one_frame.cpp', live555_lib])
 local_liblive555_env.Program(['jpeg_stream.cpp', live555_lib])
 local_liblive555_env.Program(['jpeg_multiple_source_stream.cpp', live555_lib])
 local_liblive555_env.Program(['openRTSP.cpp', 'playCommon.cpp', live555_lib])
-
+local_liblive555_env.Program(['testH264VideoStreamer.cpp', live555_lib])
 
 # locally installed environment, NOT USED now
 locally_installed_env = Environment(
@@ -68,4 +68,3 @@ locally_installed_env = Environment(
 		'/usr/local/include/UsageEnvironment'
 	]
 )
-

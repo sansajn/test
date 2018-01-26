@@ -1,16 +1,19 @@
 #include <string>
 #include <stdexcept>
+#include <iostream>
 #include <cassert>
 #include <liveMedia.hh>
 #include <BasicUsageEnvironment.hh>
 #include <GroupsockHelper.hh>
 
 using std::string;
+using std::cout;
 
 string h264_input_file = "test.264";
 H264VideoStreamFramer * video_source = nullptr;
 UsageEnvironment * env = nullptr;
 RTPSink * video_sink = nullptr;
+char quit_live555_loop = 0;
 
 void play();
 void after_playing(void *);
@@ -77,12 +80,17 @@ int main(int argc, char * argv[])
 	*env << "Beginning streaming ...\n";
 	play();
 
-	env->taskScheduler().doEventLoop();  // does not return
+	env->taskScheduler().doEventLoop(&quit_live555_loop);
 
+	// release
 	Medium::close(video_sink);
 	Medium::close(video_source);
 	Medium::close(rtsp_serv);
 	Medium::close(rtcp);
+
+	bool released = env->reclaim();
+	assert(released);
+	delete sched;
 
 	return 0;
 }
@@ -109,8 +117,8 @@ void after_playing(void *)
 	Medium::close(video_source);
 	// note that this also ocloses the input file that this source read from.
 
-	// start playing one again
-	play();
+	// quit
+	quit_live555_loop = 1;
 }
 
 string gethostname()
