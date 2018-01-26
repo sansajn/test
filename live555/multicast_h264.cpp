@@ -115,7 +115,7 @@ void after_playing(void *)
 	*env << "... done reading from file\n";
 	video_sink->stopPlaying();
 	Medium::close(video_source);
-	// note that this also ocloses the input file that this source read from.
+	// note that this also closes the input file that this source read from.
 
 	// quit
 	quit_live555_loop = 1;
