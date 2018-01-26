@@ -177,7 +177,7 @@ void player_server::on_matroska_file_creation(MatroskaFile * new_file, void * da
 		assert(track.source);
 		cout << ", track-src:" << track_src;
 		cout << ", streaming-src:" << track.source;
-		cout << ", est_bitrate:" << est_bitrate;
+		cout << ", est_bitrate:" << est_bitrate << "kbps";
 
 		Groupsock * rtp_sock = new Groupsock(*self->_env, self->_dst_address, rtp_port_num, ttl);
 		Groupsock * rtcp_groupsock = new Groupsock(*self->_env, self->_dst_address, rtp_port_num+1, ttl);
@@ -189,7 +189,7 @@ void player_server::on_matroska_file_creation(MatroskaFile * new_file, void * da
 			if (track.sink->estimatedBitrate() > 0)
 				est_bitrate = track.sink->estimatedBitrate();
 
-			cout << ", real-est_bitrate:" << est_bitrate;
+			cout << ", real-est_bitrate:" << est_bitrate << "kbps";
 
 			track.rtcp = RTCPInstance::createNew(*self->_env, rtcp_groupsock, est_bitrate,
 				(unsigned char const *)host_name.c_str(), track.sink, nullptr, True);  // this starts RTCP running automatically
