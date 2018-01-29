@@ -51,6 +51,7 @@ local_liblive555_env.Program(['jpeg_multiple_source_stream.cpp', live555_lib])
 local_liblive555_env.Program(['openRTSP.cpp', 'playCommon.cpp', live555_lib])
 local_liblive555_env.Program(['testH264VideoStreamer.cpp', live555_lib])
 local_liblive555_env.Program(['multicast_mkv.cpp', live555_lib])
+local_liblive555_env.Program(['mkv_release.cpp', live555_lib])
 
 # locally installed environment, NOT USED now
 locally_installed_env = Environment(
