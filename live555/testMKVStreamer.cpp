@@ -42,6 +42,9 @@ static struct {
 void onMatroskaFileCreation(MatroskaFile* newFile, void* clientData); // forward
 
 int main(int argc, char** argv) {
+  if (argc > 1)
+	 inputFileName = argv[1];
+
   // Begin by setting up our usage environment:
   TaskScheduler* scheduler = BasicTaskScheduler::createNew();
   env = BasicUsageEnvironment::createNew(*scheduler);
