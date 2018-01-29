@@ -5,10 +5,12 @@
 
 char quit = 0;
 MatroskaFile * __file = nullptr;
+MatroskaDemux * __demux = nullptr;
 
 void on_file_ready(MatroskaFile * file, void * user_data)
 {
 	__file = file;
+	__demux = file->newDemux();
 	quit = 1;
 }
 
@@ -21,6 +23,7 @@ int main(int argc, char * argv[])
 
 	sched->doEventLoop(&quit);
 
+	Medium::close(__demux);  // needs to be there otherwise env->reclaim() fails
 	Medium::close(__file);
 
 	bool released = env->reclaim();
