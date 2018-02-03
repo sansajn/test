@@ -4,3 +4,5 @@ env = Environment(
 env.ParseConfig('pkg-config --cflags --libs libagg')
 
 env.Program('t01_rendering_buffer.cpp')
+env.Program('t02_pixel_formats.cpp')
+env.Program('t03_solar_spectrum.cpp')
