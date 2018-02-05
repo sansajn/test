@@ -1,9 +1,24 @@
 env = Environment(
-	CCFLAGS=['-std=c++14', '-O0', '-g', '-Wall'])
+	CCFLAGS=['-std=c++14', '-O0', '-g', '-Wall'],
+	CPPPATH=['agg-2.5/include']
+)
 
-env.ParseConfig('pkg-config --cflags --libs libagg')
+# build library with x11 support
 
-env.Program('t01_rendering_buffer.cpp')
-env.Program('t02_pixel_formats.cpp')
-env.Program('t03_solar_spectrum.cpp')
-env.Program('t04_alpha_mask.cpp')
+env.ParseConfig('pkg-config --cflags --libs x11')
+
+agg_lib = env.StaticLibrary('agg', [
+	Glob('agg-2.5/src/*.cpp'),
+	Glob('agg-2.5/src/ctrl/*.cpp'),
+	Glob('agg-2.5/src/platform/X11/*.cpp')
+])
+
+# examples
+env.Program(['agg-2.5/examples/line_patterns.cpp', agg_lib])
+
+
+# my samples
+env.Program(['t01_rendering_buffer.cpp', agg_lib])
+env.Program(['t02_pixel_formats.cpp', agg_lib])
+env.Program(['t03_solar_spectrum.cpp', agg_lib])
+env.Program(['t04_alpha_mask.cpp', agg_lib])
