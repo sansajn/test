@@ -32,7 +32,7 @@ public:
 	}
 
 private:
-	vector<polygon_type> _polys;
+	vector<polygon_type> & _polys;
 };
 
 int main(int argc, char * argv[])
