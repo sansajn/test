@@ -7,3 +7,4 @@ env.ParseConfig('pkg-config --cflags --libs expat')
 
 env.Program('node_count.cpp')
 env.Program('atm_list.cpp')
+env.Program('ways.cpp')
