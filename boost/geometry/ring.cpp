@@ -31,9 +31,19 @@ int main(int argc, char * argv[])
 	cout << "area(r2)=" << bg::area(r2) << "\n";
 
 	// iteracia ringom
-	cout << "vertives(r2)=";
+	cout << "vertices(r2)=";
 	for (point const & v : r2)
 		cout << bg::dsv(v) << ", ";
+	cout << "\n";
+
+	cout << "vertices(r2)=";
+	for (auto it = std::begin(r2); it != std::end(r2); ++it)
+		cout << bg::dsv(*it) << ", ";
+	cout << "\n";
+
+	cout << "vertices(r2)=";
+	for (size_t i = 0; i < r2.size(); ++i)
+		cout << bg::dsv(r2[i]) << ", ";
 	cout << "\n";
 
 	return 0;
