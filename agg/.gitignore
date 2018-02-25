@@ -1,3 +1,14 @@
-t01_rendering_buffer
-t02_pixel_formats
-t03_solar_spectrum
+/line_patterns
+/pipeline_1
+/pipeline_2
+/pipeline_3
+/pipeline_4
+/pipeline_5
+/pipeline_6
+/pipeline_7
+/render_poly
+/t01_rendering_buffer
+/t02_pixel_formats
+/t03_solar_spectrum
+/t04_alpha_mask
+/*.ppm
