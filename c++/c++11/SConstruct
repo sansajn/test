@@ -18,6 +18,7 @@ env.Program('find_if.cpp')
 # right-reference
 env.Program('rrefopt.cpp')
 env.Program('rref_test.cpp')
+env.Program('rvalref_constructor.cpp')
 
 # time
 env.Program('utc_time.cpp')
