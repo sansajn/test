@@ -1,6 +1,8 @@
-// playground for new ideas
+// implementuje streamer streamujuci MKV videa (snazi sa znovapouzit live555 kanal).
 #include <string>
 #include <memory>
+#include <queue>
+#include <vector>
 #include <iostream>
 #include <cassert>
 #include <liveMedia.hh>
@@ -10,98 +12,235 @@
 
 using std::string;
 using std::unique_ptr;
+using std::queue;
+using std::vector;
 using std::cout;
 
 char const * TEST_VIDEO = "test.mkv";
 
-char mkv_file_ready_flag = 0;
-void on_mkv_file_ready(MatroskaFile * file, void * user_data)
+class stream_server
 {
-	*((MatroskaFile **)user_data) = file;
-	mkv_file_ready_flag = 1;
+public:
+	stream_server();
+	~stream_server();
+	void bind();
+	void stream(bool repeat = false);
+	void add(string const & fname);
+	void join();
+
+private:
+	void play_next(string const & item);
+
+	static void on_file_ready(MatroskaFile * file, void * user_data);
+	static void on_playing_done(void * user_data);
+
+	queue<string> _items;
+	TaskScheduler * _sched;
+	UsageEnvironment * _env;
+	RTSPServer * _serv;
+	ServerMediaSession * _sms;
+	MatroskaFile * _file;
+	MatroskaDemux * _demux;
+	FramedSource * _source;
+	RTPSink * _sink;
+	Groupsock * _rtp_group, * _rtcp_group;
+	RTCPInstance * _rtcp;
+	char _file_ready_flag, _playing_done_flag;
+	bool _repeat;
+};
+
+void introduce_self(string const & item)
+{
+	cout << "streaming: " << item << std::endl;
 }
 
-char after_playing_flag = 0;
-void on_after_playing(void * user_data)
+stream_server::~stream_server()
 {
-	RTPSink * sink = (RTPSink *)user_data;
-	sink->stopPlaying();
-	after_playing_flag = 1;
+	Medium::close(_sink);
+	Medium::close(_source);
+	Medium::close(_serv);  // also release sms
+	Medium::close(_rtcp);
+	Medium::close(_file);
+
+	delete _rtp_group;
+	delete _rtcp_group;
+
+	bool env_released = _env->reclaim();
+	assert(env_released);
+
+	delete _sched;
 }
 
-int main(int argc, char * argv[])
+void stream_server::add(string const & fname)
 {
-	string input_video = (argc > 1) ? argv[1] : TEST_VIDEO;
+	_items.push(fname);
+}
 
-	// [constructor]
-	TaskScheduler * sched = BasicTaskScheduler::createNew();
-	UsageEnvironment * env = BasicUsageEnvironment::createNew(*sched);
+stream_server::stream_server()
+	: _serv{nullptr}
+	, _sms{nullptr}
+	, _file{nullptr}
+	, _demux{nullptr}
+	, _source{nullptr}
+	, _sink{nullptr}
+	, _rtp_group{nullptr}
+	, _rtcp_group{nullptr}
+	, _rtcp{nullptr}
+	, _file_ready_flag{0}
+	, _playing_done_flag{0}
+	, _repeat{false}
+{
+	_sched = BasicTaskScheduler::createNew();
+	_env = BasicUsageEnvironment::createNew(*_sched);
+}
 
-	// [bind]
-	RTSPServer * rtsp_serv = RTSPServer::createNew(*env, 7070);
-	assert(rtsp_serv);
+void stream_server::bind()
+{
+	_serv = RTSPServer::createNew(*_env, 7070);
+	assert(_serv);
 
-	ServerMediaSession * sms = ServerMediaSession::createNew(*env, "testStream", "some description ...",
-		"", True);
-	assert(sms);
+	_sms = ServerMediaSession::createNew(*_env, "stream", "", "", True);
+	assert(_sms);
 
-	rtsp_serv->addServerMediaSession(sms);
+	_serv->addServerMediaSession(_sms);
 
-	// [play]
-	MatroskaFile * file = nullptr;
-	MatroskaFile::createNew(*env, input_video.c_str(), on_mkv_file_ready,
-		(void *)&file, "eng");
+	struct in_addr addr;
+	addr.s_addr = chooseRandomIPv4SSMAddress(*_env);
+	_rtp_group = new Groupsock{*_env, addr, 18888, 255};
+	_rtcp_group = new Groupsock{*_env, addr, 18889, 255};
+}
 
-	sched->doEventLoop(&mkv_file_ready_flag);  // wait file ready
-	assert(file);
+void stream_server::stream(bool repeat)
+{
+	_repeat = repeat;
 
-	MatroskaDemux * demux = file->newDemux();
-	assert(demux);
+	string item = _items.front();
+	_items.pop();
+
+	if (repeat)
+		_items.push(item);
+
+	MatroskaFile::createNew(*_env, item.c_str(), on_file_ready, (void *)this, "eng");
+
+	_file_ready_flag = 0;
+	_sched->doEventLoop(&_file_ready_flag);  // wait file ready
+	assert(_file);
+
+	_demux = _file->newDemux();
+	assert(_demux);
 
 	// source
 	unsigned track_num = 0;
-	FramedSource * source = demux->newDemuxedTrack(track_num);
+	_source = _demux->newDemuxedTrack(track_num);
 
 	unsigned est_bitrate, num_filters_in_front_of_track;
-	source = file->createSourceForStreaming(source, track_num, est_bitrate, num_filters_in_front_of_track);
-	assert(source);
+	_source = _file->createSourceForStreaming(_source, track_num, est_bitrate, num_filters_in_front_of_track);
+	assert(_source);
 
 	// sink
-	struct in_addr addr;
-	addr.s_addr = chooseRandomIPv4SSMAddress(*env);
-	Groupsock rtp_group{*env, addr, 18888, 255};
-	RTPSink * sink = file->createRTPSinkForTrackNumber(track_num, &rtp_group, 96);
-	assert(sink);
+	_sink = _file->createRTPSinkForTrackNumber(track_num, _rtp_group, 96);
+	assert(_sink);
 
-	if (sink->estimatedBitrate() > 0)
-		est_bitrate = sink->estimatedBitrate();
+	if (_sink->estimatedBitrate() > 0)
+		est_bitrate = _sink->estimatedBitrate();
 
-	Groupsock rtcp_group{*env, addr, 18889, 255};
-	RTCPInstance * rtcp = RTCPInstance::createNew(*env, &rtcp_group, est_bitrate,
-		(unsigned char const *)"", sink, nullptr, True);  // this starts RTCP running automatically
-	assert(rtcp);
+	_rtcp = RTCPInstance::createNew(*_env, _rtcp_group, est_bitrate,
+		(unsigned char const *)"", _sink, nullptr, True);  // this starts RTCP running automatically
+	assert(_rtcp);
 
-	sms->addSubsession(PassiveServerMediaSubsession::createNew(*sink, rtcp));
+	_sms->addSubsession(PassiveServerMediaSubsession::createNew(*_sink, _rtcp));
 
-	sink->startPlaying(*source, on_after_playing, (void *)sink);
+	_sink->startPlaying(*_source, on_playing_done, (void *)this);
 
-	unique_ptr<char []> url{rtsp_serv->rtspURL(sms)};
-	cout << "use 'cvlc " << url.get() << "' command to see streamed content\n";
+	unique_ptr<char []> url{_serv->rtspURL(_sms)};
+	cout << "use\n\n"
+		<< "   cvlc " << url.get() << "\n\n"
+		<< "command to see streamed content.\n\n";
 
-	// [join]
-	sched->doEventLoop(&after_playing_flag);
+	cout << "max-frame-size=" << _source->maxFrameSize() << ", "
+		 << "OutPacketBuffer::maxSize=" << OutPacketBuffer::maxSize << "\n\n";
 
-	// [destructor]
-	Medium::close(sink);
-	Medium::close(source);
-	Medium::close(rtsp_serv);  // also release sms
-	Medium::close(rtcp);
-	Medium::close(file);
+	introduce_self(item);
+}
 
-	bool env_released = env->reclaim();
-	assert(env_released);
+void stream_server::play_next(string const & item)
+{
+	Medium::close(_source);
+	Medium::close(_file);
 
-	delete sched;
+	// _sink, _rtcp can be reused
+	MatroskaFile::createNew(*_env, item.c_str(), on_file_ready, (void *)this, "eng");
 
+	_file_ready_flag = 0;
+	_sched->doEventLoop(&_file_ready_flag);  // wait file ready
+	assert(_file);
+
+	_demux = _file->newDemux();
+	assert(_demux);
+
+	// source
+	unsigned track_num = 0;
+	_source = _demux->newDemuxedTrack(track_num);
+
+	unsigned est_bitrate, num_filters_in_front_of_track;
+	_source = _file->createSourceForStreaming(_source, track_num, est_bitrate, num_filters_in_front_of_track);
+	assert(_source);
+
+	_sink->startPlaying(*_source, on_playing_done, (void *)this);
+
+	introduce_self(item);
+}
+
+void stream_server::join()
+{
+	_playing_done_flag = 0;
+	_sched->doEventLoop(&_playing_done_flag);
+}
+
+void stream_server::on_file_ready(MatroskaFile * file, void * user_data)
+{
+	stream_server * self = (stream_server *)user_data;
+	self->_file = file;
+	self->_file_ready_flag = 1;
+}
+
+void stream_server::on_playing_done(void * user_data)
+{
+	stream_server * self = (stream_server *)user_data;
+	self->_sink->stopPlaying();
+
+	if (!self->_items.empty())
+	{
+		string item = self->_items.front();
+		self->_items.pop();
+
+		if (self->_repeat)
+			self->_items.push(item);
+
+		self->play_next(item);
+	}
+	else
+		self->_playing_done_flag = 1;
+}
+
+
+int main(int argc, char * argv[])
+{
+	vector<string> item_list;
+	for (int i = 1; i < argc; ++i)
+		item_list.push_back(argv[i]);
+
+	if (item_list.empty())
+		item_list.push_back(TEST_VIDEO);
+
+	stream_server p;
+	for (string const & item : item_list)
+		p.add(item);
+
+	p.bind();
+	p.stream(true);
+	p.join();
+
+	cout << "done.\n";
 	return 0;
 }
