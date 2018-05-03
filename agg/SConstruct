@@ -31,3 +31,7 @@ env.Program(['pipeline_5.cpp', agg_lib])
 env.Program(['pipeline_6.cpp', agg_lib])
 env.Program(['pipeline_7.cpp', agg_lib])
 env.Program(['render_poly.cpp', agg_lib])
+env.Program(['render_line.cpp', agg_lib])
+#env.Program(['render_primitives.cpp', agg_lib])
+env.Program(['graph_test.cpp', agg_lib])
+
