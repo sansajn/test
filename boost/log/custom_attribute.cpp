@@ -130,6 +130,13 @@ class severity_errorcode_logger
 BOOST_LOG_ATTRIBUTE_KEYWORD(errorcode, "ErrorCode", int);
 
 
+enum error_code
+{
+	ok,
+	wrong_input_file,
+	bad_media_format
+};
+
 int main(int argc, char * argv[])
 {
 	logging::add_common_attributes();
@@ -145,8 +152,8 @@ int main(int argc, char * argv[])
 
 	severity_errorcode_logger<logging::trivial::severity_level> lg;
 
-	LOG_WITH_EC(lg, trace, 101) << "can't open file";
-	LOG_WITH_EC(lg, trace, 202) << "invalid handle value";
+	LOG_WITH_EC(lg, trace, wrong_input_file) << "can't open file";
+	LOG_WITH_EC(lg, trace, bad_media_format) << "invalid handle value";
 
 	return 0;
 }
