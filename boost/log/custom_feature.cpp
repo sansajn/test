@@ -20,7 +20,7 @@ namespace keywords = boost::log::keywords;
 
 
 template <typename BaseT>
-class record_tagger_feature: public BaseT
+class record_tagger_feature : public BaseT
 {
 public:
 	using char_type = typename BaseT::char_type;
