@@ -90,7 +90,7 @@ int main(int argc, char * argv[])
 {
 	vector<polygon_type> polys;
 
-	osmium::io::Reader osm{"u_uranie.osm"};
+	osmium::io::Reader osm{argc > 1 ? argv[1] : "u_uranie.osm"};
 	polygon_handler_impl h{polys};
 	h.apply(osm);
 	osm.close();
