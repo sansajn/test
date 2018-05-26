@@ -17,4 +17,8 @@ env.Program('curlyconstruct.cpp')
 env.Program('curlyb.cpp')
 env.Program('ortho.cpp')
 env.Program('projection_play.cpp')
-env.Program('vector_angle.cpp')
+
+# unable to compile with glm 0.9.9.0
+#env.Program('vector_angle.cpp')
+
+env.Program('test_adapt.cpp')
