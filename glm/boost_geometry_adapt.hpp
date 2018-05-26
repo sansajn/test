@@ -1,4 +1,4 @@
-/*! Adaptuje štruktúry s knižnice glm (0.9.6.3) pre použitie s boost::geometry. */
+/*! Adaptuje štruktúry s knižnice glm (0.9.6.3, 0.9.9.0) pre použitie s boost::geometry. */
 #pragma once
 #include <boost/mpl/int.hpp>
 #include <boost/geometry/core/access.hpp>
@@ -6,8 +6,55 @@
 #include <boost/geometry/core/coordinate_system.hpp>
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/core/coordinate_dimension.hpp>
-#include <glm/vec3.hpp>
-#include <glm/vec2.hpp>
+#include <glm/detail/setup.hpp>
+
+#if GLM_VERSION >= 990
+	#include <glm/detail/type_vec.hpp>
+#else
+	#include <glm/vec2.hpp>
+	#include <glm/vec3.hpp>
+#endif
+
+#if GLM_VERSION >= 990
+
+namespace boost { namespace geometry { namespace traits {
+
+// glm::vec adaptation
+template <glm::length_t L, typename T, glm::qualifier Q>
+struct tag<glm::vec<L, T, Q>>
+{
+	typedef point_tag type;
+};
+
+template <glm::length_t L, typename T, glm::qualifier Q>
+struct coordinate_type<glm::vec<L, T, Q>>
+{
+	typedef typename glm::vec<L, T, Q>::value_type type;
+};
+
+template <glm::length_t L, typename T, glm::qualifier Q>
+struct coordinate_system<glm::vec<L, T, Q>>
+{
+	typedef cs::cartesian type;
+};
+
+template <glm::length_t L, typename T, glm::qualifier Q>
+struct dimension<glm::vec<L, T, Q>> : boost::mpl::int_<L>
+{};
+
+template <glm::length_t L, typename T, glm::qualifier Q, std::size_t Dimension>
+struct access<glm::vec<L, T, Q>, Dimension>
+{
+	typedef glm::vec<L, T, Q> point_type;
+	typedef typename glm::vec<L, T, Q>::value_type value_type;
+
+	static value_type get(point_type const & p) {return p[Dimension];}
+	static void set(point_type & p, value_type const & v) {p[Dimension] = v;}
+};
+
+}}}  // geometry, boost, traits
+
+#else  // glm 0.9.6.3
 
 namespace boost { namespace geometry { namespace traits {
 
@@ -78,3 +125,5 @@ struct access<glm::tvec3<T, P>, Dimension>
 };
 
 }}}  // geometry, boost, traits
+
+#endif

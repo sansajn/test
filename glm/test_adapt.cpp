@@ -3,12 +3,7 @@
 #include <boost/geometry/geometry.hpp>
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
-
-#if GLM_VERSION >= 990
-	#include "boost_geometry_adapt_0990.hpp"
-#else
-	#include "boost_geometry_adapt_0963.hpp"
-#endif
+#include "boost_geometry_adapt.hpp"
 
 using boost::geometry::make;
 using boost::geometry::make_inverse;
