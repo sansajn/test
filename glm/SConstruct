@@ -22,3 +22,4 @@ env.Program('projection_play.cpp')
 #env.Program('vector_angle.cpp')
 
 env.Program('test_adapt.cpp')
+env.Program('vec2_adapt.cpp')
