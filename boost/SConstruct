@@ -7,3 +7,4 @@ env.Append(
 
 env.Program('rename.cpp')
 env.Program('tokenizer.cpp')
+env.Program('scope_exit.cpp')
