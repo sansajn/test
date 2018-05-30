@@ -1,6 +1,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <time.h>
+#include <Magick++.h>
 #include "agg_basics.h"
 #include "agg_rendering_buffer.h"
 #include "agg_conv_transform.h"
@@ -23,31 +24,12 @@ enum flip_y_e { flip_y = true };
 
 typedef agg::pixfmt_bgr24 pixfmt;
 
-
-class pattern_src_brightness_to_alpha_rgba8
-{
-public:
-	pattern_src_brightness_to_alpha_rgba8(agg::rendering_buffer& rb) :
-		m_rb(&rb), m_pf(*m_rb) {}
-
-	unsigned width()  const { return m_pf.width();  }
-	unsigned height() const { return m_pf.height(); }
-	agg::rgba8 pixel(int x, int y) const
-	{
-		agg::rgba8 c = m_pf.pixel(x, y);
-		return c;
-	}
-
-private:
-	agg::rendering_buffer* m_rb;
-	pixfmt m_pf;
-};
-
-
 class the_application : public agg::platform_support
 {
 	agg::rgba8 m_ctrl_color;
 	agg::bezier_ctrl<agg::rgba8> m_curve1;
+	Magick::Blob _patt_pixels;
+	agg::rendering_buffer _patt_rb;
 
 public:
 	typedef agg::renderer_base<pixfmt> renderer_base;
@@ -67,6 +49,10 @@ public:
 		add_ctrl(m_curve1);
 
 		m_curve1.no_transform();
+
+		Magick::Image patt_im{"data/1.ppm"};
+		patt_im.write(&_patt_pixels, "BGR");
+		_patt_rb.attach((uint8_t *)_patt_pixels.data(), patt_im.columns(), patt_im.rows(), patt_im.columns()*3);
 	}
 
 
@@ -105,7 +91,7 @@ public:
 		// Any agg::renderer_base<> or derived
 		// is good for the use as a source.
 		//-----------------------------------
-		pattern_src_brightness_to_alpha_rgba8 p1(rbuf_img(0));
+		pixfmt p1{_patt_rb};
 
 		agg::pattern_filter_bilinear_rgba8 fltr;           // Filtering functor
 
@@ -140,19 +126,6 @@ int agg_main(int argc, char* argv[])
 {
 	the_application app(agg::pix_format_bgr24, flip_y);
 	app.caption("AGG Example. Drawing Lines with Image Patterns");
-
-	if(!app.load_img(0, "data/1"))
-	{
-		char buf[256];
-		sprintf(buf, "There must be files 1%s...9%s\n"
-						 "Download and unzip:\n"
-						 "http://www.antigrain.com/line_patterns.bmp.zip\n"
-						 "or\n"
-						 "http://www.antigrain.com/line_patterns.ppm.tar.gz\n",
-				  app.img_ext(), app.img_ext());
-		app.message(buf);
-		return 1;
-	}
 
 	if(app.init(500, 450, agg::window_resize))
 	{

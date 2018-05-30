@@ -1,4 +1,3 @@
-/line_patterns
 /pipeline_1
 /pipeline_2
 /pipeline_3
@@ -11,4 +10,18 @@
 /t02_pixel_formats
 /t03_solar_spectrum
 /t04_alpha_mask
-/*.ppm
+/graph_test
+/render_primitives
+/line_patterns
+/conv_stroke
+/render_pattern_line
+/render_line
+/load_ppm
+/pixfmt_test
+/agg-2.5/examples/line_patterns
+/agg-2.5/examples/graph_test
+/agg-2.5/examples/aa_demo
+/agg-2.5/examples/aa_test
+/agg-2.5/examples/circles
+/agg-2.5/examples/conv_stroke
+/agg-2.5/examples/rasterizers

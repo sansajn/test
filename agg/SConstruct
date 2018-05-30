@@ -14,7 +14,13 @@ agg_lib = env.StaticLibrary('agg', [
 ])
 
 # examples
+env.Program(['agg-2.5/examples/aa_demo.cpp', agg_lib])
+env.Program(['agg-2.5/examples/aa_test.cpp', agg_lib])
 env.Program(['agg-2.5/examples/line_patterns.cpp', agg_lib])
+env.Program(['agg-2.5/examples/graph_test.cpp', agg_lib])
+env.Program(['agg-2.5/examples/rasterizers.cpp', agg_lib])
+env.Program(['agg-2.5/examples/circles.cpp', agg_lib])
+env.Program(['agg-2.5/examples/conv_stroke.cpp', agg_lib])
 
 
 # my samples
@@ -33,3 +39,12 @@ env.Program(['pipeline_7.cpp', agg_lib])
 env.Program(['render_poly.cpp', agg_lib])
 env.Program(['graph_test.cpp', agg_lib])
 env.Program(['render_primitives.cpp', agg_lib])
+#env.Program(['conv_stroke.cpp', agg_lib])
+env.Program(['pixfmt_test.cpp', agg_lib])
+
+# program requires image-magick support
+env_pattern = env.Clone()
+env_pattern.ParseConfig('pkg-config --cflags --libs Magick++')
+
+env_pattern.Program(['render_pattern_line.cpp', agg_lib])
+env_pattern.Program(['load_ppm.cpp', agg_lib])
