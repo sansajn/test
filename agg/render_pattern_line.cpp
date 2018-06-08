@@ -15,20 +15,50 @@
 #include <agg_rasterizer_outline_aa.h>
 #include <Magick++.h>
 
+// TODO: ako na nazvy typou ?
+
 int const WIDTH = 300;
 int const HEIGHT = 300;
 
 using std::cout;
 using pixfmt = agg::pixfmt_rgb24;
 using renderer_base = agg::renderer_base<pixfmt>;
-using renderer_scanline = agg::renderer_scanline_aa_solid<renderer_base>;
-using rasterizer_scanline = agg::rasterizer_scanline_aa<>;
-using scanline = agg::scanline_p8;
 
 bool write_ppm(unsigned char const * buf, unsigned width, unsigned height,
 	char const * file_name);
 
 bool read_ppm(char const * file_name, Magick::Blob & pixels, agg::rendering_buffer & rb);
+
+template <typename PixelFmt>
+class pattern_curve_renderer
+{
+public:
+	using pixfmt_type = PixelFmt;
+	using renderer_base_type = agg::renderer_base<PixelFmt>;
+	using filter_type = agg::pattern_filter_bilinear_rgba8;
+	using pattern_type = agg::line_image_pattern<filter_type>;
+	using renderer_type = agg::renderer_outline_image<renderer_base_type, pattern_type>;
+	using rasterizer_rype = agg::rasterizer_outline_aa<renderer_type>;
+
+	pattern_curve_renderer(pixfmt_type & pattern_pixels)
+		: _patt{filter_type{}}
+	{
+		_patt.create(pattern_pixels);
+	}
+
+	void render(renderer_base & dst, agg::path_storage & p)
+	{
+		renderer_type ren{dst, _patt};
+		ren.scale_x(1.0);
+		ren.start_x(0.0);
+
+		rasterizer_rype ras{ren};
+		ras.add_path(p);
+	}
+
+private:
+	pattern_type _patt;
+};
 
 
 int main(int argc, char * argv[])
@@ -42,21 +72,6 @@ int main(int argc, char * argv[])
 	renderer_base ren_base{pf};
 	ren_base.clear(agg::rgba{1.0, 1.0, 0.95});
 
-	renderer_scanline ren{ren_base};
-	rasterizer_scanline ras;
-	scanline sl;
-
-	// pattern
-	using pattern_filter_t = agg::pattern_filter_bilinear_rgba8;
-	using pattern_t = agg::line_image_pattern<pattern_filter_t>;
-	using renderer_pattern_t = agg::renderer_outline_image<renderer_base, pattern_t>;
-	using rasterizer_pattern_t = agg::rasterizer_outline_aa<renderer_pattern_t>;
-
-	pattern_filter_t fltr;
-	pattern_t patt{fltr};
-	renderer_pattern_t ren_img{ren_base, patt};
-	rasterizer_pattern_t ras_img{ren_img};
-
 	// load pattern bitmap
 	Magick::Blob pixels;
 	agg::rendering_buffer patt_rb;
@@ -68,12 +83,8 @@ int main(int argc, char * argv[])
 	path.move_to(0, 0);
 	path.line_to(WIDTH, HEIGHT);
 
-	// draw
-	patt.create(patt_src);
-	ren_img.scale_x(1.0);
-	ren_img.start_x(0.0);
-	ras_img.add_path(path);
-
+	pattern_curve_renderer<pixfmt> r{patt_src};
+	r.render(ren_base, path);
 
 	write_ppm(buf, WIDTH, HEIGHT, "out/pattern_line.ppm");
 
