@@ -1,4 +1,5 @@
 // pattern line sample
+#include <string>
 #include <iostream>
 #include <cstdint>
 #include <cstdio>
@@ -20,6 +21,7 @@
 int const WIDTH = 300;
 int const HEIGHT = 300;
 
+using std::string;
 using std::cout;
 using pixfmt = agg::pixfmt_rgb24;
 using renderer_base = agg::renderer_base<pixfmt>;
@@ -63,6 +65,8 @@ private:
 
 int main(int argc, char * argv[])
 {
+	string const patt_file = argc > 1 ? argv[1] : "data/1.ppm";
+
 	uint8_t * buf = new uint8_t[WIDTH * HEIGHT * 3];
 
 	// initialize buffers
@@ -75,7 +79,7 @@ int main(int argc, char * argv[])
 	// load pattern bitmap
 	Magick::Blob pixels;
 	agg::rendering_buffer patt_rb;
-	read_ppm("data/1.ppm", pixels, patt_rb);
+	read_ppm(patt_file.c_str(), pixels, patt_rb);
 	pixfmt patt_src{patt_rb};
 
 	// initialize vector data
