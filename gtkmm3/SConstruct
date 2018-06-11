@@ -13,6 +13,7 @@ env.Program('17.6.1_drawing_images.cpp')
 env.Program('clock.cpp')
 env.Program('23.1.1_keyboard_events.cpp')
 env.Program('23.2.1_keyboard_events_propagation.cpp')
+env.Program('combobox.cpp')
 
 # my
 env.Program('paint.cpp')
