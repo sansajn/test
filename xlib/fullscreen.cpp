@@ -1,11 +1,20 @@
-// window with text sample
+// fulscreen window sample
 #include <iostream>
 #include <cstring>
 #include <cassert>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <X11/Xatom.h>
 
 using std::cout;
+
+
+void fullscreen(Display * disp, Window win)
+{
+	Atom atoms[2] = {XInternAtom(disp, "_NET_WM_STATE_FULLSCREEN", False), None};
+	XChangeProperty(disp, win, XInternAtom(disp, "_NET_WM_STATE", False),
+		XA_ATOM, 32, PropModeReplace, (unsigned char *)atoms, 1);
+}
 
 int main(int argc, char * argv[])
 {
@@ -22,9 +31,7 @@ int main(int argc, char * argv[])
 	unsigned display_width = DisplayWidth(disp, screen_num);
 	unsigned display_height = DisplayHeight(disp, screen_num);
 
-
-	/*  Set initial window size and position, and create it  */
-
+	// Set initial window size and position, and create it
 	int x = 0, y = 0;
 	unsigned width = 800, height = 600;
 	unsigned int border_width = 0;
@@ -72,6 +79,7 @@ int main(int argc, char * argv[])
 	XSetFont(disp, gc, font_info->fid);
 	XSetForeground(disp, gc, BlackPixel(disp, screen_num));
 
+	fullscreen(disp, win);
 	XMapWindow(disp, win);  // display window
 
 	bool running = true;
