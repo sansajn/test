@@ -1,3 +1,7 @@
-env = Environment(CCFLAGS=['-std=c++11', '-Wall'])
+env = Environment(CXXFLAGS=['-std=c++14', '-Wall', '-O0', '-g'])
+
 env.ParseConfig('pkg-config --libs --cflags x11')
+
 env.Program('hello.cpp')
+env.Program('x11_sizes.cpp')
+env.Program('window.cpp')
