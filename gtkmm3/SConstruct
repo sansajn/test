@@ -15,6 +15,7 @@ env.Program('23.1.1_keyboard_events.cpp')
 env.Program('23.2.1_keyboard_events_propagation.cpp')
 env.Program('combobox.cpp')
 env.Program('fixed.cpp')
+env.Program('scale.cpp')
 
 # my
 env.Program('paint.cpp')
