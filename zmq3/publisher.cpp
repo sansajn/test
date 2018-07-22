@@ -1,4 +1,4 @@
-// publisher, subscriber pattern
+// sample publisher implementation
 #include <string>
 #include <thread>
 #include <iostream>
