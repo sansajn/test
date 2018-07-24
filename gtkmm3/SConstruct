@@ -18,6 +18,7 @@ env.Program('fixed.cpp')
 env.Program('scale.cpp')
 env.Program('scale_with_title.cpp')
 env.Program('26.2.1_glade_gui.cpp')
+env.Program('listviewtext.cpp')
 
 # my
 env.Program('paint.cpp')
