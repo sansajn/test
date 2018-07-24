@@ -14,7 +14,7 @@ static void on_button_clicked()
 
 int main(int argc, char * argv[])
 {
-	auto app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
+	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
 	auto builder = Gtk::Builder::create();
 	
 	try {
