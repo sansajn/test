@@ -1,7 +1,7 @@
 env = Environment(
 	CXXFLAGS=['-std=c++11', '-Wall', '-g'])
 
-env.ParseConfig('pkg-config --cflags --libs gstreamer-1.0 gstreamer-rtsp-server-1.0')
+env.ParseConfig('pkg-config --cflags --libs gstreamer-1.0 gstreamer-pbutils-1.0 gstreamer-rtsp-server-1.0')
 
 env.Program('initialization.cpp')
 env.Program('test-readme.c')
@@ -9,12 +9,15 @@ env.Program('test-mp4.c')
 env.Program('test-multicast.c')
 env.Program('test-multicast2.c')
 
-# oficial tutorial
-env.Program('basic_tutorial_1.cpp')
-env.Program('basic_tutorial_2.cpp')
-env.Program('basic_tutorial_3.cpp')
-env.Program('basic_tutorial_4.cpp')
+# basic tutorial
+env.Program('basic_01.cpp')
+env.Program('basic_02.cpp')
+env.Program('basic_03.cpp')
+env.Program('basic_04.cpp')
+env.Program('basic_05.cpp')  # simple GTK GUI
+env.Program('basic_09.cpp')  # media discover
 
+# playing tutorial
 
 # tests
 env.Program('play.cpp')
