@@ -1,7 +1,8 @@
 env = Environment(
 	CXXFLAGS=['-std=c++11', '-Wall', '-g'])
 
-env.ParseConfig('pkg-config --cflags --libs gstreamer-1.0 gstreamer-pbutils-1.0 gstreamer-rtsp-server-1.0')
+# dependencies: libgstreamer1.0-dev libgstrtspserver-1.0-dev
+env.ParseConfig('pkg-config --cflags --libs gstreamer-1.0 gstreamer-pbutils-1.0 gstreamer-video-1.0 gstreamer-rtsp-server-1.0 gtk+-3.0')
 
 env.Program('initialization.cpp')
 env.Program('test-readme.c')
