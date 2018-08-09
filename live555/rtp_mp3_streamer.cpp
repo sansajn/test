@@ -9,9 +9,7 @@ struct session_state
 {
 	FramedSource * source;
 	RTPSink * sink;
-	RTCPInstance * rtcpInstance;
 	Groupsock * rtpGroupsock;
-	Groupsock * rtcpGroupsock;
 };
 
 session_state sess;
@@ -30,32 +28,15 @@ int main(int argc, char * argv[])
 	env = BasicUsageEnvironment::createNew(*scheduler);
 
 	const unsigned short rtpPortNum = 6666;
-	const unsigned short rtcpPortNum = rtpPortNum+1;
 	const unsigned char ttl = 1; // low, in case routers don't admin scope
 
 	in_addr dest_address;
 //	dest_address.s_addr = chooseRandomIPv4SSMAddress(*env);
 	dest_address.s_addr = inet_addr("127.0.0.1");
 
-	const Port rtpPort(rtpPortNum);
-	const Port rtcpPort(rtcpPortNum);
-
-	sess.rtpGroupsock = new Groupsock(*env, dest_address, rtpPort, ttl);
-	sess.rtcpGroupsock = new Groupsock(*env, dest_address, rtcpPort, ttl);
+	sess.rtpGroupsock = new Groupsock(*env, dest_address, Port{rtpPortNum}, ttl);
 
 	sess.sink = MPEG1or2AudioRTPSink::createNew(*env, sess.rtpGroupsock);
-
-	// Create (and start) a 'RTCP instance' for this RTP sink:
-	const unsigned estimatedSessionBandwidth = 160; // in kbps; for RTCP b/w share
-	const unsigned maxCNAMElen = 100;
-	unsigned char CNAME[maxCNAMElen+1];
-	gethostname((char*)CNAME, maxCNAMElen);
-	CNAME[maxCNAMElen] = '\0'; // just in case
-	sess.rtcpInstance = RTCPInstance::createNew(*env, sess.rtcpGroupsock,
-					 estimatedSessionBandwidth, CNAME,
-					 sess.sink, nullptr,
-					 /*True*/False);  // SSM (Source Specific Multicast)
-	// Note: This starts RTCP running automatically
 
 	*env << "to receive a stream use '$ cvlc rtp://127.0.0.1:6666\n";
 
