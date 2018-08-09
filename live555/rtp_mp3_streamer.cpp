@@ -37,7 +37,6 @@ int main(int argc, char * argv[])
 //	dest_address.s_addr = chooseRandomIPv4SSMAddress(*env);
 	dest_address.s_addr = inet_addr("127.0.0.1");
 
-
 	const Port rtpPort(rtpPortNum);
 	const Port rtcpPort(rtcpPortNum);
 
@@ -57,6 +56,8 @@ int main(int argc, char * argv[])
 					 sess.sink, nullptr,
 					 /*True*/False);  // SSM (Source Specific Multicast)
 	// Note: This starts RTCP running automatically
+
+	*env << "to receive a stream use '$ cvlc rtp://127.0.0.1:6666\n";
 
 	play();
 
