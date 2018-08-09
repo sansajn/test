@@ -56,6 +56,7 @@ local_liblive555_env.Program(['playground.cpp', live555_lib])
 local_liblive555_env.Program(['most_simple_h264.cpp', live555_lib])
 local_liblive555_env.Program(['h264_on_demand.cpp', live555_lib])
 local_liblive555_env.Program(['rtp_mp3_streamer.cpp', live555_lib])
+local_liblive555_env.Program(['mp3_streamer.cpp', live555_lib])
 
 # locally installed environment, NOT USED now
 locally_installed_env = Environment(
