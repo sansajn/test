@@ -22,3 +22,4 @@ env.Program('basic_09.cpp')  # media discover
 
 # tests
 env.Program('play.cpp')
+env.Program('thread_safe_player.cpp')

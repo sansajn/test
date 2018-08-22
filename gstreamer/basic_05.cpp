@@ -1,5 +1,6 @@
 // ako na GUI
 #include <string>
+#include <cstring>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
