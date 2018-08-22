@@ -83,7 +83,10 @@ void player::start()
 void player::play(string const & uri)
 {
 	_pbin.play(uri);
+
 	lock_guard<mutex> lock{_pline_state_locker};
+	_duration = 0;
+	_position = 0;
 	_playing = true;
 }
 
@@ -115,8 +118,15 @@ void player::join()
 	if (!playing())
 		return;
 
-	long diff = duration() - position();
-	assert(diff > 0);
+	long diff;
+	do
+	{
+		diff = duration() - position();
+		if (diff == 0)
+			std::this_thread::sleep_for(std::chrono::milliseconds{100});  // wait for playback info update
+	}
+	while (diff > 0);
+
 	std::this_thread::sleep_for(std::chrono::nanoseconds{diff});
 
 	while (playing())
