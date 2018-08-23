@@ -172,6 +172,8 @@ void player::handle_message(GstMessage * msg)
 
 		case GST_MESSAGE_EOS:
 		{
+			stop();
+
 			{
 				lock_guard<mutex> lock{_pline_state_locker};
 				_playing = false;
@@ -199,7 +201,7 @@ void player::handle_message(GstMessage * msg)
 				if (new_state == GST_STATE_PLAYING)
 				{
 					_duration = _pbin.duration();
-					assert(_duration > 0);
+					assert(_duration > 0);  // this sometimes fails even we are already in a PLAYING state
 				}
 			}
 			break;
@@ -316,9 +318,7 @@ int main(int argc, char * argv[])
 	player p;
 	p.start();
 	p.play(uri);
-	std::this_thread::sleep_for(std::chrono::seconds{5});
-	p.stop();
-	std::this_thread::sleep_for(std::chrono::seconds{5});
+	std::this_thread::sleep_for(std::chrono::seconds{3});
 	p.play(uri);
 	p.join();
 
