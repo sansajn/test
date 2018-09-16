@@ -33,7 +33,7 @@ fs::path relative_path(fs::path const & p1, fs::path const & p2)
 
 int main(int argc, char * argv[])
 {
-	fs::path p = relative_path(fs::path{"temp/drop"}, fs::path{"temp/drop/files/apps"});
-	cout << p << "\n";
+	cout << relative_path(fs::path{"temp/drop"}, fs::path{"temp/drop/files/apps"});
+	cout << relative_path(fs::path{"temp/drop/files/apps"}, fs::path{"temp/drop"});
 	return 0;
 }
