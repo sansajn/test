@@ -1,4 +1,7 @@
-env = Environment(CCFLAGS=['-std=c++11'])
+env = Environment(
+	CCFLAGS=['-std=c++11'],
+	LIBS=['boost_date_time']
+)
 
 env.Program('date.cpp')
 env.Program('getting_date.cpp')
@@ -10,3 +13,5 @@ env.Program('time_input_facet.cpp')
 env.Program('date_comparison.cpp')
 env.Program('parse_custom_date.cpp')
 env.Program('local_to_utc.cpp')
+env.Program('posix_time2.cpp')
+env.Program('ptime_string_conv.cpp')

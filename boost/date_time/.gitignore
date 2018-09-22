@@ -8,3 +8,6 @@
 /posix_time
 /posix_time_time_period
 /time_input_facet
+/ptime_string_conv
+/posix_time2
+/local_time
