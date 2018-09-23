@@ -1,0 +1,5 @@
+env = Environment()
+env.ParseConfig('pkg-config --cflags --libs alsa')
+
+env.Program('master_volume.cpp')
+env.Program('volume_control.cpp')
