@@ -15,6 +15,7 @@ env.Program('remove_reference.cpp')
 env.Program('union.cpp')
 env.Program('find_if.cpp')
 env.Program('tuple_compare.cpp')
+env.Program('regex_match.cpp')
 
 # right-reference
 env.Program('rrefopt.cpp')
