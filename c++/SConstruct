@@ -1,6 +1,8 @@
 env = Environment(
 	CXX='clang++', CXXFLAGS=['-std=c++14'], CCFLAGS=['-Wall', '-g', '-O0'])
 
+cpp14_env = env.Clone()
+
 import os  # enable color in output
 if 'TERM' in os.environ:
 	env['ENV']['TERM'] = os.environ['TERM']
@@ -19,3 +21,5 @@ env.Program('struct_hier.cpp')
 env.Program('ref_to_ptr.cpp')
 env.Program('value_proxy.cpp')
 env.Program('getline.cpp')
+
+cpp14_env.Program('filter.cpp')
