@@ -1,0 +1,5 @@
+env = Environment(
+	CCFLAGS=['-std=c++17', '-Wall', '-O0', '-g']
+)
+
+env.Program('filter_iterator.cpp')
