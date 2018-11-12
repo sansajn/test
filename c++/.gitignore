@@ -12,5 +12,7 @@
 /set_container_sort
 /struct_hier
 /value_proxy
-
+/filter
+/filter_ptr
+/test-cpp.includes
 
