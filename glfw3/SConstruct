@@ -1,0 +1,7 @@
+# libglfw3-dev (3.2.1, ubuntu 18.04)
+
+env = Environment()
+env.ParseConfig('pkg-config --cflags --libs glfw3 gl glu')
+
+env.Program('hello.cpp')
+env.Program('triangle_gles2.cpp')
