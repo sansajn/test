@@ -1,4 +1,7 @@
+# dependencies:
+#    libpng-dev (1.6.34)
+
 env = Environment(CXXFLAGS=['-std=c++11', '-O0', '-g'])
-env.ParseConfig('pkg-config --libs --cflags libpng12')
+env.ParseConfig('pkg-config --libs --cflags libpng')
 env.Program('read.cpp')
 env.Program('read_as_rgba.cpp')

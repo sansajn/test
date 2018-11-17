@@ -32,7 +32,7 @@ int main(int argc, char * argv[])
 	png_uint_32 width, height;
 	int bit_depth, color_type, interlace_method;
 	png_get_IHDR(png, info, &width, &height, &bit_depth, &color_type, 
-		&interlace_method, int_p_NULL, int_p_NULL);
+		&interlace_method, nullptr, nullptr);
 	
 	png_set_strip_16(png);  // strip 16 bit to 8 bit
 	assert(bit_depth <= 8 && "16 bit depth image will be stripped to 8 bit");
@@ -68,10 +68,10 @@ int main(int argc, char * argv[])
 	
 	std::ostringstream oss;
 	oss << "w:" << png_get_image_width(png, info) << ", h:" << png_get_image_height(png, info)
-		<< ", ch:" << (int)png_get_channels(png, info) << ", pixel-depth:" << (int)info->pixel_depth
+		<< ", ch:" << (int)png_get_channels(png, info)
 		<< ", bit-depth:" << (int)png_get_bit_depth(png, info)
 		<< ", rowbytes:" << (int)png_get_rowbytes(png, info)
-		<< ", valid:" << (int)info->valid;
+		<< ", valid:" << (int)png_get_valid(png, info, 0);
 
 	std::cout << oss.str() << std::endl;
 
@@ -93,7 +93,7 @@ int main(int argc, char * argv[])
 
 	// data mam aj v pixels ...
 
-	png_destroy_read_struct(&png, &info, png_infopp_NULL);
+	png_destroy_read_struct(&png, &info, nullptr);
 	fclose(fp);
 
 	delete [] rows;

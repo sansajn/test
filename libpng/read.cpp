@@ -27,19 +27,19 @@ int main(int argc, char * argv[])
 	}
 	
 	png_init_io(png, fp);
-	png_read_png(png, info, 0, png_voidp_NULL);
+	png_read_png(png, info, 0, nullptr);
 
 	// data su dostupne ako ukazatele na riadky (data nie su kontinualne)
 	png_byte ** rows = png_get_rows(png, info);
-	for (int i = 0; i < std::min(png_get_image_height(png, info), 10ul); ++i)
+	for (int i = 0; i < std::min(png_get_image_height(png, info), 10u); ++i)
 		std::cout << (intptr_t)rows[i] << std::endl;
 
 	std::ostringstream oss;
 	oss << "w:" << png_get_image_width(png, info) << ", h:" << png_get_image_height(png, info)
-		<< ", ch:" << (int)png_get_channels(png, info) << ", pixel-depth:" << (int)info->pixel_depth
+		<< ", ch:" << (int)png_get_channels(png, info)
 		<< ", bit-depth:" << (int)png_get_bit_depth(png, info)
 		<< ", rowbytes:" << (int)png_get_rowbytes(png, info)
-		<< ", valid:" << (int)info->valid;
+		<< ", valid:" << (int)png_get_valid(png, info, 0);
 	
 	std::cout << oss.str() << std::endl;
 
@@ -59,7 +59,7 @@ int main(int argc, char * argv[])
 		std::cout << std::endl;
 	}
 
-	png_destroy_read_struct(&png, &info, png_infopp_NULL);
+	png_destroy_read_struct(&png, &info, nullptr);
 	fclose(fp);
 
 	return 0;
