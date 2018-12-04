@@ -3,3 +3,6 @@
 /test-glfw3.includes
 /triangle_gles2
 /keys_gles2
+/mouse_gles2
+/mouse_poll_gles2
+/mouse_camera_mode_gles2
