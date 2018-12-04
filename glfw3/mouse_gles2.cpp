@@ -68,12 +68,9 @@ GLint common_get_shader_program(const char *vertex_shader_source, const char *fr
     return shader_program;
 }
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 {
-	cout << "key=" << key << ", scancode=" << scancode << std::endl;
-
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	cout << "(x=" << xpos << ",y=" << ypos << ")" << std::endl;
 }
 
 int main(int argc, char * argv[])
@@ -88,7 +85,7 @@ int main(int argc, char * argv[])
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     window = glfwCreateWindow(WIDTH, HEIGHT, __FILE__, NULL, NULL);
 
-	 glfwSetKeyCallback(window, key_callback);
+	 glfwSetCursorPosCallback(window, cursor_position_callback);
 
     glfwMakeContextCurrent(window);
 

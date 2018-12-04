@@ -15,3 +15,4 @@ gles2_env.ParseConfig('pkg-config --cflags --libs glfw3 glesv2')
 
 gles2_env.Program('triangle_gles2.cpp')
 gles2_env.Program('keys_gles2.cpp')
+gles2_env.Program('mouse_gles2.cpp')
