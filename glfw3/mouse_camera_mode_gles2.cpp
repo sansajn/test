@@ -68,9 +68,16 @@ GLint common_get_shader_program(const char *vertex_shader_source, const char *fr
     return shader_program;
 }
 
-void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+void handle_cursor_position(GLFWwindow* window)
 {
-	cout << "(x=" << xpos << ",y=" << ypos << ")" << std::endl;
+	double xpos, ypos;
+	glfwGetCursorPos(window, &xpos, &ypos);
+	glfwSetCursorPos(window, WIDTH/2, HEIGHT/2);
+
+	double x = xpos - WIDTH/2;
+	double y = ypos - HEIGHT/2;
+
+	cout << "(x=" << x << ",y=" << y << ")" << std::endl;
 }
 
 int main(int argc, char * argv[])
@@ -84,8 +91,6 @@ int main(int argc, char * argv[])
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     window = glfwCreateWindow(WIDTH, HEIGHT, __FILE__, NULL, NULL);
-
-	 glfwSetCursorPosCallback(window, cursor_position_callback);
 
     glfwMakeContextCurrent(window);
 
@@ -105,8 +110,14 @@ int main(int argc, char * argv[])
     glEnableVertexAttribArray(pos);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	 glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	 glfwSetCursorPos(window, WIDTH/2, HEIGHT/2);
+
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
+
+		  handle_cursor_position(window);
+
         glClear(GL_COLOR_BUFFER_BIT);
         glUseProgram(shader_program);
         glDrawArrays(GL_TRIANGLES, 0, 3);
