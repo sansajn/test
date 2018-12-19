@@ -1,7 +1,6 @@
 env = Environment(
-	#CXX='clang++',
-	CCFLAGS=['-g', '-O0', '-rdynamic'],
-	CPPFLAGS=['-std=c++11'],
+	CCFLAGS=['-std=c++11', '-g', '-O0'],
+	LINKFLAGS=['-rdynamic'],
 	LIBS=['pthread']
 )
 
@@ -10,5 +9,9 @@ env.Program('dirit.cpp')
 env.Program('reentrant_ls.cpp')
 env.Program('sighandler.cpp')
 env.Program('backtrace.cpp')
+env.Program('stack_trace_on_sigsegv.cpp')
 env.Program('hostname.cpp')
 env.Program('sigint_in_multithread_app.cpp')
+
+# nejde skompilovat, stara verzia glibc
+#env.Program('sigcontext.cpp')
