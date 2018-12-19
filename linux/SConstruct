@@ -11,6 +11,7 @@ env.Program('sighandler_signal.cpp')
 env.Program('sighandler_sigaction.cpp')
 env.Program('backtrace.cpp')
 env.Program('stack_trace_on_sigsegv.cpp')
+env.Program('backtrace_with_signals.cpp')
 env.Program('hostname.cpp')
 env.Program('sigint_in_multithread_app.cpp')
 
