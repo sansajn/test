@@ -9,3 +9,5 @@
 /sighandler_signal
 /sighandler_sigaction
 /backtrace_with_signals
+/demangling
+/demangled_backtrace
