@@ -2,3 +2,5 @@ env = Environment(CXXFLAGS=['-std=c++14', '-Wall'])
 
 env.Program('priority_queue.cpp')
 env.Program('move_map.cpp')
+#env.Program('input_iterator.cpp')
+env.Program('search_range.cpp')
