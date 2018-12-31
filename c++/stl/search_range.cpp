@@ -1,4 +1,4 @@
-// search iterator implementation
+// search range implementation
 #include <vector>
 #include <iostream>
 
@@ -6,16 +6,16 @@ using std::vector;
 using std::cout;
 
 
-class search_range  // full search traverse range
+class search_traversal_range  // full search traverse range
 {
 public:
-	search_range(vector<int> & data, size_t from = 0) 
+	search_traversal_range(vector<int> & data, size_t from = 0) 
 		: _data{data}, _from{from}, _idx{from}
 	{}
 	
 	struct iterator 
 	{
-		iterator(search_range const * r) : _r{r} {}
+		iterator(search_traversal_range const * r) : _r{r} {}
 		
 		int const & operator*() const
 		{
@@ -37,9 +37,9 @@ public:
 		bool operator!=(iterator rhs) const {return !(*this == rhs);}
 
 	private:
-		search_range const * _r;
+		search_traversal_range const * _r;
 		
-		friend class search_range;
+		friend class search_traversal_range;
 	};
 	
 	iterator begin() const {return iterator{this};}
@@ -56,13 +56,13 @@ private:
 
 
 
-bool search_range::next() const
+bool search_traversal_range::next() const
 {
 	_idx = (_idx+1) % _data.size(); 
 	return _idx != _from;
 }
 
-int const & search_range::current() const
+int const & search_traversal_range::current() const
 {
 	return _data[_idx];
 }
@@ -72,13 +72,13 @@ int const & search_range::current() const
 int main(int argc, char * argv[])
 {
 	auto data = vector<int>{{1,2,3,4,5}};
-	search_range r{data};
+	search_traversal_range r{data};
 	cout << "r={";
 	for (int v : r)
 		cout << v << ", ";
 	cout << "}\n";
 	
-	search_range r2{data, 2};
+	search_traversal_range r2{data, 2};
 	cout << "r2={";
 	for (int v : r2)
 		cout << v << ", ";
