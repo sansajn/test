@@ -11,3 +11,4 @@
 /ptime_string_conv
 /posix_time2
 /local_time
+/utc_now

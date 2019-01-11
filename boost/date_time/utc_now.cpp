@@ -26,13 +26,13 @@ int main()
 	t2 += millisec{100};
 
 	time_duration dt = t2 - t1;
-	cout << "dt=" << dt << "\n";
+	cout << "dt=" << dt.total_milliseconds() << "ms\n";
 
 	// lets compare
 	if (dt == millisec{100})
 		cout << "time difference is exactly 100ms\n";
 	else
 		cout << "unknown\n";
-
+	
 	return 0;
 }
