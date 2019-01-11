@@ -1,5 +1,5 @@
 env = Environment(
-	CCFLAGS=['-std=c++11'],
+	CCFLAGS=['-std=c++11', '-Wall', '-g', '-O0'],
 	LIBS=['boost_date_time']
 )
 
@@ -15,3 +15,5 @@ env.Program('parse_custom_date.cpp')
 env.Program('local_to_utc.cpp')
 env.Program('posix_time2.cpp')
 env.Program('ptime_string_conv.cpp')
+env.Program('local_time.cpp')
+env.Program('utc_now.cpp')

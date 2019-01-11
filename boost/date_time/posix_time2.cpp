@@ -14,9 +14,9 @@ int main(int argc, char * argv[])
 	ptime t3 = from_iso_string("20020120T235959.123456");  // from iso string
 
 	// standard formatting
-	cout << "simple string: " << to_simple_string(t1) << "\n"
-		<< "iso string: " << to_iso_string(t1) << "\n"
-		<< "iso extended string: " << to_iso_extended_string(t1) << "\n";
+	cout << "simple string: " << to_simple_string(t1) << "\n"             // 2019-Jan-11 15:24:43.371758
+		<< "iso string: " << to_iso_string(t1) << "\n"                     // 20190111T152443.371758
+		<< "iso extended string: " << to_iso_extended_string(t1) << "\n";  // 2019-01-11T15:24:43.371758
 
 	cout << to_simple_string(t2) << "\n";
 
