@@ -1,6 +1,7 @@
 env = Environment(
 	CCFLAGS=['-std=c++17', '-Wall', '-g', '-O0'],
-	LIBS=['boost_stacktrace_backtrace', 'dl'],
+	LIBS=['boost_stacktrace_backtrace', 'boost_system', 'boost_filesystem', 'dl'],
 	LINKFLAGS=['-rdynamic'])
 
 env.Program('stacktrace.cpp')
+env.Program('safe_dump.cpp')
