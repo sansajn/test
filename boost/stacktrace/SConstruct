@@ -1,0 +1,6 @@
+env = Environment(
+	CCFLAGS=['-std=c++17', '-Wall', '-g', '-O0'],
+	LIBS=['boost_stacktrace_backtrace', 'dl'],
+	LINKFLAGS=['-rdynamic'])
+
+env.Program('stacktrace.cpp')
