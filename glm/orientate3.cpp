@@ -11,22 +11,35 @@ using glm::mat4;
 using glm::radians;
 using glm::orientate3;
 using glm::yawPitchRoll;
+using glm::eulerAngleX;
+using glm::eulerAngleY;
+using glm::eulerAngleZ;
 
 int main(int argc, char * argv[])
 {
-	mat3 M = orientate3(vec3{.1, .2, .3});
-	cout << "M=" << M << "\n";
+	float yaw = radians(60.0f);  // y
+	float pitch = radians(30.0f);  // x
+	float roll = radians(15.0f);  // z
 
-	mat4 M2 = yawPitchRoll(.1, .2, .3);  // yaw (y), pitch (x), roll (z)
-	cout << "M2=" << M2 << "\n";
+	/* mat3 Rotation3x3(float pitch, float yaw, float roll) {
+		return ZRotation3x3(roll) * XRotation3x3(pitch) * YRotation3x3(yaw);
+	}*/
 
-	vec3 p = {1, 2, 3};
-	vec3 p_transformed = M*p;
-	cout << "p_transformed=" << p_transformed << "\n";
+	mat4 Rx = eulerAngleX(pitch);
+	mat4 Ry = eulerAngleY(yaw);
+	mat4 Rz = eulerAngleZ(roll);
+	mat4 R = Rz * Rx * Ry;
 
-	vec4 p2 = {1, 2, 3, 0};
-	vec4 p2_transformed = M2*p2;
-	cout << "p2_transformed=" << p2_transformed << "\n";
+	cout << mat3{R} << "\n";
+	cout << orientate3(vec3{pitch, yaw, roll}) << "\n";
+
+	mat3 O = orientate3(vec3{pitch, yaw, roll});  // yawPitchRoll(angles.z, angles.x, angles.y)
+
+	vec3 p0 = {0,0,0};
+	vec3 direction = mat3{R} * vec3{0, 0, 1};
+	vec3 p = p0 + direction;
+
+	cout << "p=" << p << "\n";
 
 	return 0;
 }

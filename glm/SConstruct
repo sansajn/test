@@ -1,6 +1,5 @@
 env = Environment(
-	CXX=['clang++'],
-	CPPFLAGS=['-std=c++11', '-g', '-O0'], 
+	CPPFLAGS=['-std=c++17', '-Wall', '-g', '-O0'],
 	CPPDEFINES=['GLM_FORCE_RADIANS', 'GLM_ENABLE_EXPERIMENTAL'])
 
 import os
@@ -25,3 +24,5 @@ env.Program('test_adapt.cpp')
 env.Program('vec2_adapt.cpp')
 env.Program('orientate3.cpp')
 env.Program('yawPitchRoll.cpp')
+env.Program('eulerAngle.cpp')
+env.Program('test_print.cpp')
