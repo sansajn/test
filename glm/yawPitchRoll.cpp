@@ -1,9 +1,11 @@
 #include <iostream>
 #include <glm/trigonometric.hpp>
 #include <glm/gtx/euler_angles.hpp>
+#include "glmprint.hpp"
 
 using std::cout;
 using glm::vec4;
+using glm::vec3;
 using glm::mat4;
 using glm::radians;
 using glm::yawPitchRoll;
@@ -11,6 +13,7 @@ using glm::eulerAngleX;
 using glm::eulerAngleY;
 using glm::eulerAngleZ;
 using glm::eulerAngleYXZ;
+using glm::orientate4;
 
 int main(int argc, char * argv[])
 {
@@ -32,6 +35,14 @@ int main(int argc, char * argv[])
 		cout << "equals\n";
 	else
 		cout << "not equall\n";
+
+	if (yawPitchRoll(yaw, pitch, roll) == orientate4(vec3{pitch, yaw, roll}))  // possible bug, search for it ...
+		cout << "equals\n";
+	else
+		cout << "not equall\n";
+
+	cout << yawPitchRoll(yaw, pitch, roll) << "\n"
+		<< orientate4(vec3{pitch, yaw, roll}) << "\n";
 
 	return 0;
 }
