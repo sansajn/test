@@ -1,13 +1,13 @@
 env = Environment(
 	CXX=['clang++'],
 	CPPFLAGS=['-std=c++11', '-g', '-O0'], 
-	CPPDEFINES=['GLM_FORCE_RADIANS'])
+	CPPDEFINES=['GLM_FORCE_RADIANS', 'GLM_ENABLE_EXPERIMENTAL'])
 
 import os
 if 'TERM' in os.environ:
 	env['ENV']['TERM'] = os.environ['TERM']
 
-env.Program('lookat.cpp')
+#env.Program('lookat.cpp')
 env.Program('sample.cpp')
 env.Program('projection.cpp')
 env.Program('quatmat.cpp')
@@ -23,3 +23,5 @@ env.Program('projection_play.cpp')
 
 env.Program('test_adapt.cpp')
 env.Program('vec2_adapt.cpp')
+env.Program('orientate3.cpp')
+env.Program('yawPitchRoll.cpp')
