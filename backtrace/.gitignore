@@ -1,0 +1,9 @@
+/libbacktrace/.libs
+/libbacktrace/backtrace-supported.h
+/libbacktrace/config.h
+/libbacktrace/config.status
+/libbacktrace/libtool
+/libbacktrace/Makefile
+/libbacktrace/stamp-h1
+/sample
+/test-backtrace.includes

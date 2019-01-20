@@ -1,0 +1,8 @@
+env = Environment(
+	CCFLAGS=['-std=c++17', '-Wall', '-g', '-O0'],
+	LIBS=['dl', 'boost_filesystem', 'boost_system']
+)
+
+libbacktrace_lib = 'libbacktrace/.libs/libbacktrace.a'
+
+env.Program(['sample.cpp', libbacktrace_lib])
