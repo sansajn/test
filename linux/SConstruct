@@ -1,7 +1,7 @@
 env = Environment(
 	CCFLAGS=['-std=c++11', '-g', '-O0'],
 	LINKFLAGS=['-rdynamic'],
-	LIBS=['pthread']
+	LIBS=['pthread', 'dl']
 )
 
 env.Program('ls.cpp')
@@ -16,3 +16,4 @@ env.Program('demangled_backtrace.cpp')
 env.Program('hostname.cpp')
 env.Program('demangling.cpp')
 env.Program('readlink.cpp')
+env.Program('unwind.cpp')
