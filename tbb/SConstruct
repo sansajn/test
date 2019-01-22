@@ -1,0 +1,7 @@
+env = Environment(
+	CCFLAGS=['-std=c++17', '-Wall', '-g', '-O0']
+)
+
+env.ParseConfig('pkg-config --libs --cflags tbb')
+
+env.Program('init.cpp')
