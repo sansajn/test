@@ -1,6 +1,7 @@
 #include <iostream>
 #include <tbb/parallel_for.h>
 #include <tbb/blocked_range.h>
+#include <tbb/task_scheduler_init.h>
 
 using std::cout;
 using namespace tbb;
@@ -21,6 +22,8 @@ struct average
 
 int main(int argc, char * argv[])
 {
+	task_scheduler_init init;
+	
 	float input[1024];
 	for (int i = 0; i < 1024; ++i)
 		input[i] = 1.0f * i;
