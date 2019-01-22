@@ -6,3 +6,4 @@ env.ParseConfig('pkg-config --libs --cflags tbb')
 
 env.Program('init.cpp')
 env.Program('parallel_for.cpp')
+env.Program('average.cpp')
