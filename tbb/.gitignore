@@ -3,3 +3,5 @@
 /average
 /auto_partitioner
 /parallel_reduce
+/min_index
+/ptr_based_sum
