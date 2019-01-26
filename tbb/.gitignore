@@ -7,3 +7,4 @@
 /ptr_based_sum
 /text_filter
 /parallel_sort
+/concurrent_queue
