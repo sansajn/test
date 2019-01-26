@@ -5,3 +5,5 @@
 /parallel_reduce
 /min_index
 /ptr_based_sum
+/text_filter
+/parallel_sort
