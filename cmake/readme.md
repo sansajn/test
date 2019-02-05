@@ -16,3 +16,11 @@ extern_compiled_library: externá knižnica skompilovaná zo zdrojakov
 	$ cmake ..
 	$ make
 
+**shared_with_dependency**: program volajúci dynamickú knižnicu s zavislosťou na inej dynamickej knižnici. Ukážku skompilujem príkazom
+
+```bash
+$ mkdir build && cd build
+$ cmake ..
+$ make
+```
+
