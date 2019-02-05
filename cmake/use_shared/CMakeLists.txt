@@ -1,0 +1,5 @@
+project(use_shared)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -O0 -g")
+add_library(version SHARED version.cpp)
+add_executable(useshared main.cpp)
+target_link_libraries(useshared version)
