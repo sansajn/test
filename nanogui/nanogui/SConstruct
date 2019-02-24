@@ -1,0 +1,25 @@
+env = Environment(
+	CCFLAGS=['-std=c++17', '-O0', '-g', '-fPIC'],
+	CPPPATH=['include', 'ext/eigen', 'ext/nanovg/src', '.'],
+	CPPDEFINES=[
+		# nanogui
+		'NANOGUI_EXTRA_DEFS', 
+		'NANOGUI_SHARED', 
+		'NVG_SHARED', 
+		'GLAD_GLAPI_EXPORT'],
+	LIBS=['pthread'],
+	LINKFLAGS=['-Wl,-rpath,.'])
+
+env.ParseConfig('pkg-config --cflags --libs gl glu glfw3')
+
+def build_nanogui():
+	import re
+	src = [f for f in Glob('src/*.cpp') if not re.match('src/example.\.cpp', f.path)]
+	src.append('ext/nanovg/src/nanovg.c')
+	
+	return env.SharedLibrary('nanogui', src)
+
+nanogui = build_nanogui()
+nanogui_resources = env.Object('nanogui_resources.cpp')
+
+example1 = env.Program('example1', ['src/example1.cpp', nanogui_resources, nanogui])
