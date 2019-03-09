@@ -1,0 +1,11 @@
+env = Environment(CXXFLAGS=['-std=c++17', '-Wall', '-O0', '-g'])
+
+env.Program('framebuffer.cpp')
+env.Program('sphere.cpp')
+env.Program('more_spheres.cpp')
+env.Program('lighting.cpp')
+env.Program('specular_lighting.cpp')
+env.Program('shadow.cpp')
+env.Program('reflections.cpp')
+env.Program('refractions.cpp')
+env.Program('checkeboard.cpp')

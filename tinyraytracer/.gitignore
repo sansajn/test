@@ -1,0 +1,10 @@
+\framebuffer
+\sphere
+\more_spheres
+\lighting
+\specular_lighting
+\shadow
+\reflections
+\refractions
+\checkeboard
+*.ppm
