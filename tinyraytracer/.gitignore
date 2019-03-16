@@ -7,4 +7,6 @@
 \reflections
 \refractions
 \checkeboard
+\test_sphere
+\kaboom
 *.ppm
