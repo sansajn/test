@@ -24,3 +24,4 @@ env.Program('getline.cpp')
 
 cpp14_env.Program('filter.cpp')
 cpp14_env.Program('filter_ptr.cpp')
+cpp14_env.Program('pretty_function_macro.cpp')
