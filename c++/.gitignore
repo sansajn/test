@@ -15,3 +15,6 @@
 /value_proxy
 /filter
 /filter_ptr
+/pretty_function_macro
+/file_name_from_file
+
