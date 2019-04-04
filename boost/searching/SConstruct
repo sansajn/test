@@ -1,0 +1,6 @@
+env = Environment(CCFLAGS=['-std=c++17', '-Wall'])
+
+env.Program('knuth_morris_pratt.cpp')
+env.Program('knuth_morris_pratt_search.cpp')
+env.Program('boyer_moore.cpp')
+env.Program('boyer_moore_horspool.cpp')
