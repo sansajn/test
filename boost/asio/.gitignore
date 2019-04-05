@@ -11,3 +11,7 @@
 /service_poll
 /steady_timer
 /endless_run
+/work_remove
+/work
+/shutdown
+/post
