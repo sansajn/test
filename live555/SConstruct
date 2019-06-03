@@ -57,20 +57,4 @@ local_liblive555_env.Program(['rtp_mp3_streamer.cpp', live555_lib])
 local_liblive555_env.Program(['mp3_streamer.cpp', live555_lib])
 local_liblive555_env.Program(['only_rtsp_server.cpp', live555_lib])
 local_liblive555_env.Program(['schedule_custom_task.cpp', live555_lib])
-
-# locally installed environment, NOT USED now
-locally_installed_env = Environment(
-	CXXFLAGS=['-std=c++11', '-Wall', '-g', '-O0'],
-	LIBS=[
-		'pthread',
-		'liveMedia', 'groupsock', 'BasicUsageEnvironment', 'UsageEnvironment',
-		'jpeg'
-	],
-	LIBPATH=['/usr/local/lib'],
-	CPPPATH=[
-		'/usr/local/include/liveMedia',
-		'/usr/local/include/groupsock',
-		'/usr/local/include/BasicUsageEnvironment',
-		'/usr/local/include/UsageEnvironment'
-	]
-)
+local_liblive555_env.Program(['rtsp_setup_handler.cpp', live555_lib])
