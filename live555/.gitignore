@@ -22,3 +22,5 @@
 /testMKVStreamer
 /testH264VideoStreamer
 /check
+/schedule_custom_task
+/only_rtsp_server

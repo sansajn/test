@@ -16,9 +16,8 @@ UsageEnvironment * env = nullptr;
 RTPSink * video_sink = nullptr;
 char quit_live555_loop = 0;
 
-void play();
+void play(void * _);
 void after_playing(void *);
-string gethostname();
 
 
 int main(int argc, char * argv[])
@@ -54,12 +53,6 @@ int main(int argc, char * argv[])
 	video_sink = H264VideoRTPSink::createNew(*env, &rtp_group, 96);
 	assert(video_sink);
 
-	// create (and start) a RTCP instance for this RTP sink
-	string host_name = gethostname();
-	unsigned const estimated_session_bandwidth = 500;  // in kbps; for RTCP b/w share
-	
-	// note: this starts RTCP running automatically
-
 	RTSPServer * rtsp_serv = RTSPServer::createNew(*env, 8554);
 	if (!rtsp_serv)
 		throw std::runtime_error{string{"failed to create RTSP server: "} + string{env->getResultMsg()}};
@@ -76,9 +69,9 @@ int main(int argc, char * argv[])
 
 	sms->addSubsession(PassiveServerMediaSubsession::createNew(*video_sink, nullptr));
 
-	// start the streaming
-// 	*env << "Beginning streaming ...\n";
-//	play();
+	// schedule play a little bit later later
+	sched->scheduleDelayedTask(10*1e6, play, nullptr);  // play 10s later
+	*env << "streaming scheduled ...\n";
 
 	env->taskScheduler().doEventLoop(&quit_live555_loop);
 
@@ -94,7 +87,7 @@ int main(int argc, char * argv[])
 	return 0;
 }
 
-void play()
+void play(void * _)
 {
 	// open the input file as a 'byte stream file source'
 	ByteStreamFileSource * file_source = ByteStreamFileSource::createNew(*env, h264_input_file.c_str());
@@ -105,8 +98,8 @@ void play()
 	video_source = H264VideoStreamFramer::createNew(*env, video_es);  // create a framer for the video elementary stream
 
 	// finally, start playing
-//	*env << "Beginning to read from file ...\n";
-//	video_sink->startPlaying(*video_source, after_playing, video_sink);
+	*env << "Beginning to read from file ...\n";
+	video_sink->startPlaying(*video_source, after_playing, video_sink);
 }
 
 void after_playing(void *)
@@ -118,15 +111,4 @@ void after_playing(void *)
 
 	// quit
 	quit_live555_loop = 1;
-}
-
-string gethostname()
-{
-	int const SIZE = 1024;
-	char buf[SIZE];
-	int res = gethostname(buf, SIZE);
-	if (res != 0)
-		throw std::runtime_error{"gethostname() failed"};
-	buf[SIZE-1] = '\0';
-	return string{buf};
 }
