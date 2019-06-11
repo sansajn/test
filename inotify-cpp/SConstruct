@@ -1,0 +1,10 @@
+inotify_path = 'inotify-cpp-0.2.0/src'
+
+env = Environment(
+	CCFLAGS=['-std=c++14', '-Wall', '-O0', '-g'],
+	CPPPATH=[inotify_path + '/include'],
+	LIBS=['pthread', 'boost_system', 'boost_filesystem'])
+
+inotify_cpp = env.Object(Glob(inotify_path + '/*.cpp'))
+
+env.Program('sample', ['sample.cpp', inotify_cpp])
