@@ -8,3 +8,4 @@ env = Environment(
 inotify_cpp = env.Object(Glob(inotify_path + '/*.cpp'))
 
 env.Program('sample', ['sample.cpp', inotify_cpp])
+env.Program(['new_files.cpp', inotify_cpp])
