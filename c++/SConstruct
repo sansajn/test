@@ -3,6 +3,10 @@ env = Environment(
 
 cpp14_env = env.Clone()
 
+cpp14 = cpp14_env.Clone()
+cpp17 = Environment(
+	CXX='clang++', CXXFLAGS=['-std=c++17'], CCFLAGS=['-Wall', '-g', '-O0'])
+
 import os  # enable color in output
 if 'TERM' in os.environ:
 	env['ENV']['TERM'] = os.environ['TERM']
@@ -27,3 +31,5 @@ cpp14_env.Program('filter_ptr.cpp')
 cpp14_env.Program('pretty_function_macro.cpp')
 cpp14_env.Program('file_name_from_file.cpp')
 cpp14_env.Program('derived_inner_class.cpp')
+
+cpp14.Program('observer.cpp')

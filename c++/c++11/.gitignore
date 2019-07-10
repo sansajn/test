@@ -14,3 +14,5 @@
 /utc_time
 /tuple_compare
 /regex_match
+/bind
+/notify

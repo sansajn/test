@@ -10,7 +10,6 @@ env.Program('move_hier.cpp')
 #env.Program('fstream_move.cpp')
 env.Program('constexpr.cpp')
 env.Program('memfunc_ptr.cpp')
-env.Program('function.cpp')
 env.Program('remove_reference.cpp')
 env.Program('union.cpp')
 env.Program('find_if.cpp')
@@ -27,3 +26,8 @@ env.Program('utc_time.cpp')
 
 # thread
 env.Program('joinable_thread.cpp')
+
+# functional
+env.Program('function.cpp')
+env.Program('bind.cpp')
+env.Program('notify.cpp')
