@@ -11,3 +11,6 @@
 /backtrace_with_signals
 /demangling
 /demangled_backtrace
+/ioctl_iflags
+/readlink
+/unwind

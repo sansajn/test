@@ -1,8 +1,10 @@
 env = Environment(
-	CCFLAGS=['-std=c++11', '-g', '-O0'],
+	CCFLAGS=['-std=c++11', '-g', '-O0', '-Wall'],
 	LINKFLAGS=['-rdynamic'],
 	LIBS=['pthread', 'dl']
 )
+
+cpp11 = env.Clone()
 
 env.Program('ls.cpp')
 env.Program('dirit.cpp')
@@ -17,3 +19,5 @@ env.Program('hostname.cpp')
 env.Program('demangling.cpp')
 env.Program('readlink.cpp')
 env.Program('unwind.cpp')
+
+cpp11.Program('ioctl_iflags.cpp')
