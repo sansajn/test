@@ -1,3 +1,4 @@
+/* see http://www.man7.org/linux/man-pages/man2/ioctl_iflags.2.html for more info */
 #include <string>
 #include <iostream>
 #include <cassert>
