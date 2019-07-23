@@ -1,4 +1,6 @@
-*.includes
+/*.includes
+/*.cflags
+/*.cxxflags
 /crtp
 /getline
 /game_fsm
@@ -18,3 +20,5 @@
 /pretty_function_macro
 /file_name_from_file
 /observer
+/inheritance_from_base_ctor
+

@@ -1,13 +1,11 @@
 env = Environment(
 	CXX='clang++', CXXFLAGS=['-std=c++14'], CCFLAGS=['-Wall', '-g', '-O0'])
 
-cpp14_env = env.Clone()
-
-cpp14 = cpp14_env.Clone()
+cpp14 = env.Clone()
 cpp17 = Environment(
 	CXX='clang++', CXXFLAGS=['-std=c++17'], CCFLAGS=['-Wall', '-g', '-O0'])
 
-import os  # enable color in output
+import os  # enable color in output for clang
 if 'TERM' in os.environ:
 	env['ENV']['TERM'] = os.environ['TERM']
 
@@ -26,10 +24,12 @@ env.Program('ref_to_ptr.cpp')
 env.Program('value_proxy.cpp')
 env.Program('getline.cpp')
 
-cpp14_env.Program('filter.cpp')
-cpp14_env.Program('filter_ptr.cpp')
-cpp14_env.Program('pretty_function_macro.cpp')
-cpp14_env.Program('file_name_from_file.cpp')
-cpp14_env.Program('derived_inner_class.cpp')
-
+cpp14.Program('filter.cpp')
+cpp14.Program('filter_ptr.cpp')
+cpp14.Program('pretty_function_macro.cpp')
+cpp14.Program('file_name_from_file.cpp')
+#cpp14.Program('derived_inner_class.cpp')
 cpp14.Program('observer.cpp')
+cpp14.Program('inheritance_from_base_ctor.cpp')
+
+cpp14.Program('openfile.cpp')
