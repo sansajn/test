@@ -61,6 +61,6 @@ fun main(args: Array<String>) {
 
 	val consumer = Consumer()
 	val producer = Producer(consumer::consume)
-	producer.produce()   // one, two, three, 
+	producer.produce()   // one, two, three,
 
 }
