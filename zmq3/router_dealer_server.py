@@ -7,6 +7,7 @@ def main():
 	ctx = zmq.Context()
 	socket = ctx.socket(zmq.ROUTER)
 	socket.bind('tcp://*:5557')
+	print('waiting on tcp://*:5557 ...')
 
 	# cakaj na dotazy
 	while True:
