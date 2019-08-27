@@ -1,6 +1,6 @@
-/*.includes
-/*.cflags
-/*.cxxflags
+*.includes
+*.cflags
+*.cxxflags
 /crtp
 /getline
 /game_fsm
@@ -21,4 +21,7 @@
 /file_name_from_file
 /observer
 /inheritance_from_base_ctor
+/float_and_literal_comparsion
+/openfile
+
 
