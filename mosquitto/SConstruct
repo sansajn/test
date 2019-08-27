@@ -1,0 +1,5 @@
+cpp11 = Environment(
+	CCFLAGS=['-std=c++11', '-Wall', '-g', '-O0'],
+	LIBS=['mosquitto'])
+
+cpp11.Program('hello.cpp')
