@@ -33,3 +33,4 @@ cpp14.Program('observer.cpp')
 cpp14.Program('inheritance_from_base_ctor.cpp')
 
 cpp14.Program('openfile.cpp')
+cpp14.Program('float_and_literal_comparsion.cpp')
