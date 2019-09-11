@@ -19,5 +19,6 @@ env.Program('hostname.cpp')
 env.Program('demangling.cpp')
 env.Program('readlink.cpp')
 env.Program('unwind.cpp')
+env.Program('ip_address.cpp')
 
 cpp11.Program('ioctl_iflags.cpp')
