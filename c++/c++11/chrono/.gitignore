@@ -5,3 +5,4 @@
 /clock
 /fract_duration
 /duration_diff
+/current_time_stamp_in_mills
