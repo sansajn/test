@@ -12,3 +12,4 @@
 /posix_time2
 /local_time
 /utc_now
+/to_simple_string
