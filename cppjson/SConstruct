@@ -1,0 +1,5 @@
+cpp14 = Environment(CXXFLAGS=['-std=c++14', '-O0', '-Wall'])
+cpp14.ParseConfig('pkg-config --cflags --libs jsoncpp')
+cpp14.Program('write_to_string.cpp')
+cpp14.Program('write_to_string_old_way.cpp')
+
