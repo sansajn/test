@@ -1,0 +1,5 @@
+cpp11 = Environment(
+	CXXFLAGS=['-std=c++11', '-Wall', '-O0', '-g'],
+	LIBS=['pthread'])
+
+cpp11.Program('spin_lock.cpp')
