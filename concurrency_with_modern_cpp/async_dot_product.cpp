@@ -1,5 +1,4 @@
-/* dot product with four futures
-note: not running parallel on my machine */
+// dot product with four futures
 
 #include <future>
 #include <random>

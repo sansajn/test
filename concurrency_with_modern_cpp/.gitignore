@@ -14,3 +14,6 @@
 /async_lazy
 /fire_and_forget_futures
 /dot_product_async
+/async_dot_product
+/packaged_task
+/packaged_task_dot_product
