@@ -1,5 +1,32 @@
-cpp11 = Environment(
+gcc11 = Environment(
 	CXXFLAGS=['-std=c++11', '-Wall', '-O0', '-g'],
 	LIBS=['pthread'])
 
-cpp11.Program('spin_lock.cpp')
+gcc14 = Environment(
+	CXXFLAGS=['-std=c++14', '-Wall', '-O0', '-g'],
+	LIBS=['pthread'])
+
+gcc17 = Environment(
+	CXXFLAGS=['-std=c++17', '-Wall', '-O0', '-g'],
+	LIBS=['pthread'])
+
+clang11 = Environment(
+	CXX='clang++', CC='clang',
+	CXXFLAGS=['-std=c++11', '-Wall', '-O0', '-g'],
+	LIBS=['pthread'])
+
+gcc11.Program('spin_lock.cpp')
+gcc11.Program('condition_var.cpp')
+gcc11.Program('create_thread.cpp')
+gcc11.Program('dead_lock.cpp')
+gcc11.Program('unique_lock_dead_lock_resolved.cpp')
+gcc17.Program('scoped_lock_dead_lock_resolved.cpp')
+gcc14.Program('reader_writer_lock.cpp')
+gcc11.Program('call_once.cpp')
+clang11.Program('call_once_singleton.cpp')
+gcc11.Program('mayers_singleton.cpp')
+gcc11.Program('thread_local_state.cpp')
+gcc11.Program('async_vs_thread.cpp')
+gcc11.Program('async_lazy.cpp')
+gcc11.Program('fire_and_forget_futures.cpp')
+gcc11.Program('dot_product_async.cpp')

@@ -1,10 +1,11 @@
-// spin_lock.cpp - spin lock implementation using atomic_flag
-
+// spin lock implementation using atomic_flag
 #include <atomic>
 #include <thread>
+#include <chrono>
 #include <iostream>
 
 using std::cout;
+using std::chrono::seconds;
 
 class spin_lock
 {
@@ -30,7 +31,7 @@ spin_lock spin;
 void work_on_resource()
 {
 	spin.lock();
-	// do some work ...
+	std::this_thread::sleep_for(seconds{2});
 	spin.unlock();
 }
 

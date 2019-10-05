@@ -1,1 +1,16 @@
+/concurrency-with-modern-cpp.*
 /spin_lock
+/condition_var
+/create_thread
+/dead_lock
+/unique_lock_dead_lock_resolved
+/scoped_lock_dead_lock_resolved
+/reader_writer_lock
+/call_once
+/call_once_singleton
+/mayers_singleton
+/thread_local_state
+/async_vs_thread
+/async_lazy
+/fire_and_forget_futures
+/dot_product_async
