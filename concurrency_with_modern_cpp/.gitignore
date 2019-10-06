@@ -21,3 +21,4 @@
 /promise_wait_for
 /shared_future
 /promise_future_exception
+/promise_future_synchronise
