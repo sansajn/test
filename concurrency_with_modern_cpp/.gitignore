@@ -20,3 +20,4 @@
 /promise_future
 /promise_wait_for
 /shared_future
+/promise_future_exception
