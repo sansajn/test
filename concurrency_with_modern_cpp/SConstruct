@@ -15,8 +15,15 @@ clang11 = Environment(
 	CXXFLAGS=['-std=c++11', '-Wall', '-O0', '-g'],
 	LIBS=['pthread'])
 
+clang17 = Environment(
+	CXX='clang++', CC='clang',
+	CXXFLAGS=['-std=c++17', '-Wall', '-O0', '-g'],
+	LIBS=['pthread'])
+
 gcc11.Program('spin_lock.cpp')
 gcc11.Program('condition_var.cpp')
+
+# multithreading
 gcc11.Program('create_thread.cpp')
 gcc11.Program('dead_lock.cpp')
 gcc11.Program('unique_lock_dead_lock_resolved.cpp')
@@ -37,3 +44,6 @@ gcc14.Program('promise_wait_for.cpp')
 gcc11.Program('shared_future.cpp')
 gcc14.Program('promise_future_exception.cpp')
 gcc14.Program('promise_future_synchronise.cpp')
+
+# parallel algorithms of the standard library
+gcc17.Program('exception_execution_policy.cpp')
