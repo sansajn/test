@@ -17,3 +17,5 @@
 /async_dot_product
 /packaged_task
 /packaged_task_dot_product
+/promise_future
+/promise_wait_for
