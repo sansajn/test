@@ -1,0 +1,12 @@
+import os
+
+gcc92 = Environment(
+	CXXFLAGS=['-std=c++17', '-Wall'])
+
+gcc92['CC'] = 'gcc-9.2'
+gcc92['CXX'] = 'g++-9.2'
+gcc92['AR'] = 'gcc-ar-9.2'
+
+gcc92.Append(ENV = {'PATH' : os.environ['PATH']})
+
+gcc92.Program('main.cpp')
