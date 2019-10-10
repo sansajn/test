@@ -1,3 +1,5 @@
+import os
+
 gcc11 = Environment(
 	CXXFLAGS=['-std=c++11', '-Wall', '-O0', '-g'],
 	LIBS=['pthread'])
@@ -10,6 +12,15 @@ gcc17 = Environment(
 	CXXFLAGS=['-std=c++17', '-Wall', '-O0', '-g'],
 	LIBS=['pthread'])
 
+# prepare gcc toolchain for paraller algorithms
+gcc92 = Environment(
+	CXXFLAGS=['-std=c++17', '-Wall', '-O0', '-g'],
+	LIBS=['pthread', 'tbb'],
+	CXX='g++-9.2', CC='gcc-9.2')
+
+gcc92.Append(ENV = {'PATH' : '/usr/local/gcc-9.2/bin:' + os.environ['PATH']})
+
+
 clang11 = Environment(
 	CXX='clang++', CC='clang',
 	CXXFLAGS=['-std=c++11', '-Wall', '-O0', '-g'],
@@ -20,6 +31,7 @@ clang17 = Environment(
 	CXXFLAGS=['-std=c++17', '-Wall', '-O0', '-g'],
 	LIBS=['pthread'])
 
+
 gcc11.Program('spin_lock.cpp')
 gcc11.Program('condition_var.cpp')
 
@@ -27,7 +39,7 @@ gcc11.Program('condition_var.cpp')
 gcc11.Program('create_thread.cpp')
 gcc11.Program('dead_lock.cpp')
 gcc11.Program('unique_lock_dead_lock_resolved.cpp')
-gcc17.Program('scoped_lock_dead_lock_resolved.cpp')
+#gcc17.Program('scoped_lock_dead_lock_resolved.cpp')
 gcc14.Program('reader_writer_lock.cpp')
 gcc11.Program('call_once.cpp')
 clang11.Program('call_once_singleton.cpp')
@@ -47,3 +59,4 @@ gcc14.Program('promise_future_synchronise.cpp')
 
 # parallel algorithms of the standard library
 gcc17.Program('exception_execution_policy.cpp')
+gcc92.Program('new_algorithm.cpp')
