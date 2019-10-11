@@ -13,12 +13,19 @@ gcc17 = Environment(
 	LIBS=['pthread'])
 
 # prepare gcc toolchain for paraller algorithms
-gcc92 = Environment(
+gcc92_17 = Environment(
 	CXXFLAGS=['-std=c++17', '-Wall', '-O0', '-g'],
 	LIBS=['pthread', 'tbb'],
 	CXX='g++-9.2', CC='gcc-9.2')
 
-gcc92.Append(ENV = {'PATH' : '/usr/local/gcc-9.2/bin:' + os.environ['PATH']})
+gcc92_17.Append(ENV = {'PATH' : '/usr/local/gcc-9.2/bin:' + os.environ['PATH']})
+
+gcc92_20 = Environment(
+	CXXFLAGS=['-std=c++2a', '-Wall', '-O0', '-g'],
+	LIBS=['pthread', 'tbb'],
+	CXX='g++-9.2', CC='gcc-9.2')
+
+gcc92_20.Append(ENV = {'PATH' : '/usr/local/gcc-9.2/bin:' + os.environ['PATH']})
 
 
 clang11 = Environment(
@@ -59,8 +66,11 @@ gcc14.Program('promise_future_synchronise.cpp')
 
 # parallel algorithms of the standard library
 gcc17.Program('exception_execution_policy.cpp')
-gcc92.Program('new_algorithm.cpp')
-gcc92.Program('parallel_stl_performance.cpp')
+gcc92_17.Program('new_algorithm.cpp')
+gcc92_17.Program('parallel_stl_performance.cpp')
+
+# the near future: c++20
+#gcc92_20.Program('lazy_generator.cpp')
 
 # custom
-gcc92.Program('exclusive_scan.cpp')
+gcc92_17.Program('exclusive_scan.cpp')
