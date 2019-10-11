@@ -60,6 +60,7 @@ gcc14.Program('promise_future_synchronise.cpp')
 # parallel algorithms of the standard library
 gcc17.Program('exception_execution_policy.cpp')
 gcc92.Program('new_algorithm.cpp')
+gcc92.Program('parallel_stl_performance.cpp')
 
 # custom
 gcc92.Program('exclusive_scan.cpp')
