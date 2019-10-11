@@ -18,7 +18,7 @@ int main(int argc, char * argv[])
 		cout << v << " ";
 	cout << "\n\n";
 
-	// exclusive_scan and inclusive_scan
+	// exclusive_scan and inclusive_scan (gets wrong results, no idea why)
 	vector<int> data2{1, 2, 3, 4, 5, 6, 7, 8, 9};
 	exclusive_scan(execution::par, data2.begin(), data2.end(), data2.begin(), 1,
 		[](int fir, int sec){return fir * sec;});
@@ -38,7 +38,7 @@ int main(int argc, char * argv[])
 	cout << "\n\n";
 
 	// transform_exclusive_scan and transform_inclusive_scan
-	vector<int> data4{1, 2, 4, 5, 6, 7, 8, 9};
+	vector<int> data4{1, 2, 3, 4, 5, 6, 7, 8, 9};
 	vector<int> data5(data4.size());
 	transform_exclusive_scan(execution::par, data4.begin(), data4.end(),
 		data5.begin(), 0,
@@ -51,7 +51,7 @@ int main(int argc, char * argv[])
 	cout << endl;
 
 	vector<string> data6{"Only", "for", "testing", "purpose"};
-	vector<string> data7(data6.size());
+	vector<int> data7(data6.size());
 	transform_inclusive_scan(execution::par, data6.begin(), data6.end(),
 		data7.begin(),
 		[](auto fir, auto sec){return fir + sec;},
