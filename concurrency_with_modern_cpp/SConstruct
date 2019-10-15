@@ -75,6 +75,9 @@ gcc92_17.Program('parallel_stl_performance.cpp')
 # synchronisation patterns
 gcc14.Program('copied_value_data_race.cpp')
 gcc11.Program('per_const_reference.cpp')
+gcc11.Program('strategy.cpp')
+gcc92_17.Program('strategized_locking_runtime.cpp')
+gcc92_17.Program('strategized_locking_compile_time.cpp')
 
 # custom
 gcc92_17.Program('exclusive_scan.cpp')
