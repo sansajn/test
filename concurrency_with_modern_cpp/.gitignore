@@ -26,3 +26,5 @@
 /new_algorithm
 /exclusive_scan
 /parallel_stl_performance
+/copied_value_data_race
+/per_const_reference
