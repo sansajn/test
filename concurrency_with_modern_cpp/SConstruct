@@ -79,5 +79,8 @@ gcc11.Program('strategy.cpp')
 gcc92_17.Program('strategized_locking_runtime.cpp')
 gcc92_17.Program('strategized_locking_compile_time.cpp')
 
+# concurrent architecture
+gcc17.Program('active_object.cpp')
+
 # custom
 gcc92_17.Program('exclusive_scan.cpp')

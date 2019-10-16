@@ -28,3 +28,7 @@
 /parallel_stl_performance
 /copied_value_data_race
 /per_const_reference
+/active_object
+/strategized_locking_compile_time
+/strategized_locking_runtime
+/strategy
