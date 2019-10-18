@@ -82,5 +82,9 @@ gcc92_17.Program('strategized_locking_compile_time.cpp')
 # concurrent architecture
 gcc17.Program('active_object.cpp')
 
+# the time library
+gcc17.Program('time_point.cpp')
+gcc17.Program('sleep_and_wait.cpp')
+
 # custom
 gcc92_17.Program('exclusive_scan.cpp')
