@@ -1,2 +1,3 @@
 gcc17 = Environment(CXXFLAGS=['-std=c++17', '-Wall', '-O0', '-g'])
 gcc17.Program('older_than_generic.cpp')
+gcc17.Program('older_than_with_generic_lambda.cpp')
