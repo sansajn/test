@@ -6,6 +6,7 @@ def main():
 	cpp17.Program('older_than_with_generic_lambda.cpp')
 	cpp17.Program('error_test.cpp')
 	cpp17.Program('multiples.cpp')
+	cpp17.Program('partition_phoenix.cpp')
 
 
 def cpp17_compiler():
