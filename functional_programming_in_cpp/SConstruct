@@ -1,4 +1,43 @@
-gcc17 = Environment(CXXFLAGS=['-std=c++17', '-Wall', '-O0', '-g'])
-gcc17.Program('older_than_generic.cpp')
-gcc17.Program('older_than_with_generic_lambda.cpp')
-gcc17.Program('error_test.cpp')
+# support for custom installed c++17 campliant compiler
+
+def main():
+	cpp17 = cpp17_compiler()
+	cpp17.Program('older_than_generic.cpp')
+	cpp17.Program('older_than_with_generic_lambda.cpp')
+	cpp17.Program('error_test.cpp')
+	cpp17.Program('multiples.cpp')
+
+
+def cpp17_compiler():
+	if gcc_version('gcc')[0] >= 8:
+		return Environment(CXXFLAGS=['-std=c++17', '-Wall', '-O0', '-g'])
+	else:
+		import os
+
+		# try luck with custom installed gcc
+		if gcc_version('/usr/local/gcc-9.2/bin/gcc-9.2') == (9,2,0):
+			gcc92 = Environment(
+				CXXFLAGS=['-std=c++17', '-Wall', '-O0', '-g'],
+				CXX='g++-9.2', CC='gcc-9.2')
+			gcc92.Append(ENV = {'PATH' : '/usr/local/gcc-9.2/bin:' + os.environ['PATH']})
+			return gcc92
+		else:
+			raise SystemExit('error: c++17 compliant compiler not found')
+
+
+def gcc_version(gcc):
+	import subprocess as sproc
+	import re
+
+	try:
+		cmd = gcc + ' --version'
+		p1 = sproc.Popen(cmd.split(), stdout=sproc.PIPE)
+		out = p1.communicate()[0].decode('utf-8')
+		version_line = out.split('\n')[0]
+		match = re.match('gcc.+(\d)\.(\d)\.(\d).*', version_line)
+		ver = match.group(1, 2, 3)  # ('5', '4', '0')
+		return (int(ver[0]), int(ver[1]), int(ver[2]))
+	except OSError:
+		return (0, 0, 0)
+
+main()
