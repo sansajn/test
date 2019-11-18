@@ -20,5 +20,6 @@ env.Program('demangling.cpp')
 env.Program('readlink.cpp')
 env.Program('unwind.cpp')
 env.Program('ip_address.cpp')
+env.Program('select.cpp')
 
 cpp11.Program('ioctl_iflags.cpp')
