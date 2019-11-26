@@ -8,6 +8,7 @@ def main():
 	cpp17.Program('multiples.cpp')
 	cpp17.Program('partition_phoenix.cpp')
 	cpp17.Program('function_memfunc_call.cpp')
+	cpp17.Program('41_greather_than.cpp')
 
 
 def cpp17_compiler():
