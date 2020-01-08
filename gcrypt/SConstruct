@@ -1,0 +1,7 @@
+env = Environment(
+	CXXFLAGS=['-std=c++14'],
+	CCFLAGS=['-Wall', '-O0'],
+	LIBS=['gcrypt', 'boost_filesystem', 'boost_system'])
+
+env.Program('gchash.c')
+env.Program('fmd5.cpp')
