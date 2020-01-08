@@ -36,7 +36,7 @@ void path_info(fs::path const & p)
 
 int main(int argc, char * argv[]) 
 {
-	fs::path p{"/documents/test/foo/"};
+	fs::path p{"/documents/test/foo/test.txt"};
 	path_info(p);
 	return 0;
 }

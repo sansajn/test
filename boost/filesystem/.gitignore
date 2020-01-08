@@ -1,3 +1,4 @@
+/test-boost-filesystem.*
 /compare
 /directory_listing
 /hello
@@ -9,3 +10,4 @@
 /sub_path
 /up_directory
 /directory_first_sort
+/file_size
