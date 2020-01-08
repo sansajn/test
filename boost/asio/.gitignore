@@ -15,3 +15,5 @@
 /work
 /shutdown
 /post
+/interrupt_handling
+/test-boost-asio.*
