@@ -32,8 +32,8 @@ namespace fs = boost::filesystem;
 string gethostname();
 
 vector<fs::path> assets{
-	"assets/girl_face_freckles_eyes_92358_1920x1080.jpg",
-	"assets/girls_road_model_photo_shoot_87274_1920x1080.jpg",
+	"assets/girl_face.jpg",
+	"assets/road.jpg"
 };
 
 static uint8_t * read_file(std::string const & file_name, size_t & size);

@@ -1,3 +1,6 @@
+live_path = 'live'
+#live_path = 'live_2017.07.18'
+
 # ubuntu 15.10 package live555
 env = Environment(
 	CXXFLAGS=['-std=c++11', '-Wall', '-g', '-O0'],
@@ -13,28 +16,38 @@ env.Program('multicast_h264_static_address.cpp')
 #env.Program('stream_image.cpp')
 
 
+live_includes = [
+	'%s/groupsock/include' % live_path,
+	'%s/UsageEnvironment/include' % live_path,
+	'%s/BasicUsageEnvironment/include' % live_path,
+	'%s/liveMedia/include' % live_path]
+
+
 # dectruction sample build statically against local (not installed) live555
 liblive555_static_env = Environment(
 	CCFLAGS=['-std=c++11', '-m64', '-fPIC', '-Wall', '-g', '-O0'],
 	CPPDEFINES=['-DSOCKLEN_T=socklen_t', '-D_LARGEFILE_SOURCE=1', '-D_FILE_OFFSET_BITS=64', 'BOOST_LOG_DYN_LINK'],
-	CPPPATH=['.', 'live/groupsock/include', 'live/UsageEnvironment/include', 'live/BasicUsageEnvironment/include', 'live/liveMedia/include'],
+	CPPPATH=['.', live_includes],
 	LIBS=['pthread', 'boost_log']
 )
 
-groupsock_objs = liblive555_static_env.Object([Glob('live/groupsock/*.cpp'), Glob('live/groupsock/*.c')])
-usage_env_objs = liblive555_static_env.Object([Glob('live/UsageEnvironment/*cpp'), Glob('live/BasicUsageEnvironment/*.cpp')])
-live_media_objs = liblive555_static_env.Object([Glob('live/liveMedia/*.cpp'), Glob('live/liveMedia/*.c')])
-live555_lib = liblive555_static_env.StaticLibrary('live/live555', [groupsock_objs, usage_env_objs, live_media_objs])
+groupsock_objs = liblive555_static_env.Object([
+	Glob('%s/groupsock/*.cpp' % live_path), Glob('%s/groupsock/*.c' % live_path)])
+
+usage_env_objs = liblive555_static_env.Object([
+	Glob('%s/UsageEnvironment/*cpp' % live_path),
+	Glob('%s/BasicUsageEnvironment/*.cpp' % live_path)])
+
+live_media_objs = liblive555_static_env.Object([
+	Glob('%s/liveMedia/*.cpp' % live_path),
+	Glob('%s/liveMedia/*.c' % live_path)])
+
+live555_lib = liblive555_static_env.StaticLibrary(
+	'%s/live555' % live_path, [groupsock_objs, usage_env_objs, live_media_objs])
 
 local_liblive555_env = Environment(
 	CXXFLAGS=['-std=c++11', '-Wall', '-g', '-O0'],
-	CPPPATH=[
-		'.',
-		'live/groupsock/include',
-		'live/UsageEnvironment/include', 
-		'live/BasicUsageEnvironment/include',
-		'live/liveMedia/include'
-	],
+	CPPPATH=['.', live_includes],
 	CPPDEFINES=['BOOST_LOG_DYN_LINK'],
 	LIBS=['pthread', 'boost_log', 'boost_filesystem', 'boost_system']
 )
@@ -59,3 +72,15 @@ local_liblive555_env.Program(['only_rtsp_server.cpp', live555_lib])
 local_liblive555_env.Program(['schedule_custom_task.cpp', live555_lib])
 local_liblive555_env.Program(['rtsp_setup_handler.cpp', live555_lib])
 local_liblive555_env.Program(['posponed_multicast.cpp', live555_lib])
+local_liblive555_env.Program(['bare_mkv.cpp', live555_lib])
+local_liblive555_env.Program(['multiple_mkv.cpp', live555_lib])
+local_liblive555_env.Program(['jpeg_on_demand.cpp', live555_lib])
+
+local_liblive555_env.Program([
+	'jpeg_custom.cpp',
+	'CustomOnDemandServerMediaSubsession.cpp',
+	live555_lib])
+
+
+local_liblive555_env.Program(['netaddresslist_test.cpp', live555_lib])
+

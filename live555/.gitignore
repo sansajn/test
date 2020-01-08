@@ -26,3 +26,10 @@
 /only_rtsp_server
 /rtsp_setup_handler
 /posponed_multicast
+/bare_mkv
+/multiple_mkv
+/jpeg_on_demand
+/test-live555.*
+/netaddresslist_test
+/out_*/
+/jpeg_custom

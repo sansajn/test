@@ -1,5 +1,4 @@
-/*! jpeg image streaming, this setup can stream only images up to 150KB (reason
-for that is socket send buffer overflow in multicast mode) */
+/*! jpeg image streaming, this setup can stream only images up to 150KB (reason for that is unknown) */
 #include <vector>
 #include <string>
 #include <chrono>
@@ -19,6 +18,7 @@ for that is socket send buffer overflow in multicast mode) */
 #include <GroupsockHelper.hh>
 #include <BasicUsageEnvironment.hh>
 #include <JPEGVideoSource.hh>
+#include "CustomOnDemandServerMediaSubsession.hh"
 
 using std::vector;
 using std::string;
@@ -111,31 +111,12 @@ private:
 	string _name;  //!< debug
 };
 
-class error_aware_task_scheduler : public BasicTaskScheduler
-{
-public:
-	static error_aware_task_scheduler * createNew(unsigned maxSchedulerGranularity = 10000/*microseconds*/);
-	void doEventLoop(char volatile * watchVariable) override;
-	void associate_env(UsageEnvironment * env);
-
-private:
-	error_aware_task_scheduler(unsigned maxSchedulerGranularity);
-	void SingleStep(unsigned maxDelayTime) override;
-
-	UsageEnvironment * _env;
-};
-
-void play();
-void after_playing(void *);
 void interrupt_handler(int signum);  // SIGINT
 string gethostname();
 static uint8_t * read_file(std::string const & file_name, size_t & size);
 ostream & operator<<(ostream & out, in_addr const & addr);
 
 UsageEnvironment * env = nullptr;
-RTPSink * sink = nullptr;
-FramedSource * source = nullptr;
-Groupsock * rtp_sock = nullptr;
 char quit_loop = 0;
 
 template <typename T>
@@ -145,6 +126,27 @@ void release(T *& obj)
 	obj = nullptr;
 }
 
+/*! \note we need to implement subsession derived from \c OnDemandServerMediaSubsession
+to support on-demand protocol */
+class jpeg_video_media_subsession : public CustomOnDemandServerMediaSubsession
+{
+public:
+	static jpeg_video_media_subsession * createNew(UsageEnvironment & env,
+		fs::path const & fname);
+
+private:
+	jpeg_video_media_subsession(UsageEnvironment & env, fs::path const & fname);
+
+	FramedSource * createNewStreamSource(unsigned clientSessionId,
+		unsigned & estBitrate) override;
+
+	RTPSink * createNewRTPSink(Groupsock * rtpGroupsock,
+		unsigned char rtpPayloadTypeIfDynamic, FramedSource * inputSource) override;
+
+	fs::path _fname;
+};
+
+
 int main(int argc, char * argv[])
 {
 	signal(SIGINT, interrupt_handler);  // interrupt signal handler
@@ -152,49 +154,25 @@ int main(int argc, char * argv[])
 	if (argc > 1)
 		input_image = argv[1];
 
-	auto * sched = error_aware_task_scheduler::createNew();
+	TaskScheduler * sched = BasicTaskScheduler::createNew();
 	assert(sched);
 
 	env = BasicUsageEnvironment::createNew(*sched);
 	assert(env);
 
-	sched->associate_env(env);
+//	in_addr dest_address;
+//	dest_address.s_addr = chooseRandomIPv4SSMAddress(*env);
+//	cout << "rtp/rtcp address: " << dest_address << "\n";
 
-	in_addr dest_address;
-	dest_address.s_addr = chooseRandomIPv4SSMAddress(*env);
-	cout << "rtp/rtcp address: " << dest_address << "\n";
+//	Groupsock rtp_sock{*env, dest_address, 18888, 255};
+//	rtp_sock.multicastSendOnly();
 
-	rtp_sock = new Groupsock{*env, dest_address, 18888, 255};
-	rtp_sock->multicastSendOnly();
-
-	OutPacketBuffer::increaseMaxSizeTo(600000);  // ask for bigger buffer
-
-	source = jpeg_video_source_impl::createNew(*env, input_image, seconds{10},
-		milliseconds{500}, "source_0");
-
-	sink = JPEGVideoRTPSink::createNew(*env, rtp_sock);
-	assert(sink);
-
-	unsigned bitrate = 500;  // in kbit/s
-	if (sink->estimatedBitrate() > 0)
-		bitrate = sink->estimatedBitrate();
-
-	unsigned rtp_buf_size = bitrate * 25 / 2;  // 1 kbps * 0.1s = 12.5
-	if (rtp_buf_size < 50*1024)  // use at least 50KB
-		rtp_buf_size = 50*1024;
-	increaseSendBufferTo(*env, rtp_sock->socketNum(), rtp_buf_size);
-
-	Groupsock rtcp_sock{*env, dest_address, 18889, 255};
-	rtcp_sock.multicastSendOnly();
-
-	RTCPInstance * rtcp = RTCPInstance::createNew(*env, &rtcp_sock, bitrate,
-		(unsigned char const *)"host-name", sink, nullptr, True);
-	assert(rtcp);
+	OutPacketBuffer::increaseMaxSizeTo(300000);  // ask for bigger buffer
 
 	ServerMediaSession * sms = ServerMediaSession::createNew(*env, "testStream",
 		"info", "description ...", True);
 	assert(sms);
-	sms->addSubsession(PassiveServerMediaSubsession::createNew(*sink, rtcp));
+	sms->addSubsession(jpeg_video_media_subsession::createNew(*env, input_image));
 
 	RTSPServer * rtsp_serv = RTSPServer::createNew(*env, 8554);
 	if (!rtsp_serv)
@@ -204,35 +182,14 @@ int main(int argc, char * argv[])
 	unique_ptr<char []> url{rtsp_serv->rtspURL(sms)};
 	cout << "Play this stream using 'cvlc --rtsp-frame-buffer-size=300000 " << url.get() << "'" << std::endl;
 
-	play();
-
 	sched->doEventLoop(&quit_loop);
 
-	release(sink);
-	release(source);
 	release(rtsp_serv);
 	bool released = env->reclaim();
 	assert(released);
 
 	cout << "done!\n";
 	return 0;
-}
-
-void play()
-{
-	unsigned fps = 2;
-	source = jpeg_video_source_impl::createNew(*env, input_image, seconds{30},
-		microseconds{1000000/fps}, "source_0");
-	sink->startPlaying(*source, after_playing, nullptr);
-}
-
-void after_playing(void *)
-{
-	sink->stopPlaying();
-	((jpeg_video_source_impl *)source)->clear_buffer();
-	Medium::close(source);
-	source = nullptr;
-	play();
 }
 
 
@@ -805,60 +762,29 @@ void interrupt_handler(int signum)
 	quit_loop = 1;  // quit live555 loop
 }
 
-error_aware_task_scheduler * error_aware_task_scheduler::createNew(unsigned maxSchedulerGranularity)
+jpeg_video_media_subsession * jpeg_video_media_subsession::createNew(UsageEnvironment & env,
+	fs::path const & fname)
 {
-	return new error_aware_task_scheduler{maxSchedulerGranularity};
+	return new jpeg_video_media_subsession{env, fname};
 }
 
-void error_aware_task_scheduler::associate_env(UsageEnvironment * env)
-{
-	_env = env;
-}
 
-void error_aware_task_scheduler::doEventLoop(char volatile * watchVariable)
-{
-	while (1)
-	{
-		if (watchVariable != NULL && *watchVariable != 0)
-			break;
-
-		/* dirty hack to solve soket send buffer overflow for multicast mode in a
-		case of streaming big JPEG images (>208KB) */
-
-		int snd_bufsize = 0;
-		socklen_t optlen = sizeof(snd_bufsize);
-		getsockopt(rtp_sock->socketNum(), SOL_SOCKET, SO_SNDBUF,	(void *)&snd_bufsize,
-			&optlen);
-
-		unsigned max_packet_count = snd_bufsize / 1456;  // RTP_PAYLOAD_MAX_SIZE value from MultiFramedRTPSink.cpp
-
-		unsigned immediate_task_loop_count = 1;
-		do
-		{
-			SingleStep(0);
-
-			if (immediate_task_loop_count++ % max_packet_count)
-				std::this_thread::sleep_for(microseconds{100});  // TODO: we can maybe use select() to find out socket is ready
-		}
-		while (fDelayQueue.timeToNextAlarm() == DELAY_ZERO);
-	}
-}
-
-error_aware_task_scheduler::error_aware_task_scheduler(unsigned maxSchedulerGranularity)
-	: BasicTaskScheduler{maxSchedulerGranularity}
-	, _env{nullptr}
+jpeg_video_media_subsession::jpeg_video_media_subsession(UsageEnvironment & env,
+	fs::path const & fname)
+		: CustomOnDemandServerMediaSubsession{env, True}
+		, _fname{fname}
 {}
 
-void error_aware_task_scheduler::SingleStep(unsigned maxDelayTime)
+FramedSource * jpeg_video_media_subsession::createNewStreamSource(
+	unsigned clientSessionId,	unsigned & estBitrate)
 {
-	BasicTaskScheduler::SingleStep(maxDelayTime);
+	estBitrate = 0;
+	return jpeg_video_source_impl::createNew(envir(), _fname.string(), seconds{5},
+		milliseconds{500}, "source_0");
+}
 
-	if (_env)
-	{
-		if (strlen(_env->getResultMsg()) > 0)
-		{
-			if (strncmp(_env->getResultMsg(), "liveMedia", 9) != 0)  // ignore liveMedia%d messages
-				cout << "live555, " << _env->getResultMsg() << std::endl;
-		}
-	}
+RTPSink * jpeg_video_media_subsession::createNewRTPSink(Groupsock * rtpGroupsock,
+	unsigned char rtpPayloadTypeIfDynamic, FramedSource * inputSource)
+{
+	return JPEGVideoRTPSink::createNew(envir(), rtpGroupsock);
 }
