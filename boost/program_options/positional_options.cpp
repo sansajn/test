@@ -1,4 +1,5 @@
-// positional options handling
+/* one positional option (url) sample 
+usage:  positional_options [--compression] {url} */
 #include <string>
 #include <iostream>
 #include <boost/program_options.hpp>
