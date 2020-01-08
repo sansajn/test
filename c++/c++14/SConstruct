@@ -1,0 +1,4 @@
+cpp14 = Environment(
+	CCFLAGS=['-std=c++14'])
+
+cpp14.Program('polymorfic_lambdas.cpp')
