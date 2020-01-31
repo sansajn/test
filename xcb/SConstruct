@@ -1,5 +1,5 @@
 env = Environment(
-	CXXFLAGS=['-std=c++11', '-Wall', '-O0', '-g'])
+	CXXFLAGS=['-std=c++14', '-Wall', '-O0', '-g'])
 
 env.ParseConfig('pkg-config --cflags --libs xcb')
 
@@ -7,3 +7,4 @@ env.Program('hello.cpp')
 env.Program('basics.cpp')
 env.Program('no_decoration.cpp')
 env.Program('move.cpp')
+env.Program('unmap.cpp')
