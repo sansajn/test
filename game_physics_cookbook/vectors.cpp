@@ -1,6 +1,7 @@
-#include "vectors.h"
 #include <cmath>
 #include <cfloat>
+#include "Compare.h"
+#include "vectors.h"
 
 using std::ostream;
 
@@ -327,21 +328,23 @@ vec3 Project(vec3 const & length, vec3 const & direction)
 	return direction * (dot / magSq);
 }
 
+vec2 Perpendicular(vec2 const & length, vec2 const & direction)
+{
+	return length - Project(length, direction);
+}
 
+vec3 Perpendicular(vec3 const & length, vec3 const & direction)
+{
+	return length - Project(length, direction);
+}
 
+vec2 Reflection(vec2 const & sourceVector, vec2 const & normal)
+{
+	return sourceVector - normal * (Dot(sourceVector, normal) * 2.0f);
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+vec3 Reflection(vec3 const & sourceVector, vec3 const & normal)
+{
+	return sourceVector - normal * (Dot(sourceVector, normal) * 2.0f);
+}
 
