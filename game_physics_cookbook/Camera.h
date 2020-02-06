@@ -2,6 +2,7 @@
 
 struct mat4 {};
 struct vec3 {};
+struct vec2 {};
 struct Frustum {};
 
 class Camera
@@ -46,3 +47,33 @@ protected:
 
 Camera CreatePerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane);
 Camera CreateOrthographic(float width, float height, float nearPlane, float farPlane);
+
+class OrbitCamera : public Camera
+{
+public:
+	OrbitCamera();
+
+	void Rotate(vec2 const & deltaRot, float deltaTime);
+	void Zoom(float deltaZoom, float deltaTime);
+	void Pan(vec2 const & deltaPan, float deltaTime);
+	
+	void Update(float dt);
+	float ClampAngle(float angle, float min, float max);  //!< \param angle angle in deg
+	
+	void SetTarget(vec3 const & newTarget);
+	void SetZoom(float zoom);
+	void SetRotation(vec2 const & rotation);
+	void PrintDebug();
+	
+protected:
+	vec3 target,
+		panSpeed;
+		
+	float zoomDistance;
+	vec2 zoomDistanceLimit;  // (x=min, y=max)
+	float zoomSpeed;
+	
+	vec2 rotationSpeed,
+		yRotationLimit,  // (x=min, y=max)
+		currentRotation;
+};
