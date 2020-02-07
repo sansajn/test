@@ -1,7 +1,10 @@
+#include <chrono>
 #include <iostream>
 #include <cassert>
 #include <GLFW/glfw3.h>
 #include "IWindow.h"
+
+using std::chrono::steady_clock;
 using std::cerr;
 using std::cout;
 using std::endl;
@@ -30,16 +33,28 @@ int main(int argc, char * argv[])
 	glfwMakeContextCurrent(w);
 	
 	IWindow * demo = IWindow::GetInstance();
+	assert(demo);
+	
+	demo->OnInitialize();
+	demo->OnResize(640, 480);
+	demo->MarkAsShown();
 	
 	// loop
 	while (!glfwWindowShouldClose(w))
 	{
-		glClear(GL_COLOR_BUFFER_BIT);  // render
-		glfwSwapBuffers(w);  // show
 		glfwPollEvents();  // process events
+		
+		// update
+		demo->OnUpdate(0.1f);  // dt = 0.1s
+		
+		// render
+		glClear(GL_COLOR_BUFFER_BIT);  // render
+		demo->OnRender();
+		glfwSwapBuffers(w);  // show
 	}
 	
 	demo->Close();
+	demo->OnShutdown();
 	
 	cout << "done!\n";
 	return 0;
