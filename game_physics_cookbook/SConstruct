@@ -6,5 +6,6 @@ math_module = cpp17.Object([
 	'matrices.cpp'])
 
 cpp17.Object([
+	'DemoBase.cpp',
 	'Camera.cpp'])
 
