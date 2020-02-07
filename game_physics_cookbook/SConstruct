@@ -1,11 +1,28 @@
+''' dependencies: 
+	libglfw3-dev (3.3)
+'''
+
 cpp17 = Environment()
+cpp17.ParseConfig('pkg-config --cflags --libs glfw3 gl')
+
+#imgui_module = cpp17.Object(Glob('imgui/*.cpp'))
+
+# gl, window, ui stuff
+ui_module = cpp17.Object([
+	'IWindow.cpp',
+	'FixedFunctionPrimitives.cpp'])
+
 
 math_module = cpp17.Object([
 	'Compare.cpp',
 	'vectors.cpp',
 	'matrices.cpp'])
 
+
 cpp17.Object([
 	'DemoBase.cpp',
 	'Camera.cpp'])
 
+cpp17.Program('demo', [
+	'main.cpp',
+	ui_module])
