@@ -1,4 +1,7 @@
+#include <iostream>
 #include "Camera.h"
+
+using std::cout;
 
 Camera::Camera()
 {

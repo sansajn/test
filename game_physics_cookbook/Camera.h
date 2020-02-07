@@ -1,8 +1,7 @@
 #pragma once
+#include "vectors.h"
 
 struct mat4 {};
-struct vec3 {};
-struct vec2 {};
 struct Frustum {};
 
 class Camera
