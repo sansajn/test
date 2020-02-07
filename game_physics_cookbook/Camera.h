@@ -1,7 +1,6 @@
 #pragma once
-#include "vectors.h"
+#include "matrices.h"
 
-struct mat4 {};
 struct Frustum {};
 
 class Camera
@@ -65,8 +64,8 @@ public:
 	void PrintDebug();
 	
 protected:
-	vec3 target,
-		panSpeed;
+	vec3 target;
+	vec2 panSpeed;
 		
 	float zoomDistance;
 	vec2 zoomDistanceLimit;  // (x=min, y=max)

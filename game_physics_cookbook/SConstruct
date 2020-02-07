@@ -2,4 +2,5 @@ cpp17 = Environment()
 
 cpp17.Object([
 	'Camera.cpp',
+	'Compare.cpp',
 	'vectors.cpp'])

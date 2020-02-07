@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Compare.h"
 #include "Camera.h"
 
 using std::cout;
@@ -27,13 +28,13 @@ bool Camera::IsOrthoNormal()
 	vec3 up = vec3{m_matWorld._21, m_matWorld._22, m_matWorld._23};
 	vec3 forward = vec3{m_matWorld._31, m_matWorld._32, m_matWorld._33};
 	
-	if (!CMP(Dot(right, right), 1.0f)
+	if (!CMP(Dot(right, right), 1.0f))
 		return false;  // X axis is not normal
 		
 	if (!CMP(Dot(up, up), 1.0f))
 		return false;  // Y axis is not normal
 		
-	if (!CMP(Dot(forward, forward), 1.0f)
+	if (!CMP(Dot(forward, forward), 1.0f))
 		return false;  // Z axis is not normal
 		
 	if (!CMP(Dot(forward, up), 0.0f))
@@ -194,7 +195,7 @@ void OrbitCamera::Rotate(const vec2 & deltaRot, float deltaTime)
 	currentRotation.x += deltaRot.x * rotationSpeed.x * zoomDistance * deltaTime;
 	currentRotation.y += deltaRot.y * rotationSpeed.y * zoomDistance * deltaTime;
 	currentRotation.x = ClampAngle(currentRotation.x, -360, 360);
-	currentRotation.y = ClampAngle(currentRotation.y, yRotationLimit.x. yRotationLimit.y);
+	currentRotation.y = ClampAngle(currentRotation.y, yRotationLimit.x, yRotationLimit.y);
 }
 
 void OrbitCamera::Zoom(float deltaZoom, float deltaTime)
