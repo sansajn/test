@@ -89,6 +89,9 @@ float Dot(vec3 const & l, vec3 const & r);
 float Magnitude(vec2 const & v);
 float Magnitude(vec3 const & v);
 
+float MagnitudeSq(vec2 const & v);
+float MagnitudeSq(vec3 const & v);
+
 float Distance(vec2 const & p1, vec2 const & p2);
 float Distance(vec3 const & p1, vec3 const & p2);
 

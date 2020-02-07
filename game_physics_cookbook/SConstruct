@@ -1,6 +1,10 @@
 cpp17 = Environment()
 
-cpp17.Object([
-	'Camera.cpp',
+math_module = cpp17.Object([
 	'Compare.cpp',
-	'vectors.cpp'])
+	'vectors.cpp',
+	'matrices.cpp'])
+
+cpp17.Object([
+	'Camera.cpp'])
+

@@ -9,6 +9,32 @@ TODO: dopln popis z originalu */
 
 #include "vectors.h"
 
+struct mat2
+{
+	union {
+		struct {
+			float _11, _12,
+				_21, _22;
+		};
+		float asArray[4];
+	};
+	
+	mat2()
+	{
+		_11 = _22 = 1.0f;
+		_12 = _21 = 0.0f;
+	}
+	
+	mat2(float f11, float f12, 
+		float f21, float f22)
+	{
+		_11 = f11; _12 = f12;
+		_21 = f21; _22 = f22;
+	}
+	
+	float * operator[](int i) {return &(asArray[i*2]);}
+};
+
 struct mat3
 {
 	union {
@@ -37,10 +63,7 @@ struct mat3
 		_31 = f31; _32 = f32; _33 = f33;
 	}
 	
-	float * operator[](int i)
-	{
-		return &(asArray[i*3]);
-	}
+	float * operator[](int i) {return &(asArray[i*3]);}
 };
 
 struct mat4
@@ -75,23 +98,33 @@ struct mat4
 		_41 = f41; _42 = f42; _43 = f43; _44 = f44;
 	}
 	
-	float * operator[](int i)
-	{
-		return &(asArray[i*4]);
-	}
+	float * operator[](int i) {return &(asArray[i*4]);}
 };
 
 bool operator==(mat4 const & l, mat4 const & r);
 
 bool operator!=(mat4 const & l, mat4 const & r);
 
-std::ostream operator<<(std::ostream & os, mat4 const & m);
+std::ostream & operator<<(std::ostream & os, mat4 const & m);
 
+void Transpose(float const * srcMat, float * dstMat, int srcRows, int srcCols);
 mat4 Transpose(mat4 const & matrix);
 
 mat4 operator*(mat4 const & matrix, float scalar);
 
+bool Multiply(float * out, float const * matA, int aRows, int aCols, float const * matB, int bRows, int bCols);
 mat4 operator*(mat4 const & matrixA, mat4 const & matrixB);
+
+mat2 Cut(mat3 const & mat, int row, int col);
+mat3 Cut(mat4 const & mat, int row, int col);
+
+void Cofactor(float * out, float const * minor, int rows, int cols);
+
+float Determinant(mat2 const & mat);
+
+mat3 Minor(mat3 const & mat);
+mat3 Cofactor(mat3 const & mat);
+float Determinant(mat3 const & mat);
 
 mat4 Minor(mat4 const & mat);
 mat4 Cofactor(mat4 const & mat);

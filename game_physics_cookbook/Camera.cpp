@@ -68,26 +68,10 @@ void Camera::OrthoNormalize()
 
 mat4 Camera::GetViewMatrix()
 {
-	// return Inverse(m_matWorld);
-	
 	if (!IsOrthoNormal())
 		OrthoNormalize();
 	
-	mat4 inv = Transpose(m_matWorld);
-	inv._41 = inv._14 = 0.0f;
-	inv._42 = inv._24 = 0.0f;
-	inv._43 = inv._34 = 0.0f;
-	
-	vec3 right = vec3{m_matWorld._11, m_matWorld._12, m_matWorld._13};
-	vec3 up = vec3{m_matWorld._21, m_matWorld._22, m_matWorld._23};
-	vec3 forward = vec3{m_matWorld._31, m_matWorld._32, m_matWorld._33};
-	vec3 position = vec3{m_matWorld._41, m_matWorld._42, m_matWorld._43};
-	
-	inv._41 = -Dot(right, position);
-	inv._42 = -Dot(up, position);
-	inv._43 = -Dot(forward, position);
-	
-	return inv;
+	return FastInverse(m_matWorld);
 }
 
 float Camera::GetAspect()
