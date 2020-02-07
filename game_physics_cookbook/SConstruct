@@ -10,6 +10,7 @@ cpp17.ParseConfig('pkg-config --cflags --libs glfw3 gl')
 # gl, window, ui stuff
 ui_module = cpp17.Object([
 	'IWindow.cpp',
+	'GLWindow.cpp',
 	'FixedFunctionPrimitives.cpp'])
 
 
