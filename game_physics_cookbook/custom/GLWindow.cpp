@@ -5,6 +5,7 @@
 
 //#include "glad/glad.h"
 
+#include <cstring>
 #include <GLFW/glfw3.h>
 #include "GLWindow.h"
 
