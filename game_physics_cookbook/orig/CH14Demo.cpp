@@ -1,7 +1,8 @@
 #include "CH14Demo.h"
 #include "FixedFunctionPrimitives.h"
-#include "glad/glad.h"
-#include "imgui/imgui.h"
+// #include "glad/glad.h"
+// #include "imgui/imgui.h"
+#include <GLFW/glfw3.h>
 #include <iostream>
 
 extern double GetMilliseconds();
@@ -85,7 +86,7 @@ void CH14Demo::Render() {
 }
 
 void CH14Demo::ImGUI() {
-	DemoBase::ImGUI();
+// 	DemoBase::ImGUI();
 
 	float avgTime = 0;
 	std::list<float>::iterator iterator = deltaTimes.begin();
@@ -98,26 +99,26 @@ void CH14Demo::ImGUI() {
 
 	if (size_imgui_window) {
 		size_imgui_window = false;
-		ImGui::SetNextWindowPos(ImVec2(400, 10));
-		ImGui::SetNextWindowSize(ImVec2(370, 75));
+// 		ImGui::SetNextWindowPos(ImVec2(400, 10));
+// 		ImGui::SetNextWindowSize(ImVec2(370, 75));
 	}
 
-	ImGui::Begin("Chapter 14 Demo", 0, ImGuiWindowFlags_NoResize);
-	ImGui::Text("Simulation delta: %.3f ms/frame", avgTime);
-
-	ImGui::Text("Particle count");
-	ImGui::SameLine();
-	ImGui::PushItemWidth(100);
-	ImGui::SliderInt("", &numParticles, 1, 300);
-	ImGui::SameLine();
-	if (ImGui::Button("Reset")) {
-		ResetDemo();
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("Show Help")) {
-		show_help = true;
-	}
-	ImGui::End();
+// 	ImGui::Begin("Chapter 14 Demo", 0, ImGuiWindowFlags_NoResize);
+// 	ImGui::Text("Simulation delta: %.3f ms/frame", avgTime);
+// 
+// 	ImGui::Text("Particle count");
+// 	ImGui::SameLine();
+// 	ImGui::PushItemWidth(100);
+// 	ImGui::SliderInt("", &numParticles, 1, 300);
+// 	ImGui::SameLine();
+// 	if (ImGui::Button("Reset")) {
+// 		ResetDemo();
+// 	}
+// 	ImGui::SameLine();
+// 	if (ImGui::Button("Show Help")) {
+// 		show_help = true;
+// 	}
+// 	ImGui::End();
 }
 
 void CH14Demo::Update(float dt) {

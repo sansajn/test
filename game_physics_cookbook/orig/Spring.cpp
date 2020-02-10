@@ -1,3 +1,4 @@
+#include <cmath>
 #include "Spring.h"
 
 Spring::Spring(float _k, float _b, float len) {

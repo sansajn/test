@@ -1,8 +1,9 @@
 #include "CollisionFeature.h"
 #include "FixedFunctionPrimitives.h"
-#include "glad/glad.h"
-#include "imgui/imgui.h"
-#include "imgui/ImGuizmo.h"
+// #include "glad/glad.h"
+#include <GLFW/glfw3.h>
+// #include "imgui/imgui.h"
+// #include "imgui/ImGuizmo.h"
 #include <iostream>
 
 void CollisionFeature::Initialize(int width, int height) {
@@ -35,8 +36,8 @@ void CollisionFeature::ImGUI() {
 
 	if (size_imgui_window) {
 		size_imgui_window = false;
-		ImGui::SetNextWindowPos(ImVec2(400, 10));
-		ImGui::SetNextWindowSize(ImVec2(370, 75));
+// 		ImGui::SetNextWindowPos(ImVec2(400, 10));
+// 		ImGui::SetNextWindowSize(ImVec2(370, 75));
 	}
 
 	ImGui::Begin("SAT Test Demo", 0, ImGuiWindowFlags_NoResize);

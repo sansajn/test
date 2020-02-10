@@ -72,7 +72,7 @@ typedef struct Plane {
 		normal(n), distance(d) { }
 } Plane;
 
-typedef struct Triangle {
+struct Triangle {
 	union {
 		struct {
 			Point a;
@@ -92,7 +92,7 @@ typedef struct Triangle {
 	inline Triangle() { }
 	inline Triangle(const Point& _p1, const Point& _p2, const Point& _p3) :
 		a(_p1), b(_p2), c(_p3) { }
-} Triangle;
+};
 
 typedef struct BVHNode {
 	AABB bounds;
@@ -352,7 +352,7 @@ Ray GetPickRay(const vec2& viewportPoint, const vec2& viewportOrigin, const vec2
 
 // Chapter 15
 
-typedef struct CollisionManifold {
+struct CollisionManifold {
 	bool colliding;
 	vec3 normal;
 	float depth;

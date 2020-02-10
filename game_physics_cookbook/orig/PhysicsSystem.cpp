@@ -1,7 +1,9 @@
 #include "PhysicsSystem.h"
 #include "RigidbodyVolume.h"
 #include "FixedFunctionPrimitives.h"
-#include "glad/glad.h"
+//#include "glad/glad.h"
+#include <cmath>
+#include <GLFW/glfw3.h>
 #include <iostream>
 
 PhysicsSystem::PhysicsSystem() {

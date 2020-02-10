@@ -1,5 +1,6 @@
 #include "Cloth.h"
-#include "glad/glad.h"
+// #include "glad/glad.h"
+#include <GLFW/glfw3.h>
 #include "FixedFunctionPrimitives.h"
 
 void Cloth::Initialize(int gridSize, float distance, const vec3& position) {
