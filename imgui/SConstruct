@@ -1,0 +1,18 @@
+# sample imgui build file
+
+cpp17 = Environment(
+	CPPPATH=['.', 'examples/'],
+)
+
+cpp17.ParseConfig('pkg-config --cflags --libs glfw3 gl')
+
+imgui = cpp17.StaticLibrary([
+	Glob('*.cpp'),
+	'examples/imgui_impl_glfw.cpp',  # backend for GLFW
+	'examples/imgui_impl_opengl2.cpp',  # backend fo opengl2
+])
+
+cpp17.Program('demo_glfw_opengl2', [
+	'examples/example_glfw_opengl2/main.cpp',  # sample itself
+	imgui
+])
