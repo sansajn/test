@@ -28,6 +28,19 @@ void window_size(GLFWwindow * win, int width, int height)
 		demo->OnResize(width, height);
 }
 
+void cursor_position_callback(GLFWwindow * window, double xpos, double ypos)
+{
+	cout << "(x=" << xpos << ",y=" << ypos << ")" << endl;
+}
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	cout << "key=" << key << ", scancode=" << scancode << std::endl;
+
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, GLFW_TRUE);
+}
+
 int main(int argc, char * argv[])
 {
 	if (!glfwInit())
@@ -36,12 +49,20 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 	
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+	
 	GLFWwindow * w = glfwCreateWindow(640, 480, "glfw window", nullptr, nullptr);
 	assert(w);
 	
 	glfwSetWindowSizeCallback(w, window_size);
+	glfwSetCursorPosCallback(w, cursor_position_callback);
+	glfwSetKeyCallback(w, key_callback);
 	
 	glfwMakeContextCurrent(w);
+	
+	cout << "GL_VERSION  : " << glGetString(GL_VERSION) << "\n"
+		<< "GL_RENDERER : " << glGetString(GL_RENDERER) << endl;
 	
 	// imgui setup
 	IMGUI_CHECKVERSION();
