@@ -2,28 +2,76 @@
 	libglfw3-dev (3.3)
 '''
 
-cpp17 = Environment()
+cpp17 = Environment(
+	CXX='clang++', CC='clang',  # code use feature not supported by GCC
+)
+	
 cpp17.ParseConfig('pkg-config --cflags --libs glfw3 gl')
 
 #imgui_module = cpp17.Object(Glob('imgui/*.cpp'))
 
 # gl, window, ui stuff
+'''
 ui_module = cpp17.Object([
 	'IWindow.cpp',
 	'GLWindow.cpp',
 	'FixedFunctionPrimitives.cpp'])
-
 
 math_module = cpp17.Object([
 	'Compare.cpp',
 	'vectors.cpp',
 	'matrices.cpp'])
 
+phys_module = cpp17.Object([
+	'Geometry3D.cpp',
+	'Particle.cpp',
+	'PhysicsSystem.cpp'])
 
 cpp17.Object([
+	'DemoWindow.cpp',
 	'DemoBase.cpp',
 	'Camera.cpp'])
 
 cpp17.Program('demo', [
 	'main.cpp',
+	'CH14Demo.cpp',
+	math_module,
+	phys_module,
 	ui_module])
+'''
+
+imgui = cpp17.StaticLibrary('imgui', [
+	Glob('orig/imgui/*.cpp')])
+
+cpp17.Program('demo', [
+	'orig/Camera.cpp',
+	'orig/CH14Demo.cpp',
+	'orig/Cloth.cpp',
+	#'orig/CollisionFeature.cpp',
+	'orig/ConservationOfMomentum.cpp',
+	'orig/DemoBase.cpp',
+	'orig/DemoWindow.cpp',
+	'orig/DistanceJoint.cpp',
+	'orig/FixedFunctionPrimitives.cpp',
+	'orig/Geometry2D.cpp',
+	'orig/Geometry3D.cpp',
+	'orig/GLWindow.cpp',
+	#'orig/IMGUIWindow.cpp',
+	'orig/IWindow.cpp',
+	#'orig/JointDemo.cpp',
+	#'orig/LinearImpulse.cpp',
+	'orig/main.cpp',
+	'orig/matrices.cpp',
+	#'orig/ObjLoader.cpp',
+	'orig/Particle.cpp',
+	'orig/PhysicsSystem.cpp',
+	#'orig/QuadTree.cpp',
+	#'orig/RaycastDemo.cpp',
+	'orig/RigidbodyVolume.cpp',
+	#'orig/RotationalForce.cpp',
+	#'orig/Scene.cpp',
+	#'orig/SimpleSpring.cpp',
+	'orig/Spring.cpp',
+	'orig/vectors.cpp',
+	imgui
+])
