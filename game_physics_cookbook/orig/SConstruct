@@ -4,12 +4,18 @@
 
 cpp17 = Environment(
 	CXX='clang++', CC='clang',  # code use feature not supported by GCC
+	CPPPATH=['.', 'imgui/', 'imgui/examples'],
+	CCFLAGS=['-Wall', '-g', '-O0']
 )
 	
 cpp17.ParseConfig('pkg-config --cflags --libs glfw3 gl')
 
-imgui = cpp17.StaticLibrary('imgui', [
-	Glob('imgui/*.cpp')])
+imgui = cpp17.StaticLibrary([
+	Glob('imgui/*.cpp'),
+	'imgui/examples/imgui_impl_glfw.cpp',  # backend for GLFW
+	'imgui/examples/imgui_impl_opengl2.cpp',  # backend fo opengl2
+])
+
 
 cpp17.Program('demo', [
 	'Camera.cpp',

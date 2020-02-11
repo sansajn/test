@@ -2,6 +2,9 @@
 #include <iostream>
 #include <cassert>
 #include <GLFW/glfw3.h>
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl2.h"
 #include "IWindow.h"
 
 using std::chrono::steady_clock;
@@ -39,6 +42,14 @@ int main(int argc, char * argv[])
 	
 	glfwMakeContextCurrent(w);
 	
+	// imgui setup
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	
+	// Setup Platform/Renderer bindings
+	ImGui_ImplGlfw_InitForOpenGL(w, true);
+	ImGui_ImplOpenGL2_Init();
+	
 	IWindow * demo = IWindow::GetInstance();
 	assert(demo);
 	
@@ -51,12 +62,21 @@ int main(int argc, char * argv[])
 	{
 		glfwPollEvents();  // process events
 		
+		// Start the Dear ImGui frame
+		ImGui_ImplOpenGL2_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+		
 		// update
 		demo->OnUpdate(0.1f);  // dt = 0.1s
 		
 		// render
+		ImGui::Render();
+		
 		glClear(GL_COLOR_BUFFER_BIT);  // render
 		demo->OnRender();
+		
+		ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 		glfwSwapBuffers(w);  // show
 	}
 	
