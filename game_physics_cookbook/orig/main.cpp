@@ -57,6 +57,10 @@ int main(int argc, char * argv[])
 	demo->OnResize(640, 480);
 	demo->MarkAsShown();
 	
+	double lastTime = GetMilliseconds();
+	double fixed_millis = demo->GetFixedFPS() / 1000.0;
+	double fixed_ellapsed = 0.0;
+	
 	// loop
 	while (!glfwWindowShouldClose(w))
 	{
@@ -67,16 +71,27 @@ int main(int argc, char * argv[])
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 		
-		// update
-		demo->OnUpdate(0.1f);  // dt = 0.1s
+		// window update
+		double time = GetMilliseconds();
+		float deltaTime = float(time - lastTime) * 0.0001f;  // in s
+		lastTime = time;
+		demo->OnUpdate(deltaTime);
+		
+		// phys update
+		fixed_ellapsed += deltaTime;
+		while (fixed_ellapsed > fixed_millis)
+		{
+			demo->OnFixedUpdate(fixed_millis);
+			fixed_ellapsed -= fixed_millis;
+		}
 		
 		// render
-		ImGui::Render();
-		
 		glClear(GL_COLOR_BUFFER_BIT);  // render
 		demo->OnRender();
 		
+		ImGui::Render();
 		ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+		
 		glfwSwapBuffers(w);  // show
 	}
 	
