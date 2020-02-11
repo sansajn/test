@@ -41,7 +41,6 @@ void DemoWindow::OnResize(int width, int height) {
 }
 
 void DemoWindow::OnRender() {
-// 	std::cout << "DemoWindow::OnRender()" << std::endl;
 	
 	GLWindow::OnRender();
 
@@ -66,8 +65,6 @@ void DemoWindow::ApplyDemoCamera() {
 }
 
 void DemoWindow::OnUpdate(float deltaTime) {
-// 	std::cout << "DemoWindow::OnUpdate(dt=" << deltaTime << ")" << std::endl;
-	
 	GLWindow::OnUpdate(deltaTime);
 
 	if (imgui_init) {

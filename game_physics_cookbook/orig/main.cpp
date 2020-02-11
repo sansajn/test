@@ -30,15 +30,45 @@ void window_size(GLFWwindow * win, int width, int height)
 
 void cursor_position_callback(GLFWwindow * window, double xpos, double ypos)
 {
-	cout << "(x=" << xpos << ",y=" << ypos << ")" << endl;
+// 	cout << "(x=" << xpos << ",y=" << ypos << ")" << endl;
+	
+	IWindow * demo = IWindow::GetInstance();
+	assert(demo);
+	demo->OnMouseMove(xpos, ypos);
 }
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+void mouse_button_callback(GLFWwindow * window, int button, int action, int mods)
 {
-	cout << "key=" << key << ", scancode=" << scancode << std::endl;
+	IWindow * demo = IWindow::GetInstance();
+	assert(demo);
+	
+	int mouse_code;
+	switch (button)
+	{
+		case GLFW_MOUSE_BUTTON_RIGHT: mouse_code = MOUSE_RIGHT; break;
+		case GLFW_MOUSE_BUTTON_LEFT: mouse_code = MOUSE_LEFT; break;
+		case GLFW_MOUSE_BUTTON_MIDDLE: mouse_code = MOUSE_MIDDLE; break;
+		default: 
+			cout << "unknown button (" << button << ")" << endl;
+			return;
+	}
+	
+	if (action == GLFW_PRESS)
+		demo->OnMouseDown(mouse_code);
+	else if (action == GLFW_RELEASE)
+		demo->OnMouseUp(mouse_code);
+}
+
+void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)
+{
+	cout << "key=" << key << ", scancode=" << scancode << endl;
 
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	
+	IWindow * demo = IWindow::GetInstance();
+	assert(demo);
+// 	demo->OnKeyDown(WParamToKeydef(wParam, shiftDown ^ capsOn));
 }
 
 int main(int argc, char * argv[])
@@ -57,12 +87,14 @@ int main(int argc, char * argv[])
 	
 	glfwSetWindowSizeCallback(w, window_size);
 	glfwSetCursorPosCallback(w, cursor_position_callback);
+	glfwSetMouseButtonCallback(w, mouse_button_callback);
 	glfwSetKeyCallback(w, key_callback);
 	
 	glfwMakeContextCurrent(w);
 	
 	cout << "GL_VERSION  : " << glGetString(GL_VERSION) << "\n"
-		<< "GL_RENDERER : " << glGetString(GL_RENDERER) << endl;
+		<< "GL_RENDERER : " << glGetString(GL_RENDERER) << "\n"
+		<< "GLSL Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl;
 	
 	// imgui setup
 	IMGUI_CHECKVERSION();

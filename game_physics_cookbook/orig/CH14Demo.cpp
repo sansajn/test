@@ -83,8 +83,6 @@ void CH14Demo::Render() {
 	glLightfv(GL_LIGHT0, GL_POSITION, val);
 
 	physicsSystem.Render();
-	
-// 	std::cout << "CH14Demo::Render()" << std::endl;
 }
 
 void CH14Demo::ImGUI() {
@@ -145,8 +143,6 @@ void CH14Demo::Update(float dt) {
 			particles[i].SetPosition(position);
 		}
 	}
-	
-	std::cout << "CH14Demo::Update(dt=" << dt << ")" << std::endl;
 }
 
 float CH14Demo::Random(float min, float max) {
