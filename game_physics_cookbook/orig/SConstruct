@@ -1,0 +1,45 @@
+''' dependencies: 
+	libglfw3-dev (3.3)
+'''
+
+cpp17 = Environment(
+	CXX='clang++', CC='clang',  # code use feature not supported by GCC
+)
+	
+cpp17.ParseConfig('pkg-config --cflags --libs glfw3 gl')
+
+imgui = cpp17.StaticLibrary('imgui', [
+	Glob('imgui/*.cpp')])
+
+cpp17.Program('demo', [
+	'Camera.cpp',
+	'CH14Demo.cpp',
+	'Cloth.cpp',
+	#'CollisionFeature.cpp',
+	'ConservationOfMomentum.cpp',
+	'DemoBase.cpp',
+	'DemoWindow.cpp',
+	'DistanceJoint.cpp',
+	'FixedFunctionPrimitives.cpp',
+	'Geometry2D.cpp',
+	'Geometry3D.cpp',
+	'GLWindow.cpp',
+	#'IMGUIWindow.cpp',
+	'IWindow.cpp',
+	#'JointDemo.cpp',
+	#'LinearImpulse.cpp',
+	'main.cpp',
+	'matrices.cpp',
+	#'ObjLoader.cpp',
+	'Particle.cpp',
+	'PhysicsSystem.cpp',
+	#'QuadTree.cpp',
+	#'RaycastDemo.cpp',
+	'RigidbodyVolume.cpp',
+	#'RotationalForce.cpp',
+	#'Scene.cpp',
+	#'SimpleSpring.cpp',
+	'Spring.cpp',
+	'vectors.cpp',
+	imgui
+])
