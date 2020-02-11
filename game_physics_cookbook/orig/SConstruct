@@ -21,8 +21,8 @@ cpp17.Program('demo', [
 	'Camera.cpp',
 	'CH14Demo.cpp',
 	'Cloth.cpp',
-	#'CollisionFeature.cpp',
-	'ConservationOfMomentum.cpp',
+	#'CollisionFeature.cpp',  # not needed
+	#'ConservationOfMomentum.cpp',  # not needed
 	'DemoBase.cpp',
 	'DemoWindow.cpp',
 	'DistanceJoint.cpp',
