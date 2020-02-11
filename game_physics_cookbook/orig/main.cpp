@@ -1,4 +1,5 @@
 #include <chrono>
+#include <thread>
 #include <iostream>
 #include <cassert>
 #include <GLFW/glfw3.h>
@@ -60,6 +61,7 @@ int main(int argc, char * argv[])
 	double lastTime = GetMilliseconds();
 	double fixed_millis = demo->GetFixedFPS() / 1000.0;
 	double fixed_ellapsed = 0.0;
+	steady_clock::time_point next_game_tick = steady_clock::now();
 	
 	// loop
 	while (!glfwWindowShouldClose(w))
@@ -73,7 +75,7 @@ int main(int argc, char * argv[])
 		
 		// window update
 		double time = GetMilliseconds();
-		float deltaTime = float(time - lastTime) * 0.0001f;  // in s
+		float deltaTime = float(time - lastTime) * 0.001f;  // in s
 		lastTime = time;
 		demo->OnUpdate(deltaTime);
 		
@@ -93,6 +95,12 @@ int main(int argc, char * argv[])
 		ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 		
 		glfwSwapBuffers(w);  // show
+		
+		// force FPS
+		milliseconds delay{1000 / demo->GetTargetFPS()};
+		next_game_tick += delay;
+		if (steady_clock::now() < next_game_tick)
+			std::this_thread::sleep_until(next_game_tick);
 	}
 	
 	demo->Close();
