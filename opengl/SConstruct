@@ -6,4 +6,5 @@ cpp17 = Environment(
 
 cpp17.ParseConfig('pkg-config --cflags --libs glfw3 glesv2')
 
-cpp17.Program('glew3_triangle.cpp')
+cpp17.Program('triangle.cpp')
+cpp17.Program('xy_plane.cpp')
