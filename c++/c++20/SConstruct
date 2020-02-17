@@ -1,0 +1,4 @@
+cpp20 = Environment(
+	CCFLAGS=['-std=c++2a', '-Wall', '-O0', '-g'])
+
+cpp20.Program('hello_ranges.cpp')
