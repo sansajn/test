@@ -6,5 +6,8 @@ cpp17 = Environment(
 
 cpp17.ParseConfig('pkg-config --cflags --libs glfw3 glesv2')
 
+phys = cpp17.Object(Glob('phys/*.cpp'))
+
 cpp17.Program('triangle.cpp')
 cpp17.Program('xy_plane.cpp')
+cpp17.Program(['row_major_xy_plane.cpp', phys])
