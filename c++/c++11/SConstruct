@@ -5,6 +5,7 @@ env = Environment(
 )
 
 env.Program('rand_gen.cpp')
+env.Program('random_vals.cpp')
 env.Program('uniqueptr.cpp')
 env.Program('move_hier.cpp')
 #env.Program('fstream_move.cpp')
