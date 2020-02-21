@@ -10,4 +10,5 @@ phys = cpp17.Object(Glob('phys/*.cpp'))
 
 cpp17.Program('triangle.cpp')
 cpp17.Program('xy_plane.cpp')
+cpp17.Program('axis.cpp')
 cpp17.Program(['row_major_xy_plane.cpp', phys])
