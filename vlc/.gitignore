@@ -1,0 +1,13 @@
+/test-vlc.*
+/events
+/playlist_player
+/playlist_player_stop
+/sdl_render
+/simple_play
+/stream_client
+/stream_server
+/stream_server_thread
+/test_player
+/track_info
+/vlc_abstr
+/simple_stream_serv_abstr
