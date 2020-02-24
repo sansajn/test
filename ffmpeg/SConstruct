@@ -1,12 +1,17 @@
-env = Environment(
-	CXXFLAGS=['-std=c++11', '-O0', '-g', '-Wall']
-)
+# dependencies: ffmpeg 2.8 (ubuntu 16.04)
+#   libavformat-dev
+#   libavcodec-dev
+#   libavutil-dev
 
-env.ParseConfig(
-	'pkg-config --cflags --libs libavformat-ffmpeg libavutil-ffmpeg libavcodec-ffmpeg')
+cpp17 = Environment(
+	CCFLAGS=['-std=c++17', '-Wall', '-g', '-O0'], 
+	LIBS=['m'])
 
-env.Program('metadata.cpp')
-env.Program('video_geometry.cpp')
-env.Program('extract_from_mp4.cpp')
-env.Program('read_n_frames.cpp')
-env.Program('list_input_formats.cpp')
+cpp17.ParseConfig('pkg-config --cflags --libs libavformat-ffmpeg libavutil-ffmpeg libavcodec-ffmpeg')
+
+cpp17.Program('metadata.cpp')
+cpp17.Program('video_geometry.cpp')
+cpp17.Program('extract_from_mp4.cpp')
+cpp17.Program('read_n_frames.cpp')
+cpp17.Program('list_input_formats.cpp')
+cpp17.Program('decoding_encoding.c')
