@@ -1,0 +1,25 @@
+# sample imgui build file for GLFW, GLEW and opengl3
+
+cpp17 = Environment(
+	CCFLAGS=['-std=c++17', '-Wall'],
+	CPPDEFINES=['IMGUI_IMPL_OPENGL_ES3'],
+	CPPPATH=['.', '..', '../imgui/', '../imgui/examples/'],
+)
+
+cpp17.ParseConfig('pkg-config --cflags --libs glfw3 glew gl')
+
+imgui = cpp17.StaticLibrary([
+	Glob('../imgui/*.cpp'),
+	'../imgui/examples/imgui_impl_glfw.cpp',  # backend for GLFW
+	'../imgui/examples/imgui_impl_opengl3.cpp'  # backend for opengl3, (es2 or es3)
+])
+
+cpp17.Program('demo_glfw_opengl3', [
+	'../imgui/examples/example_glfw_opengl3/main.cpp',  # sample itself
+	imgui
+])
+
+cpp17.Program('hello', [
+	'hello.cpp', imgui
+])
+
