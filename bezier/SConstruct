@@ -1,0 +1,5 @@
+cpp17 = Environment(CCFLAGS=['--std=c++17', '-Wall', '-g', '-O0'])
+
+cpp17.ParseConfig('pkg-config --cflags --libs sdl2')
+
+cpp17.Program('bezier.cpp')
