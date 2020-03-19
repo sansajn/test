@@ -1,5 +1,6 @@
-cpp11 = Environment(
-	CCFLAGS=['-std=c++11', '-Wall', '-g', '-O0'],
+cpp17 = Environment(
+	CCFLAGS=['-std=c++17', '-Wall', '-g', '-O0'],
 	LIBS=['mosquitto'])
 
-cpp11.Program('hello.cpp')
+cpp17.Program('hello.cpp')
+cpp17.Program('mqtt_subscriber.cpp')
