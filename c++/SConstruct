@@ -5,6 +5,12 @@ cpp14 = env.Clone()
 cpp17 = Environment(
 	CXX='clang++', CXXFLAGS=['-std=c++17'], CCFLAGS=['-Wall', '-g', '-O0'])
 
+catch17 = Environment(
+	CXX='clang++',
+	CXXFLAGS=['-std=c++17'], 
+	CCFLAGS=['-Wall', '-g', '-O0'],
+	CPPDEFINES=['CATCH_CONFIG_MAIN'])
+
 import os  # enable color in output for clang
 if 'TERM' in os.environ:
 	env['ENV']['TERM'] = os.environ['TERM']
@@ -34,3 +40,5 @@ cpp14.Program('inheritance_from_base_ctor.cpp')
 
 cpp14.Program('openfile.cpp')
 cpp14.Program('float_and_literal_comparsion.cpp')
+
+catch17.Program('equal.cpp')
