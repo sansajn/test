@@ -23,6 +23,55 @@ using std::cout;
 
 using table_type = vector<pair<vector<double>, int>>;
 
+table_type load_data_from_file(string const & fname);
+void kmeans(table_type const & ds, size_t k);
+
+
+double distance(vector<double> const & u, vector<double> const & v)
+{
+	assert(size(u) == size(v));
+
+	double result = 0;
+	for (size_t i = 0; i < size(u); ++i)
+		result = pow(u[i] - v[i]);
+
+	return result;
+}
+
+size_t euclidian_step(table_type const & ds, size_t centroid)
+{
+	size_t max_idx = 0;
+	double max_distance = 0.0;
+	for (size_t i = 0; i < size(ds); ++i)
+	{
+		double dist = eucl_distance(ds[centroid].first); 
+		if (dist > max_distance)
+		{
+			max_idx = i;
+			max_distance = dist;
+		}
+	}
+	return max_idx;
+}
+
+void kmeans(table_type const & ds, size_t k)
+{
+
+}
+
+
+int main(int argc, char * argv[])
+{
+	string const dataset_file = argc > 1 ? argv[1] : "dataset.csv";
+	size_t const k = argc > 2 ? atoi(argv[2]) : 5;
+
+	table_type dataset = load_data_from_file(dataset_file);
+	cout << "records: " << size(dataset) << "\n";
+
+	cout << "done!\n";
+	return 0;
+}
+
 table_type load_data_from_file(string const & fname)
 {
 	ifstream fin{fname};
@@ -58,14 +107,4 @@ table_type load_data_from_file(string const & fname)
 	}
 
 	return data;
-}
-
-
-int main(int argc, char * argv[])
-{
-	table_type dataset = load_data_from_file("dataset.csv");
-	cout << "records: " << size(dataset) << "\n";
-
-	cout << "done!\n";
-	return 0;
 }
