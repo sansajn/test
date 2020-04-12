@@ -1,0 +1,5 @@
+cpp17 = Environment(
+	CXXFLAGS=['-std=c++17'],
+	CCFLAGS=['-Wall', '-O0', '-g'])
+
+cpp17.Program('kmeans.cpp')
