@@ -10,21 +10,25 @@
 #include <cmath>
 #include <cassert>
 #include <boost/algorithm/string/join.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
 using std::count;
-using std::string;
-using std::getline;
-using std::vector;
-using std::size;
-using std::pair; 
-using std::make_pair;
+using std::string,
+	std::to_string,
+	std::getline;
+using std::vector,
+	std::size;
+using std::pair,
+	std::make_pair;
 using std::ifstream;
 using std::istringstream;
-using std::invalid_argument;
-using std::runtime_error;
+using std::invalid_argument,
+	std::runtime_error;
 using std::pow;
 using std::cout;
-using boost::join;
+using boost::algorithm::join;
+using boost::adaptors::transformed;
+
 
 using table_type = vector<pair<vector<double>, int>>;
 using cluster_type = pair<size_t, vector<size_t>>;
@@ -157,16 +161,17 @@ int main(int argc, char * argv[])
 	cout << "records: " << size(ds) << "\n";
 
 	for (pair<vector<double>, int> const & row : ds)
-		cout << join(row.first, ", ") << " -> " << row.second << "\n";
+		cout << join(row.first|transformed(static_cast<string (*)(double)>(to_string)), ", ")
+			<< " -> " << row.second << "\n";
 
-	// testing kmeans_plus_plus
-	pair<vector<size_t>, vector<cluster_type>> centroids_and_clusters = 
-		kmeans_plus_plus(ds, k);
+//	// testing kmeans_plus_plus
+//	pair<vector<size_t>, vector<cluster_type>> centroids_and_clusters =
+//		kmeans_plus_plus(ds, k);
 
-	cout << "centroids:\n";
-	vector<size_t> const & centroids = centroids_and_clusters.first;
-	for (int centroid : centroids)
-		cout << "  " << centroid << "\n";
+//	cout << "centroids:\n";
+//	vector<size_t> const & centroids = centroids_and_clusters.first;
+//	for (int centroid : centroids)
+//		cout << "  " << centroid << "\n";
 
 	cout << "done!\n";
 	return 0;
@@ -181,27 +186,28 @@ table_type load_data_from_file(string const & fname)
 	// N columns of features as floats and label as integer
 	vector<pair<vector<double>, int>> data;
 	size_t columns = 0;
-	istringstream line_ss;
 
 	string line;
+	vector<double> row;
 	while (getline(fin, line))
 	{
 		if (columns == 0)
-			columns = count(begin(line), end(line), ',') - 1;
+		{
+			columns = count(begin(line), end(line), ',');
+			row.resize(columns);
+		}
 
 		if (columns < 1)
 			throw runtime_error{"unable to parse table record (\"" + line + "\""};  // wrong number of columns
 
-		vector<double> row;
-		row.resize(columns);
+		istringstream in{line};
 
-		line_ss.str(line);
-
+		char sep;
 		for (size_t i = 0; i < columns; ++i)
-			line_ss >> row[i];
+			in >> row[i] >> sep;
 
 		int label;
-		line_ss >> label;
+		in >> label;
 
 		data.push_back(make_pair(row, label));
 	}
