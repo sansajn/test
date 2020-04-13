@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <utility>
+#include <limits>
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
@@ -20,6 +21,7 @@ using std::vector,
 	std::size;
 using std::pair,
 	std::make_pair;
+using std::numeric_limits;
 using std::ifstream;
 using std::istringstream;
 using std::invalid_argument,
@@ -78,10 +80,11 @@ vector<cluster_type> lloyd_step(table_type const & ds,
 	{
 		size_t cluster_idx = 0;
 
-		double min_dist = 0;
+		double min_dist = numeric_limits<double>::max();
 		for (size_t j = 0; j < size(clusters); ++j)
 		{
-			double dist = distance(ds[i].first, ds[centroids[j]].first);
+			vector<double> const & centroid = ds[clusters[j].first].first;
+			double dist = distance(centroid, ds[i].first);
 			if (dist < min_dist)
 			{
 				cluster_idx = j;
@@ -160,18 +163,19 @@ int main(int argc, char * argv[])
 	table_type ds = load_data_from_file(dataset_file);
 	cout << "records: " << size(ds) << "\n";
 
+	// list records
 	for (pair<vector<double>, int> const & row : ds)
 		cout << join(row.first|transformed(static_cast<string (*)(double)>(to_string)), ", ")
 			<< " -> " << row.second << "\n";
 
-//	// testing kmeans_plus_plus
-//	pair<vector<size_t>, vector<cluster_type>> centroids_and_clusters =
-//		kmeans_plus_plus(ds, k);
+	// testing kmeans_plus_plus
+	pair<vector<size_t>, vector<cluster_type>> centroids_and_clusters =
+		kmeans_plus_plus(ds, k);
 
-//	cout << "centroids:\n";
-//	vector<size_t> const & centroids = centroids_and_clusters.first;
-//	for (int centroid : centroids)
-//		cout << "  " << centroid << "\n";
+	cout << "centroids:\n";
+	vector<size_t> const & centroids = centroids_and_clusters.first;
+	for (size_t centroid : centroids)
+		cout << "  " << centroid << "\n";
 
 	cout << "done!\n";
 	return 0;
