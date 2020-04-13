@@ -9,6 +9,7 @@
 #include <iostream>
 #include <cmath>
 #include <cassert>
+#include <boost/algorithm/string/join.hpp>
 
 using std::count;
 using std::string;
@@ -23,6 +24,7 @@ using std::invalid_argument;
 using std::runtime_error;
 using std::pow;
 using std::cout;
+using boost::join;
 
 using table_type = vector<pair<vector<double>, int>>;
 using cluster_type = pair<size_t, vector<size_t>>;
@@ -153,6 +155,9 @@ int main(int argc, char * argv[])
 
 	table_type ds = load_data_from_file(dataset_file);
 	cout << "records: " << size(ds) << "\n";
+
+	for (pair<vector<double>, int> const & row : ds)
+		cout << join(row.first, ", ") << " -> " << row.second << "\n";
 
 	// testing kmeans_plus_plus
 	pair<vector<size_t>, vector<cluster_type>> centroids_and_clusters = 
