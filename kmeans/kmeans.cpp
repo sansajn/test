@@ -30,8 +30,8 @@ using boost::algorithm::join;
 using boost::adaptors::transformed;
 
 
-using table_type = vector<pair<vector<double>, int>>;
-using cluster_type = pair<size_t, vector<size_t>>;
+using table_type = vector<pair<vector<double>, int>>;  //!< N columns of features as doubles and label as integer
+using cluster_type = pair<size_t, vector<size_t>>;  //!< centroid idx
 
 table_type load_data_from_file(string const & fname);
 void kmeans(table_type const & ds, size_t k);
@@ -183,25 +183,21 @@ table_type load_data_from_file(string const & fname)
 	if (!fin.is_open())
 		throw invalid_argument{"unable to open \"" + fname + "\" file"};
 
-	// N columns of features as floats and label as integer
-	vector<pair<vector<double>, int>> data;
-	size_t columns = 0;
+	table_type result;
 
 	string line;
+	getline(fin, line);
+
+	size_t const columns = count(begin(line), end(line), ',');
+	if (columns < 1)  // not enough columns
+		throw runtime_error{"unable to parse table record (\"" + line + "\" at least two columns expected"};  // wrong number of columns
+
 	vector<double> row;
-	while (getline(fin, line))
+	row.resize(columns);
+
+	do
 	{
-		if (columns == 0)
-		{
-			columns = count(begin(line), end(line), ',');
-			row.resize(columns);
-		}
-
-		if (columns < 1)
-			throw runtime_error{"unable to parse table record (\"" + line + "\""};  // wrong number of columns
-
 		istringstream in{line};
-
 		char sep;
 		for (size_t i = 0; i < columns; ++i)
 			in >> row[i] >> sep;
@@ -209,8 +205,12 @@ table_type load_data_from_file(string const & fname)
 		int label;
 		in >> label;
 
-		data.push_back(make_pair(row, label));
-	}
+		if (in.bad())
+			throw runtime_error{"unable to parse table record (\"" + line + "\""};
 
-	return data;
+		result.push_back(make_pair(row, label));
+	}
+	while(getline(fin, line));
+
+	return result;
 }
