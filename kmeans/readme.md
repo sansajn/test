@@ -1,3 +1,5 @@
+# k-means algortithm implementation details
+
 To run `generate_dataset.py` install *numpy*, *pandas* and *scikit-learn* with
 
 ```sh
