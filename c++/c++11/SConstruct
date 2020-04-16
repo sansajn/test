@@ -4,6 +4,11 @@ env = Environment(
 	LIBS=['pthread']
 )
 
+import os  # enable color in output for clang
+if 'TERM' in os.environ:
+	env['ENV']['TERM'] = os.environ['TERM']
+
+
 env.Program('rand_gen.cpp')
 env.Program('random_vals.cpp')
 env.Program('uniqueptr.cpp')
