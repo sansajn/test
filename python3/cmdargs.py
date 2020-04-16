@@ -6,10 +6,10 @@ import argparse
 
 def main():
 	parser = argparse.ArgumentParser(description='Parsing command line arguments.')
-	parser.add_argument('--port', type=int, help='port number')
+	parser.add_argument('--port', type=int, default=3333, help='port number')
 	parser.add_argument('--filter', nargs='*', default=[], help='filter out specified messages')
 	args = parser.parse_args('--filter a b c --port=12'.split())
-	
+
 	print(args)
 	
 	print('port=%s' % (args.port, ))
