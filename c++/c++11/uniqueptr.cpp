@@ -1,5 +1,5 @@
 /*! \file uniqueptr.cpp 
-basic unique_ptr usage */
+basic unique_ptr usage (creation and assignment) */
 
 #include <memory>
 #include <functional>
@@ -42,6 +42,15 @@ int main(int argc, char * argv[])
 	
 	// with function deleter
 	unique_ptr<int, function<void (int *)>> u6{new int{12}, [](int * p){delete p;}};
+	
+	// assignment
+	unique_ptr<int> u7;
+	u7.reset(new int{14});
+	
+	u7 = unique_ptr<int>{new int{15}};
+	
+	u7 = nullptr;  // release u7 content
+	
 
 	return 0;
 }
