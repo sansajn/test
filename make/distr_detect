@@ -1,0 +1,11 @@
+# makefile with system distribution detection sample
+
+ARGS=-j3 --disable-test --release-build
+DISTRIBUTION=`lsb_release -c --short`
+
+ifeq (jessie,${DISTRIBUTION})
+	ARGS += --support-debian8
+endif
+
+all:
+	scons ${ARGS}
