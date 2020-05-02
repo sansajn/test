@@ -3,3 +3,4 @@ cpp17 = Environment(
 	LIBS=['boost_fiber', 'boost_context'])
 
 cpp17.Program('hello.cpp')
+cpp17.Program('channel.cpp')
