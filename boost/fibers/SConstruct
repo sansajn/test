@@ -1,0 +1,5 @@
+cpp17 = Environment(
+	CCFLAGS=['-std=c++17', '-Wall', '-g', '-O0'],
+	LIBS=['boost_fiber', 'boost_context'])
+
+cpp17.Program('hello.cpp')
