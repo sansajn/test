@@ -2,5 +2,5 @@ cpp17 = Environment(
 	CXX='clang++',
 	CCFLAGS=['-std=c++17', '-fcoroutines-ts', '-stdlib=libc++'])
 
+cpp17.Program('lazy_generator.cpp')
 cpp17.Program('task.cpp')
-
