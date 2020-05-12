@@ -1,6 +1,8 @@
+# at least gcc10 with -std=c++20 -fcoroutines
 cpp17 = Environment(
-	CXX='clang++',
-	CCFLAGS=['-std=c++17', '-fcoroutines-ts', '-stdlib=libc++'])
+	CXX='g++-10',
+	CCFLAGS=['-std=c++20', '-fcoroutines'])
 
-cpp17.Program('lazy_generator.cpp')
+#cpp17.Program('lazy_generator.cpp')
 cpp17.Program('task.cpp')
+cpp17.Program('infinite_data_stream.cpp')

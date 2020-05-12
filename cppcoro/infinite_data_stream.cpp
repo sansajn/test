@@ -3,6 +3,8 @@
 #include <memory>
 #include <iostream>
 
+using std::cout;
+
 template <typename T>
 struct Generator
 {
@@ -35,7 +37,7 @@ struct Generator
 		auto initial_suspend() {return std::suspend_always{};}
 		auto final_suspend() {return std::suspend_always{};}
 		auto get_return_object() {return Generator{handle_type::from_promise(*this)};}
-		auto return_void() {return std::suspend_newer{};}
+		auto return_void() {return std::suspend_never{};}
 		auto yield_value(T const value) {current_value = value; return std::suspend_always{};}
 		void unhandled_exception() {exit(1);}
 
@@ -72,6 +74,8 @@ int main(int argc, char * argv[])
 		gen2.next();
 		cout << " " << gen2.getValue();
 	}
+
+	cout << "\n\n";
 
 	cout << "done.\n";
 
