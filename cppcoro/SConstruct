@@ -1,8 +1,9 @@
 # at least gcc10 with -std=c++20 -fcoroutines
-cpp17 = Environment(
+cpp20 = Environment(
 	CXX='g++-10',
-	CCFLAGS=['-std=c++20', '-fcoroutines'])
+	CCFLAGS=['-std=c++20', '-fcoroutines'],
+	LIBS=['pthread'])
 
-cpp17.Program('infinite_data_stream.cpp')
+cpp20.Program('infinite_data_stream.cpp')
+cpp20.Program('condition_variables.cpp')
 #cpp17.Program('task.cpp')
-
