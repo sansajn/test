@@ -1,4 +1,4 @@
-// condition variable use case (producer/consumer) sample
+// condition variable use case (sender/receiver) sample
 
 #include <condition_variable>
 #include <iostream>
