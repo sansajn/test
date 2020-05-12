@@ -6,4 +6,5 @@ cpp20 = Environment(
 
 cpp20.Program('infinite_data_stream.cpp')
 cpp20.Program('condition_variables.cpp')
+cpp20.Program('sender_receiver.cpp')
 #cpp17.Program('task.cpp')
