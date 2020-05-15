@@ -3,18 +3,20 @@
 #include <iostream>
 #include <string>
 #include <thread>
-
 #include <cppcoro/sync_wait.hpp>
 #include <cppcoro/task.hpp>
 
 using std::cout, std::endl;
 using std::chrono::time_point, 
-	std::chrono::high_resolution_clock,
-	std::chrono::duration_cast;
+	std::chrono::duration,
+	std::chrono::high_resolution_clock;
+using namespace std::chrono_literals;
+namespace this_thread = std::this_thread;
 
 double time_since(time_point<high_resolution_clock> const & t)
 {
-	return duration_cast<double>(high_resolution_clock::now() - t).count();
+	duration<double> elapsed = high_resolution_clock::now() - t;
+	return elapsed.count();
 }
 
 cppcoro::task<> third(time_point<high_resolution_clock> const & start)
