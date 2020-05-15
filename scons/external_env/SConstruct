@@ -1,0 +1,5 @@
+# CXX=custom-cc scons
+
+import os
+cpp = Environment(CXX = os.environ['CXX'])
+cpp.Program('main.cpp')
