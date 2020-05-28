@@ -18,7 +18,3 @@ cpp17.Program('gather.cpp')
 cpp17.Program('hex.cpp')
 cpp17.Program('apply_permutation.cpp')
 cpp17.Program('power.cpp')
-
-# string algorithms
-cpp17.Program('join.cpp')
-cpp17.Program('join_numbers.cpp')

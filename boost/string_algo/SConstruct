@@ -1,0 +1,4 @@
+cpp17 = Environment(CCFLAGS=['-std=c++17', '-Wall', '-O0', '-g'])
+
+cpp17.Program('join.cpp')
+cpp17.Program('join_numbers.cpp')
