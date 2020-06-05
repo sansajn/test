@@ -42,3 +42,5 @@ cpp14.Program('openfile.cpp')
 cpp14.Program('float_and_literal_comparsion.cpp')
 
 catch17.Program('equal.cpp')
+
+cpp14.Program('avoid_hierarchy.cpp')
