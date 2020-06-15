@@ -45,6 +45,7 @@ bool check_subsampling_is_422(string const & file_name)
 		ostringstream sout;
 		sout << "Error while reading JPEG file '" << file_name << "', what: " 
 			<< last_error_message << endl;
+		jpeg_destroy_decompress(&dinfo);
 		fclose(fin);
 		return false;
 	}
