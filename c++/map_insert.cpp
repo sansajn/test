@@ -8,10 +8,11 @@ TEST_CASE("map insertion with previous value detection",
 {
 	map<bool, int> m;
 
-	// brand new value
+	// insert brand new value
 	auto result = m.insert(make_pair(2, false));
 	REQUIRE(result.second);
 
+	// update value
 	result = m.insert(make_pair(2, true));
 	REQUIRE_FALSE(result.second);
 	REQUIRE_FALSE(result.first->second);
