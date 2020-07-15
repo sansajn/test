@@ -1,16 +1,25 @@
-/*! tagging feature implmentation and logger injection, for more 
-info see `boost/libs/log/example/doc/extension_record_tagger.cpp` sample */
+// custom feature multithread logger sample
 #include <string>
-#include <utility>
-#include <boost/log/core/record.hpp>
-#include <boost/log/utility/strictest_lock.hpp>
-#include <boost/log/attributes/constant.hpp>
-#include <boost/log/sources/basic_logger.hpp>
-#include <boost/log/sources/severity_feature.hpp>
-#include <boost/log/sources/record_ostream.hpp>
-#include <boost/parameter/keyword.hpp>
+#include <ostream>
+#include <fstream>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
 #include <boost/scope_exit.hpp>
 #include <boost/mpl/quote.hpp>
+#include <boost/parameter/keyword.hpp>
+#include <boost/thread/locks.hpp>
+#include <boost/move/utility_core.hpp>
+#include <boost/log/core.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/attributes/constant.hpp>
+#include <boost/log/sources/features.hpp>
+#include <boost/log/sources/basic_logger.hpp>
+#include <boost/log/sources/record_ostream.hpp>
+#include <boost/log/sources/severity_logger.hpp>
+#include <boost/log/sinks/sync_frontend.hpp>
+#include <boost/log/sinks/text_ostream_backend.hpp>
+#include <boost/log/utility/strictest_lock.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
 
 using std::string;
 using std::pair;
@@ -19,7 +28,7 @@ namespace attrs = boost::log::attributes;
 namespace sources = boost::log::sources;
 namespace keywords = boost::log::keywords;
 
-
+// BaseT je sources::basic_logger
 template <typename BaseT>
 class record_tagger_feature : public BaseT
 {
@@ -35,8 +44,10 @@ public:
 
 	// use the most restricting lock type
 	typedef typename logging::strictest_lock<
-		boost::lock_guard<threading_model>, typename BaseT::open_record_lock,
-		typename BaseT::add_attribute_lock, typename BaseT::remove_attribute_lock
+		boost::lock_guard<threading_model>, 
+        typename BaseT::open_record_lock,
+		typename BaseT::add_attribute_lock, 
+        typename BaseT::remove_attribute_lock
 	>::type open_record_lock;
 
 protected:
@@ -54,8 +65,6 @@ struct record_tagger
 namespace custom_keywords {
 	BOOST_PARAMETER_KEYWORD(tag_ns, tag)  // Boost.Parameter
 }
-
-
 
 template <typename BaseT>
 record_tagger_feature<BaseT>::record_tagger_feature()
@@ -102,15 +111,21 @@ logging::record record_tagger_feature<BaseT>::open_record_unlocked(ArgsT const &
 	return BaseT::open_record_unlocked(args);  // forward the call to the base feature
 }
 
-
 // tagging feature logger
 template <typename LevelT = int>
 class tagged_logger
 	: public sources::basic_composite_logger<
-		char, tagged_logger<LevelT>, sources::single_thread_model,
-		sources::features<
+		char, 
+        tagged_logger<LevelT>, 
+        //sources::single_thread_model,
+        sources::multi_thread_model<boost::log::aux::light_rw_mutex>,
+        //sources::multi_thread_model<std::mutex>,
+		/*sources::features<
 			sources::severity<LevelT>, record_tagger>
-		>
+		>*/
+        boost::log::sources::features<
+            boost::log::sources::severity<LevelT>, record_tagger >
+    >
 {
 	BOOST_LOG_FORWARD_LOGGER_MEMBERS_TEMPLATE(tagged_logger)
 };
@@ -122,7 +137,7 @@ enum severity_level
 	error
 };
 
-void manual_logging()
+/*void manual_logging()
 {
 	tagged_logger<severity_level> logger;
 	logging::record rec = logger.open_record((keywords::severity = normal, custom_keywords::tag = "GUI"));
@@ -133,7 +148,7 @@ void manual_logging()
 		strm.flush();
 		logger.push_record(boost::move(rec));
 	}
-}
+}*/
 
 // or we can also use special macro to log
 #define LOG_WITH_TAG(lg, sev, tg) \
@@ -147,13 +162,19 @@ void logging_function()
 	// cela pointa je v tom, ze pri vytvarani zanamu sa docasne vytvori 'Tag'
 	// attribut, ktory sa po zapisani zaznamu zmaze, pozri implementaciu funkcie
 	// 'record_tagger_feature<BaseT>::open_record_unlocked()'.
-	LOG_WITH_TAG(logger, normal, "GUI") << "The user has comfirmed his choice";
+	//LOG_WITH_TAG(logger, normal, "GUI") << "The user has comfirmed his choice";
+
+    //BOOST_LOG_SEV(logger, severity_level::warning) << "hello from custom logger!"; 
+
+    LOG_WITH_TAG(logger, severity_level::normal, "GUI") << "The user has comfirmed his choice";
 }
 
 
 int main(int argc, char * argv[])
 {
-	manual_logging();
+	//manual_logging();
 	logging_function();
 	return 0;
 }
+
+
