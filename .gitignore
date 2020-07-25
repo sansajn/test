@@ -6,6 +6,7 @@
 // outputs
 out/
 *.log
+/apply
 
 // scons
 .sconsign.dblite
