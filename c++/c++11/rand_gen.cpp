@@ -1,4 +1,4 @@
-// použitie random
+// použitie random, see random_vals.cpp
 #include <random>
 #include <ctime>
 #include <iostream>
