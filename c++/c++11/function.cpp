@@ -65,7 +65,7 @@ int main(int argc, char * argv[])
 	using function_with_arg_t = function<void (bool)>;
 	
 	vector<function_with_arg_t> functs_with_arg{
-		function_with_arg_t{bind(e, _1)},                           // playin old function with argument
+		function_with_arg_t{bind(e, _1)},                           // plain old function with argument
 		function_with_arg_t{static_cast<void (*)(bool)>(h)},        // overloaded playin old function with argument
 		function_with_arg_t{bind(&foo::call_me_with_arg, &f, _1)},  // member function with argument
 		function_with_arg_t{bind(                                   // overloaded memger function with argument
