@@ -23,8 +23,8 @@ env = Environment(
 zmq_env = env.Clone()
 zmq_env.ParseConfig('pkg-config --cflags --libs libzmq')
 
-#zmq_env.Program('router_dealer_client.cpp')
-#zmq_env.Program('router_dealer_server.cpp')
+zmq_env.Program('router_dealer_client.cpp')
+zmq_env.Program('router_dealer_server.cpp')
 #zmq_env.Program('router_dealer_server_msg.cpp')
 #zmq_env.Program('router_dealer_server_pp.cpp')
 #zmq_env.Program('mtserver.cpp')
@@ -37,6 +37,7 @@ zmq_env.Program('publisher.cpp')
 zmq_env.Program('subscriber.cpp')
 zmq_env.Program('subscriber_mon.cpp')
 zmq_env.Program('publisher_mon.cpp')
+zmq_env.Program('router_mon.cpp')
 
 # cppzmq (zmq.hpp)
 #env.Program('cppzmq/rrserv.cpp')
