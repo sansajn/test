@@ -36,6 +36,7 @@ zmq_env.Program('sighandling_mt.cpp')
 zmq_env.Program('publisher.cpp')
 zmq_env.Program('subscriber.cpp')
 zmq_env.Program('subscriber_mon.cpp')
+zmq_env.Program('publisher_mon.cpp')
 
 # cppzmq (zmq.hpp)
 #env.Program('cppzmq/rrserv.cpp')
