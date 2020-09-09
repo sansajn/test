@@ -1,4 +1,4 @@
-// publisher pattern sample with ZMQ event monitoring, see `subscriber_mon.cpp` for subscriber sample
+//! publisher pattern sample with ZMQ event monitoring, see `subscriber_mon.cpp` for subscriber sample
 #include <string>
 #include <thread>
 #include <iostream>
@@ -43,20 +43,20 @@ int main(int argc, char * argv[])
 		{pub_mon, 0, ZMQ_POLLIN, 0}
 	};
 
-	auto t0 = steady_clock::now() - 1s; 
+	auto t0 = steady_clock::now(); 
 
 	size_t counter = 1;
+	bool accept_received = false;
 
 	while (1)
 	{
-		if (steady_clock::now() - t0 > 1s)
+		if (accept_received && (steady_clock::now() - t0) > 1s)
 		{
 			string const buf = "hello " + to_string(counter);
 			++counter;
 			zmq_send(pub, buf.data(), buf.size(), 0);
-			std::this_thread::sleep_for(1s);
+			t0 = steady_clock::now();
 		}
-
 
 		rc = zmq_poll(&items[0], 1, 20);  // 20ms poll
 		assert(rc != -1);
@@ -80,6 +80,14 @@ int main(int argc, char * argv[])
 			assert(!zmq_msg_more(&msg));  // last message
 
 			zmq_close(&msg);
+
+			if (event == ZMQ_EVENT_ACCEPTED)
+			{
+				t0 = steady_clock::now();  // we need to wait some time before we can send message, otherwise it will be lost
+				accept_received = true;
+			}
+			else if (event == ZMQ_EVENT_DISCONNECTED)
+				accept_received = false;
 		}
 	}
 

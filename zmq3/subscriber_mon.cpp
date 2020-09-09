@@ -38,7 +38,7 @@ int main(int argc, char * argv[])
 	assert(sub_mon);
 	zmq_connect(sub_mon, MONITOR_ADDR);
 
-	std::this_thread::sleep_for(10ms);  // wait for zmq to connect
+	std::this_thread::sleep_for(100ms);  // wait for zmq to connect
 
 	zmq_pollitem_t items[] = {
 		{sub, 0, ZMQ_POLLIN, 0},
