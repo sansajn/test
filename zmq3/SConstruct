@@ -1,5 +1,5 @@
 env = Environment(
-	CPPFLAGS=['-std=c++11', '-g', '-O0', '-Wall'], LIBS=['pthread']
+	CPPFLAGS=['-std=c++17', '-g', '-O0', '-Wall'], LIBS=['pthread']
 )
 
 # dependencies libzmq3, libczmq

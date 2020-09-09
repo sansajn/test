@@ -1,12 +1,14 @@
-// publisher, subscriber pattern
+//! subscriber pattern sample, see `publisher.cpp` for publisher sample
 #include <string>
 #include <thread>
 #include <iostream>
 #include <cassert>
+#include <chrono>
 #include <zmq.h>
 
 using std::string;
 using std::cout;
+using namespace std::chrono_literals;
 
 int main(int argc, char * argv[])
 {
@@ -21,7 +23,7 @@ int main(int argc, char * argv[])
 	int rc = zmq_connect(sub, addr.c_str());
 	assert(!rc);
 
-	std::this_thread::sleep_for(std::chrono::milliseconds{10});  // wait for zmq to connect
+	std::this_thread::sleep_for(10ms);  // wait for zmq to connect
 
 	while (1)
 	{
