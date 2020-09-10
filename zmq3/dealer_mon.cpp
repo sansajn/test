@@ -1,4 +1,4 @@
-// dealer pattern sample with monitored ZMQ events, see `router_mon.cpp` for router sample
+// router pattern sample with monitored ZMQ events, see `dealer_mon.cpp` sample
 #include <string>
 #include <iostream>
 #include <cassert>
@@ -8,37 +8,41 @@
 
 using std::string, std::to_string;
 using std::cout, std::endl;
+using std::chrono::steady_clock;
 using namespace std::chrono_literals;
 
-constexpr char const * MONITOR_ADDR = "inproc://rtr_monitor";
+constexpr char const * MONITOR_ADDR = "inproc://dea_monitor";
 
 static string zmq_event_to_string(int event);
 
+
 int main(int argc, char * argv[])
 {
-	// router
+	// dealer
 	void * ctx = zmq_ctx_new();
-	void * rtr = zmq_socket(ctx, ZMQ_ROUTER);
-	int rc = zmq_bind(rtr, "tcp://*:5557");
+	void * dea = zmq_socket(ctx, ZMQ_DEALER);
+	int rc = zmq_connect(dea, "tcp://localhost:5557");
 	assert(!rc);
 
-	// create router monitor
-	rc = zmq_socket_monitor(rtr, MONITOR_ADDR, ZMQ_EVENT_ALL);
+	// create dealer monitor
+	rc = zmq_socket_monitor(dea, MONITOR_ADDR, ZMQ_EVENT_ALL);
 	assert(rc >= 0);
 
 	// connect to monitor
-	void * rtr_mon = zmq_socket(ctx, ZMQ_PAIR);
-	assert(rtr_mon);
-	zmq_connect(rtr_mon, MONITOR_ADDR);
+	void * dea_mon = zmq_socket(ctx, ZMQ_PAIR);
+	assert(dea_mon);
+	zmq_connect(dea_mon, MONITOR_ADDR);
 
-	std::this_thread::sleep_for(1s);  // wait for zmq to bind
+	std::this_thread::sleep_for(100ms);  // wait for zmq to connect
 
 	zmq_pollitem_t items[] = {
-		{rtr, 0, ZMQ_POLLIN, 0},
-		{rtr_mon, 0, ZMQ_POLLIN, 0}
+		{dea, 0, ZMQ_POLLIN|ZMQ_POLLOUT, 0},
+		{dea_mon, 0, ZMQ_POLLIN, 0}
 	};
 
-	size_t answer_counter = 1;
+	auto t0 = steady_clock::now();
+
+	size_t question_counter = 1;
 
 	while (true)
 	{
@@ -46,51 +50,36 @@ int main(int argc, char * argv[])
 		rc = zmq_poll(&items[0], 2, 20);  // 20ms poll
 		assert(rc != -1);
 
-		if (items[0].revents & ZMQ_POLLIN)
+		if ((steady_clock::now() - t0) > 1s && items[0].revents & ZMQ_POLLOUT)  // we can ask
 		{
-			// TODO: use zmq_msq_t there
-
-			// question will be in (identity, message) format
-			char identity[1024];
-			int identity_size = zmq_recv(rtr, identity, 1024, 0);
-			assert(rc != -1);
-
-			string const ident_s(identity, identity_size);
-			cout << "identity: " << ident_s << endl;
-
-			int more;
-			size_t option_len = sizeof(more);
-			int rc = zmq_getsockopt(rtr, ZMQ_RCVMORE, &more, &option_len);
-			assert(rc == 0);
-			assert(more == 1 && "multi frame message expected");
-
-			char d[1024];
-			rc = zmq_recv(rtr, d, 1024, 0);
-			assert(rc != -1);
-			string const question_s(d, rc);
-			cout << "question: " << question_s << std::endl;
-
-			// answer
-			string const answer = "world " + to_string(answer_counter);
-			++answer_counter;
-			zmq_send(rtr, identity, identity_size, ZMQ_SNDMORE);
-			zmq_send(rtr, answer.c_str(), answer.size(), 0);	
+			string const buf = "hello " + to_string(question_counter);
+			zmq_send(dea, buf.data(), buf.size(), 0);
+			++question_counter;
+			cout << "question: " << buf << endl;
+			t0 = steady_clock::now();
 		}
 
-		// handle monitor events
+		if (items[0].revents & ZMQ_POLLIN)  // get an answer
+		{
+			char buf[1024] = {'\0'};
+			zmq_recv(dea, buf, 1024, 0);
+			cout << "answer: " << buf << endl;
+		}
+
+		// monitor events
 		if (items[1].revents & ZMQ_POLLIN)
 		{
 			// we expect two frame message (see zmq_socket_monitor() description)
 			zmq_msg_t msg;
 			zmq_msg_init(&msg);
-			rc = zmq_msg_recv(&msg, rtr_mon, 0);
+			rc = zmq_msg_recv(&msg, dea_mon, 0);
 			assert(rc != -1);
 
 			assert(zmq_msg_more(&msg));
 			uint16_t event = *(uint16_t *)zmq_msg_data(&msg);
 			cout << "event: " << zmq_event_to_string(event) << ", ";
 
-			rc = zmq_msg_recv(&msg, rtr_mon, 0);
+			rc = zmq_msg_recv(&msg, dea_mon, 0);
 			assert(rc != -1);
 			cout << string((char *)zmq_msg_data(&msg), zmq_msg_size(&msg)) << endl;
 
@@ -98,6 +87,7 @@ int main(int argc, char * argv[])
 
 			zmq_close(&msg);
 		}
+
 	}
 
 	return 0;

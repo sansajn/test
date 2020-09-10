@@ -6,3 +6,6 @@
 /subscriber_mon
 /publisher_mon
 /router_mon
+/dealer_mon
+/router_dealer_client
+/router_dealer_server

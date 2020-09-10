@@ -37,6 +37,7 @@ zmq_env.Program('publisher.cpp')
 zmq_env.Program('subscriber.cpp')
 zmq_env.Program('subscriber_mon.cpp')
 zmq_env.Program('publisher_mon.cpp')
+zmq_env.Program('dealer_mon.cpp')
 zmq_env.Program('router_mon.cpp')
 
 # cppzmq (zmq.hpp)
