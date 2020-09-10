@@ -37,20 +37,20 @@ int main(int argc, char * argv[])
 
 	cout << "broadcasting on " << addr << " ..." << std::endl;
 
-	std::this_thread::sleep_for(1s);  // wait for ZMQ to bind (otherwise we do not receive first ZMQ message)
+	//std::this_thread::sleep_for(1s);  // wait for ZMQ to bind (otherwise we do not receive first ZMQ message)
 	
 	zmq_pollitem_t items[] = {
 		{pub_mon, 0, ZMQ_POLLIN, 0}
 	};
 
-	auto t0 = steady_clock::now(); 
+	auto t0 = steady_clock::now() - 2s; 
 
 	size_t counter = 1;
-	bool accept_received = false;
+	bool handshake_succeeded = false;
 
 	while (1)
 	{
-		if (accept_received && (steady_clock::now() - t0) > 1s)
+		if (handshake_succeeded && (steady_clock::now() - t0) > 1s)
 		{
 			string const buf = "hello " + to_string(counter);
 			++counter;
@@ -81,13 +81,11 @@ int main(int argc, char * argv[])
 
 			zmq_close(&msg);
 
-			if (event == ZMQ_EVENT_ACCEPTED)
-			{
-				t0 = steady_clock::now();  // we need to wait some time before we can send message, otherwise it will be lost
-				accept_received = true;
-			}
+			//! \note waiting for ZMQ_EVENT_ACCEPTED will not work
+			if (event == ZMQ_EVENT_HANDSHAKE_SUCCEEDED)
+				handshake_succeeded = true;
 			else if (event == ZMQ_EVENT_DISCONNECTED)
-				accept_received = false;
+				handshake_succeeded = false;
 		}
 	}
 
