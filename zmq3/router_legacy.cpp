@@ -12,16 +12,23 @@ using std::cout;
 using std::endl;
 using std::chrono::seconds;
 
+string const DEFAULT_ROUTER_ADDRESS = "*:5557";
 constexpr char const * MONITOR_ADDR = "inproc://rtr_monitor";
 
 static string zmq_event_to_string(int event);
 
 int main(int argc, char * argv[])
 {
+	string address;
+	if (argc > 1)
+		address = "tcp://" + string{argv[1]};
+	else
+		address = "tcp://" + DEFAULT_ROUTER_ADDRESS;
+
 	// router
 	void * ctx = zmq_ctx_new();
 	void * rtr = zmq_socket(ctx, ZMQ_ROUTER);
-	int rc = zmq_bind(rtr, "tcp://*:5557");
+	int rc = zmq_bind(rtr, address.c_str());
 	assert(!rc);
 
 	// create router monitor

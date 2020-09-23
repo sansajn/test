@@ -14,17 +14,23 @@ using std::chrono::steady_clock;
 using std::chrono::seconds;
 using std::chrono::milliseconds;
 
+string const DEFAULT_DEALER_ADDRESS = "localhost:5557";
 constexpr char const * MONITOR_ADDR = "inproc://dea_monitor";
 
 static string zmq_event_to_string(int event);
 
-
 int main(int argc, char * argv[])
 {
+	string address;
+	if (argc > 1)
+		address = "tcp://" + string{argv[1]};
+	else
+		address = "tcp://" + DEFAULT_DEALER_ADDRESS;
+
 	// dealer
 	void * ctx = zmq_ctx_new();
 	void * dea = zmq_socket(ctx, ZMQ_DEALER);
-	int rc = zmq_connect(dea, "tcp://localhost:5557");
+	int rc = zmq_connect(dea, address.c_str());
 	assert(!rc);
 
 	// create dealer monitor
