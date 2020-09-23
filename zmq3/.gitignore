@@ -11,3 +11,5 @@
 /router_dealer_server
 /push_mon
 /pull_mon
+/dealer_legacy
+/router_legacy

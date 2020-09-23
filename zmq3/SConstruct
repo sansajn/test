@@ -1,6 +1,14 @@
-env = Environment(
+cpp17 = Environment(
 	CPPFLAGS=['-std=c++17', '-g', '-O0', '-Wall'], LIBS=['pthread']
 )
+
+# C++11 environament
+
+cpp11 = Environment(
+	CPPFLAGS=['-std=c++11', '-g', '-O0', '-Wall'], LIBS=['pthread'])
+
+cpp11.ParseConfig('pkg-config --cflags --libs libzmq')
+
 
 # dependencies libzmq3, libczmq
 #env.ParseConfig('pkg-config --cflags --libs libzmq libczmq')
@@ -20,7 +28,7 @@ env = Environment(
 #env.Program(['zmqpp/hwclient.cpp', objs])
 
 # pure zmq
-zmq_env = env.Clone()
+zmq_env = cpp17.Clone()
 zmq_env.ParseConfig('pkg-config --cflags --libs libzmq')
 
 zmq_env.Program('router_dealer_client.cpp')
@@ -41,6 +49,10 @@ zmq_env.Program('dealer_mon.cpp')
 zmq_env.Program('router_mon.cpp')
 zmq_env.Program('pull_mon.cpp')
 zmq_env.Program('push_mon.cpp')
+
+
+cpp11.Program('router_legacy.cpp')
+cpp11.Program('dealer_legacy.cpp')
 
 
 # cppzmq (zmq.hpp)
