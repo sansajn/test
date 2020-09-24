@@ -27,8 +27,26 @@ int main(int argc, char * argv[])
 	// pull
 	void * ctx = zmq_ctx_new();
 	void * pull = zmq_socket(ctx, ZMQ_PULL);
+
+	// change keepalive settings
+	int keep_alive = 1;
+	int res = zmq_setsockopt(pull, ZMQ_TCP_KEEPALIVE, (void const *)&keep_alive, sizeof(keep_alive));
+	assert(!res);
+
+	int keep_alive_cnt = 2;  // tcp_keepalive_probes (default: 9)
+	res = zmq_setsockopt(pull, ZMQ_TCP_KEEPALIVE_CNT, (void const *)&keep_alive_cnt, sizeof(keep_alive_cnt));
+	assert(!res);
+
+	int keep_alive_idle = 10;  //  tcp_keepalive_time (default: 7200s)
+	res = zmq_setsockopt(pull, ZMQ_TCP_KEEPALIVE_IDLE, (void const *)&keep_alive_idle, sizeof(keep_alive_idle));
+	assert(!res);
+
+	int keep_alive_intvl = 30;  //  tcp_keepalive_intvl (default: 75s)
+	res = zmq_setsockopt(pull, ZMQ_TCP_KEEPALIVE_INTVL, (void const *)&keep_alive_intvl, sizeof(keep_alive_intvl));
+
+	// bind socket
 	string const addr = "tcp://" + host + ":" + port;
-	int res = zmq_bind(pull, addr.c_str());
+	res = zmq_bind(pull, addr.c_str());
 	assert(!res);
 
 	// create pull monitor
