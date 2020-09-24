@@ -18,6 +18,7 @@ string const DEFAULT_DEALER_ADDRESS = "localhost:5557";
 constexpr char const * MONITOR_ADDR = "inproc://dea_monitor";
 
 static string zmq_event_to_string(int event);
+static void dump_keepalive_settings(void * socket);
 
 int main(int argc, char * argv[])
 {
@@ -30,6 +31,10 @@ int main(int argc, char * argv[])
 	// dealer
 	void * ctx = zmq_ctx_new();
 	void * dea = zmq_socket(ctx, ZMQ_DEALER);
+
+	cout << "default keep alive settings for dealer socket:\n";
+	dump_keepalive_settings(dea);
+
 	int rc = zmq_connect(dea, address.c_str());
 	assert(!rc);
 
@@ -122,4 +127,33 @@ string zmq_event_to_string(int event)
 //		case ZMQ_EVENT_HANDSHAKE_FAILED_PROTOCOL: return "handshake failed (protocol)";
 		default: return "unknown (" + to_string(event) + ")";
 	}
+}
+
+void dump_keepalive_settings(void * socket)
+{
+	// current TCP keep alive settings
+	int keep_alive;
+	size_t option_len = sizeof(keep_alive);
+	int res = zmq_getsockopt(socket, ZMQ_TCP_KEEPALIVE, (void *)&keep_alive, &option_len);
+	assert(!res);
+
+	int keep_alive_cnt;
+	option_len = sizeof(keep_alive_cnt);
+	res = zmq_getsockopt(socket, ZMQ_TCP_KEEPALIVE_CNT, (void *)&keep_alive_cnt, &option_len);
+	assert(!res);
+
+	int keep_alive_idle;
+	option_len = sizeof(keep_alive_idle);
+	res = zmq_getsockopt(socket, ZMQ_TCP_KEEPALIVE_IDLE, (void *)&keep_alive_idle, &option_len);
+	assert(!res);
+
+	int keep_alive_intvl;
+	option_len = sizeof(keep_alive_intvl);
+	res = zmq_getsockopt(socket, ZMQ_TCP_KEEPALIVE_INTVL, (void *)&keep_alive_intvl, &option_len);
+	assert(!res);
+
+	cout << "keepalive=" << keep_alive << "\n"
+		<< "keepalive_cnt=" << keep_alive_cnt << "\n"
+		<< "keepalive_idle=" << keep_alive_idle << "\n"
+		<< "keepalive_intvl=" << keep_alive_intvl << endl;
 }
