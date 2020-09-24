@@ -33,9 +33,21 @@ int main(int argc, char * argv[])
 	cout << "default keep alive settings for router socket:\n";
 	dump_keepalive_settings(rtr);
 
+	// change keepalive settings
 	int keep_alive = 1;
-	int res = zmq_setsockopt(rtr, ZMQ_TCP_KEEPALIVE, (void const *)&keep_alive, sizeof(int));
+	int res = zmq_setsockopt(rtr, ZMQ_TCP_KEEPALIVE, (void const *)&keep_alive, sizeof(keep_alive));
 	assert(!res);
+
+	int keep_alive_cnt = 2;  // tcp_keepalive_probes (default: 9)
+	res = zmq_setsockopt(rtr, ZMQ_TCP_KEEPALIVE_CNT, (void const *)&keep_alive_cnt, sizeof(keep_alive_cnt));
+	assert(!res);
+
+	int keep_alive_idle = 10;  //  tcp_keepalive_time (default: 7200s)
+	res = zmq_setsockopt(rtr, ZMQ_TCP_KEEPALIVE_IDLE, (void const *)&keep_alive_idle, sizeof(keep_alive_idle));
+	assert(!res);
+
+	int keep_alive_intvl = 30;  //  tcp_keepalive_intvl (default: 75s)
+	res = zmq_setsockopt(rtr, ZMQ_TCP_KEEPALIVE_INTVL, (void const *)&keep_alive_intvl, sizeof(keep_alive_intvl));
 
 	cout << "keep alive settings after setup:\n";
 	dump_keepalive_settings(rtr);
