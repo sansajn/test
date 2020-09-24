@@ -12,7 +12,9 @@ using std::cout;
 using std::endl;
 using std::chrono::seconds;
 
-string const DEFAULT_ROUTER_ADDRESS = "*:5557";
+string const DEFAULT_HOST = "*",
+	DEFAULT_PORT = "5557";
+
 constexpr char const * MONITOR_ADDR = "inproc://rtr_monitor";
 
 static string zmq_event_to_string(int event);
@@ -20,11 +22,8 @@ static void dump_keepalive_settings(void * socket);
 
 int main(int argc, char * argv[])
 {
-	string address;
-	if (argc > 1)
-		address = "tcp://" + string{argv[1]};
-	else
-		address = "tcp://" + DEFAULT_ROUTER_ADDRESS;
+	string const host = (argc > 1) ? argv[1] : DEFAULT_HOST;
+	string const port = (argc > 2) ? argv[2] : DEFAULT_PORT;
 
 	// router
 	void * ctx = zmq_ctx_new();
@@ -52,6 +51,7 @@ int main(int argc, char * argv[])
 	cout << "keep alive settings after setup:\n";
 	dump_keepalive_settings(rtr);
 
+	string const address = "tcp://" + host + ":" + port;
 	res = zmq_bind(rtr, address.c_str());
 	assert(!res);
 

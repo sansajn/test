@@ -53,6 +53,9 @@ zmq_env.Program('push_mon.cpp')
 
 cpp11.Program('router_legacy.cpp')
 cpp11.Program('dealer_legacy.cpp')
+cpp11.Program('pull_legacy.cpp')
+cpp11.Program('push_legacy.cpp')
+
 
 
 # cppzmq (zmq.hpp)
