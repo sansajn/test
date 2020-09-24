@@ -16,6 +16,7 @@ string const DEFAULT_ROUTER_ADDRESS = "*:5557";
 constexpr char const * MONITOR_ADDR = "inproc://rtr_monitor";
 
 static string zmq_event_to_string(int event);
+static void dump_keepalive_settings(void * socket);
 
 int main(int argc, char * argv[])
 {
@@ -28,12 +29,23 @@ int main(int argc, char * argv[])
 	// router
 	void * ctx = zmq_ctx_new();
 	void * rtr = zmq_socket(ctx, ZMQ_ROUTER);
-	int rc = zmq_bind(rtr, address.c_str());
-	assert(!rc);
+
+	cout << "default keep alive settings for router socket:\n";
+	dump_keepalive_settings(rtr);
+
+	int keep_alive = 1;
+	int res = zmq_setsockopt(rtr, ZMQ_TCP_KEEPALIVE, (void const *)&keep_alive, sizeof(int));
+	assert(!res);
+
+	cout << "keep alive settings after setup:\n";
+	dump_keepalive_settings(rtr);
+
+	res = zmq_bind(rtr, address.c_str());
+	assert(!res);
 
 	// create router monitor
-	rc = zmq_socket_monitor(rtr, MONITOR_ADDR, ZMQ_EVENT_ALL);
-	assert(rc >= 0);
+	res = zmq_socket_monitor(rtr, MONITOR_ADDR, ZMQ_EVENT_ALL);
+	assert(res >= 0);
 
 	// connect to monitor
 	void * rtr_mon = zmq_socket(ctx, ZMQ_PAIR);
@@ -52,8 +64,8 @@ int main(int argc, char * argv[])
 	while (true)
 	{
 		// listen
-		rc = zmq_poll(&items[0], 2, 20);  // 20ms poll
-		assert(rc != -1);
+		res = zmq_poll(&items[0], 2, 20);  // 20ms poll
+		assert(res != -1);
 
 		if (items[0].revents & ZMQ_POLLIN)
 		{
@@ -62,7 +74,7 @@ int main(int argc, char * argv[])
 			// question will be in (identity, message) format
 			char identity[1024];
 			int identity_size = zmq_recv(rtr, identity, 1024, 0);
-			assert(rc != -1);
+			assert(res != -1);
 
 			string const ident_s(identity, identity_size);
 			cout << "identity: " << ident_s << endl;
@@ -92,15 +104,15 @@ int main(int argc, char * argv[])
 			// we expect two frame message (see zmq_socket_monitor() description)
 			zmq_msg_t msg;
 			zmq_msg_init(&msg);
-			rc = zmq_msg_recv(&msg, rtr_mon, 0);
-			assert(rc != -1);
+			res = zmq_msg_recv(&msg, rtr_mon, 0);
+			assert(res != -1);
 
 			assert(zmq_msg_more(&msg));
 			uint16_t event = *(uint16_t *)zmq_msg_data(&msg);
 			cout << "event: " << zmq_event_to_string(event) << ", ";
 
-			rc = zmq_msg_recv(&msg, rtr_mon, 0);
-			assert(rc != -1);
+			res = zmq_msg_recv(&msg, rtr_mon, 0);
+			assert(res != -1);
 			cout << string((char *)zmq_msg_data(&msg), zmq_msg_size(&msg)) << endl;
 
 			assert(!zmq_msg_more(&msg));  // last message
@@ -132,4 +144,33 @@ string zmq_event_to_string(int event)
 //		case ZMQ_EVENT_HANDSHAKE_FAILED_PROTOCOL: return "handshake failed (protocol)";
 		default: return "unknown (" + to_string(event) + ")";
 	}
+}
+
+void dump_keepalive_settings(void * socket)
+{
+	// current TCP keep alive settings
+	int keep_alive;
+	size_t option_len = sizeof(keep_alive);
+	int res = zmq_getsockopt(socket, ZMQ_TCP_KEEPALIVE, (void *)&keep_alive, &option_len);
+	assert(!res);
+
+	int keep_alive_cnt;
+	option_len = sizeof(keep_alive_cnt);
+	res = zmq_getsockopt(socket, ZMQ_TCP_KEEPALIVE_CNT, (void *)&keep_alive_cnt, &option_len);
+	assert(!res);
+
+	int keep_alive_idle;
+	option_len = sizeof(keep_alive_idle);
+	res = zmq_getsockopt(socket, ZMQ_TCP_KEEPALIVE_IDLE, (void *)&keep_alive_idle, &option_len);
+	assert(!res);
+
+	int keep_alive_intvl;
+	option_len = sizeof(keep_alive_intvl);
+	res = zmq_getsockopt(socket, ZMQ_TCP_KEEPALIVE_INTVL, (void *)&keep_alive_intvl, &option_len);
+	assert(!res);
+
+	cout << "keepalive=" << keep_alive << "\n"
+		<< "keepalive_cnt=" << keep_alive_cnt << "\n"
+		<< "keepalive_idle=" << keep_alive_idle << "\n"
+		<< "keepalive_intvl=" << keep_alive_intvl << endl;
 }
