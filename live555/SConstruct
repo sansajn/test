@@ -1,5 +1,6 @@
-live_path = 'live'
+#live_path = 'live'
 #live_path = 'live_2017.07.18'
+live_path = 'live_2020.08.19'
 
 # ubuntu 15.10 package live555
 env = Environment(
@@ -52,6 +53,8 @@ local_liblive555_env = Environment(
 	LIBS=['pthread', 'boost_log', 'boost_filesystem', 'boost_system']
 )
 
+local_liblive555_env.ParseConfig('pkg-config --cflags --libs openssl')
+
 local_liblive555_env.Program(['mkv_demux.cpp', live555_lib])
 local_liblive555_env.Program(['testMKVStreamer.cpp', live555_lib])
 local_liblive555_env.Program(['smooth_transition.cpp', live555_lib])
@@ -75,6 +78,7 @@ local_liblive555_env.Program(['posponed_multicast.cpp', live555_lib])
 local_liblive555_env.Program(['bare_mkv.cpp', live555_lib])
 local_liblive555_env.Program(['multiple_mkv.cpp', live555_lib])
 local_liblive555_env.Program(['jpeg_on_demand.cpp', live555_lib])
+local_liblive555_env.Program(['h264_streamer.cpp', live555_lib])
 
 local_liblive555_env.Program([
 	'jpeg_custom.cpp',
