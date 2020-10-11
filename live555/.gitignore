@@ -33,3 +33,7 @@
 /netaddresslist_test
 /out_*/
 /jpeg_custom
+/testRTSPClient
+/synced_server
+/stats_client
+
