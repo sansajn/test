@@ -19,6 +19,8 @@ unique_ptr<int[]> make_sequence(int n)
 
 void plain_deleter(int * p) {delete p;}
 
+void close_file(std::FILE * f) {std::fclose(f);}
+
 
 int main(int argc, char * argv[])
 {
@@ -35,6 +37,8 @@ int main(int argc, char * argv[])
 	
 	// plain function
 	unique_ptr<int, void (*)(int *)> u4{new int{101}, plain_deleter};
+
+	unique_ptr<std::FILE, decltype(&close_file)> f{std::fopen("demo.txt", "r"), &close_file};
 	
 	// with lambda deleter
 	auto deleter = [](int * p){delete p;};
@@ -50,7 +54,6 @@ int main(int argc, char * argv[])
 	u7 = unique_ptr<int>{new int{15}};
 	
 	u7 = nullptr;  // release u7 content
-	
 
 	return 0;
 }
