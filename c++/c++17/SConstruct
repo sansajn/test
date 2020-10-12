@@ -1,6 +1,7 @@
-env = Environment(
+cpp17 = Environment(
 	CCFLAGS=['-std=c++17', '-Wall', '-O0', '-g'])
 
-env.Program('class_template_argument_deduction.cpp')
-env.Program('structured_bindings.cpp')
-env.Program('open_nested_namespaces.cpp')
+cpp17.Program('class_template_argument_deduction.cpp')
+cpp17.Program('structured_bindings.cpp')
+cpp17.Program('open_nested_namespaces.cpp')
+cpp17.Program('filesystem_path.cpp')
