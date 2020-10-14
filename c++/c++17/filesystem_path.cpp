@@ -6,14 +6,21 @@ using namespace std::filesystem;
 
 int main(int argc, char * argv[])
 {
-	path p = current_path();
+	path p;
+	if (argc > 1)
+		p = argv[1];
+	else
+		p = current_path();
 	
 	cout << "current path: " << p << "\n"
-		<< "root path: " << p.root_path() << "\n"
-		<< "relative path: " << p.relative_path() << "\n"
-		<< "parent path: " << p.parent_path() << "\n"
-		<< "root name: " << p.root_name() << "\n"
-		<< "root directory: " << p.root_directory()
+		<< "root_name: " << p.root_name() << "\n"
+		<< "root_directory: " << p.root_directory() << "\n"
+		<< "root_path: " << p.root_path() << "\n"
+		<< "relative_path: " << p.relative_path() << "\n"
+		<< "parent_path: " << p.parent_path() << "\n"
+		<< "filename: " << p.filename() << "\n"
+		<< "stem: " << p.stem() << "\n"
+		<< "extension: " << p.extension()
 		<< endl;
 
 	cout << "\npath elements:\n";
@@ -21,7 +28,8 @@ int main(int argc, char * argv[])
 		cout << e << ", ";
 	cout << "\n";
 
-	// replace "/home" with "/tmp"
+	// replace first two elements with "/tmp"
+	cout << "replace /home with /tmp\n";
 	auto it = p.begin();
 	++it;
 	++it;
