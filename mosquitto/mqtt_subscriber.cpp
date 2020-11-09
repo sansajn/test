@@ -1,4 +1,5 @@
-// mqtt mosquitto subscriber implementation for unit testing purpose
+/*! mqtt mosquitto subscriber implementation for unit testing purpose
+*/
 #include <map>
 #include <string>
 #include <queue>
@@ -46,19 +47,23 @@ private:
 
 int main(int argc, char * argv[])
 {
+	string const topic = "test/topic";
+	seconds const timeout = 20s;
+
 	mqtt_subscriber test;
-	test.subscribe("test/topic");
+	test.subscribe(topic);
+	cout << "subscribed to '" << topic << "' topic with " << timeout.count() << "s timeout" << endl;
 
 	string msg;
 	bool alive = true;
 	while (alive)
 	{
-		alive = test.recv_for(msg, 20s);
+		alive = test.recv_for(msg, timeout);
 		if (alive)
 			cout << msg << endl;
 	}
 
-	cout << "done, no content for 20s.\n";
+	cout << "done, no content for " << timeout.count() << "s.\n";
 
 	return 0;
 }

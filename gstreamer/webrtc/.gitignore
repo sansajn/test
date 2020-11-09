@@ -1,5 +1,5 @@
 /sendrecv
 /send
-/unidirectional-h264
+/webrtc-unidirectional-h264
 /rtsp_to_webrtc
 /test-webrtc.*
