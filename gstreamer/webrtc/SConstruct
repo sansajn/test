@@ -6,6 +6,6 @@ cpp17.ParseConfig('pkg-config --cflags --libs  glib-2.0 gstreamer-1.0 gstreamer-
 
 cpp17.Program('sendrecv', ['webrtc-sendrecv.c'])
 cpp17.Program('send', ['webrtc-send.cpp'])
-cpp17.Program('unidirectional-h264', ['webrtc-unidirectional-h264.c'])
+cpp17.Program('webrtc-unidirectional-h264', ['webrtc-unidirectional-h264.c'])
 cpp17.Program(['rtsp_to_webrtc.cpp'])
 
