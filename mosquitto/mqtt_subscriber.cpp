@@ -111,7 +111,7 @@ mqtt_subscriber::mqtt_subscriber(seconds timeout)
 
 		if (mosquitto_connect(__mosq, host, port, keepalive) != MOSQ_ERR_SUCCESS)
 			throw std::runtime_error{
-				boost::str(format("mosquitto: unable connect to %1:%2") % host % port)};
+				boost::str(format("mosquitto: unable connect to %1%:%2%") % host % port)};
 
 		// wait for connection done ...
 		while (!connected)

@@ -4,3 +4,4 @@ cpp17 = Environment(
 
 cpp17.Program('hello.cpp')
 cpp17.Program('mqtt_subscriber.cpp')
+cpp17.Program('publish.cpp')
