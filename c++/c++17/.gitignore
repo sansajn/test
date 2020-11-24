@@ -3,3 +3,5 @@
 /string_view_basic
 /inline_member_variable
 /extract_node
+/map_try_emplace
+/map_insert_or_assign
