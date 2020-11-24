@@ -6,3 +6,4 @@
 /map_try_emplace
 /map_insert_or_assign
 /algorithm_sample
+/thread_scoped_lock
