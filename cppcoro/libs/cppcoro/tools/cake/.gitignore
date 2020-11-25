@@ -1,0 +1,11 @@
+*.pyc
+*.pyo
+*.cakec
+*.dep
+.pydevproject
+.DS_Store
+/build/
+/dist/
+/examples/build/
+/examples/cache/
+*~

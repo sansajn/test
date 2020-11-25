@@ -1,0 +1,46 @@
+# dependencies, libc++-dev (10+), libc++abi-dev (10+), clang (10+)
+
+cpp20 = Environment(
+	CXX='clang++-10',
+	CCFLAGS=['-std=c++20', '-Wall', '-O0', '-g', '-fcoroutines-ts', '-stdlib=libc++'],
+	CPPPATH=['libs/cppcoro/include'],
+	CPPDEFINES=['CPPCORO_OS_LINUX'],
+	LINKFLAGS=['-stdlib=libc++'],
+	LIBS=['pthread'])
+
+exclude_files = ['libs/cppcoro/lib/' + f for f in [  # file wont compile under linux (Ubuntu 20.04 LTS)
+	'file.cpp',
+	'file_read_operation.cpp',
+	'io_service.cpp',
+	'read_only_file.cpp',
+	'read_write_file.cpp',
+	'readable_file.cpp',
+	'socket.cpp',
+	'socket_accept_operation.cpp',
+	'socket_connect_operation.cpp',
+	'socket_disconnect_operation.cpp',
+	'socket_recv_from_operation.cpp',
+	'socket_recv_operation.cpp',
+	'socket_send_operation.cpp',
+	'socket_send_to_operation.cpp',
+	'win32.cpp',
+	'writable_file.cpp',
+	'write_only_file.cpp']]
+
+cppcoro = cpp20.StaticLibrary('cppcoro',
+	[f for f in Glob('libs/cppcoro/lib/*.cpp') if not str(f) in exclude_files])
+
+
+# build some tests
+
+#cpp20.Program('test/test', [
+#	'test/counted.cpp',
+#	'test/main.cpp',
+#	'test/task_tests.cpp',
+#	cppcoro])
+
+#cpp20.Program(['hello.cpp', cppcoro])
+
+#cpp20.Program(['temp_test.cpp', cppcoro])
+
+cpp20.Program(['task1.cpp', cppcoro])

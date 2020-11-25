@@ -1,0 +1,12 @@
+build
+*.cakec
+*.pyc
+*.o
+/libcppcoro.a
+/cppcoro.cflags
+/cppcoro.config
+/cppcoro.creator
+/cppcoro.cxxflags
+/cppcoro.files
+/cppcoro.includes
+/test/test
