@@ -33,3 +33,4 @@ cppcoro = cpp20.StaticLibrary('cppcoro',
 cpp20.Program(['task1.cpp', cppcoro])
 cpp20.Program(['task2.cpp', cppcoro])
 cpp20.Program(['generator.cpp', cppcoro])
+cpp20.Program(['producer_consumer.cpp', cppcoro])
