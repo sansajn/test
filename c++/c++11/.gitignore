@@ -16,3 +16,4 @@
 /regex_match
 /bind
 /notify
+/exception_ptr
