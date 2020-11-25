@@ -30,18 +30,6 @@ exclude_files = ['libs/cppcoro/lib/' + f for f in [  # file wont compile under l
 cppcoro = cpp20.StaticLibrary('cppcoro',
 	[f for f in Glob('libs/cppcoro/lib/*.cpp') if not str(f) in exclude_files])
 
-
-# build some tests
-
-#cpp20.Program('test/test', [
-#	'test/counted.cpp',
-#	'test/main.cpp',
-#	'test/task_tests.cpp',
-#	cppcoro])
-
-#cpp20.Program(['hello.cpp', cppcoro])
-
-#cpp20.Program(['temp_test.cpp', cppcoro])
-
 cpp20.Program(['task1.cpp', cppcoro])
 cpp20.Program(['task2.cpp', cppcoro])
+cpp20.Program(['generator.cpp', cppcoro])
