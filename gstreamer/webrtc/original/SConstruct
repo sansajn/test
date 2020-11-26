@@ -1,0 +1,8 @@
+cpp17 = Environment(
+	CCFLAGS=['-Wall', '-g'],
+	CXXFLAGS=['-std=c++17'])
+
+cpp17.ParseConfig('pkg-config --cflags --libs  glib-2.0 gstreamer-1.0 gstreamer-sdp-1.0 gstreamer-webrtc-1.0 json-glib-1.0 libsoup-2.4')
+
+cpp17.Program('sendrecv', ['webrtc-sendrecv.c'])
+cpp17.Program('h264-sendrecv', ['h264-sendrecv.c'])
