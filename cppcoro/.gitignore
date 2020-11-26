@@ -4,3 +4,5 @@
 /generator
 /producer_consumer
 /cancellation
+/async_mutex
+/when_all
