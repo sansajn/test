@@ -7,3 +7,4 @@
 /async_mutex
 /when_all
 /static_thread_pool
+/async_latch
