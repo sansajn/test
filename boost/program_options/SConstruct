@@ -1,8 +1,9 @@
 env = Environment(
-	CCFLAGS=['-std=c++11', '-Wall', '-g', '-O0'],
+	CCFLAGS=['-std=c++17', '-Wall', '-g', '-O0'],
 	LIBS=['boost_program_options']
 )
 
 env.Program('hello.cpp')
 env.Program('unknown_options.cpp')
 env.Program('positional_options.cpp')
+env.Program('optional_with_default.cpp')
