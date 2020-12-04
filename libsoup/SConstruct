@@ -1,0 +1,8 @@
+cpp17 = Environment(
+	CCFLAGS=['-std=c++17', '-Wall', '-O0', '-g'],
+	LIBS=['boost_filesystem', 'boost_system'])
+
+cpp17.ParseConfig('pkg-config --cflags --libs libsoup-2.4')
+
+cpp17.Program('serve.cpp')
+cpp17.Program('websocket.cpp')
