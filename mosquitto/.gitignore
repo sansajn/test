@@ -1,3 +1,4 @@
+/test-mqtt.*
 /hello
 /mqtt_subscriber
 /publish

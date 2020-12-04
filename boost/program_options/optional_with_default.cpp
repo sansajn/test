@@ -17,11 +17,9 @@ int main(int argc, char * argv[])
 		("encoder", po::value<string>(&arg_encoder)->default_value("h264"), "video encoder")
 		("page", po::value<string>(), "use external html page to show video content");
 
-	po::positional_options_description pos_desc;
-
 	// process arguments
 	po::variables_map vm;
-	po::store(po::command_line_parser(argc, argv).options(desc).positional(pos_desc).run(), vm);
+	po::store(po::command_line_parser(argc, argv).options(desc).run(), vm);
 	po::notify(vm);
 	
 	if (vm.count("help"))
