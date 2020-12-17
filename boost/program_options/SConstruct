@@ -1,9 +1,10 @@
-env = Environment(
+cpp17 = Environment(
 	CCFLAGS=['-std=c++17', '-Wall', '-g', '-O0'],
 	LIBS=['boost_program_options']
 )
 
-env.Program('hello.cpp')
-env.Program('unknown_options.cpp')
-env.Program('positional_options.cpp')
-env.Program('optional_with_default.cpp')
+cpp17.Program('hello.cpp')
+cpp17.Program('unknown_options.cpp')
+cpp17.Program('positional_options.cpp')
+cpp17.Program('optional_with_default.cpp')
+cpp17.Program('venc_sample.cpp')
