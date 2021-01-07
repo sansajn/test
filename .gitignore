@@ -16,6 +16,9 @@ out/
 *.creator.user
 *.config
 *.files
+*.cflags
+*.cxxflags
+*.includes
 
 // doc
 doc/html/

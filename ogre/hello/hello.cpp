@@ -5,21 +5,21 @@
 using namespace Ogre;
 using namespace OgreBites;
 
-class MyTestApp
+class ogre_app
 	: public ApplicationContext, public InputListener
 {
 public:
-	MyTestApp();
-	~MyTestApp() {}
+	ogre_app();
+	~ogre_app() {}
 	void setup() override;
 	bool keyPressed(KeyboardEvent const & evt) override;
 };
 
-MyTestApp::MyTestApp()
+ogre_app::ogre_app()
 	: ApplicationContext{"OgreTutorialApp"}
 {}
 
-bool MyTestApp::keyPressed(KeyboardEvent const & evt)
+bool ogre_app::keyPressed(KeyboardEvent const & evt)
 {
 	if (evt.keysym.sym == SDLK_ESCAPE)
 		getRoot()->queueEndRendering();
@@ -27,7 +27,7 @@ bool MyTestApp::keyPressed(KeyboardEvent const & evt)
 	return true;
 }
 
-void MyTestApp::setup()
+void ogre_app::setup()
 {
 	ApplicationContext::setup();
 	addInputListener(this);  // register for input events
@@ -67,7 +67,7 @@ void MyTestApp::setup()
 
 int main(int argc, char * argv[])
 {
-	MyTestApp app;
+	ogre_app app;
 	app.initApp();
 	app.getRoot()->startRendering();
 	app.closeApp();
