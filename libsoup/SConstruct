@@ -6,3 +6,4 @@ cpp17.ParseConfig('pkg-config --cflags --libs libsoup-2.4')
 
 cpp17.Program('serve.cpp')
 cpp17.Program('websocket.cpp')
+cpp17.Program('websocket_nb.cpp')
