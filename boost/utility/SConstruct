@@ -3,3 +3,4 @@ env = Environment(
 )
 
 env.Program('string_ref.cpp')
+env.Program('string_view.cpp')
