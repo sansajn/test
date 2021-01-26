@@ -1,4 +1,4 @@
-// server with websocket connection running in not blocking loop sample
+// WebSocket echo server sample
 #include <string>
 #include <thread>
 #include <chrono>
@@ -9,6 +9,7 @@
 
 using std::string, std::cout, std::endl;
 using namespace std::chrono_literals;
+using namespace std::string_literals;
 using boost::filesystem::load_string_file;
 
 constexpr int SERVER_PORT = 40001;
@@ -31,7 +32,9 @@ int main(int argc, char * argv[])
 	SoupServer * server = soup_server_new(SOUP_SERVER_SERVER_HEADER, "test soap server", nullptr);
 	assert(server);
 
+	// we want to serve HTML page with WS handlers
 	soup_server_add_handler(server, "/", server_http_handler, nullptr, nullptr);
+
 	soup_server_add_websocket_handler(server, "/ws", nullptr, nullptr, server_websocket_handler, nullptr, nullptr);
 	soup_server_listen_all(server, SERVER_PORT, (SoupServerListenOptions)0, nullptr);
 
@@ -40,8 +43,7 @@ int main(int argc, char * argv[])
 	GMainLoop * loop = g_main_loop_new(nullptr, FALSE);
 	assert(loop);
 
-	while (true)
-		g_main_context_iteration(g_main_loop_get_context(loop), FALSE);
+	g_main_loop_run(loop);
 
 	// clean up
 	g_object_unref(G_OBJECT(server));
@@ -104,6 +106,11 @@ void websocket_message_handler(SoupWebsocketConnection * connection,
 
 	cout << "ws >> " << msg_str << endl;
 
-	g_free(msg_str);
+	// answer message
+	string answer = "Hello "s + msg_str + "!"s;
+	soup_websocket_connection_send_text(connection, answer.c_str());
 
+	cout << "ws << " << answer << endl;
+
+	g_free(msg_str);
 }

@@ -2,3 +2,4 @@
 /serve
 /websocket
 /websocket_nb
+/ws_echo_server
