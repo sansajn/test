@@ -1,0 +1,29 @@
+dependencies = ['glm >= 0.9.9.5']
+
+def build():
+	env = Environment(CXXFLAGS=['-std=c++17'], CCFLAGS=['-Wall', '-g', '-O0'])
+
+	conf = env.Configure(
+		custom_tests={'CheckPkgVersion': check_pkg_version})
+
+	if not conf.CheckCXXHeader('iostream'):
+		print("We really need 'iostream' header")
+		Exit(1)
+
+	for pkg in dependencies:
+		if not conf.CheckPkgVersion(pkg):
+			print("'%' package not found" % pkg)
+			Exit(1)
+
+	env = conf.Finish()
+
+	env.Program('main.cpp')
+
+# custom pkg-config based package version check
+def check_pkg_version(context, pkg):
+	context.Message("Checking for '%s' package... " % pkg)
+	res = context.TryAction("pkg-config --exists '%s'" % pkg)[0]
+	context.Result(res)
+	return res
+
+build()
