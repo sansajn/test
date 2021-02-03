@@ -1,4 +1,6 @@
-env = Environment(CXXFLAGS=['-std=c++14'])
+env = Environment(CXXFLAGS=['-std=c++17'], 
+    CCFLAGS=['-Wall', '-O0', '-g'])
+
 env['CXX'] = 'clang++'
 
 env.Program('custom_range.cpp')
@@ -6,3 +8,4 @@ env.Program('filter_like.cpp')
 env.Program('arrayrgn.cpp')
 env.Program('integer_range.cpp')
 env.Program('adaptors.cpp')
+env.Program('iter_range.cpp')
