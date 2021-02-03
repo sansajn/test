@@ -26,3 +26,5 @@
 /equal
 /avoid_hierarchy
 /map_insert
+/uniqueptr
+/uniqueptr_func

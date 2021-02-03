@@ -45,3 +45,7 @@ catch17.Program('equal.cpp')
 catch17.Program('map_insert.cpp')
 
 cpp14.Program('avoid_hierarchy.cpp')
+
+
+cpp17.Program('uniqueptr.cpp')
+cpp17.Program('uniqueptr_func.cpp')
