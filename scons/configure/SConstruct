@@ -12,7 +12,7 @@ def build():
 
 	for pkg in dependencies:
 		if not conf.CheckPkgVersion(pkg):
-			print("'%' package not found" % pkg)
+			print("'%s' package not found" % pkg)
 			Exit(1)
 
 	env = conf.Finish()
