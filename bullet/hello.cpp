@@ -47,6 +47,7 @@ int main(int argc, char * argv[])
 	btScalar mass = 1;
 	btVector3 local_inertia = {0, 0, 0};
 	sphere_shape.calculateLocalInertia(mass, local_inertia);
+	cout << "local_inertia = (" << local_inertia.x() << ", " << local_inertia.y() << ", " << local_inertia.z() << ")\n";
 
 	btRigidBody sphere_body{mass, &sphere_motion, &sphere_shape, local_inertia};
 	world.addRigidBody(&sphere_body);
