@@ -19,7 +19,7 @@ def configure(env, dependency_list):
 	for dep in dependency_list:
 		pkg = ("%s %s" % dep) if type(dep) == tuple else dep
 		if not conf.CheckPkgVersion(pkg):
-			print("'%' package not found" % pkg)
+			print("'%s' package not found" % pkg)
 			Exit(1)
 
 	conf_env = conf.Finish()
