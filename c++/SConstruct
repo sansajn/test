@@ -3,7 +3,10 @@ env = Environment(
 
 cpp14 = env.Clone()
 cpp17 = Environment(
-	CXX='clang++', CXXFLAGS=['-std=c++17'], CCFLAGS=['-Wall', '-g', '-O0'])
+	CXX='clang++', CXXFLAGS=['-std=c++17'], CCFLAGS=['-Wall', '-g', '-O0'],
+	LIBS=[
+		'pthread'  # for thread library from c++11
+	])
 
 catch17 = Environment(
 	CXX='clang++',
@@ -49,3 +52,7 @@ cpp14.Program('avoid_hierarchy.cpp')
 
 cpp17.Program('uniqueptr.cpp')
 cpp17.Program('uniqueptr_func.cpp')
+
+
+# thread & synchronization
+cpp17.Program('promise_future.cpp')
