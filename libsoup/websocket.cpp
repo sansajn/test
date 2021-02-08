@@ -104,5 +104,4 @@ void websocket_message_handler(SoupWebsocketConnection * connection,
 	cout << "ws >> " << msg_str << endl;
 
 	g_free(msg_str);
-
 }
