@@ -1,0 +1,5 @@
+# freeglut3-dev
+
+cpp17 = Environment()
+
+cpp17.Program('ddraw', [Glob('*.cpp')])
