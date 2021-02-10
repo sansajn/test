@@ -9,6 +9,7 @@
 #include <boost/range/iterator_range.hpp>
 #include <bullet/btBulletDynamicsCommon.h>
 #include <bullet/BulletCollision/btBulletCollisionCommon.h>
+#include <GL/freeglut.h>
 #include "DebugDrawer.h"
 
 using std::find;
@@ -243,19 +244,20 @@ namespace gui {
 class glut_app
 {
 public:
-	static glut_app & ref();
+	glut_app(int argc, char * argv[]);
 	void go();  // blocking
 
 protected:
-	void keyboard_event(unsigned char key, int x, int y);
-	void keyboard_up_event(unsigned char key, int x, int y);
-	void special_event(int key, int x, int y);
-	void special_up_event(int key, int x, int y);
-	void reshape_event(int w, int h);
-	void idle();
-	void mouse_event(int button, int state, int x, int y);
-	void motion_event(int x, int y);
-	void display();
+	static glut_app & ref();
+	void keyboard_event(unsigned char key, int x, int y) {}
+	void keyboard_up_event(unsigned char key, int x, int y) {}
+	void special_event(int key, int x, int y) {}
+	void special_up_event(int key, int x, int y) {}
+	void reshape_event(int w, int h) {}
+	void idle() {}
+	void mouse_event(int button, int state, int x, int y) {}
+	void motion_event(int x, int y) {}
+	void display() {}
 
 private:
 	static void keyboard_cb(unsigned char key, int x, int y);
@@ -267,7 +269,50 @@ private:
 	static void mouse_cb(int button, int state, int x, int y);
 	static void motion_cb(int x, int y);
 	static void display_cb();
+
+	static glut_app * _app;
 };
+
+glut_app * glut_app::_app = nullptr;
+
+glut_app::glut_app(int argc, char * argv[])
+{
+	assert(_app == nullptr);
+	_app = this;
+
+	char const * title = "glut window";
+	constexpr int width = 800,
+		height = 600;
+
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGBA|GLUT_DEPTH);
+	glutInitWindowPosition(0, 0);
+	glutInitWindowSize(width, height);
+	glutCreateWindow(title);
+	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
+
+	glutKeyboardFunc(keyboard_cb);
+	glutKeyboardUpFunc(keyboard_up_cb);
+	glutSpecialFunc(special_cb);
+	glutSpecialUpFunc(special_up_cb);
+	glutReshapeFunc(reshape_cb);
+	glutIdleFunc(idle_cb);
+	glutMouseFunc(mouse_cb);
+	glutPassiveMotionFunc(motion_cb);
+	glutMotionFunc(motion_cb);
+	glutDisplayFunc(display_cb);
+}
+
+void glut_app::go()
+{
+	glutMainLoop();
+}
+
+glut_app & glut_app::ref()
+{
+	assert(_app);
+	return *_app;
+}
 
 void glut_app::keyboard_cb(unsigned char key, int x, int y)
 {
@@ -359,8 +404,8 @@ int main(int argc, char * argv[])
 
 	cout << "done!" << std::endl;
 
-	gui::glut_app::ref()
-		.go();
+	gui::glut_app app{argc, argv};
+	app.go();
 
 	return 0;
 }

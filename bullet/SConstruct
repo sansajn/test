@@ -6,7 +6,8 @@ dependencies = [
 ]
 
 def build():
-	cpp17 = Environment(CCFLAGS=['-std=c++17', '-Wall', '-O0', '-g'])
+	cpp17 = Environment(CCFLAGS=['-std=c++17', '-Wall', '-O0', '-g'],
+		LIBS=['glut'])
 
 	cpp17 = configure(cpp17, dependencies)
 
