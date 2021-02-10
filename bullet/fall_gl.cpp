@@ -1,4 +1,4 @@
-//! hello sample with word an body physics abstractions
+//! OpenGL visualized fall sample
 #include <algorithm>
 #include <memory>
 #include <utility>
@@ -9,6 +9,7 @@
 #include <boost/range/iterator_range.hpp>
 #include <bullet/btBulletDynamicsCommon.h>
 #include <bullet/BulletCollision/btBulletCollisionCommon.h>
+#include "DebugDrawer.h"
 
 using std::find;
 using std::unique_ptr, std::make_unique;
@@ -88,6 +89,8 @@ private:
 
 	collision_pairs _last_collisions;
 	std::vector<collision_listener *> _collision_listeners;
+
+	std::unique_ptr<DebugDrawer> _ddraw;
 };
 
 btVector3 calculate_local_inertia(btCollisionShape & shape, btScalar mass)
@@ -114,7 +117,12 @@ btVector3 const & body::position() const
 world::world()
 	: _dispatcher{&_config}
 	, _world{&_dispatcher, &_pair_cache, &_solver, &_config}
-{}
+{
+	_ddraw.reset(new DebugDrawer);
+	_ddraw->ToggleDebugFlag(btIDebugDraw::DBG_DrawWireframe);
+	_ddraw->ToggleDebugFlag(btIDebugDraw::DBG_DrawAabb);
+	_world.setDebugDrawer(_ddraw.get());
+}
 
 void world::add_body(body * b)
 {
@@ -230,6 +238,85 @@ private:
 	bool _done;
 };
 
+namespace gui {
+
+class glut_app
+{
+public:
+	static glut_app & ref();
+	void go();  // blocking
+
+protected:
+	void keyboard_event(unsigned char key, int x, int y);
+	void keyboard_up_event(unsigned char key, int x, int y);
+	void special_event(int key, int x, int y);
+	void special_up_event(int key, int x, int y);
+	void reshape_event(int w, int h);
+	void idle();
+	void mouse_event(int button, int state, int x, int y);
+	void motion_event(int x, int y);
+	void display();
+
+private:
+	static void keyboard_cb(unsigned char key, int x, int y);
+	static void keyboard_up_cb(unsigned char key, int x, int y);
+	static void special_cb(int key, int x, int y);
+	static void special_up_cb(int key, int x, int y);
+	static void reshape_cb(int w, int h);
+	static void idle_cb();
+	static void mouse_cb(int button, int state, int x, int y);
+	static void motion_cb(int x, int y);
+	static void display_cb();
+};
+
+void glut_app::keyboard_cb(unsigned char key, int x, int y)
+{
+	glut_app::ref().keyboard_event(key, x, y);
+}
+
+void glut_app::keyboard_up_cb(unsigned char key, int x, int y)
+{
+	glut_app::ref().keyboard_up_event(key, x, y);
+}
+
+void glut_app::special_cb(int key, int x, int y)
+{
+	glut_app::ref().special_event(key, x, y);
+}
+
+void glut_app::special_up_cb(int key, int x, int y)
+{
+	glut_app::ref().special_up_event(key, x, y);
+}
+
+void glut_app::reshape_cb(int w, int h)
+{
+	glut_app::ref().reshape_event(w, h);
+}
+
+void glut_app::idle_cb()
+{
+	glut_app::ref().idle();
+}
+
+void glut_app::mouse_cb(int button, int state, int x, int y)
+{
+	glut_app::ref().mouse_event(button, state, x, y);
+}
+
+void glut_app::motion_cb(int x, int y)
+{
+	glut_app::ref().motion_event(x, y);
+}
+
+void glut_app::display_cb()
+{
+	glut_app::ref().display();
+}
+
+}  // gui
+
+
 int main(int argc, char * argv[])
 {
 	//! initialization
@@ -271,6 +358,9 @@ int main(int argc, char * argv[])
 	}
 
 	cout << "done!" << std::endl;
+
+	gui::glut_app::ref()
+		.go();
 
 	return 0;
 }
