@@ -15,7 +15,8 @@
 using std::find;
 using std::unique_ptr, std::make_unique;
 using std::move, std::make_pair;
-using std::chrono::milliseconds, std::chrono::duration, std::chrono::duration_cast;
+using std::chrono::milliseconds, std::chrono::duration, std::chrono::duration_cast,
+	std::chrono::steady_clock;
 using namespace std::chrono_literals;
 using std::size;
 using std::cout, std::endl, std::ostream;
@@ -254,10 +255,12 @@ protected:
 	void special_event(int key, int x, int y) {}
 	void special_up_event(int key, int x, int y) {}
 	void reshape_event(int w, int h) {}
-	void idle() {}
 	void mouse_event(int button, int state, int x, int y) {}
 	void motion_event(int x, int y) {}
+	void initialize();
 	void display() {}
+	void update(steady_clock::duration const & dt) {}
+	void idle();
 
 private:
 	static void keyboard_cb(unsigned char key, int x, int y);
@@ -275,6 +278,53 @@ private:
 
 glut_app * glut_app::_app = nullptr;
 
+void glut_app::idle()
+{
+	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+	steady_clock::time_point now = steady_clock::now();
+	static steady_clock::time_point t0 = now;
+	steady_clock::duration dt = now - t0;
+	t0 = now;
+
+	update(dt);
+
+	glutSwapBuffers();
+}
+
+void glut_app::initialize()
+{
+	// create some floats for our ambient, diffuse, specular and position
+	GLfloat ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f }; // dark grey
+	GLfloat diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f }; // white
+	GLfloat specular[] = { 1.0f, 1.0f, 1.0f, 1.0f }; // white
+	GLfloat position[] = { 5.0f, 10.0f, 1.0f, 0.0f };
+
+	// set the ambient, diffuse, specular and position for LIGHT0
+	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+	glLightfv(GL_LIGHT0, GL_POSITION, position);
+
+	glEnable(GL_LIGHTING); // enables lighting
+	glEnable(GL_LIGHT0); // enables the 0th light
+	glEnable(GL_COLOR_MATERIAL); // colors materials when lighting is enabled
+
+	// enable specular lighting via materials
+	glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+	glMateriali(GL_FRONT, GL_SHININESS, 15);
+
+	// enable smooth shading
+	glShadeModel(GL_SMOOTH);
+
+	// enable depth testing to be 'less than'
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+
+	// set the backbuffer clearing color to a lightish blue
+	glClearColor(0.6, 0.65, 0.85, 0);
+}
+
 glut_app::glut_app(int argc, char * argv[])
 {
 	assert(_app == nullptr);
@@ -290,6 +340,8 @@ glut_app::glut_app(int argc, char * argv[])
 	glutInitWindowSize(width, height);
 	glutCreateWindow(title);
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
+
+	initialize();
 
 	glutKeyboardFunc(keyboard_cb);
 	glutKeyboardUpFunc(keyboard_up_cb);
