@@ -240,7 +240,7 @@ private:
 	bool _done;
 };
 
-namespace gui {
+namespace ui {
 
 class glut_app
 {
@@ -250,17 +250,18 @@ public:
 
 protected:
 	static glut_app & ref();
-	void keyboard_event(unsigned char key, int x, int y) {}
-	void keyboard_up_event(unsigned char key, int x, int y) {}
-	void special_event(int key, int x, int y) {}
-	void special_up_event(int key, int x, int y) {}
-	void reshape_event(int w, int h) {}
-	void mouse_event(int button, int state, int x, int y) {}
-	void motion_event(int x, int y) {}
-	void initialize();
-	void display() {}
-	void update(steady_clock::duration const & dt) {}
-	void idle();
+
+	virtual void initialize();
+	virtual void update(steady_clock::duration const & dt) {}
+	virtual void render() {}
+	virtual void idle();
+	virtual void reshape(int w, int h);
+	virtual void keyboard_event(unsigned char key, int x, int y) {}
+	virtual void keyboard_up_event(unsigned char key, int x, int y) {}
+	virtual void special_event(int key, int x, int y) {}
+	virtual void special_up_event(int key, int x, int y) {}
+	virtual void mouse_event(int button, int state, int x, int y) {}
+	virtual void motion_event(int x, int y) {}
 
 private:
 	static void keyboard_cb(unsigned char key, int x, int y);
@@ -273,6 +274,7 @@ private:
 	static void motion_cb(int x, int y);
 	static void display_cb();
 
+	int _w, _h;
 	static glut_app * _app;
 };
 
@@ -288,6 +290,8 @@ void glut_app::idle()
 	t0 = now;
 
 	update(dt);
+
+	render();
 
 	glutSwapBuffers();
 }
@@ -360,6 +364,13 @@ void glut_app::go()
 	glutMainLoop();
 }
 
+void glut_app::reshape(int w, int h)
+{
+	_w = w;
+	_h = h;
+	glViewport(0, 0, _w, _h);
+}
+
 glut_app & glut_app::ref()
 {
 	assert(_app);
@@ -388,7 +399,7 @@ void glut_app::special_up_cb(int key, int x, int y)
 
 void glut_app::reshape_cb(int w, int h)
 {
-	glut_app::ref().reshape_event(w, h);
+	glut_app::ref().reshape(w, h);
 }
 
 void glut_app::idle_cb()
@@ -408,10 +419,73 @@ void glut_app::motion_cb(int x, int y)
 
 void glut_app::display_cb()
 {
-	glut_app::ref().display();
+	glut_app::ref().render();
 }
 
-}  // gui
+}  // ui
+
+class bullet_app : public ui::glut_app
+{
+public:
+	bullet_app(int argc, char * argv[]);
+
+	void update(steady_clock::duration const & dt) override;
+	void render() override {}
+	void reshape(int w, int h) override;
+
+private:
+	void update_camera() {}
+
+	physics::world _world;
+	physics::body _ground,
+		_sphere;
+	collision_handler _impact_event;
+
+	bool _impact = false;
+	steady_clock::duration _t_impact = 0s;
+};
+
+bullet_app::bullet_app(int argc, char * argv[])
+	: ui::glut_app{argc, argv}
+	, _ground{make_unique<btBoxShape>(btVector3{50, 50, 50}), translate(btVector3{0, -56, 0}), 0}
+	, _sphere{make_unique<btSphereShape>(1), translate(btVector3{2, 10, 0}), 1}
+	, _impact_event{&_ground, &_sphere}
+{
+	_world.native().setGravity(btVector3{0, -10, 0});
+	_world.add_body(&_ground);
+	_world.add_body(&_sphere);
+	_world.subscribe_collisions(&_impact_event);
+}
+
+
+void bullet_app::update(steady_clock::duration const & dt)
+{
+	ui::glut_app::update(dt);
+
+	// update scene there ...
+	_world.simulate(duration_cast<duration<btScalar>>(dt).count());
+
+	// impact detection
+	if (!_impact && _impact_event.finished())
+	{
+		cout << "ball hits ground in "
+			<< duration_cast<duration<double>>(_t_impact).count() << "s\n";
+
+		cout << "at " << _sphere.position() << " position\n";
+
+		_impact = true;
+	}
+	else
+		_t_impact += dt;
+
+	update_camera();
+}
+
+void bullet_app::reshape(int w, int h)
+{
+	ui::glut_app::reshape(w, h);
+	update_camera();
+}
 
 
 int main(int argc, char * argv[])
@@ -456,7 +530,7 @@ int main(int argc, char * argv[])
 
 	cout << "done!" << std::endl;
 
-	gui::glut_app app{argc, argv};
+	bullet_app app{argc, argv};
 	app.go();
 
 	return 0;
