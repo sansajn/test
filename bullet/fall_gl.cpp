@@ -247,6 +247,8 @@ class glut_app
 public:
 	glut_app(int argc, char * argv[]);
 	void go();  // blocking
+	int width() const {return _w;}
+	int height() const {return _h;}
 
 protected:
 	static glut_app & ref();
@@ -428,33 +430,162 @@ class bullet_app : public ui::glut_app
 {
 public:
 	bullet_app(int argc, char * argv[]);
+	~bullet_app();
 
 	void update(steady_clock::duration const & dt) override;
 	void render() override {}
 	void reshape(int w, int h) override;
 
 private:
-	void update_camera() {}
+	void keyboard_event(unsigned char key, int x, int y) override;
+
+	void update_camera();
+	void zoom_camera(float distance);
 
 	physics::world _world;
 	physics::body _ground,
 		_sphere;
 	collision_handler _impact_event;
+	DebugDrawer * _ddraw;
 
 	bool _impact = false;
 	steady_clock::duration _t_impact = 0s;
+
+	// camera stuff
+	btVector3 m_cameraPosition; // the camera's current position
+	btVector3 m_cameraTarget;	 // the camera's lookAt target
+	float m_nearPlane; // minimum distance the camera will render
+	float m_farPlane; // farthest distance the camera will render
+	btVector3 m_upVector; // keeps the camera rotated correctly
+	float m_cameraDistance; // distance from the camera to its target
+	float m_cameraPitch; // pitch of the camera
+	float m_cameraYaw; // yaw of the camera
 };
+
+// Some constants for 3D math and the camera speed
+#define RADIANS_PER_DEGREE 0.01745329f
+#define CAMERA_STEP_SIZE 5.0f
+
+void bullet_app::keyboard_event(unsigned char key, int x, int y)
+{
+	switch (key)
+	{
+	case 'z': zoom_camera(+CAMERA_STEP_SIZE); break;
+	case 'x': zoom_camera(-CAMERA_STEP_SIZE); break;
+	}
+}
+
+void bullet_app::zoom_camera(float distance)
+{
+	// change the distance value
+	m_cameraDistance -= distance;
+	// prevent it from zooming in too far
+	if (m_cameraDistance < 0.1f) m_cameraDistance = 0.1f;
+	// update the camera since we changed the zoom distance
+	update_camera();
+}
+
+void bullet_app::update_camera()
+{
+	// handlig camera with bullet math
+
+	// exit in erroneous situations
+	if (width() == 0 && height() == 0)
+		return;
+
+	// select the projection matrix
+	glMatrixMode(GL_PROJECTION);
+	// set it to the matrix-equivalent of 1
+	glLoadIdentity();
+	// determine the aspect ratio of the screen
+	float aspectRatio = width() / (float)height();
+	// create a viewing frustum based on the aspect ratio and the
+	// boundaries of the camera
+	glFrustum (-aspectRatio * m_nearPlane, aspectRatio * m_nearPlane, -m_nearPlane, m_nearPlane, m_nearPlane, m_farPlane);
+	// the projection matrix is now set
+
+	// select the view matrix
+	glMatrixMode(GL_MODELVIEW);
+	// set it to '1'
+	glLoadIdentity();
+
+	// our values represent the angles in degrees, but 3D
+	// math typically demands angular values are in radians.
+	float pitch = m_cameraPitch * RADIANS_PER_DEGREE;
+	float yaw = m_cameraYaw * RADIANS_PER_DEGREE;
+
+	// create a quaternion defining the angular rotation
+	// around the up vector
+	btQuaternion rotation(m_upVector, yaw);
+
+	// set the camera's position to 0,0,0, then move the 'z'
+	// position to the current value of m_cameraDistance.
+	btVector3 cameraPosition(0,0,0);
+	cameraPosition[2] = -m_cameraDistance;
+
+	// create a Bullet Vector3 to represent the camera
+	// position and scale it up if its value is too small.
+	btVector3 forward(cameraPosition[0], cameraPosition[1], cameraPosition[2]);
+	if (forward.length2() < SIMD_EPSILON) {
+		forward.setValue(1.f,0.f,0.f);
+	}
+
+	// figure out the 'right' vector by using the cross
+	// product on the 'forward' and 'up' vectors
+	btVector3 right = m_upVector.cross(forward);
+
+	// create a quaternion that represents the camera's roll
+	btQuaternion roll(right, - pitch);
+
+	// turn the rotation (around the Y-axis) and roll (around
+	// the forward axis) into transformation matrices and
+	// apply them to the camera position. This gives us the
+	// final position
+	cameraPosition = btMatrix3x3(rotation) * btMatrix3x3(roll) * cameraPosition;
+
+	// save our new position in the member variable, and
+	// shift it relative to the target position (so that we
+	// orbit it)
+	m_cameraPosition[0] = cameraPosition.getX();
+	m_cameraPosition[1] = cameraPosition.getY();
+	m_cameraPosition[2] = cameraPosition.getZ();
+	m_cameraPosition += m_cameraTarget;
+
+	// create a view matrix based on the camera's position and where it's
+	// looking
+	gluLookAt(m_cameraPosition[0], m_cameraPosition[1], m_cameraPosition[2], m_cameraTarget[0], m_cameraTarget[1], m_cameraTarget[2], m_upVector.getX(), m_upVector.getY(), m_upVector.getZ());
+	// the view matrix is now set
+}
+
 
 bullet_app::bullet_app(int argc, char * argv[])
 	: ui::glut_app{argc, argv}
 	, _ground{make_unique<btBoxShape>(btVector3{50, 50, 50}), translate(btVector3{0, -56, 0}), 0}
 	, _sphere{make_unique<btSphereShape>(1), translate(btVector3{2, 10, 0}), 1}
 	, _impact_event{&_ground, &_sphere}
+	, m_cameraPosition(10.0f, 5.0f, 0.0f)
+	, m_cameraTarget(0.0f, 0.0f, 0.0f)
+	, m_nearPlane(1.0f)
+	, m_farPlane(1000.0f)
+	, m_upVector(0.0f, 1.0f, 0.0f)
+	, m_cameraDistance(15.0f)
+	, m_cameraPitch(20.0f)
+	, m_cameraYaw(0.0f)
 {
 	_world.native().setGravity(btVector3{0, -10, 0});
 	_world.add_body(&_ground);
 	_world.add_body(&_sphere);
 	_world.subscribe_collisions(&_impact_event);
+	_ddraw = new DebugDrawer{};
+	_ddraw->ToggleDebugFlag(btIDebugDraw::DBG_DrawWireframe);
+	_ddraw->ToggleDebugFlag(btIDebugDraw::DBG_DrawAabb);
+	_world.native().setDebugDrawer(_ddraw);
+}
+
+bullet_app::~bullet_app()
+{
+	_world.native().setDebugDrawer(nullptr);
+	delete _ddraw;
 }
 
 
