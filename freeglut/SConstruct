@@ -1,10 +1,13 @@
-env = Environment(
+cpp17 = Environment(
 	CCFLAGS=['-Wall', '-g', '-O0'],
-	CPPFLAGS=['-std=c++11'],
+	CPPFLAGS=['-std=c++17'],
 	LIBS=['glut'])
 
-env.ParseConfig('pkg-config --libs --cflags glew')
+cpp17.ParseConfig('pkg-config --libs --cflags glew')
 
-env.Program('simple_window.cpp')
-env.Program('window_layer.cpp')
-env.Program('window_user_input.cpp')
+cpp17.Program('simple_window.cpp')
+cpp17.Program('window_layer.cpp')
+cpp17.Program('window_user_input.cpp')
+
+# glut only
+cpp17.Program('solid_objects.cpp')
