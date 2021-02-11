@@ -560,7 +560,7 @@ void bullet_app::update_camera()
 
 bullet_app::bullet_app(int argc, char * argv[])
 	: ui::glut_app{argc, argv}
-	, _ground{make_unique<btBoxShape>(btVector3{50, 50, 50}), translate(btVector3{0, -56, 0}), 0}
+	, _ground{make_unique<btBoxShape>(btVector3(1,50,50)), translate(btVector3(0.0f, 0.0f, 0.0f)), 0}
 	, _sphere{make_unique<btSphereShape>(1), translate(btVector3{2, 10, 0}), 1}
 	, _impact_event{&_ground, &_sphere}
 	, m_cameraPosition(10.0f, 5.0f, 0.0f)
