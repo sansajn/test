@@ -490,46 +490,6 @@ void bullet_app::reshape(int w, int h)
 
 int main(int argc, char * argv[])
 {
-	//! initialization
-	physics::world world;
-	world.native().setGravity(btVector3{0, -10, 0});
-
-	// the ground is a cube of side 100 at position y = -56.
-	physics::body ground{make_unique<btBoxShape>(btVector3{50, 50, 50}),
-		translate(btVector3{0, -56, 0}), 0};
-	world.add_body(&ground);
-
-	// create a dynamic rigidbody (mass > 0)
-	btScalar mass = 1;
-	physics::body sphere{make_unique<btSphereShape>(1), translate(btVector3{2, 10, 0}),
-		mass};
-	world.add_body(&sphere);
-
-	collision_handler impact_event{&ground, &sphere};
-	world.subscribe_collisions(&impact_event);
-
-	milliseconds t_impact = 0ms;
-	milliseconds const time_step = 10ms;
-
-	//! do the simulation
-	for (int i = 0; i < 300; ++i)
-	{
-		world.simulate(time_step.count() / 1000.f, 10);
-		t_impact += time_step;
-
-		if (impact_event.finished())
-		{
-			cout << "ball hits ground in "
-				<< duration_cast<duration<double>>(t_impact).count() << "s\n";
-
-			cout << "at " << sphere.position() << " position\n";
-
-			break;  // impact detected, we are done
-		}
-	}
-
-	cout << "done!" << std::endl;
-
 	bullet_app app{argc, argv};
 	app.go();
 
