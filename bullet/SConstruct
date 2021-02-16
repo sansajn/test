@@ -1,15 +1,21 @@
 # List of pkg-config based library dependencies as (package, version) pair or just package as string (e.g. ('libzmq', '>= 4.3.0') pair or 'libzmq' string).
 dependencies = [
 	('bullet', '>= 2.88'),
+	('gl', '>= 1.2'),
+	('glu', '>= 9.0.1')
 ]
 
 def build():
-	cpp17 = Environment(CCFLAGS=['-std=c++17', '-Wall', '-O0', '-g'])
+	cpp17 = Environment(CCFLAGS=['-std=c++17', '-Wall', '-O0', '-g'],
+		LIBS=['glut'])
 
 	cpp17 = configure(cpp17, dependencies)
 
+	objs = cpp17.Object(['DebugDrawer.cpp'])
+
 	cpp17.Program('hello.cpp')
 	cpp17.Program('fall.cpp')
+	cpp17.Program(['solid_objects.cpp', objs])
 
 
 def configure(env, dependency_list):
