@@ -69,6 +69,9 @@ void BulletOpenGLApplication::Initialize() {
 /*ADD*/		m_pDebugDrawer = new DebugDrawer();
 /*ADD*/		// set the initial debug level to 0
 /*ADD*/		m_pDebugDrawer->setDebugMode(0);
+				m_pDebugDrawer->ToggleDebugFlag(btIDebugDraw::DBG_DrawWireframe);
+				m_pDebugDrawer->ToggleDebugFlag(btIDebugDraw::DBG_DrawAabb);
+
 /*ADD*/		// add the debug drawer to the world
 /*ADD*/		m_pWorld->setDebugDrawer(m_pDebugDrawer);
 }

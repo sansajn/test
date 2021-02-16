@@ -11,9 +11,13 @@ def build():
 
 	cpp17 = configure(cpp17, dependencies)
 
+	objs = cpp17.Object(['DebugDrawer.cpp'])
+
 	cpp17.Program('hello.cpp')
 	cpp17.Program('fall.cpp')
-	cpp17.Program(['fall_gl.cpp', 'DebugDrawer.cpp'])
+	cpp17.Program(['fall_gl.cpp', objs])
+	cpp17.Program(['solid_objects.cpp', objs])
+	cpp17.Program('rotate_func.cpp')
 
 
 def configure(env, dependency_list):
