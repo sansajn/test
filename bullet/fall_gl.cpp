@@ -433,7 +433,7 @@ public:
 	~bullet_app();
 
 	void update(steady_clock::duration const & dt) override;
-	void render() override {}
+	void render() override;
 	void reshape(int w, int h) override;
 
 private:
@@ -461,6 +461,11 @@ private:
 	float m_cameraPitch; // pitch of the camera
 	float m_cameraYaw; // yaw of the camera
 };
+
+void bullet_app::render()
+{
+	_world.native().debugDrawWorld();
+}
 
 // Some constants for 3D math and the camera speed
 #define RADIANS_PER_DEGREE 0.01745329f
@@ -556,7 +561,6 @@ void bullet_app::update_camera()
 	gluLookAt(m_cameraPosition[0], m_cameraPosition[1], m_cameraPosition[2], m_cameraTarget[0], m_cameraTarget[1], m_cameraTarget[2], m_upVector.getX(), m_upVector.getY(), m_upVector.getZ());
 	// the view matrix is now set
 }
-
 
 bullet_app::bullet_app(int argc, char * argv[])
 	: ui::glut_app{argc, argv}
