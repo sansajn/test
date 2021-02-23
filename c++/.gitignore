@@ -30,3 +30,6 @@
 /uniqueptr_func
 /promise_future
 /range_filter_transform
+/range_keyval
+/range_composition
+/range_iota
