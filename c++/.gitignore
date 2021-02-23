@@ -34,3 +34,5 @@
 /range_composition
 /range_iota
 /async
+/packaged_t
+/promise_and_future
