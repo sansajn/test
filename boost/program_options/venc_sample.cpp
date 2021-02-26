@@ -1,5 +1,5 @@
 /*! video encoder like commandline processing sample
-venc [--encoder h264|vp8, =h264][--verbose][--log PATH][--output,o PATH] [--input]INPUT */
+venc [--encoder h264|vp8, =h264][--verbose][--log PATH][--output,o PATH][--help] [--input]INPUT */
 
 #include <string>
 #include <iostream>
@@ -32,15 +32,14 @@ int main(int argc, char * argv[])
 	po::positional_options_description pos_opts;  // positional options
 	pos_opts.add("input", 1);
 
-	po::options_description cmd_opts;
-	cmd_opts.add(opts).add(hidden_opts);
-
 	po::options_description visible_opts{"Options"};  // to generate help message
 	visible_opts.add(opts);
 
-	po::variables_map args;
+	po::options_description cmd_opts;  // parsed options
+	cmd_opts.add(opts).add(hidden_opts);
 
-	// process arguments
+	// parse arguments
+	po::variables_map args;
 	po::store(po::command_line_parser{argc, argv}
 		.options(cmd_opts)
 		.positional(pos_opts)
