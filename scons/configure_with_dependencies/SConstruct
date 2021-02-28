@@ -1,6 +1,6 @@
 # automated pkg-config based dependencies with version check 
 
-# List of pkg-config based library dependencies as (package, version) pair or just package as string (e.g. ('libzmq', '>= 4.3.0') pair or 'libzmq' string).
+# List of pkg-config based library dependencies as (library, version) pair or just package as string (e.g. ('libzmq', '>= 4.3.0') pair or 'libzmq' string).
 dependencies = [
 	('glm', '>= 0.9.9.5')
 ]
