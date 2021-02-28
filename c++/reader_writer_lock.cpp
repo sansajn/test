@@ -13,14 +13,14 @@ using std::vector;
 using std::cout, std::endl;
 using namespace std::chrono_literals;
 
-shared_mutex _locker;
+shared_mutex content_locker;
 
 void reader(char initial) 
 {
 	for (int i = 0; i < 10; ++i)
 	{
 		{
-			shared_lock lock{_locker};
+			shared_lock lock{content_locker};
 			std::this_thread::sleep_for(2ms);
 			cout << initial;
 		}
@@ -34,7 +34,7 @@ void writer(vector<string_view> const & text)
 	for (string_view const & w : text)
 	{
 		{
-			unique_lock lock{_locker};  // whole world needs to be written without interruption
+			unique_lock lock{content_locker};  // whole world needs to be written without an interruption
 			for (auto ch : w)
 			{
 				std::this_thread::sleep_for(2ms);
