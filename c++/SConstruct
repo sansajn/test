@@ -67,6 +67,7 @@ cpp17.Program('async.cpp')
 cpp17.Program('packaged_t.cpp')
 cpp17.Program('promise_and_future.cpp')
 cpp20.Program('jthread_hello.cpp')
+cpp17.Program('reader_writer_lock.cpp')
 
 # ranges (c++20)
 cpp20.Program('range_filter_transform.cpp')
