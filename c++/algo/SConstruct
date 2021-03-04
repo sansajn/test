@@ -1,0 +1,13 @@
+cpp20 = Environment(
+	CXXFLAGS=['-std=c++20'], 
+	CCFLAGS=['-Wall', '-g', '-O0'])
+
+cpp20.Program('reverse.cpp')
+cpp20.Program('transform.cpp')
+cpp20.Program('partition.cpp')
+cpp20.Program('nth_element.cpp')
+cpp20.Program('sorted_squares.cpp')
+cpp20.Program('repeated_2_times.cpp')
+cpp20.Program('binary_search.cpp')
+cpp20.Program('search_rotated.cpp')
+cpp20.Program('reverse_only_letters.cpp')
