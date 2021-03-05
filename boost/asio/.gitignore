@@ -17,3 +17,6 @@
 /post
 /interrupt_handling
 /test-boost-asio.*
+/post_with_result
+/athread
+/asio_loop
