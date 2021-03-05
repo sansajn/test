@@ -1,7 +1,7 @@
-env = Environment(
-	CC='clang',
-	CXX='clang++',
-	CXXFLAGS=['-std=c++14', '-Wall'], 
+cpp20 = Environment(
+	#CC='clang',
+	#CXX='clang++',
+	CXXFLAGS=['-std=c++20', '-Wall', '-O0', '-g'], 
 	LIBS=[
 		'boost_filesystem', 
 		'boost_system', 
@@ -11,18 +11,20 @@ env = Environment(
 	]
 )
 
-env.Program('daytime1.cpp')
-env.Program('tcp_sync_echo_client.cpp')
-env.Program('tcp_sync_echo_server.cpp')
-env.Program('deadline_timer.cpp')
-env.Program('simple_timer.cpp')
-env.Program('singlethread_events.cpp')
-env.Program('multithread_events.cpp')
-env.Program('steady_timer.cpp')
-env.Program('endless_run.cpp')
-env.Program('work.cpp')
-env.Program('work_remove.cpp')
-env.Program('service_poll.cpp')
-env.Program('post.cpp')
-env.Program('shutdown.cpp')
-env.Program('interrupt_handling.cpp')
+cpp20.Program('daytime1.cpp')
+cpp20.Program('tcp_sync_echo_client.cpp')
+cpp20.Program('tcp_sync_echo_server.cpp')
+cpp20.Program('deadline_timer.cpp')
+cpp20.Program('simple_timer.cpp')
+cpp20.Program('singlethread_events.cpp')
+cpp20.Program('multithread_events.cpp')
+cpp20.Program('steady_timer.cpp')
+cpp20.Program('endless_run.cpp')
+cpp20.Program('work.cpp')
+cpp20.Program('work_remove.cpp')
+cpp20.Program('service_poll.cpp')
+cpp20.Program('post.cpp')
+cpp20.Program('shutdown.cpp')
+cpp20.Program('interrupt_handling.cpp')
+cpp20.Program('athread.cpp')
+cpp20.Program('post_with_result.cpp')
