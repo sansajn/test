@@ -1,4 +1,4 @@
-// thread with asio loop
+// thread like implementation with asio loop
 #include <thread>
 #include <stop_token>
 #include <future>
