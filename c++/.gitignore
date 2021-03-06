@@ -39,3 +39,4 @@
 /range_primes
 /jthread_hello
 /reader_writer_lock
+/promise_bind
