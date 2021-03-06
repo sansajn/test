@@ -1,5 +1,6 @@
 // thread with asio loop
 #include <thread>
+#include <stop_token>
 #include <future>
 #include <functional>
 #include <vector>
@@ -8,10 +9,9 @@
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/post.hpp>
 
-using std::jthread;
+using std::jthread, std::stop_token;
 using std::future, std::promise, std::async;
-using std::bind;
-using std::move;
+using std::bind, std::move;
 using std::vector;
 using std::cout, std::endl;
 using namespace std::chrono_literals;
@@ -25,7 +25,10 @@ public:
 
 	void async_run()
 	{
-		_th = jthread{[this]{_io.run();}};
+		_th = jthread{[this](stop_token && token){
+			// TODO: use stop_callback there
+			_io.run();
+		}};
 	}
 
 	void stop();
@@ -49,6 +52,10 @@ public:
 
 		return result;
 	}
+
+	// jthread api
+	stop_token get_stop_token() const {return _th.get_stop_token();}
+	bool request_stop() noexcept {return _th.request_stop();}
 
 private:
 	jthread _th;
@@ -92,7 +99,7 @@ class robo_worker
 public:
 	robo_worker(brain & b) : _b{&b} {}
 
-	void operator()()
+	void operator()(stop_token && token)
 	{
 		future<bool> more;
 		do
@@ -104,7 +111,7 @@ public:
 			// need more?
 			more = _b->loop().post_with_result([b = this->_b]{return b->need_more();});
 		}
-		while (more.get());
+		while (!token.stop_requested() && more.get());
 	}
 
 private:
@@ -133,14 +140,16 @@ int main(int argc, char * argv[])
 //	w1();
 //	w2();
 
-	auto u = async(robo_worker{b});
+	auto u = async(robo_worker{b}, b.loop().get_stop_token());
 
 	for (auto & r : results)
 		r.get();
 
 	std::this_thread::sleep_for(500ms);
 
-	b.loop().stop();
+	b.loop().request_stop();
+
+	u.get();  // wait for robo_worker
 
 	cout << "done!\n";
 	return 0;
