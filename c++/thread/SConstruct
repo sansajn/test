@@ -29,6 +29,7 @@ def build():
 	cpp11.Program('hello.cpp')
 
 	cpp20.Program('stop_source.cpp')
+	cpp20.Program('stop_callback.cpp')
 
 
 def configure(env, dependency_list):
