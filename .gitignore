@@ -1,17 +1,16 @@
-// build
+# build fragments
 *.o
 *.a
 *.so
 
-// outputs
+# outputs
 out/
 *.log
-/apply
 
-// scons
+# scons
 .sconsign.dblite
 
-// creator project files
+# project files
 *.creator
 *.creator.user
 *.config
@@ -19,10 +18,13 @@ out/
 *.cflags
 *.cxxflags
 *.includes
+.vscode/
 
-// doc
+# doc
 doc/html/
 
-// os
+# os
 .directory
 
+# binaries
+/apply

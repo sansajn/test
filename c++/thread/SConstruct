@@ -1,16 +1,61 @@
-env = Environment(
-	CXXFLAGS=['-std=c++11', '-Wall', '-g', '-O0'],
-	LIBS=['pthread']
-)
+# dependencies: libmagick++-dev
 
-env.ParseConfig('pkg-config --cflags --libs Magick++')
+# List of pkg-config based library dependencies as (library, version) pair or just package as string (e.g. ('libzmq', '>= 4.3.0') pair or 'libzmq' string).
+dependencies = [
+	('Magick++', '>= 6.9.10')  # can be downgraded for Ubuntu 18.04
+]
 
-#env.Program('condition_var.cpp') 
-env.Program('thread_use.cpp') 
-env.Program('terminate.cpp') 
-env.Program('atomic_counter.cpp') 
-env.Program('lock_in_loop.cpp') 
-env.Program('thread_joinable.cpp')
-env.Program('async.cpp')
-env.Program('async_perlin_noise.cpp')
-env.Program('hello.cpp')
+def build():
+	cpp11 = Environment(
+		CXXFLAGS=['-std=c++11', '-Wall', '-g', '-O0'],
+		LIBS=['pthread'])
+
+	cpp11 = configure(cpp11, dependencies)
+	
+	cpp20 = Environment(
+		CXXFLAGS=['-std=c++20', '-Wall', '-g', '-O0'],
+		LIBS=['pthread'])
+
+	cpp20 = configure(cpp20, dependencies)
+	
+	cpp11.Program('condition_var.cpp') 
+	cpp11.Program('thread_use.cpp') 
+	cpp11.Program('terminate.cpp') 
+	cpp11.Program('atomic_counter.cpp') 
+	cpp11.Program('lock_in_loop.cpp') 
+	cpp11.Program('thread_joinable.cpp')
+	cpp11.Program('async.cpp')
+	cpp11.Program('async_perlin_noise.cpp')
+	cpp11.Program('hello.cpp')
+
+	cpp20.Program('stop_source.cpp')
+
+
+def configure(env, dependency_list):
+	conf = env.Configure(
+		custom_tests={'CheckPkgVersion': check_pkg_version})
+
+	for dep in dependency_list:
+		pkg = ("%s %s" % dep) if type(dep) == tuple else dep
+		if not conf.CheckPkgVersion(pkg):
+			print("'%s' library not found" % pkg)
+			Exit(1)
+
+	conf_env = conf.Finish()
+
+	pkg_conf = 'pkg-config --cflags --libs ' + ' '.join(
+		map(lambda dep: dep[0] if type(dep) == tuple else dep, dependencies))
+
+	conf_env.ParseConfig(pkg_conf)
+
+	return conf_env
+
+def check_pkg_version(context, pkg):
+	"""custom pkg-config based package version check"""
+
+	context.Message("Checking for '%s' library ... " % pkg)
+	res = context.TryAction("pkg-config --exists '%s'" % pkg)[0]
+	context.Result(res)
+	return res
+
+build()

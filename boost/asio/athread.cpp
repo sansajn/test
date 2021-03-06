@@ -2,15 +2,17 @@
 #include <thread>
 #include <future>
 #include <functional>
+#include <vector>
 #include <chrono>
 #include <iostream>
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/post.hpp>
 
-using std::jthread, std::stop_token;
-using std::future, std::promise;
+using std::jthread;
+using std::future, std::promise, std::async;
 using std::bind;
 using std::move;
+using std::vector;
 using std::cout, std::endl;
 using namespace std::chrono_literals;
 namespace asio = boost::asio;
@@ -21,15 +23,17 @@ public:
 	athread() : _idle{_io}
 	{}
 
-	void run()  // async_run ?
+	void async_run()
 	{
 		_th = jthread{[this]{_io.run();}};
 	}
 
+	void stop();
+
 	template <typename F>
-	void post(F && job)
+	void post(F && f)
 	{
-		asio::post(job);
+		asio::post(_io, f);
 	}
 
 	template<typename F>
@@ -50,33 +54,93 @@ private:
 	jthread _th;
 	asio::io_context _io;
 	asio::io_context::work _idle;
-};
+};  // athread
 
 class brain
 {
 public:
-	brain() {_loop.run();}
+	brain() {_loop.async_run();}
 	athread & loop() {return _loop;}
-	void name() {cout << "brain" << endl;}
-	int meaning_of_life() const {return 42;}
+	bool need_more() {return true;}
+	void work_done() {cout << "*" << endl;}
 
 private:
 	athread _loop;
+};
+
+class worker
+{
+public:
+	worker(brain & b) : _b{&b} {}
+
+	void operator()()
+	{
+		// work hard ..., then notify
+		std::this_thread::sleep_for(100ms);
+		_b->loop().post([b = this->_b]{b->work_done();});
+	}
+
+private:
+	brain * _b;
+};
+
+
+// TODO: implement brain_handle safe brain handle
+
+class robo_worker
+{
+public:
+	robo_worker(brain & b) : _b{&b} {}
+
+	void operator()()
+	{
+		future<bool> more;
+		do
+		{
+			// work hard ..., then notify
+			std::this_thread::sleep_for(75ms);
+			_b->loop().post([b = this->_b]{b->work_done();});
+
+			// need more?
+			more = _b->loop().post_with_result([b = this->_b]{return b->need_more();});
+		}
+		while (more.get());
+	}
+
+private:
+	brain * _b;
 };
 
 int main(int argc, char * argv[])
 {
 	brain b;
 
-	b.loop().post([&b]{b.name();});
+//	a.loop().post([&a]{a.say_name();});
 
-	auto answer = b.loop().post_with_result([&b]{
-		return b.meaning_of_life();
-	});
+//	auto answer = a.loop().post_with_result([&a]{
+//		return a.meaning_of_life();
+//	});
 
-	cout << "the answer is " << answer.get() << "\n";
+//	cout << "the answer is " << answer.get() << "\n";
 
-	std::this_thread::sleep_for(1s);
+	vector<future<void>> results;
+	for (int i = 0; i < 3; ++i)
+		results.push_back(async(worker{b}));
+
+	auto r = async(worker{b});
+
+//	worker w1{b}, w2{b};
+//	w1();
+//	w2();
+
+	auto u = async(robo_worker{b});
+
+	for (auto & r : results)
+		r.get();
+
+	std::this_thread::sleep_for(500ms);
+
+	b.loop().stop();
 
 	cout << "done!\n";
 	return 0;
