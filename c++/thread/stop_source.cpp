@@ -8,7 +8,7 @@ using std::stop_source, std::stop_token, std::thread;
 using std::cout, std::endl, std::flush;
 using namespace std::chrono_literals;
 
-void job(stop_token && token)
+void job(stop_token token)
 {
 	while (!token.stop_requested())
 	{

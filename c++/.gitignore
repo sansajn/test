@@ -28,15 +28,8 @@
 /map_insert
 /uniqueptr
 /uniqueptr_func
-/promise_future
 /range_filter_transform
 /range_keyval
 /range_composition
 /range_iota
-/async
-/packaged_t
-/promise_and_future
 /range_primes
-/jthread_hello
-/reader_writer_lock
-/promise_bind

@@ -16,7 +16,7 @@ queue<int> jobs;
 mutex locker;
 condition_variable_any cv;
 
-void worker(stop_token && token)
+void worker(stop_token token)
 {
 	while (true)
 	{

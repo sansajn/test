@@ -1,5 +1,6 @@
-// thread with asio loop
+// thread like implementation with asio loop
 #include <thread>
+#include <stop_token>
 #include <future>
 #include <functional>
 #include <vector>
@@ -8,12 +9,11 @@
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/post.hpp>
 
-using std::jthread;
+using std::jthread, std::stop_token, std::stop_callback;
 using std::future, std::promise, std::async;
-using std::bind;
-using std::move;
+using std::bind, std::move;
 using std::vector;
-using std::cout, std::endl;
+using std::cout, std::endl, std::flush;
 using namespace std::chrono_literals;
 namespace asio = boost::asio;
 
@@ -25,7 +25,13 @@ public:
 
 	void async_run()
 	{
-		_th = jthread{[this]{_io.run();}};
+		_th = jthread{[this](stop_token st){
+			stop_callback stop_cb{st, [this]{
+				_io.stop();
+			}};
+
+			_io.run();
+		}};
 	}
 
 	void stop();
@@ -50,6 +56,10 @@ public:
 		return result;
 	}
 
+	// jthread api
+	[[nodiscard]] stop_token get_stop_token() const noexcept {return _th.get_stop_token();}
+	bool request_stop() noexcept {return _th.request_stop();}
+
 private:
 	jthread _th;
 	asio::io_context _io;
@@ -62,7 +72,7 @@ public:
 	brain() {_loop.async_run();}
 	athread & loop() {return _loop;}
 	bool need_more() {return true;}
-	void work_done() {cout << "*" << endl;}
+	void work_done() {cout << "*"; flush(cout);}
 
 private:
 	athread _loop;
@@ -84,15 +94,12 @@ private:
 	brain * _b;
 };
 
-
-// TODO: implement brain_handle safe brain handle
-
 class robo_worker
 {
 public:
 	robo_worker(brain & b) : _b{&b} {}
 
-	void operator()()
+	void operator()(stop_token st)
 	{
 		future<bool> more;
 		do
@@ -104,7 +111,7 @@ public:
 			// need more?
 			more = _b->loop().post_with_result([b = this->_b]{return b->need_more();});
 		}
-		while (more.get());
+		while (!st.stop_requested() && more.get());
 	}
 
 private:
@@ -115,33 +122,27 @@ int main(int argc, char * argv[])
 {
 	brain b;
 
-//	a.loop().post([&a]{a.say_name();});
-
-//	auto answer = a.loop().post_with_result([&a]{
-//		return a.meaning_of_life();
-//	});
-
-//	cout << "the answer is " << answer.get() << "\n";
-
 	vector<future<void>> results;
 	for (int i = 0; i < 3; ++i)
 		results.push_back(async(worker{b}));
 
 	auto r = async(worker{b});
 
-//	worker w1{b}, w2{b};
-//	w1();
-//	w2();
+	worker w1{b}, w2{b};
+	w1();
+	w2();
 
-	auto u = async(robo_worker{b});
+	auto u = async(robo_worker{b}, b.loop().get_stop_token());
 
 	for (auto & r : results)
 		r.get();
 
 	std::this_thread::sleep_for(500ms);
 
-	b.loop().stop();
+	b.loop().request_stop();
 
-	cout << "done!\n";
+	u.get();  // wait for robo_worker
+
+	cout << "\ndone!\n";
 	return 0;
 }

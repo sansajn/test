@@ -16,7 +16,7 @@ queue<int> jobs;
 mutex locker;
 condition_variable cv;
 
-void worker(stop_token && token)
+void worker(stop_token token)
 {
 	stop_callback cb{token, []{
 		cv.notify_all();
