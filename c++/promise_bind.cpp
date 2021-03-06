@@ -19,7 +19,12 @@ auto foo(F && f) -> future<decltype(f())>
 	future<result_type> result = p.get_future();
 
 	thread{[result = move(p), fce = move(f)]() mutable {
-		result.set_value(fce());
+		try {
+			result.set_value(fce());
+		}
+		catch (...) {
+			result.set_exception(std::current_exception());
+		}
 	}}.detach();
 
 	return result;
