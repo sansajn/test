@@ -1,4 +1,5 @@
 # dependencies: libmagick++-dev
+import os
 
 # List of pkg-config based library dependencies as (library, version) pair or just package as string (e.g. ('libzmq', '>= 4.3.0') pair or 'libzmq' string).
 dependencies = [
@@ -16,6 +17,10 @@ def build():
 		CXXFLAGS=['-std=c++20', '-Wall', '-g', '-O0'],
 		LIBS=['pthread'])
 
+	if 'TERM' in os.environ:
+		cpp11['ENV']['TERM'] = os.environ['TERM']
+		cpp20['ENV']['TERM'] = os.environ['TERM']
+
 	cpp20 = configure(cpp20, dependencies)
 	
 	cpp11.Program('condition_var.cpp') 
@@ -28,10 +33,15 @@ def build():
 	cpp11.Program('async_perlin_noise.cpp')
 	cpp11.Program('hello.cpp')
 
+	cpp20.Program('promise_future.cpp')
+	cpp20.Program('async2.cpp')
+	cpp20.Program('packaged_t.cpp')
+	cpp20.Program('promise_and_future.cpp')
+	cpp20.Program('reader_writer_lock.cpp')
 	cpp20.Program('stop_source.cpp')
 	cpp20.Program('stop_callback.cpp')
 	cpp20.Program('condition_variable_any.cpp')
-
+	cpp20.Program('promise_bind.cpp')
 
 def configure(env, dependency_list):
 	conf = env.Configure(
