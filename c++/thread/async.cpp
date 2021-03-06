@@ -1,22 +1,31 @@
-// pouzitie std::async funkcie
+// async() sample (at least C++11 required)
 #include <future>
-#include <thread>
+#include <vector>
 #include <iostream>
-
-using std::future;
-using std::async;
+using std::vector;
+using std::async, std::future;
 using std::cout;
+
+int meaning_of_life()
+{
+	return 42;
+}
 
 int main(int argc, char * argv[])
 {
-	future<int> result{async(
-		[](int m, int n){
-			return m+n;
-		}, 
-	2, 4)};
+	// run one worker
+	future<int> answer = async(meaning_of_life);
+	cout << "The answer is " << answer.get() << "\n";
+	
+	// run more workers
+	vector<future<int>> results;
+	for (int i = 0; i< 5; ++i)
+		results.push_back(async(meaning_of_life));
 
-	cout << "message from main" << std::endl;
-	cout << result.get() << std::endl;
+	for (auto & r : results)
+		cout << r.get() << ", ";
+	cout << "\n";
 
+	cout << "done!\n";
 	return 0;
 }
