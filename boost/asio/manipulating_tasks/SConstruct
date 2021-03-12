@@ -1,0 +1,20 @@
+cpp11 = Environment(
+	CXXFLAGS=['-std=c++11', '-Wall', '-O0', '-g'], 
+	LIBS=[
+		'boost_filesystem', 
+		'boost_system', 
+		'boost_thread',
+		'boost_chrono',
+		'pthread'
+	]
+)
+    
+cpp11.Program('functor_as_task.cpp')
+cpp11.Program('timed_tasks.cpp')
+cpp11.Program('network_as_task.cpp')
+# ...
+cpp11.Program('multithread_tasks.cpp')
+cpp11.Program('conveyor.cpp')
+cpp11.Program('nonblocking_barrier.cpp')
+cpp11.Program('exception_task.cpp')
+cpp11.Program('system_signals.cpp')
