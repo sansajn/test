@@ -20,3 +20,6 @@
 /post_with_result
 /athread
 /asio_loop
+/async_loop
+/async_file
+/async_websocket
