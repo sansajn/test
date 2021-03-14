@@ -1,4 +1,4 @@
-// safe_dump_to() sample
+// the only safe way to process dump is to save it to file with `safe_dump_to()` function
 #include <fstream>
 #include <iostream>
 #include <exception>

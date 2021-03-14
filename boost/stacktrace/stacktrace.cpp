@@ -2,16 +2,19 @@
 #include <iostream>
 #include <boost/stacktrace.hpp>
 
-using std::cout;
+using std::cout, std::endl;
 
-void foo()
+struct foo
 {
-	cout << boost::stacktrace::stacktrace{} << "\n";
-}
+	void test() {
+		cout << boost::stacktrace::stacktrace{} << endl;
+	}
+};
 
 void goo()
 {
-	foo();
+	foo f;
+	f.test();
 }
 
 int main(int argc, char * argv[])
