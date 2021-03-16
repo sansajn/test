@@ -10,8 +10,6 @@ cpp17 = Environment(
 	],
 	LINKFLAGS=[
 		'-rdynamic', 
-		#'-no-pie', 
-		#'-fno-pie'
 	],
 	CPPDEFINES=[
 		"BOOST_STACKTRACE_USE_BACKTRACE",

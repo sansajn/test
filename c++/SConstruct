@@ -59,6 +59,8 @@ cpp14.Program('avoid_hierarchy.cpp')
 
 cpp17.Program('uniqueptr.cpp')
 cpp17.Program('uniqueptr_func.cpp')
+cpp20.Program('system_handle.cpp')
+
 
 # ranges (c++20)
 cpp20.Program('range_filter_transform.cpp')
