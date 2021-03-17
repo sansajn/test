@@ -1,0 +1,14 @@
+#!/bin/bash
+
+COVERAGE_REPORT_PATH=coverage_report
+
+mkdir -p ${COVERAGE_REPORT_PATH}
+
+# run tests
+./test
+
+# then create human readable HTML report
+gcovr -r . --html-details -o ${COVERAGE_REPORT_PATH}/index.html
+
+# clean up
+find  . -depth -type f -name '*.gcda' -exec rm '{}' ';'

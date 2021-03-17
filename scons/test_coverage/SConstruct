@@ -1,0 +1,11 @@
+# generate test coverage
+AddOption('--test-coverage', action='store_true', dest='test_coverage', help='enable test coverage analyze (with gcov)', default=False)
+
+env = Environment(CCFLAGS=['-g', '-O0', '-Wall'])
+
+if GetOption('test_coverage'):
+	# https://gcc.gnu.org/onlinedocs/gcc-10.1.0/gcc/Instrumentation-Options.html
+	env.Append(CXXFLAGS = ['-fprofile-arcs', '-ftest-coverage'],
+		LIBS = ['gcov'])
+
+env.Program('test.cpp')
