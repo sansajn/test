@@ -41,6 +41,7 @@ def build():
 	cpp20.Program('stop_callback.cpp')
 	cpp20.Program('condition_variable_any.cpp')
 	cpp20.Program('promise_bind.cpp')
+	cpp20.Program('jthread_with_condition_variable.cpp')
 
 def configure(env, dependency_list):
 	conf = env.Configure(
