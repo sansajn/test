@@ -30,18 +30,12 @@ int main(int argc, char * argv[]) {
 		}
 	}};
 
-	std::this_thread::sleep_for(100ms);
+	std::this_thread::sleep_for(100ms);  // wait for worker thread
 
-	// create some jobs
-	for (int i = 1; i < 1000; ++i) {
-		unique_lock lock{locker};
-		jobs.push(i);
-		cv.notify_one();
-	}
-
+	// before we create any job for waiting worker, let's ask worker to stop
 	worker.request_stop();
 
-	cout << "exiting with " << size(jobs) << " unexecuted jobs!\n";
+	cout << "exiting without unexecuting any job!\n";
 
 	return 0;
 }
