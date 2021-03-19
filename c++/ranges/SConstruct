@@ -1,0 +1,10 @@
+cpp20 = Environment(
+	CXXFLAGS=['-std=c++20', '-Wall', '-g', '-O0'],
+	LIBS=['pthread'])
+
+cpp20.Program('filter_transform.cpp')
+cpp20.Program('keyval.cpp')
+cpp20.Program('composition.cpp')
+cpp20.Program('iota.cpp')
+cpp20.Program('primes.cpp')
+cpp20.Program('all_any_none.cpp')

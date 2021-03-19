@@ -28,9 +28,4 @@
 /map_insert
 /uniqueptr
 /uniqueptr_func
-/range_filter_transform
-/range_keyval
-/range_composition
-/range_iota
-/range_primes
 /system_handle
