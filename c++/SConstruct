@@ -61,3 +61,5 @@ cpp17.Program('uniqueptr.cpp')
 cpp17.Program('uniqueptr_func.cpp')
 cpp20.Program('system_handle.cpp')
 #cpp20.Program('file_handle.cpp')
+cpp17.Program('find_files.cpp')
+
