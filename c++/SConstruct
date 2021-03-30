@@ -63,3 +63,4 @@ cpp20.Program('system_handle.cpp')
 #cpp20.Program('file_handle.cpp')
 cpp17.Program('find_files.cpp')
 
+cpp20.Program('pixel_range.cpp')
