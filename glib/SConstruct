@@ -6,3 +6,4 @@ cpp17 = Environment(CCFLAGS=['-O0', '-g', '-Wall'],
 cpp17.ParseConfig('pkg-config --cflags --libs glib-2.0')
 
 cpp17.Program('cmdparse.cpp')
+cpp17.Program('venc.cpp')
