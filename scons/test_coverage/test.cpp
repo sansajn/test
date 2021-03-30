@@ -2,7 +2,7 @@
 #include <catch.hpp>
 #include "concurrent_queue.hpp"
 
-TEST_CASE("we can push and pop elements on the queue", 
+TEST_CASE("we can push and pop elements to the queue", 
 	"[concurrent_queue]")
 {
 	concurrent_queue<int> q;
