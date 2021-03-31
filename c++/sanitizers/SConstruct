@@ -1,0 +1,17 @@
+gcc = Environment(CCFLAGS=['-Wall', '-g'])
+
+clang = Environment(CXX='clang++', 
+	CCFLAGS=['-Wall', '-g'])
+
+# we need to add `-fsanitize=xxx` to both `CCFLAGS` and `LINKFLAGS`
+address_sanitizer = gcc.Clone()
+address_sanitizer.Append(CCFLAGS=['-fsanitize=address'],
+	LINKFLAGS=['-fsanitize=address'])
+
+memory_sanitizer = clang.Clone()
+memory_sanitizer.Append(CCFLAGS=['-fsanitize=memory'],
+	LINKFLAGS=['-fsanitize=memory'])
+
+address_sanitizer.Program('address.cpp')
+memory_sanitizer.Program('memory.cpp')
+
