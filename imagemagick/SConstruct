@@ -2,7 +2,7 @@
 #   libmagick++-dev (ubuntu 15.10, 6.8.9.9)
 
 env = Environment(
-	CXXFLAGS=['-std=c++11'], 
+	CXXFLAGS=['-std=c++20'], 
 	CCFLAGS=['-g', '-O0', '-Wall']
 )
 
@@ -13,3 +13,4 @@ env.Program('pixel_color.cpp')
 env.Program('pixels.cpp')
 env.Program('attributes.cpp')
 env.Program('file_vs_memory.cpp')
+env.Program('pixels_to_image.cpp')
