@@ -1,7 +1,13 @@
-env = Environment(CXXFLAGS=['-std=c++14', '-Wall', '-g', '-O0'])
+env = Environment(CCFLAGS=['-Wall', '-g', '-O0'])
 
-env.Program('priority_queue.cpp')
-env.Program('move_map.cpp')
+cpp14 = env.Clone(CXXFLAGS=['-std=c++14'])
+
+cpp20 = env.Clone(CXXFLAGS=['-std=c++20'])
+
+cpp14.Program('priority_queue.cpp')
+cpp14.Program('move_map.cpp')
 #env.Program('input_iterator.cpp')
-env.Program('search_range.cpp')
-env.Program('filtered_range.cpp')
+cpp14.Program('search_range.cpp')
+cpp14.Program('filtered_range.cpp')
+
+cpp20.Program('parallel_transform.cpp')
