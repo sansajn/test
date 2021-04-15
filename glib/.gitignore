@@ -1,2 +1,4 @@
 /cmdparse
+/main_loop
+/main_context
 /glib.*
