@@ -1,26 +1,32 @@
-env = Environment(
-	CCFLAGS=['-std=c++11', '-g', '-O0', '-Wall'],
+cpp = Environment(
+	CCFLAGS=['-g', '-O0', '-Wall'],
 	LINKFLAGS=['-rdynamic'],
 	LIBS=['pthread', 'dl']
 )
 
-cpp11 = env.Clone()
+cpp11 = cpp.Clone()
+cpp11.Append(CCFLAGS=['-std=c++11'])
 
-env.Program('ls.cpp')
-env.Program('dirit.cpp')
-env.Program('reentrant_ls.cpp')
-env.Program('sighandler_signal.cpp')
-env.Program('sighandler_sigaction.cpp')
-env.Program('backtrace.cpp')
-env.Program('stack_trace_on_sigsegv.cpp')
-env.Program('backtrace_with_signals.cpp')
-env.Program('demangled_backtrace.cpp')
-env.Program('hostname.cpp')
-env.Program('demangling.cpp')
-env.Program('readlink.cpp')
-env.Program('unwind.cpp')
-env.Program('ip_address.cpp')
-env.Program('select.cpp')
+cpp17 = cpp.Clone()
+cpp17.Append(CCFLAGS=['-std=c++17'])
+
+cpp.Program('ls.cpp')
+cpp.Program('dirit.cpp')
+cpp.Program('reentrant_ls.cpp')
+cpp.Program('sighandler_signal.cpp')
+cpp.Program('sighandler_sigaction.cpp')
+cpp.Program('backtrace.cpp')
+cpp.Program('stack_trace_on_sigsegv.cpp')
+cpp.Program('backtrace_with_signals.cpp')
+cpp.Program('demangled_backtrace.cpp')
+cpp.Program('hostname.cpp')
+cpp.Program('demangling.cpp')
+cpp.Program('readlink.cpp')
+cpp.Program('unwind.cpp')
+cpp.Program('ip_address.cpp')
+cpp.Program('select.cpp')
 
 cpp11.Program('ioctl_iflags.cpp')
 cpp11.Program('multicast_send.cpp')
+
+cpp17.Program('sigint_handler.cpp')
