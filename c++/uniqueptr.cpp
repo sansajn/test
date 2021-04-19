@@ -21,6 +21,10 @@ void plain_deleter(int * p) {delete p;}
 
 void close_file(std::FILE * f) {std::fclose(f);}
 
+struct free_delete {
+	void operator()(void * p) {std::free(p);}
+};
+
 
 int main(int argc, char * argv[])
 {
@@ -46,6 +50,9 @@ int main(int argc, char * argv[])
 	
 	// with function deleter
 	unique_ptr<int, function<void (int *)>> u6{new int{12}, [](int * p){delete p;}};
+
+	// with functor deleter
+	unique_ptr<int, free_delete> u_free{(int *)malloc(sizeof(int))};
 	
 	// assignment
 	unique_ptr<int> u7;
