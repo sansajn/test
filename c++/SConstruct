@@ -64,3 +64,5 @@ cpp20.Program('file_handle.cpp')
 cpp17.Program('find_files.cpp')
 
 cpp20.Program('pixel_range.cpp')
+
+env.Program('inheritance.cpp')
