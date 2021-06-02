@@ -24,3 +24,5 @@ env.Program('basic_09.cpp')  # media discover
 env.Program('play.cpp')
 env.Program('thread_safe_player.cpp')
 env.Program('play_rtsp.cpp')
+
+env.Program('video_parse.cpp')
