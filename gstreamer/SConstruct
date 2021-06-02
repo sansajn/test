@@ -1,6 +1,6 @@
 # dependencies: libgstreamer1.0-dev libgstrtspserver-1.0-dev
 env = Environment(
-	CXXFLAGS=['-std=c++17', '-Wall', '-g'])
+	CXXFLAGS=['-std=c++17', '-Wall', '-g', '-O0'])
 
 env.ParseConfig('pkg-config --cflags --libs gstreamer-1.0 gstreamer-pbutils-1.0 gstreamer-video-1.0 gstreamer-rtsp-server-1.0 gtk+-3.0')
 
@@ -26,3 +26,5 @@ env.Program('thread_safe_player.cpp')
 env.Program('play_rtsp.cpp')
 
 env.Program('video_parse.cpp')
+env.Program('video_capi.cpp')
+env.Program('audio_capi.cpp')
