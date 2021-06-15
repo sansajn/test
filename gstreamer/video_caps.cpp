@@ -1,19 +1,15 @@
-/*! C API based video encoder with output to a window.
+/*! C API based PAD capabilities setup sample with `capsfilter` element.
 
 Based on following pipeline:
 
-	videotestsrc pattern=ball is-live=true !
+	videotestsrc !
+		video/x-raw, width=1280, height=720 !
 	videoconvert !
-	queue !
-	x264enc bitrate=900 speed-preset=ultrafast tune=zerolatency key-int-max=15 !
-		video/x-h264,profile=constrained-baseline !
-	queue max-size-time=100000000 !
-	decodebin !
 	autovideosink
 
 Run it this way
 
-	./video_enc
+	./video_caps
 
 */
 #include <string>
@@ -26,93 +22,78 @@ using std::string, std::to_string;
 using std::cerr, std::cout, std::endl;
 using boost::format, boost::str;
 
-struct encoder_pipeline {
+struct caps_pipeline {
 	GstElement * pipeline,
 		* source,
+		* source_caps,
 		* convert,
-		* queue_enc,
-		* encoder,
-		* queue_decode,
-		* decode,
 		* sink;
 };
 
-void pad_added_handler(GstElement * src, GstPad * new_pad, encoder_pipeline * player);
 string state_change_return_to_string(GstStateChangeReturn state);
 
 
 int main(int argc, char * argv[]) {
 	gst_init(&argc, &argv);
 
-	// Our pipeline looks this way `videotestsrc ! videoconvert ! queue ! x264enc ! queue ! decodebin ! autovideosink`
-	string const pipeline_desc = {"videotestsrc pattern=ball is-live=true ! "
+	// pipeline visualisation, just as hint
+	string const pipeline_desc =
+		"videotestsrc ! "
+			"video/x-raw, width=1280, height=720 !"
 		"videoconvert ! "
-		"queue ! "
-		"x264enc bitrate=900 speed-preset=ultrafast tune=zerolatency key-int-max=15 !"
-			"video/x-h264,profile=constrained-baseline !"
-		"queue max-size-time=100000000 !"
-		"decodebin !"
-		"autovideosink"};
+		"autovideosink";
 
 	cout << "Pipeline: " << pipeline_desc << "\n";
 
-	encoder_pipeline encoder;
-	encoder.source = gst_element_factory_make("videotestsrc", "source");
-	assert(encoder.source);
+	caps_pipeline pipe;
+	pipe.source = gst_element_factory_make("videotestsrc", "source");
+	assert(pipe.source);
 
-	encoder.convert = gst_element_factory_make("videoconvert", "convert");
-	assert(encoder.convert);
+	pipe.source_caps = gst_element_factory_make("capsfilter", "source_caps");
+	assert(pipe.source);
 
-	encoder.queue_enc = gst_element_factory_make("queue", "queue_enc");
-	assert(encoder.queue_enc);
+	pipe.convert = gst_element_factory_make("videoconvert", "convert");
+	assert(pipe.convert);
 
-	encoder.encoder = gst_element_factory_make("x264enc", "encoder");
-	assert(encoder.encoder);
+	pipe.sink = gst_element_factory_make("autovideosink", "sink");
+	assert(pipe.sink);
 
-	encoder.queue_decode = gst_element_factory_make("queue", "queue_decode");
-	assert(encoder.encoder);
+	pipe.pipeline = gst_pipeline_new("player-pipeline");
+	assert(pipe.pipeline);
 
-	encoder.decode = gst_element_factory_make("decodebin", "decode");
-	assert(encoder.encoder);
+	// Build the pipeline.
+	gst_bin_add_many(GST_BIN(pipe.pipeline),
+		pipe.source, pipe.source_caps, pipe.convert, pipe.sink, nullptr);
 
-	encoder.sink = gst_element_factory_make("autovideosink", "sink");
-	assert(encoder.sink);
-
-	encoder.pipeline = gst_pipeline_new("encoder-pipeline");
-	assert(encoder.pipeline);
-
-	// Build the pipeline except decodebin and autovideosink which are linked later.
-	gst_bin_add_many(GST_BIN(encoder.pipeline), encoder.source, encoder.convert,
-		encoder.queue_enc, encoder.encoder, encoder.queue_decode, encoder.decode,
-		encoder.sink, nullptr);
-
-	gboolean linked = gst_element_link_many(encoder.source, encoder.convert,
-		encoder.queue_enc, encoder.encoder, encoder.queue_decode, encoder.decode, nullptr);
+	gboolean linked = gst_element_link_many(pipe.source, pipe.source_caps,
+		pipe.convert, pipe.sink, nullptr);
 
 	if (!linked) {
-		cerr << "Pipeline elements could not be linked together.\n";
-		gst_object_unref(encoder.pipeline);
+		cerr << "Pipeline can not be linked together.\n";
+		gst_object_unref(pipe.pipeline);
 		return 2;
 	}
 
-	// Connect to the *pad-added* signal for decode
-	g_signal_connect(encoder.decode, "pad-added", G_CALLBACK(pad_added_handler), &encoder);
+	// set source capabilities
+	GstCaps * caps = gst_caps_new_simple("video/x-raw",
+		"width", G_TYPE_INT, 1280,
+		"height", G_TYPE_INT, 720, nullptr);
 
-	// Set source properties.
-	g_object_set(encoder.source, "pattern", 18, nullptr);  // ball (18), see inspect
-	g_object_set(encoder.source, "is-live", TRUE, nullptr);
+	g_object_set(pipe.source_caps, "caps", caps, nullptr);
 
-	GstStateChangeReturn changed = gst_element_set_state(encoder.pipeline, GST_STATE_PLAYING);  // start playing
+	gst_caps_unref(caps);  // we do not need caps anymore
+
+	GstStateChangeReturn changed = gst_element_set_state(pipe.pipeline, GST_STATE_PLAYING);  // start playing
 	cout << "Changing pipeline state to PLAYING ... " << state_change_return_to_string(changed) << "\n";
 
 	if (changed == GST_STATE_CHANGE_FAILURE) {
 		cerr << "Unable to set the pipeline to the playing state.\n";
-		gst_object_unref(encoder.pipeline);
+		gst_object_unref(pipe.pipeline);
 		return 2;
 	}
 
 	// wait until error or EOS
-	GstBus * bus = gst_element_get_bus(encoder.pipeline);
+	GstBus * bus = gst_element_get_bus(pipe.pipeline);
 	assert(bus);
 
 	bool terminate = false;
@@ -129,7 +110,7 @@ int main(int argc, char * argv[]) {
 				}
 
 				case GST_MESSAGE_STATE_CHANGED: {
-					if (GST_MESSAGE_SRC(msg) == GST_OBJECT(encoder.pipeline)) {
+					if (GST_MESSAGE_SRC(msg) == GST_OBJECT(pipe.pipeline)) {
 						GstState old_state, new_state, pending_state;
 						gst_message_parse_state_changed(msg, &old_state, &new_state, &pending_state);
 						cout << "Pipeline changed from " << gst_element_state_get_name(old_state) << " to "
@@ -161,15 +142,15 @@ int main(int argc, char * argv[]) {
 
 	// clean-up
 	gst_object_unref(bus);
-	gst_element_set_state(encoder.pipeline, GST_STATE_NULL);
-	gst_object_unref(encoder.pipeline);
+	gst_element_set_state(pipe.pipeline, GST_STATE_NULL);
+	gst_object_unref(pipe.pipeline);
 
 	cout << "done!\n";
 
 	return 0;
 }
 
-void pad_added_handler(GstElement * src, GstPad * new_pad, encoder_pipeline * player) {
+void pad_added_handler(GstElement * src, GstPad * new_pad, caps_pipeline * player) {
 	cout << "Received new pad '" << GST_PAD_NAME(new_pad) << "' from '" << GST_ELEMENT_NAME(src) << "':\n";
 
 	assert(player);

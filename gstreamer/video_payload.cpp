@@ -1,19 +1,15 @@
-/*! C API based video encoder with output to a window.
+/*! C API based video pipeline with RTP payload (`rtph264pay`) element and output to a window sample.
 
 Based on following pipeline:
 
-	videotestsrc pattern=ball is-live=true !
-	videoconvert !
-	queue !
-	x264enc bitrate=900 speed-preset=ultrafast tune=zerolatency key-int-max=15 !
-		video/x-h264,profile=constrained-baseline !
-	queue max-size-time=100000000 !
-	decodebin !
-	autovideosink
+	videotestsrc ! convert ! queue !
+	x264enc ! queue !
+	rtph264pay ! rtph264depay ! queue !
+	decodebin ! autovideosink
 
 Run it this way
 
-	./video_enc
+	./video_payload
 
 */
 #include <string>
@@ -26,93 +22,117 @@ using std::string, std::to_string;
 using std::cerr, std::cout, std::endl;
 using boost::format, boost::str;
 
-struct encoder_pipeline {
+struct payload_pipeline {
 	GstElement * pipeline,
 		* source,
 		* convert,
 		* queue_enc,
 		* encoder,
-		* queue_decode,
+		* queue_pay,
+		* payload,
+		* depayload,
+		* queue_dec,
 		* decode,
 		* sink;
 };
 
-void pad_added_handler(GstElement * src, GstPad * new_pad, encoder_pipeline * player);
+void pad_added_handler(GstElement * src, GstPad * new_pad, payload_pipeline * player);
 string state_change_return_to_string(GstStateChangeReturn state);
 
 
 int main(int argc, char * argv[]) {
 	gst_init(&argc, &argv);
 
-	// Our pipeline looks this way `videotestsrc ! videoconvert ! queue ! x264enc ! queue ! decodebin ! autovideosink`
-	string const pipeline_desc = {"videotestsrc pattern=ball is-live=true ! "
-		"videoconvert ! "
-		"queue ! "
-		"x264enc bitrate=900 speed-preset=ultrafast tune=zerolatency key-int-max=15 !"
-			"video/x-h264,profile=constrained-baseline !"
-		"queue max-size-time=100000000 !"
-		"decodebin !"
-		"autovideosink"};
+	string const pipeline_desc = {
+		"videotestsrc ! convert ! queue ! "
+		"x264enc ! queue ! "
+		"rtph264pay ! rtph264depay ! queue ! "
+		"decodebin ! autovideosink"};
 
 	cout << "Pipeline: " << pipeline_desc << "\n";
 
-	encoder_pipeline encoder;
-	encoder.source = gst_element_factory_make("videotestsrc", "source");
-	assert(encoder.source);
+	payload_pipeline paypipe;
+	paypipe.source = gst_element_factory_make("videotestsrc", "source");
+	assert(paypipe.source);
 
-	encoder.convert = gst_element_factory_make("videoconvert", "convert");
-	assert(encoder.convert);
+	paypipe.convert = gst_element_factory_make("videoconvert", "convert");
+	assert(paypipe.convert);
 
-	encoder.queue_enc = gst_element_factory_make("queue", "queue_enc");
-	assert(encoder.queue_enc);
+	paypipe.queue_enc = gst_element_factory_make("queue", "queue_enc");
+	assert(paypipe.queue_enc);
 
-	encoder.encoder = gst_element_factory_make("x264enc", "encoder");
-	assert(encoder.encoder);
+	paypipe.encoder = gst_element_factory_make("x264enc", "encode");
+	assert(paypipe.encoder);
 
-	encoder.queue_decode = gst_element_factory_make("queue", "queue_decode");
-	assert(encoder.encoder);
+	paypipe.queue_pay = gst_element_factory_make("queue", "queue_pay");
+	assert(paypipe.queue_pay);
 
-	encoder.decode = gst_element_factory_make("decodebin", "decode");
-	assert(encoder.encoder);
+	paypipe.payload = gst_element_factory_make("rtph264pay", "payload");
+	assert(paypipe.payload);
 
-	encoder.sink = gst_element_factory_make("autovideosink", "sink");
-	assert(encoder.sink);
+	paypipe.depayload = gst_element_factory_make("rtph264depay", "depayload");
+	assert(paypipe.depayload);
 
-	encoder.pipeline = gst_pipeline_new("encoder-pipeline");
-	assert(encoder.pipeline);
+	paypipe.queue_dec = gst_element_factory_make("queue", "queue_decode");
+	assert(paypipe.queue_dec);
+
+	paypipe.decode = gst_element_factory_make("decodebin", "decode");
+	assert(paypipe.encoder);
+
+	paypipe.sink = gst_element_factory_make("autovideosink", "sink");
+	assert(paypipe.sink);
+
+	paypipe.pipeline = gst_pipeline_new("encoder-pipeline");
+	assert(paypipe.pipeline);
 
 	// Build the pipeline except decodebin and autovideosink which are linked later.
-	gst_bin_add_many(GST_BIN(encoder.pipeline), encoder.source, encoder.convert,
-		encoder.queue_enc, encoder.encoder, encoder.queue_decode, encoder.decode,
-		encoder.sink, nullptr);
+	gst_bin_add_many(GST_BIN(paypipe.pipeline),
+		paypipe.source,
+		paypipe.convert,
+		paypipe.queue_enc,
+		paypipe.encoder,
+		paypipe.queue_pay,
+		paypipe.payload,
+		paypipe.depayload,
+		paypipe.queue_dec,
+		paypipe.decode,
+		paypipe.sink, nullptr);
 
-	gboolean linked = gst_element_link_many(encoder.source, encoder.convert,
-		encoder.queue_enc, encoder.encoder, encoder.queue_decode, encoder.decode, nullptr);
+	gboolean linked = gst_element_link_many(
+		paypipe.source,
+		paypipe.convert,
+		paypipe.queue_enc,
+		paypipe.encoder,
+		paypipe.queue_pay,
+		paypipe.payload,
+		paypipe.depayload,
+		paypipe.queue_dec,
+		paypipe.decode, nullptr);
 
 	if (!linked) {
 		cerr << "Pipeline elements could not be linked together.\n";
-		gst_object_unref(encoder.pipeline);
+		gst_object_unref(paypipe.pipeline);
 		return 2;
 	}
 
 	// Connect to the *pad-added* signal for decode
-	g_signal_connect(encoder.decode, "pad-added", G_CALLBACK(pad_added_handler), &encoder);
+	g_signal_connect(paypipe.decode, "pad-added", G_CALLBACK(pad_added_handler), &paypipe);
 
 	// Set source properties.
-	g_object_set(encoder.source, "pattern", 18, nullptr);  // ball (18), see inspect
-	g_object_set(encoder.source, "is-live", TRUE, nullptr);
+	g_object_set(paypipe.source, "pattern", 18, nullptr);  // ball (18), see inspect
+	g_object_set(paypipe.source, "is-live", TRUE, nullptr);
 
-	GstStateChangeReturn changed = gst_element_set_state(encoder.pipeline, GST_STATE_PLAYING);  // start playing
+	GstStateChangeReturn changed = gst_element_set_state(paypipe.pipeline, GST_STATE_PLAYING);  // start playing
 	cout << "Changing pipeline state to PLAYING ... " << state_change_return_to_string(changed) << "\n";
 
 	if (changed == GST_STATE_CHANGE_FAILURE) {
 		cerr << "Unable to set the pipeline to the playing state.\n";
-		gst_object_unref(encoder.pipeline);
+		gst_object_unref(paypipe.pipeline);
 		return 2;
 	}
 
 	// wait until error or EOS
-	GstBus * bus = gst_element_get_bus(encoder.pipeline);
+	GstBus * bus = gst_element_get_bus(paypipe.pipeline);
 	assert(bus);
 
 	bool terminate = false;
@@ -129,7 +149,7 @@ int main(int argc, char * argv[]) {
 				}
 
 				case GST_MESSAGE_STATE_CHANGED: {
-					if (GST_MESSAGE_SRC(msg) == GST_OBJECT(encoder.pipeline)) {
+					if (GST_MESSAGE_SRC(msg) == GST_OBJECT(paypipe.pipeline)) {
 						GstState old_state, new_state, pending_state;
 						gst_message_parse_state_changed(msg, &old_state, &new_state, &pending_state);
 						cout << "Pipeline changed from " << gst_element_state_get_name(old_state) << " to "
@@ -161,15 +181,15 @@ int main(int argc, char * argv[]) {
 
 	// clean-up
 	gst_object_unref(bus);
-	gst_element_set_state(encoder.pipeline, GST_STATE_NULL);
-	gst_object_unref(encoder.pipeline);
+	gst_element_set_state(paypipe.pipeline, GST_STATE_NULL);
+	gst_object_unref(paypipe.pipeline);
 
 	cout << "done!\n";
 
 	return 0;
 }
 
-void pad_added_handler(GstElement * src, GstPad * new_pad, encoder_pipeline * player) {
+void pad_added_handler(GstElement * src, GstPad * new_pad, payload_pipeline * player) {
 	cout << "Received new pad '" << GST_PAD_NAME(new_pad) << "' from '" << GST_ELEMENT_NAME(src) << "':\n";
 
 	assert(player);
