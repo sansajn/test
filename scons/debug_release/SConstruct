@@ -1,0 +1,14 @@
+# SConstruct: use scons --release-build in case optimized binery required
+
+AddOption('--release-build', action='store_true', dest='release_build', 
+	help='generate optimized binary', default=False)
+
+env = Environment(CCFLAGS=['-Wall'])
+
+# apply debug/release options
+if not GetOption('release_build'):
+	env.Append(CCFLAGS=['-g', '-Og', '-DDEBUG'])
+else: # --release-build
+	env.Append(CCFLAGS=['-Os'])
+
+env.Program('main.cpp')
