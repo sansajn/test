@@ -1,9 +1,17 @@
 env = Environment(
 	CPPFLAGS=['-std=c++11', '-g', '-O0'],
-	LIBS=['pthread']
-)
+	LIBS=['pthread'])
 
 env.ParseConfig('pkg-config --cflags --libs libzmq')
+
+cpp17 = Environment(
+	CPPFLAGS=['-std=c++17', '-g', '-Og', '-Wall'], LIBS=['pthread'])
+
+# append thread sanitizer
+cpp17.Append(CXXFLAGS='-fsanitize=thread',
+	LINKFLAGS='-fsanitize=thread')
+
+cpp17.ParseConfig('pkg-config --cflags --libs libzmq')
 
 # cppzmq (zmq.hpp)
 env.Program('rrserv.cpp')
@@ -11,3 +19,6 @@ env.Program('rrclient.cpp')
 env.Program('rrserv_mon.cpp')
 env.Program('rrclient_mon.cpp')
 env.Program('poller_and_probe.cpp')
+
+cpp17.Program('pair_pair.cpp')
+cpp17.Program('sub_dealer.cpp')
