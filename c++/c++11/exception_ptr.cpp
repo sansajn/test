@@ -1,4 +1,4 @@
-// exception_ptr sample
+// exception rethrow sample with exception_ptr
 
 #include <exception>
 #include <string>
@@ -11,8 +11,7 @@ using std::exception;
 using std::string;
 using std::cout;
 
-void handle_exception(exception_ptr e)
-{
+void handle_exception(exception_ptr e) {  // passing by value is ok
 	try {
 		if (e)
 			rethrow_exception(e);
@@ -22,8 +21,7 @@ void handle_exception(exception_ptr e)
 	}
 }
 
-int main(int argc, char * argv[])
-{
+int main(int argc, char * argv[]) {
 	exception_ptr e;
 	try {
 		string{}.at(1);  // this generates an out_of_range exception

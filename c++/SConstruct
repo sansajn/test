@@ -3,7 +3,7 @@ env = Environment(
 
 cpp14 = env.Clone()
 cpp17 = Environment(
-	CXX='clang++', CXXFLAGS=['-std=c++17'], CCFLAGS=['-Wall', '-g', '-O0'],
+	CXX='g++', CXXFLAGS=['-std=c++17'], CCFLAGS=['-Wall', '-g', '-O0'],
 	LIBS=[
 		'pthread'  # for thread library from c++11
 	])
@@ -56,7 +56,7 @@ catch17.Program('map_insert.cpp')
 
 cpp14.Program('avoid_hierarchy.cpp')
 
-
+cpp17.Program('cref_member.cpp')
 cpp17.Program('uniqueptr.cpp')
 cpp17.Program('uniqueptr_func.cpp')
 cpp20.Program('system_handle.cpp')

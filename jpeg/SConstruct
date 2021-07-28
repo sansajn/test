@@ -1,13 +1,17 @@
 # dependency:
 #	libjpeg-turbo8-dev (ubuntu 15.10, 1.3.0)
 #  libmagick++-dev (ubuntu 15.10, 6.8.9.9)
+#  libboost-program-options-dev
 
-env = Environment(
-	CXXFLAGS = ['-std=c++11', '-O0', '-g', '-Wall'],
-	LIBS=['jpeg', 'boost_program_options']
-)
+env = Environment(CXXFLAGS = ['-std=c++17', '-Og', '-g', '-Wall'],
+	LIBS=['jpeg', 'boost_program_options'])
 
 env.ParseConfig('pkg-config --cflags --libs Magick++')
+
+# environment with address sanitizer
+with_sanitizer = env.Clone(CCFLAGS=['-fsanitize=address'],
+	LINKFLAGS=['-fsanitize=address'])
+
 
 env.Program('read.cpp')
 env.Program('write.cpp')
@@ -16,3 +20,5 @@ env.Program('rawread.cpp')
 env.Program('reencode.cpp')
 env.Program('to_memory.cpp')
 env.Program('custom_error_handler.cpp')
+
+with_sanitizer.Program('memleak.cpp')

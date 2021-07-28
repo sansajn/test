@@ -4,8 +4,7 @@ clang = Environment(CXX='clang++',
 	CCFLAGS=['-Wall', '-g'])
 
 # we need to add `-fsanitize=xxx` to both `CCFLAGS` and `LINKFLAGS`
-address_sanitizer = gcc.Clone()
-address_sanitizer.Append(CCFLAGS=['-fsanitize=address'],
+address_sanitizer = gcc.Clone(CCFLAGS=['-fsanitize=address'],
 	LINKFLAGS=['-fsanitize=address'])
 
 memory_sanitizer = clang.Clone()
