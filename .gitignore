@@ -6,6 +6,7 @@
 # outputs
 out/
 *.log
+/out.ppm
 
 # scons
 .sconsign.dblite
@@ -28,3 +29,4 @@ doc/html/
 
 # binaries
 /apply
+/ppm

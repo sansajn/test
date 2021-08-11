@@ -35,5 +35,5 @@ TEST_CASE("A") {
 }
 
 TEST_CASE("B") {
-
+	REQUIRE(true);
 }
