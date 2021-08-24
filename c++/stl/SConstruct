@@ -1,13 +1,15 @@
-env = Environment(CCFLAGS=['-Wall', '-g', '-O0'])
-
-cpp14 = env.Clone(CXXFLAGS=['-std=c++14'])
-
-cpp20 = env.Clone(CXXFLAGS=['-std=c++20'])
+cpp = Environment(CCFLAGS=['-Wall', '-ggdb3', '-Og'])
+cpp14 = cpp.Clone(CXXFLAGS=['-std=c++14'])
+cpp17 = cpp.Clone(CXXFLAGS=['-std=c++17'])
+cpp20 = cpp.Clone(CXXFLAGS=['-std=c++2a'])
 
 cpp14.Program('priority_queue.cpp')
 cpp14.Program('move_map.cpp')
 #env.Program('input_iterator.cpp')
 cpp14.Program('search_range.cpp')
 cpp14.Program('filtered_range.cpp')
+
+cpp17.Program('optional_hello.cpp')
+cpp17.Program('optional_service.cpp')
 
 cpp20.Program('parallel_transform.cpp')
