@@ -1,4 +1,4 @@
 # the simpliest variant directory setup
-VariantDir('build', 'source')
+VariantDir('build', 'source', duplicate=0)
 env = Environment()
 env.Program('build/main.cpp')
