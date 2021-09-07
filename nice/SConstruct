@@ -1,0 +1,5 @@
+cpp = Environment()
+
+cpp.ParseConfig('pkg-config --libs --cflags nice')
+
+cpp.Program('sdp-example.cpp')
