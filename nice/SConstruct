@@ -1,4 +1,6 @@
-cpp = Environment()
+cpp = Environment(
+	CCFLAGS=['-Wall', '-Og', '-ggdb3'],
+	CPPDEFINES=['NDEBUG'])
 
 cpp.ParseConfig('pkg-config --libs --cflags nice')
 

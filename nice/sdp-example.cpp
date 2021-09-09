@@ -221,7 +221,9 @@ example_thread(void *data)
     GIOStatus s = g_io_channel_read_line (io_stdin, &line, NULL, NULL, NULL);
 
     if (s == G_IO_STATUS_NORMAL) {
-      nice_agent_send(agent, stream_id, 1, strlen(line), line);
+		gint result = nice_agent_send(agent, stream_id, 1, strlen(line), line);
+		if (result < 0)
+			g_error("send (nice_agent_send) failed with %d", result);
       g_free (line);
       printf("> ");
       fflush (stdout);
@@ -279,6 +281,6 @@ cb_nice_recv(NiceAgent *agent, guint stream_id, guint component_id,
   if (len == 1 && buf[0] == '\0')
     g_main_loop_quit (gloop);
 
-  printf("%.*s", len, buf);
+  printf("received: %.*s", len, buf);
   fflush(stdout);
 }
