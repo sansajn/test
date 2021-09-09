@@ -69,3 +69,5 @@ cpp17.Program('find_files.cpp')
 cpp20.Program('pixel_range.cpp')
 
 env.Program('inheritance.cpp')
+
+env.Program('ifdef_macro.cpp', CPPDEFINES=['NDEBUG'])
