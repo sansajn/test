@@ -1,3 +1,4 @@
+// Napi::AsyncWorker sample
 #include <chrono>
 #include <thread>
 #include <string>
