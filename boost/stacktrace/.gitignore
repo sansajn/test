@@ -1,3 +1,4 @@
 /stacktrace
 /hello
 /safe_dump
+/exception_with_stacktrace

@@ -1,5 +1,5 @@
 cpp17 = Environment(
-	CCFLAGS=['-std=c++17', '-Wall', '-g', '-O0'],
+	CCFLAGS=['-std=c++17', '-Wall', '-ggdb3', '-Og'],
 	LIBS=[
 		'boost_stacktrace_backtrace', 
 		#'boost_stacktrace_addr2line',
@@ -20,3 +20,4 @@ cpp17 = Environment(
 cpp17.Program('stacktrace.cpp')
 cpp17.Program('safe_dump.cpp')
 cpp17.Program('hello.cpp')
+cpp17.Program('exception_with_stacktrace.cpp')
