@@ -1,5 +1,7 @@
-env = Environment(CCFLAGS=['-std=c++17', '-Wall', '-g', '-O0'])
+env = Environment(CCFLAGS=['-std=c++17', '-Wall', '-ggdb3', '-Og'])
+
 env.Program('hello.cpp')
 env.Program('custom_main.cpp')
 env.Program('sections.cpp')
 env.Program('event_listener.cpp')
+env.Program('floats.cpp')
