@@ -30,3 +30,5 @@ cpp11.Program('ioctl_iflags.cpp')
 cpp11.Program('multicast_send.cpp')
 
 cpp17.Program('sigint_handler.cpp')
+cpp17.Program('count_fds.cpp')
+cpp17.Program('lot_of_fds.cpp')
