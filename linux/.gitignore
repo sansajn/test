@@ -19,3 +19,5 @@
 /test-linux.*
 /sigint_handler
 /lot_of_fds
+/count_fds
+/count_fds2
