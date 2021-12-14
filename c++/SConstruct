@@ -1,6 +1,12 @@
 env = Environment(
 	CXX='clang++', CXXFLAGS=['-std=c++14'], CCFLAGS=['-Wall', '-g', '-O0'])
 
+cpp11 = Environment(
+	CXX='g++', CXXFLAGS=['-std=c++11'], CCFLAGS=['-Wall', '-g', '-O0'],
+	LIBS=[
+		'pthread'  # for thread library from c++11
+	])
+
 cpp14 = env.Clone()
 cpp17 = Environment(
 	CXX='g++', CXXFLAGS=['-std=c++17'], CCFLAGS=['-Wall', '-g', '-O0'],
@@ -50,22 +56,22 @@ cpp14.Program('file_name_from_file.cpp')
 #cpp14.Program('derived_inner_class.cpp')
 cpp14.Program('observer.cpp')
 cpp14.Program('inheritance_from_base_ctor.cpp')
-
 cpp14.Program('openfile.cpp')
 cpp14.Program('float_and_literal_comparsion.cpp')
+cpp14.Program('avoid_hierarchy.cpp')
 
 catch17.Program('equal.cpp')
 catch17.Program('map_insert.cpp')
 
-cpp14.Program('avoid_hierarchy.cpp')
-
 cpp17.Program('cref_member.cpp')
 cpp17.Program('uniqueptr.cpp')
 cpp17.Program('uniqueptr_func.cpp')
+cpp11.Program('map_dump.cpp')
+cpp17.Program('find_files.cpp')
+cpp17.Program('running.cpp')
+
 cpp20.Program('system_handle.cpp')
 cpp20.Program('file_handle.cpp')
-cpp17.Program('find_files.cpp')
-
 cpp20.Program('pixel_range.cpp')
 
 env.Program('inheritance.cpp')
