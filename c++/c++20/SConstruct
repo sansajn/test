@@ -1,4 +1,5 @@
 cpp20 = Environment(
-	CCFLAGS=['-std=c++2a', '-Wall', '-O0', '-g'])
+	CCFLAGS=['-std=c++2a', '-Wall', '-Og', '-ggdb3'])
 
 cpp20.Program('hello_ranges.cpp')
+cpp20.Program('spaceship_oper.cpp')
