@@ -70,6 +70,7 @@ cpp17.Program('uniqueptr_func.cpp')
 cpp11.Program('map_dump.cpp')
 cpp17.Program('find_files.cpp')
 cpp17.Program('running.cpp')
+cpp17.Program('constexpr_map.cpp')
 
 cpp20.Program('system_handle.cpp')
 cpp20.Program('file_handle.cpp')
