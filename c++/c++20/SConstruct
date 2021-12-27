@@ -3,3 +3,4 @@ cpp20 = Environment(
 
 cpp20.Program('hello_ranges.cpp')
 cpp20.Program('spaceship_oper.cpp')
+cpp20.Program('concept_hello.cpp')
