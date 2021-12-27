@@ -35,3 +35,4 @@
 /ifdef_macro
 /running
 /map_dump
+/constexpr_vec3

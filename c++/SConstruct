@@ -9,7 +9,7 @@ cpp11 = Environment(
 
 cpp14 = env.Clone()
 cpp17 = Environment(
-	CXX='g++', CXXFLAGS=['-std=c++17'], CCFLAGS=['-Wall', '-g', '-O0'],
+	CXX='g++', CXXFLAGS=['-std=c++17'], CCFLAGS=['-Wall', '-ggdb3', '-O0'],
 	LIBS=[
 		'pthread'  # for thread library from c++11
 	])
@@ -59,6 +59,7 @@ cpp14.Program('inheritance_from_base_ctor.cpp')
 cpp14.Program('openfile.cpp')
 cpp14.Program('float_and_literal_comparsion.cpp')
 cpp14.Program('avoid_hierarchy.cpp')
+cpp14.Program('constexpr_vec3.cpp')
 
 catch17.Program('equal.cpp')
 catch17.Program('map_insert.cpp')
