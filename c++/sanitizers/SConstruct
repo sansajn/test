@@ -3,14 +3,18 @@ gcc = Environment(CCFLAGS=['-Wall', '-g'])
 clang = Environment(CXX='clang++', 
 	CCFLAGS=['-Wall', '-g'])
 
-# we need to add `-fsanitize=xxx` to both `CCFLAGS` and `LINKFLAGS`
-address_sanitizer = gcc.Clone(CCFLAGS=['-fsanitize=address'],
+# in GCC address sanitizer includes also leak sanitizer
+gcc_address = gcc.Clone(CCFLAGS=['-fsanitize=address'],
 	LINKFLAGS=['-fsanitize=address'])
 
-memory_sanitizer = clang.Clone()
-memory_sanitizer.Append(CCFLAGS=['-fsanitize=memory'],
+clang_memory = clang.Clone()
+clang_memory.Append(CCFLAGS=['-fsanitize=memory'],
 	LINKFLAGS=['-fsanitize=memory'])
 
-address_sanitizer.Program('address.cpp')
-memory_sanitizer.Program('memory.cpp')
+gcc_address.Program('address.cpp')
+clang_memory.Program('memory.cpp')
 
+# catch2 is expected to be installed
+catch = gcc_address.Clone()
+
+catch.Program('samples.cpp')
