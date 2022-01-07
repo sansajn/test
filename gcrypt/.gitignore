@@ -1,3 +1,4 @@
 /test-gcrypt.*
 /gchash
 /fmd5
+/fsha2_512
