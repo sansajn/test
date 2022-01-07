@@ -10,3 +10,5 @@
 /all_any_none_of
 /for_each
 /count
+/remove_if
+/remove_if_on_set
