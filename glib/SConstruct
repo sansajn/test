@@ -1,10 +1,13 @@
 # dependencies: libglib2.0-dev
 
 cpp17 = Environment(CCFLAGS=['-O0', '-g', '-Wall'],
-	CXXFLAGS=['-std=c++17'])
+	CXXFLAGS=['-std=c++17'],
+	LIBS=['pthread'])
 
-cpp17.ParseConfig('pkg-config --cflags --libs glib-2.0')
+cpp17.ParseConfig('pkg-config --cflags --libs glib-2.0 gobject-2.0')
 
 cpp17.Program('cmdparse.cpp')
 cpp17.Program('main_loop.cpp')
 cpp17.Program('main_context.cpp')
+cpp17.Program('reference_count_check.cpp')
+cpp17.Program('main_context_owner_check.cpp')
