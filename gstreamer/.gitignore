@@ -18,3 +18,4 @@
 /video_capi
 /video_enc
 /video_testsrc
+/glib_loop

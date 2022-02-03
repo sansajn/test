@@ -32,3 +32,5 @@ env.Program('video_enc.cpp')
 env.Program('video_payload.cpp')
 env.Program('video_caps.cpp')
 env.Program('video_testsrc.cpp')
+
+env.Program('glib_loop.cpp')
