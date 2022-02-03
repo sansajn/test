@@ -19,3 +19,4 @@
 /video_enc
 /video_testsrc
 /glib_loop
+/bus_add_watch_full

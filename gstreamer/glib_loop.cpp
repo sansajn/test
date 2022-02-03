@@ -1,4 +1,4 @@
-// video playback with GLib loop instead of `gst_bus_X` call sample
+// video playback with GLib's loop instead of `gst_bus_X` call sample
 
 #include <cassert>
 #include <gst/gst.h>
