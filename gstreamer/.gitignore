@@ -14,9 +14,13 @@
 /play
 /initialization
 /test-readme
+/audio_capi
 /video_parse
 /video_capi
 /video_enc
+/video_caps
+/video_payload
 /video_testsrc
 /glib_loop
 /bus_add_watch_full
+/thread_default_context_watch
