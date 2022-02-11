@@ -1,4 +1,4 @@
-# SConstruct: use scons --build-release in case optimized binery required
+# SConstruct: use scons --build-release in case optimized binary required
 
 AddOption('--build-release', action='store_true', dest='build_release', 
 	help='generate optimized binary', default=False)

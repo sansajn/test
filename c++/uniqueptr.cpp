@@ -6,6 +6,7 @@ basic unique_ptr usage (creation and assignment) */
 #include <iostream>
 
 using std::unique_ptr;
+using std::make_unique;
 using std::function;
 using std::cout;
 
@@ -25,6 +26,11 @@ struct free_delete {
 	void operator()(void * p) {std::free(p);}
 };
 
+struct brdf {};
+
+struct lambertian : public brdf {};
+
+brdf * make_lambertian() {return new lambertian;}
 
 int main(int argc, char * argv[])
 {
@@ -61,6 +67,9 @@ int main(int argc, char * argv[])
 	u7 = unique_ptr<int>{new int{15}};
 	
 	u7 = nullptr;  // release u7 content
+	
+	unique_ptr<lambertian> u8;
+	u8.reset(static_cast<lambertian *>(make_lambertian()));  // downcast
 
 	return 0;
 }
