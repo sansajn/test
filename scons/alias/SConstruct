@@ -1,0 +1,11 @@
+# creates aliases for building main as app and unit tests as test
+cpp20 = Environment(
+	CXXFLAGS=['-std=c++20'],
+	CCFLAGS=['-Wall', '-Wextra'])
+
+app = cpp20.Program('main.cpp')
+test = cpp20.Program('catch_test.cpp')
+
+# aliases
+cpp20.Alias('app', app)
+cpp20.Alias('test', test)
