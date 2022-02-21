@@ -1,10 +1,15 @@
-env = Environment()
-env['CXX'] = 'clang++'
-env.Append(
-	CXXFLAGS=['-std=c++11'],
+cpp = Environment()
+#cpp['CXX'] = 'clang++'
+cpp.Append(
 	CCFLAGS=['-O0', '-Wall'],
 	LIBS=['boost_filesystem', 'boost_system', 'boost_regex'])
 
-env.Program('rename.cpp')
-env.Program('tokenizer.cpp')
-env.Program('scope_exit.cpp')
+cpp11 = cpp.Clone(CXXFLAGS=['-std=c++11'])
+
+cpp11.Program('rename.cpp')
+cpp11.Program('tokenizer.cpp')
+cpp11.Program('scope_exit.cpp')
+
+
+cpp17 = cpp.Clone(CXXFLAGS=['-std=c++17'])
+cpp17.Program('optional.cpp')
