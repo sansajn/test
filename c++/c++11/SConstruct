@@ -1,5 +1,6 @@
 env = Environment(
-	CPPFLAGS=['-std=c++11', '-O0', '-g', '-Wall'],
+	CCFLAGS=['-Wall', '-Wextra'],
+	CXXFLAGS=['-std=c++11'],
 	LIBS=['pthread']
 )
 
@@ -36,6 +37,7 @@ env.Program('joinable_thread.cpp')
 env.Program('function.cpp')
 env.Program('bind.cpp')
 env.Program('notify.cpp')
+env.Program('mem_fn.cpp')
 
 # exceptions
 env.Program('exception_ptr.cpp')

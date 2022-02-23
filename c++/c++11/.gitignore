@@ -17,3 +17,4 @@
 /bind
 /notify
 /exception_ptr
+/mem_fn
