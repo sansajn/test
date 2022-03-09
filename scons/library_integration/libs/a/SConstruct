@@ -1,0 +1,6 @@
+cpp = Environment()
+
+a_lib = SConscript('a/SConscript', exports={'cpp':cpp})
+tests, main = SConscript('tests/SConscript', exports={'cpp':cpp})
+
+cpp.Program('test', [main, tests, a_lib])

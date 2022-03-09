@@ -1,0 +1,3 @@
+Sample with integrating library and its unit tests into host project.
+
+> **note**: directory structure for library is important `a/a`, `a/tests` ...

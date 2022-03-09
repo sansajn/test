@@ -1,0 +1,6 @@
+Import('cpp')
+
+tests = cpp.Object(['test.cpp'])
+main = cpp.Object('main.cpp')
+
+Return('tests main')
