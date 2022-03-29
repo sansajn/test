@@ -1,4 +1,6 @@
-// see h264streamer.cpp for more recent implementation
+/*! h264 WebRTC streamer with video re-encoding.
+webrtc-unidirectional-h264 sample with `videotestsrc` pipeline element in case no input file specified. */
+#include <string>
 #include <locale.h>
 #include <glib.h>
 #include <gst/gst.h>
@@ -19,6 +21,9 @@
 #define RTP_PAYLOAD_TYPE "96"
 #define SOUP_HTTP_PORT 57778
 #define STUN_SERVER "stun.l.google.com:19302"
+
+using std::string;
+using namespace std::string_literals;
 
 typedef struct _ReceiverEntry ReceiverEntry;
 
@@ -55,7 +60,7 @@ struct _ReceiverEntry
   GstElement *webrtcbin;
 };
 
-const gchar *file_name = NULL;
+const gchar *file_name = NULL;  // e.g. file:///home/me/test.mp4
 
 const gchar *html_source = " \n \
 <html> \n \
@@ -170,7 +175,7 @@ create_receiver_entry (SoupWebsocketConnection * connection)
   GstWebRTCRTPTransceiver *trans;
   GArray *transceivers;
 
-  receiver_entry = g_slice_alloc0 (sizeof (ReceiverEntry));
+  receiver_entry = (ReceiverEntry *)g_slice_alloc0 (sizeof (ReceiverEntry));
   receiver_entry->connection = connection;
 
   g_object_ref (G_OBJECT (connection));
@@ -178,15 +183,24 @@ create_receiver_entry (SoupWebsocketConnection * connection)
   g_signal_connect (G_OBJECT (connection), "message",
       G_CALLBACK (soup_websocket_message_cb), (gpointer) receiver_entry);
 
-  char const * format = "webrtcbin name=webrtcbin stun-server=stun://"
-    STUN_SERVER " "
-    "uridecodebin uri=%s ! videoconvert ! queue max-size-buffers=1 ! x264enc bitrate=600 speed-preset=ultrafast tune=zerolatency key-int-max=15 ! video/x-h264,profile=constrained-baseline ! queue max-size-time=100000000 ! h264parse ! "
-    "rtph264pay config-interval=-1 name=payloader ! "
-    "application/x-rtp,media=video,encoding-name=H264,payload="
-    RTP_PAYLOAD_TYPE " ! webrtcbin. ";
+  string source;
+  if (file_name)
+    source = "uridecodebin uri=%s ! ";
+  else
+    source = "videotestsrc is-live=true pattern=ball ! ";
 
+  string const format = "webrtcbin name=webrtcbin stun-server=stun://"s +
+    STUN_SERVER " " +
+    source +
+    "videoconvert ! queue max-size-buffers=1 ! x264enc bitrate=600 speed-preset=ultrafast tune=zerolatency key-int-max=15 ! video/x-h264,profile=constrained-baseline ! queue max-size-time=100000000 ! h264parse ! " +
+    "rtph264pay config-interval=-1 name=payloader ! " +
+    "application/x-rtp,media=video,encoding-name=H264,payload=" RTP_PAYLOAD_TYPE " ! "
+    "webrtcbin. ";
+  
   char pipe_desc[4096] = {0};
-  sprintf(pipe_desc, format, file_name);
+  sprintf(pipe_desc, format.c_str(), file_name);
+
+  g_print("pipeline: %s\n", pipe_desc);
 
   error = NULL;
   receiver_entry->pipeline =
@@ -510,7 +524,7 @@ soup_websocket_handler (G_GNUC_UNUSED SoupServer * server,
   ReceiverEntry *receiver_entry;
   GHashTable *receiver_entry_table = (GHashTable *) user_data;
 
-  g_print ("Processing new websocket connection %p", (gpointer) connection);
+  g_print ("Processing new websocket connection %p\n", (gpointer) connection);
 
   g_signal_connect (G_OBJECT (connection), "closed",
       G_CALLBACK (soup_websocket_closed_cb), (gpointer) receiver_entry_table);
@@ -553,6 +567,8 @@ exit_sighandler (gpointer user_data)
 int
 main (int argc, char *argv[])
 {
+  setenv("OPENSSL_CONF", "", 1);   // set OPENSSL_CONF="" to get WebRTC working against GStreamer 1.14 on Debian 10
+
   GMainLoop *mainloop;
   SoupServer *soup_server;
   GHashTable *receiver_entry_table;
@@ -560,12 +576,12 @@ main (int argc, char *argv[])
   setlocale (LC_ALL, "");
   gst_init (&argc, &argv);
 
-  if (argc > 1)
+  if (argc > 1) {
     file_name = argv[1];
-  else {
-    g_printerr("video file source URI (like 'file:///home/me/test.mp4') is a requirement\n");
-    return -1;
+    g_print("input: %s\n", file_name);
   }
+  else
+    g_print("input: ball pattern\n");
 
   receiver_entry_table =
       g_hash_table_new_full (g_direct_hash, g_direct_equal, NULL,
