@@ -2,6 +2,8 @@ cpp20 = Environment(
 	CXXFLAGS=['-std=c++2a'], 
 	CCFLAGS=['-Wall', '-ggdb3', '-Og'])
 
+cpp20.ParseConfig('pkg-config --libs --cflags tbb')
+
 cpp20.Program('reverse.cpp')
 cpp20.Program('transform.cpp')
 cpp20.Program('partition.cpp')
@@ -16,3 +18,4 @@ cpp20.Program('for_each.cpp')
 cpp20.Program('count.cpp')
 cpp20.Program('remove_if.cpp')
 cpp20.Program('remove_if_on_set.cpp')
+cpp20.Program('parallel_transform.cpp')
