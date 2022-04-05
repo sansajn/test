@@ -20,6 +20,7 @@ out/
 *.cxxflags
 *.includes
 .vscode/
+.qtc_clangd/
 
 # doc
 doc/html/

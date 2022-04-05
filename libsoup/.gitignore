@@ -1,4 +1,5 @@
 /test-libsoup.*
+.qtc_clangd
 /serve
 /websocket
 /websocket_nb
