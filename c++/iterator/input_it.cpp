@@ -1,16 +1,28 @@
 // Input iterator implementation sample.
 #include <algorithm>
 #include <utility>
+#include <iterator>
 #include <cmath>
 #include <cstdint>
 #include "png.hpp"
 using std::transform, std::pair, std::begin, std::end;
 
 //! Input iterator view implemenation.
-struct pixel_pos_view {
-	pixel_pos_view(size_t w, size_t h) : _pos{w, h} {}
+struct pixel_pos_view 
+	: public std::iterator<std::input_iterator_tag, pair<size_t, size_t>> {
+	
+	pixel_pos_view() : pixel_pos_view{0, 0} {}
+	
+	pixel_pos_view(size_t w, size_t h) 
+		: _w{w}, _h{h}, _pos{0, 0} 
+	{}
+
+	pair<size_t, size_t> const & operator*() {  // we do not want to allow modification there
+		return _pos;
+	}
 
 private:
+	size_t _w, _h;
 	pair<size_t, size_t> _pos;
 };
 
@@ -21,14 +33,15 @@ int main(int argc, char * argv[]) {
 
 	// input iterator requirements
 	pixel_pos_view pos1, pos2;
-	*pos1;  // access position as (x,y) pair
-	pos1->first;  // access x
-	++pos1;  // pre increment
-	pos1++;  // post increment
-	pos1 == pos2;  // equal operator
-	pos1 != pos2;  // not equal operator
-	pixel_pos_view pos3{pos1};  // copy constructor
+	// *pos1;  // access position as (x,y) pair
+	// pos1->first;  // access x
+	// ++pos1;  // pre increment
+	// pos1++;  // post increment
+	// pos1 == pos2;  // equal operator
+	// pos1 != pos2;  // not equal operator
+	// pixel_pos_view pos3{pos1};  // copy constructor
 
+/*
 	// input iterator final test
 	uint8_t pixels[w*h];  // grayscale pixels 
 	pixel_pos_view pos{w, h};
@@ -41,7 +54,8 @@ int main(int argc, char * argv[]) {
 		});
 
 	save_grayscale_png("input.png");
-	
+*/
+
 	return 0;
 }
 
