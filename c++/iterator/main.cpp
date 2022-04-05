@@ -20,6 +20,18 @@ void save_grayscale_png(uint8_t * pixels, size_t size, path const & as);
 int main(int argc, char * argv[]) {
 	constexpr size_t w = 400,
 		h = 300;
+
+	// input iterator requirements
+	pixel_pos_view pos1, pos2;
+	*pos1;  // access position as (x,y) pair
+	pos1->first;  // access x
+	++pos1;  // pre increment
+	pos1++;  // post increment
+	pos1 == pos2;  // equal operator
+	pos1 != pos2;  // not equal operator
+	pixel_pos_view pos3{pos1};  // copy constructor
+
+	// input iterator final test
 	uint8_t pixels[w*h];  // grayscale pixels 
 	pixel_pos_view pos{w, h};
 	transform(begin(pos), end(pos), begin(pixels),
