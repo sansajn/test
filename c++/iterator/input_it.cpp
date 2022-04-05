@@ -1,11 +1,10 @@
 // Input iterator implementation sample.
 #include <algorithm>
-#include <filesystem>
 #include <utility>
 #include <cmath>
 #include <cstdint>
+#include "png.hpp"
 using std::transform, std::pair, std::begin, std::end;
-using std::filesystem::path;
 
 //! Input iterator view implemenation.
 struct pixel_pos_view {
@@ -15,7 +14,6 @@ private:
 	pair<size_t, size_t> _pos;
 };
 
-void save_grayscale_png(uint8_t * pixels, size_t size, path const & as);
 
 int main(int argc, char * argv[]) {
 	constexpr size_t w = 400,
@@ -47,6 +45,3 @@ int main(int argc, char * argv[]) {
 	return 0;
 }
 
-void save_grayscale_png(uint8_t * pixels, size_t size, path const & as) {
-
-}
