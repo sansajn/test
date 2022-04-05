@@ -2,4 +2,4 @@ cpp17 = Environment(
 	CXXFLAGS=['-std=c++17'],
 	CCFLAGS=['-Wall', '-ggdb3', '-O0'])
 
-cpp17.Program('main.cpp')
+cpp17.Program('input_it.cpp')
