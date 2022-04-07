@@ -27,12 +27,25 @@ struct pixel_pos_view
 		return &_pos;
 	}
 
-	void operator++() {}
+	void operator++() {
+		auto & [c, r] = _pos;
+		c += 1;
+		if (c >= _w) {
+			c = 0;
 
-	void operator++(int) {}
+			r += 1;
+			if (r >= _h)
+				r = _h;  // end of range
+		}
+	}
 
+	void operator++(int) {
+		++(*this);
+	}
+
+	//! comparison for for-each loop (works only for it == end(r) where r is pixel_pos_view instance)
 	bool operator==(pixel_pos_view const & rhs) {
-		return false;
+		return _h == _pos.second && (rhs._w == 0 && rhs._h == 0);
 	}
 
 	bool operator!=(pixel_pos_view const & rhs) {
@@ -41,7 +54,7 @@ struct pixel_pos_view
 
 private:
 	size_t _w, _h;
-	pair<size_t, size_t> _pos;
+	pair<size_t, size_t> _pos;  //!< (column, row)
 };
 
 
@@ -57,6 +70,49 @@ TEST_CASE("input iterator should allow following expressions",
 	pos1 != pos2;  // not equal operator
 	pixel_pos_view pos3{pos1};  // copy constructor
 }
+
+TEST_CASE("following should be true for input itetrator", 
+	"[input-iterator]") {
+
+		pixel_pos_view pos1{2, 3};
+
+		SECTION("creation") {
+			REQUIRE((*pos1 == pair<size_t, size_t>{0,0}));
+			REQUIRE(pos1->first == 0);
+		}
+		
+		SECTION("pre increment") {
+			++pos1;
+			REQUIRE((*pos1 == pair<size_t, size_t>{1,0}));
+			++pos1;
+			++pos1;
+			REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
+		}
+
+		SECTION("post increment") {
+			++pos1;
+			REQUIRE((*pos1 == pair<size_t, size_t>{1,0}));
+			++pos1;
+			++pos1;
+			REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
+		}
+
+		SECTION("equal/not equall operators") {
+			pixel_pos_view pos2;
+			REQUIRE(pos1 != pos2);
+
+			pixel_pos_view pos3;
+			REQUIRE(pos2 == pos3);
+		}
+
+		SECTION("copy constructor") {
+			++pos1; ++pos1; ++pos1;
+			pixel_pos_view pos2{pos1};
+			REQUIRE((*pos2 == pair<size_t, size_t>{1,1}));
+		}
+}
+
+
 
 /*
 int main(int argc, char * argv[]) {
