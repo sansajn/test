@@ -9,9 +9,6 @@
 #include "image.hpp"
 using std::transform, std::pair, std::begin, std::end;
 
-#include <iostream>
-using std::cout;
-
 //! Input iterator view implemenation.
 struct pixel_pos_view 
 	: public std::iterator<std::input_iterator_tag, pair<size_t, size_t>> {
@@ -30,7 +27,7 @@ struct pixel_pos_view
 		return &_pos;
 	}
 
-	void operator++() {
+	pixel_pos_view & operator++() {
 		auto & [c, r] = _pos;
 		c += 1;
 		if (c >= _w) {
@@ -40,6 +37,7 @@ struct pixel_pos_view
 			if (r >= _h)
 				r = _h;  // end of range
 		}
+		return *this;
 	}
 
 	void operator++(int) {
@@ -93,6 +91,7 @@ TEST_CASE("following should be true for input itetrator",
 		++pos1;
 		++pos1;
 		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
+		REQUIRE((*(++pos1) == pair<size_t, size_t>{0,2}));
 	}
 
 	SECTION("post increment") {

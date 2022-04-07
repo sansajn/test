@@ -1,3 +1,4 @@
+# dependencies: libmagick++-dev
 cpp17 = Environment(
 	CXXFLAGS=['-std=c++17'],
 	CCFLAGS=['-Wall', '-ggdb3', '-O0'])
@@ -6,3 +7,4 @@ cpp17.ParseConfig('pkg-config --cflags --libs Magick++')
 
 cpp17.Program(['test_image.cpp', 'image.cpp'])
 cpp17.Program(['input_it.cpp', 'image.cpp'])
+cpp17.Program(['forward_it.cpp', 'image.cpp'])

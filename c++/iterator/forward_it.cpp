@@ -12,7 +12,7 @@ using std::transform, std::pair, std::begin, std::end;
 #include <iostream>
 using std::cout;
 
-//! Input iterator view implemenation.
+//! Forward iterator view implemenation.
 struct pixel_pos_view 
 	: public std::iterator<std::input_iterator_tag, pair<size_t, size_t>> {
 	
@@ -64,8 +64,8 @@ private:
 };
 
 
-TEST_CASE("input iterator should allow following expressions", 
-	"[input-iterator]") {
+TEST_CASE("forward iterator should allow following expressions",
+	"[x][forward-iterator]") {
 	
 	pixel_pos_view pos1, pos2;
 	*pos1;  // access position as (x,y) pair
