@@ -3,7 +3,7 @@
 
 env = Environment(
 	CXXFLAGS=['-std=c++20'], 
-	CCFLAGS=['-g', '-O0', '-Wall']
+	CCFLAGS=['-ggdb3', '-O0', '-Wall']
 )
 
 env.ParseConfig('pkg-config --cflags --libs Magick++')
@@ -14,3 +14,4 @@ env.Program('pixels.cpp')
 env.Program('attributes.cpp')
 env.Program('file_vs_memory.cpp')
 env.Program('pixels_to_image.cpp')
+env.Program('grayscale_image.cpp')
