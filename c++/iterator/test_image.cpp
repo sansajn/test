@@ -1,7 +1,7 @@
 #include <filesystem>
 #define CATCH_CONFIG_MAIN
 #include <catch.hpp>
-#include "png.hpp"
+#include "image.hpp"
 
 namespace fs = std::filesystem;
 
@@ -26,7 +26,7 @@ TEST_CASE("we can save grayscale pixel array as png file",
 	if (fs::exists(out_path))
 		fs::remove(out_path);
 
-	save_grayscale_png(pixels, w, h, out_path);
+	save_grayscale(pixels, w, h, out_path);
 
 	REQUIRE(fs::exists(out_path));
 }

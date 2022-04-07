@@ -4,5 +4,5 @@ cpp17 = Environment(
 
 cpp17.ParseConfig('pkg-config --cflags --libs Magick++')
 
-cpp17.Program(['test_png.cpp', 'png.cpp'])
-cpp17.Program(['input_it.cpp', 'png.cpp'])
+cpp17.Program(['test_image.cpp', 'image.cpp'])
+cpp17.Program(['input_it.cpp', 'image.cpp'])
