@@ -52,6 +52,9 @@ struct pixel_pos_view
 		return !(*this == rhs);
 	}
 
+	pixel_pos_view begin() {return *this;}
+	pixel_pos_view end() {return {};}
+
 private:
 	size_t _w, _h;
 	pair<size_t, size_t> _pos;  //!< (column, row)
@@ -74,44 +77,71 @@ TEST_CASE("input iterator should allow following expressions",
 TEST_CASE("following should be true for input itetrator", 
 	"[input-iterator]") {
 
-		pixel_pos_view pos1{2, 3};
+	pixel_pos_view pos1{2, 3};
 
-		SECTION("creation") {
-			REQUIRE((*pos1 == pair<size_t, size_t>{0,0}));
-			REQUIRE(pos1->first == 0);
-		}
-		
-		SECTION("pre increment") {
-			++pos1;
-			REQUIRE((*pos1 == pair<size_t, size_t>{1,0}));
-			++pos1;
-			++pos1;
-			REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
-		}
+	SECTION("creation") {
+		REQUIRE((*pos1 == pair<size_t, size_t>{0,0}));
+		REQUIRE(pos1->first == 0);
+	}
+	
+	SECTION("pre increment") {
+		++pos1;
+		REQUIRE((*pos1 == pair<size_t, size_t>{1,0}));
+		++pos1;
+		++pos1;
+		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
+	}
 
-		SECTION("post increment") {
-			++pos1;
-			REQUIRE((*pos1 == pair<size_t, size_t>{1,0}));
-			++pos1;
-			++pos1;
-			REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
-		}
+	SECTION("post increment") {
+		++pos1;
+		REQUIRE((*pos1 == pair<size_t, size_t>{1,0}));
+		++pos1;
+		++pos1;
+		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
+	}
 
-		SECTION("equal/not equall operators") {
-			pixel_pos_view pos2;
-			REQUIRE(pos1 != pos2);
+	SECTION("equal/not equall operators") {
+		pixel_pos_view pos2;
+		REQUIRE(pos1 != pos2);
 
-			pixel_pos_view pos3;
-			REQUIRE(pos2 == pos3);
-		}
+		pixel_pos_view pos3;
+		REQUIRE(pos2 == pos3);
+	}
 
-		SECTION("copy constructor") {
-			++pos1; ++pos1; ++pos1;
-			pixel_pos_view pos2{pos1};
-			REQUIRE((*pos2 == pair<size_t, size_t>{1,1}));
-		}
+	SECTION("copy constructor") {
+		++pos1; ++pos1; ++pos1;
+		pixel_pos_view pos2{pos1};
+		REQUIRE((*pos2 == pair<size_t, size_t>{1,1}));
+	}
 }
 
+TEST_CASE("we can convert view into iterator", 
+	"[input-iterator]") {
+
+	pixel_pos_view pos;
+	begin(pos);
+	end(pos);
+}
+
+
+TEST_CASE("we can use transform with input iterator", 
+	"[input-iterator][transform]") {
+
+	constexpr size_t w = 400,
+		h = 300;
+
+	uint8_t pixels[w*h] = {0};  // grayscale pixels 
+	pixel_pos_view pos{w, h};
+	transform(begin(pos), end(pos), begin(pixels),
+		[w, h](pair<size_t, size_t> const & pos){  // (column, row) position
+			double x = pos.first / double(w),
+				y = pos.second / double(h),
+				distance = sqrt(x*x + y*y);
+			return static_cast<uint8_t>(255.0 * distance/sqrt(2.0));
+		});
+
+	save_grayscale_png(pixels, w*h, "input_gradient.png");
+}
 
 
 /*

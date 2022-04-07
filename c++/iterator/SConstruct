@@ -2,4 +2,7 @@ cpp17 = Environment(
 	CXXFLAGS=['-std=c++17'],
 	CCFLAGS=['-Wall', '-ggdb3', '-O0'])
 
-cpp17.Program('input_it.cpp')
+cpp17.ParseConfig('pkg-config --cflags --libs Magick++')
+
+cpp17.Program(['test_png.cpp', 'png.cpp'])
+cpp17.Program(['input_it.cpp', 'png.cpp'])
