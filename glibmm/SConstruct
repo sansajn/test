@@ -5,3 +5,4 @@ cpp17 = Environment(CXXFLAGS=['-std=c++17'],
 cpp17.ParseConfig('pkg-config --cflags --libs glibmm-2.4')
 
 cpp17.Program('main_loop.cpp')
+cpp17.Program('signal_timeout.cpp')
