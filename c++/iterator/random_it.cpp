@@ -177,7 +177,7 @@ TEST_CASE("random access iterator should allow following expressions",
 }
 
 TEST_CASE("following should work for bidirectional iterator",
-	"[bidirectional][iterator]") {
+	"[random][iterator]") {
 
 	pixel_pos_view pos1{2,3};
 
@@ -267,6 +267,17 @@ TEST_CASE("following should work for bidirectional iterator",
 		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
 		REQUIRE((*(pos1--) == pair<size_t, size_t>{1,1}));
 	}
+
+	SECTION("n-th element access") {}
+	SECTION("step n elements forward") {}
+	SECTION("step n elements backward") {}
+	SECTION("n-th next element") {}
+	SECTION("n-th previous element") {}
+	SECTION("iterator distance") {}
+	SECTION("less operator") {}
+	SECTION("grater operator") {}
+	SECTION("less-equal operator") {}
+	SECTION("greater-equal operator") {}
 }
 
 TEST_CASE("we can convert view into iterator",
