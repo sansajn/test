@@ -45,11 +45,11 @@ struct pixel_pos_view
 	}
 
 	//! comparison for for-each loop (works only for it == end(r) where r is pixel_pos_view instance)
-	bool operator==(pixel_pos_view const & rhs) {
+	bool operator==(pixel_pos_view const & rhs) const {
 		return _h == _pos.second && (rhs._w == 0 && rhs._h == 0);
 	}
 
-	bool operator!=(pixel_pos_view const & rhs) {
+	bool operator!=(pixel_pos_view const & rhs) const {
 		return !(*this == rhs);
 	}
 
@@ -108,6 +108,13 @@ TEST_CASE("following should be true for input itetrator",
 
 		pixel_pos_view pos3;
 		REQUIRE(pos2 == pos3);
+
+		pixel_pos_view pos4{1,1};
+		++pos4;
+		++pos4;
+		++pos4;  // (1,1)
+		++pos4;  // {}
+		REQUIRE(pos4 == pixel_pos_view{});
 	}
 
 	SECTION("copy constructor") {

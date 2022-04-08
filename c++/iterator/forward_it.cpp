@@ -30,7 +30,7 @@ struct pixel_pos_view
 		return &_pos;
 	}
 
-	void operator++() {
+	pixel_pos_view & operator++() {
 		auto & [c, r] = _pos;
 		c += 1;
 		if (c >= _w) {
@@ -38,20 +38,21 @@ struct pixel_pos_view
 
 			r += 1;
 			if (r >= _h)
-				r = _h;  // end of range
+				r = _h;  // end of range _pos=(0, _h)
 		}
+		return *this;
 	}
 
 	void operator++(int) {
 		++(*this);
 	}
 
-	//! comparison for for-each loop (works only for it == end(r) where r is pixel_pos_view instance)
-	bool operator==(pixel_pos_view const & rhs) {
-		return _h == _pos.second && (rhs._w == 0 && rhs._h == 0);
+	bool operator==(pixel_pos_view const & rhs) const {
+		return (_w == rhs._w && _h == rhs._h && _pos == rhs._pos)
+			|| (_h == _pos.second && rhs._h == rhs._pos.second);  // end-iterator
 	}
 
-	bool operator!=(pixel_pos_view const & rhs) {
+	bool operator!=(pixel_pos_view const & rhs) const {
 		return !(*this == rhs);
 	}
 
@@ -67,24 +68,29 @@ private:
 TEST_CASE("forward iterator should allow following expressions",
 	"[x][forward-iterator]") {
 	
-	pixel_pos_view pos1, pos2;
+	pixel_pos_view pos1;  // default constructor
 	*pos1;  // access position as (x,y) pair
 	pos1->first;  // access x
 	++pos1;  // pre increment
 	pos1++;  // post increment
+	pixel_pos_view pos2;
 	pos1 == pos2;  // equal operator
 	pos1 != pos2;  // not equal operator
 	pixel_pos_view pos3{pos1};  // copy constructor
+	pos1 = pos2;  // assign operator
 }
 
 TEST_CASE("following should be true for input itetrator", 
-	"[input-iterator]") {
+	"[forward-iterator]") {
 
 	pixel_pos_view pos1{2, 3};
 
 	SECTION("creation") {
 		REQUIRE((*pos1 == pair<size_t, size_t>{0,0}));
 		REQUIRE(pos1->first == 0);
+
+		pixel_pos_view pos2;
+		REQUIRE((*pos2 == pair<size_t, size_t>{0,0}));
 	}
 	
 	SECTION("pre increment") {
@@ -93,6 +99,7 @@ TEST_CASE("following should be true for input itetrator",
 		++pos1;
 		++pos1;
 		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
+		REQUIRE((*(++pos1) == pair<size_t, size_t>{0,2}));
 	}
 
 	SECTION("post increment") {
@@ -104,11 +111,19 @@ TEST_CASE("following should be true for input itetrator",
 	}
 
 	SECTION("equal/not equall operators") {
-		pixel_pos_view pos2;
+		pixel_pos_view pos2{2, 3};
+		REQUIRE(pos1 == pos2);
+		++pos1;
 		REQUIRE(pos1 != pos2);
+		++pos2;
+		REQUIRE(pos1 == pos2);
 
-		pixel_pos_view pos3;
-		REQUIRE(pos2 == pos3);
+		pixel_pos_view pos3{1,1};
+		++pos3;
+		++pos3;
+		++pos3;  // (1,1)
+		++pos3;  // {}
+		REQUIRE(pos3 == pixel_pos_view{});
 	}
 
 	SECTION("copy constructor") {
@@ -116,14 +131,25 @@ TEST_CASE("following should be true for input itetrator",
 		pixel_pos_view pos2{pos1};
 		REQUIRE((*pos2 == pair<size_t, size_t>{1,1}));
 	}
+
+	SECTION("assign operator") {
+		pixel_pos_view pos2;
+		REQUIRE(pos1 != pos2);
+		pos2 = pos1;
+		REQUIRE(pos1 == pos2);
+		++pos1;
+		REQUIRE(pos1 != pos2);
+		++pos2;
+		REQUIRE(pos1 == pos2);
+	}
 }
 
 TEST_CASE("we can convert view into iterator", 
 	"[input-iterator]") {
 
 	pixel_pos_view pos;
-	begin(pos);
-	end(pos);
+	REQUIRE((*begin(pos) == pair<size_t, size_t>(0, 0)));
+	REQUIRE(end(pos) == pixel_pos_view{});
 }
 
 
