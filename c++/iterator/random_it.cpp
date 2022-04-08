@@ -76,6 +76,46 @@ struct pixel_pos_view
 		return previous;
 	}
 
+	value_type operator[](int n) {  //!< element access is not possibel, we can only return its value
+		return {};  // TODO: implement
+	}
+
+	pixel_pos_view & operator+=(int n) {
+		return *this;  // TODO: implement
+	}
+
+	pixel_pos_view & operator-=(int n) {
+		return *this;  // TODO: implement
+	}
+
+	pixel_pos_view operator+(int n) const {
+		return {};  // TODO: implement
+	}
+
+	pixel_pos_view operator-(int n) const {
+		return {};  // TODO: implement
+	}
+
+	difference_type operator-(pixel_pos_view const & pos) {
+		return 0;  // TODO: implement
+	}
+
+	bool operator<(pixel_pos_view const & pos) {
+		return false;  // TODO: implement
+	}
+
+	bool operator>(pixel_pos_view const & pos) {
+		return false;  // TODO: implement
+	}
+
+	bool operator<=(pixel_pos_view const & pos) {
+		return false;  // TODO: implement
+	}
+
+	bool operator>=(pixel_pos_view const & pos) {
+		return false;  // TODO: implement
+	}
+
 	bool operator==(pixel_pos_view const & rhs) const {
 		return (_w == rhs._w && _h == rhs._h && _pos == rhs._pos)
 			|| (_h == _pos.second && rhs._h == rhs._pos.second);  // end-iterator
@@ -93,6 +133,13 @@ private:
 	pair<size_t, size_t> _pos;  //!< (column, row)
 };  // pixel_pos_view
 
+pixel_pos_view operator+(int n, pixel_pos_view const & pos) {
+	return pos+n;
+}
+
+pixel_pos_view operator-(int n, pixel_pos_view const & pos) {
+	return pos-n;
+}
 
 TEST_CASE("random access iterator should allow following expressions",
 	"[random][iterator]") {
