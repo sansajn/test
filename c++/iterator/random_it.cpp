@@ -77,7 +77,7 @@ struct pixel_pos_view
 	}
 
 	value_type operator[](int n) {  //!< element access is not possibel, we can only return its value
-		return {};  // TODO: implement
+		return pair<size_t, size_t>{n%_w, n/_w};
 	}
 
 	pixel_pos_view & operator+=(int n) {
@@ -268,8 +268,13 @@ TEST_CASE("following should work for bidirectional iterator",
 		REQUIRE((*(pos1--) == pair<size_t, size_t>{1,1}));
 	}
 
-	SECTION("n-th element access") {}
+	SECTION("n-th element access") {
+		REQUIRE((pos1[3] == pair<size_t, size_t>{1,1}));
+		REQUIRE((pos1[5] == pair<size_t, size_t>{1,2}));
+	}
+
 	SECTION("step n elements forward") {}
+
 	SECTION("step n elements backward") {}
 	SECTION("n-th next element") {}
 	SECTION("n-th previous element") {}
@@ -294,8 +299,8 @@ uint8_t gradient_for(pair<size_t, size_t> pos, size_t w, size_t h) {
 	return static_cast<uint8_t>(ceil(255.0 * distance/sqrt(2.0)));
 }
 
-TEST_CASE("we can use transform with bidirectional iterator",
-	"[bidirectional][iterator][transform]") {
+TEST_CASE("we can use transform with random iterator",
+	"[random][iterator][transform]") {
 
 	constexpr size_t w = 400,
 		h = 300;
@@ -311,8 +316,8 @@ TEST_CASE("we can use transform with bidirectional iterator",
 	REQUIRE(pixels[w*h-1] == 0xff);
 }
 
-TEST_CASE("we can use parallel transform with bidirectional iterator",
-	"[idirectional][iterator][parallel][transform]") {
+TEST_CASE("we can use parallel transform with random iterator",
+	"[random][iterator][parallel][transform]") {
 
 	constexpr size_t w = 400,
 		h = 300;
