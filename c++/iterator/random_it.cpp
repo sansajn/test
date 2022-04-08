@@ -15,7 +15,7 @@ path const gradient_image = "random_gradient.png";
 
 //! Random access iterator view implemenation.
 struct pixel_pos_view
-	: public std::iterator<std::forward_iterator_tag, pair<size_t, size_t>> {
+	: public std::iterator<std::random_access_iterator_tag, pair<size_t, size_t>> {
 
 	pixel_pos_view() : pixel_pos_view{0, 0} {}
 
@@ -156,7 +156,7 @@ TEST_CASE("we can convert view into iterator",
 	REQUIRE(end(pos) == pixel_pos_view{});
 }
 
-uint8_t gradient_for(pair<size_t, size_t> pos, size_t w, size_t h) {
+uint8_t gradient_for(pair<size_t, size_t> pos, size_t w, size_t h) {  // TODO: share implementation
 	double x = pos.first / double(w),
 		y = pos.second / double(h),
 		distance = sqrt(x*x + y*y);

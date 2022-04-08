@@ -1,4 +1,4 @@
-// Forward iterator implementation sample.
+// Bidirectional iterator implementation sample.
 #include <algorithm>
 #include <utility>
 #include <iterator>
@@ -11,16 +11,16 @@
 #include "image.hpp"
 using std::transform, std::pair, std::begin, std::end, std::filesystem::path;
 
-path const gradient_image = "forward_gradient.png";
+path const gradient_image = "bidi_gradient.png";
 
-//! Forward iterator view implemenation.
-struct pixel_pos_view 
-	: public std::iterator<std::forward_iterator_tag, pair<size_t, size_t>> {
-	
+//! Bidirectional iterator view implemenation.
+struct pixel_pos_view
+	: public std::iterator<std::bidirectional_iterator_tag, pair<size_t, size_t>> {
+
 	pixel_pos_view() : pixel_pos_view{0, 0} {}
-	
-	pixel_pos_view(size_t w, size_t h) 
-		: _w{w}, _h{h}, _pos{0, 0} 
+
+	pixel_pos_view(size_t w, size_t h)
+		: _w{w}, _h{h}, _pos{0, 0}
 	{}
 
 	reference operator*() {
@@ -50,6 +50,30 @@ struct pixel_pos_view
 		return previous;
 	}
 
+	pixel_pos_view & operator--() {
+		assert(_w > 0 && _h > 0);
+		assert(_h != _pos.second);  // end of range iterator
+
+		auto & [c, r] = _pos;
+		if (c == 0 && r == 0) {
+			r = _h;  // end of range _pos=(0, _h)
+			return *this;
+		}
+		else {
+			if (c == 0)
+				r -= 1;  // it is safe, r > 0 by defnition there
+			else
+				c -= 1;
+		}
+		return *this;
+	}
+
+	pixel_pos_view operator--(int) {
+		auto previous = *this;
+		--(*this);
+		return previous;
+	}
+
 	bool operator==(pixel_pos_view const & rhs) const {
 		return (_w == rhs._w && _h == rhs._h && _pos == rhs._pos)
 			|| (_h == _pos.second && rhs._h == rhs._pos.second);  // end-iterator
@@ -68,9 +92,9 @@ private:
 };
 
 
-TEST_CASE("forward iterator should allow following expressions",
-	"[forward-iterator]") {
-	
+TEST_CASE("fidirectional iterator should allow following expressions",
+	"[forward][iterator]") {
+
 	pixel_pos_view pos1;  // default constructor
 	*pos1;  // access position as (x,y) pair
 	pos1->first;  // access x
@@ -81,10 +105,12 @@ TEST_CASE("forward iterator should allow following expressions",
 	pos1 != pos2;  // not equal operator
 	pixel_pos_view pos3{pos1};  // copy constructor
 	pos1 = pos2;  // assign operator
+	--pos1;  // pre decrement
+	pos1--;  // post decrement
 }
 
-TEST_CASE("following should be true for forward itetrator",
-	"[forward][iterator]") {
+TEST_CASE("following should be true for bidirectional itetrator",
+	"[bidirectional][iterator]") {
 
 	pixel_pos_view pos1{2, 3};
 
@@ -95,7 +121,7 @@ TEST_CASE("following should be true for forward itetrator",
 		pixel_pos_view pos2;
 		REQUIRE((*pos2 == pair<size_t, size_t>{0,0}));
 	}
-	
+
 	SECTION("pre increment") {
 		++pos1;
 		REQUIRE((*pos1 == pair<size_t, size_t>{1,0}));
@@ -146,9 +172,12 @@ TEST_CASE("following should be true for forward itetrator",
 		++pos2;
 		REQUIRE(pos1 == pos2);
 	}
+
+	SECTION("pre decrement") {}
+	SECTION("post decrement") {}
 }
 
-TEST_CASE("we can convert view into iterator", 
+TEST_CASE("we can convert view into iterator",
 	"[input-iterator]") {
 
 	pixel_pos_view pos;
@@ -169,7 +198,7 @@ TEST_CASE("we can use transform with forward iterator",
 	constexpr size_t w = 400,
 		h = 300;
 
-	uint8_t pixels[w*h] = {0};  // grayscale pixels 
+	uint8_t pixels[w*h] = {0};  // grayscale pixels
 	pixel_pos_view pos{w, h};
 	transform(begin(pos), end(pos), begin(pixels),
 		[w, h](pair<size_t, size_t> const & pos){

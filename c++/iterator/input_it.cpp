@@ -66,7 +66,7 @@ private:
 
 
 TEST_CASE("input iterator should allow following expressions", 
-	"[input-iterator]") {
+	"[input][iterator]") {
 	
 	pixel_pos_view pos1, pos2;
 	*pos1;  // access position as (x,y) pair
@@ -79,7 +79,7 @@ TEST_CASE("input iterator should allow following expressions",
 }
 
 TEST_CASE("following should be true for input itetrator", 
-	"[input-iterator]") {
+	"[input][iterator]") {
 
 	pixel_pos_view pos1{2, 3};
 
