@@ -43,8 +43,10 @@ struct pixel_pos_view
 		return *this;
 	}
 
-	void operator++(int) {  // TODO: rturn old value
+	pixel_pos_view operator++(int) {
+		auto previous = *this;
 		++(*this);
+		return previous;
 	}
 
 	bool operator==(pixel_pos_view const & rhs) const {
@@ -66,7 +68,7 @@ private:
 
 
 TEST_CASE("forward iterator should allow following expressions",
-	"[x][forward-iterator]") {
+	"[forward-iterator]") {
 	
 	pixel_pos_view pos1;  // default constructor
 	*pos1;  // access position as (x,y) pair
@@ -105,7 +107,8 @@ TEST_CASE("following should be true for input itetrator",
 	SECTION("post increment") {
 		++pos1;
 		REQUIRE((*pos1 == pair<size_t, size_t>{1,0}));
-		++pos1;
+		pixel_pos_view pos2 = pos1++;
+		REQUIRE((*pos2 == pair<size_t, size_t>{1,0}));
 		++pos1;
 		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
 	}

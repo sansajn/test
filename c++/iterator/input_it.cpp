@@ -98,10 +98,10 @@ TEST_CASE("following should be true for input itetrator",
 	}
 
 	SECTION("post increment") {
-		++pos1;
+		pos1++;
 		REQUIRE((*pos1 == pair<size_t, size_t>{1,0}));
-		++pos1;
-		++pos1;
+		pos1++;
+		pos1++;
 		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
 	}
 
