@@ -22,11 +22,11 @@ struct pixel_pos_view
 		: _w{w}, _h{h}, _pos{0, 0} 
 	{}
 
-	pair<size_t, size_t> const & operator*() {  // we do not want to allow modification there
+	reference operator*() {  // we do not want to allow modification there
 		return _pos;
 	}
 
-	pair<size_t, size_t> const * operator->() {
+	pointer operator->() {
 		return &_pos;
 	}
 

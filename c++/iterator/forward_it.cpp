@@ -23,11 +23,11 @@ struct pixel_pos_view
 		: _w{w}, _h{h}, _pos{0, 0} 
 	{}
 
-	pair<size_t, size_t> /*const*/ & operator*() {  // we do not want to allow modification there
+	reference operator*() {
 		return _pos;
 	}
 
-	pair<size_t, size_t> /*const*/ * operator->() {
+	pointer operator->() {
 		return &_pos;
 	}
 
@@ -156,6 +156,13 @@ TEST_CASE("we can convert view into iterator",
 	REQUIRE(end(pos) == pixel_pos_view{});
 }
 
+uint8_t gradient_for(pair<size_t, size_t> pos, size_t w, size_t h) {
+	double x = pos.first / double(w),
+		y = pos.second / double(h),
+		distance = sqrt(x*x + y*y);
+	return static_cast<uint8_t>(ceil(255.0 * distance/sqrt(2.0)));
+}
+
 TEST_CASE("we can use transform with forward iterator",
 	"[input-iterator][transform]") {
 
@@ -165,11 +172,8 @@ TEST_CASE("we can use transform with forward iterator",
 	uint8_t pixels[w*h] = {0};  // grayscale pixels 
 	pixel_pos_view pos{w, h};
 	transform(begin(pos), end(pos), begin(pixels),
-		[w, h](pair<size_t, size_t> const & pos){  // (column, row) position
-			double x = pos.first / double(w),
-				y = pos.second / double(h),
-				distance = sqrt(x*x + y*y);
-			return static_cast<uint8_t>(ceil(255.0 * distance/sqrt(2.0)));
+		[w, h](pair<size_t, size_t> const & pos){
+			return gradient_for(pos, w, h);
 		});
 
 	REQUIRE(pixels[0] == 0x0);
@@ -186,10 +190,7 @@ TEST_CASE("we can use parallel transform with forward iterator",
 	pixel_pos_view pos{w, h};
 	transform(std::execution::seq, begin(pos), end(pos), begin(pixels),
 		[w, h](pair<size_t, size_t> const & pos){  // (column, row) position
-			double x = pos.first / double(w),
-				y = pos.second / double(h),
-				distance = sqrt(x*x + y*y);
-			return static_cast<uint8_t>(ceil(255.0 * distance/sqrt(2.0)));
+			return gradient_for(pos, w, h);
 		});
 
 	REQUIRE(pixels[0] == 0x0);
