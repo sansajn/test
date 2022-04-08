@@ -1,9 +1,9 @@
-# dependencies: libmagick++-dev
+# dependencies: libmagick++-dev libtbb-dev (for parallel algorithms)
 cpp17 = Environment(
 	CXXFLAGS=['-std=c++17'],
 	CCFLAGS=['-Wall', '-ggdb3', '-O0'])
 
-cpp17.ParseConfig('pkg-config --cflags --libs Magick++')
+cpp17.ParseConfig('pkg-config --cflags --libs Magick++ tbb')
 
 cpp17.Program(['test_image.cpp', 'image.cpp'])
 cpp17.Program(['input_it.cpp', 'image.cpp'])

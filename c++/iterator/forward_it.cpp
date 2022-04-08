@@ -3,6 +3,7 @@
 #include <utility>
 #include <iterator>
 #include <filesystem>
+#include <execution>
 #include <cmath>
 #include <cstdint>
 #define CATCH_CONFIG_MAIN
@@ -14,7 +15,7 @@ path const gradient_image = "forward_gradient.png";
 
 //! Forward iterator view implemenation.
 struct pixel_pos_view 
-	: public std::iterator<std::input_iterator_tag, pair<size_t, size_t>> {
+	: public std::iterator<std::forward_iterator_tag, pair<size_t, size_t>> {
 	
 	pixel_pos_view() : pixel_pos_view{0, 0} {}
 	
@@ -22,11 +23,11 @@ struct pixel_pos_view
 		: _w{w}, _h{h}, _pos{0, 0} 
 	{}
 
-	pair<size_t, size_t> const & operator*() {  // we do not want to allow modification there
+	pair<size_t, size_t> /*const*/ & operator*() {  // we do not want to allow modification there
 		return _pos;
 	}
 
-	pair<size_t, size_t> const * operator->() {
+	pair<size_t, size_t> /*const*/ * operator->() {
 		return &_pos;
 	}
 
@@ -155,8 +156,7 @@ TEST_CASE("we can convert view into iterator",
 	REQUIRE(end(pos) == pixel_pos_view{});
 }
 
-
-TEST_CASE("we can use transform with input iterator", 
+TEST_CASE("we can use transform with forward iterator",
 	"[input-iterator][transform]") {
 
 	constexpr size_t w = 400,
@@ -165,6 +165,26 @@ TEST_CASE("we can use transform with input iterator",
 	uint8_t pixels[w*h] = {0};  // grayscale pixels 
 	pixel_pos_view pos{w, h};
 	transform(begin(pos), end(pos), begin(pixels),
+		[w, h](pair<size_t, size_t> const & pos){  // (column, row) position
+			double x = pos.first / double(w),
+				y = pos.second / double(h),
+				distance = sqrt(x*x + y*y);
+			return static_cast<uint8_t>(ceil(255.0 * distance/sqrt(2.0)));
+		});
+
+	REQUIRE(pixels[0] == 0x0);
+	REQUIRE(pixels[w*h-1] == 0xff);
+}
+
+TEST_CASE("we can use parallel transform with forward iterator",
+	"[input-iterator][parallel][transform]") {
+
+	constexpr size_t w = 400,
+		h = 300;
+
+	uint8_t pixels[w*h] = {0};  // grayscale pixels
+	pixel_pos_view pos{w, h};
+	transform(std::execution::seq, begin(pos), end(pos), begin(pixels),
 		[w, h](pair<size_t, size_t> const & pos){  // (column, row) position
 			double x = pos.first / double(w),
 				y = pos.second / double(h),
