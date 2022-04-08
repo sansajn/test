@@ -50,6 +50,32 @@ struct pixel_pos_view
 		return previous;
 	}
 
+	pixel_pos_view & operator--() {
+		assert(_w > 0 && _h > 0);
+		assert(_h != _pos.second);  // end of range iterator
+
+		auto & [c, r] = _pos;
+		if (c == 0 && r == 0) {
+			r = _h;  // end of range _pos=(0, _h)
+			return *this;
+		}
+		else {
+			if (c == 0) {
+				r -= 1;  // it is safe, r > 0 by defnition there
+				c = _w-1;
+			}
+			else
+				c -= 1;
+		}
+		return *this;
+	}
+
+	pixel_pos_view operator--(int) {
+		auto previous = *this;
+		--(*this);
+		return previous;
+	}
+
 	bool operator==(pixel_pos_view const & rhs) const {
 		return (_w == rhs._w && _h == rhs._h && _pos == rhs._pos)
 			|| (_h == _pos.second && rhs._h == rhs._pos.second);  // end-iterator
@@ -65,11 +91,11 @@ struct pixel_pos_view
 private:
 	size_t _w, _h;
 	pair<size_t, size_t> _pos;  //!< (column, row)
-};
+};  // pixel_pos_view
 
 
-TEST_CASE("forward iterator should allow following expressions",
-	"[forward-iterator]") {
+TEST_CASE("random access iterator should allow following expressions",
+	"[random][iterator]") {
 
 	pixel_pos_view pos1;  // default constructor
 	*pos1;  // access position as (x,y) pair
@@ -80,13 +106,33 @@ TEST_CASE("forward iterator should allow following expressions",
 	pos1 == pos2;  // equal operator
 	pos1 != pos2;  // not equal operator
 	pixel_pos_view pos3{pos1};  // copy constructor
-	pos1 = pos2;  // assign operator
+	pos3 = pos2;  // assign operator
+
+	pixel_pos_view pos4{2,2};
+	++pos4;
+	++pos4;
+	--pos4;  // pre decrement
+	pos4--;  // post decrement
+
+	pixel_pos_view pos5{5,5};
+	pos5[3];  // n-th element access
+	pos5 += 3;  // step n elements forward
+	pos5 -= 3;  // step n elements backward
+	pos5 + 3;  // nth next element
+	3 + pos5;
+	pos5 - 3;  // nth previous element
+	pixel_pos_view pos6 = pos5+3;
+	pos6 - pos5;  // distance
+	pos5 < pos6;  // pos5 before pos6
+	pos5 > pos6;  // pos5 after pos6
+	pos5 <= pos6;  // pos5 not after pos6
+	pos5 >= pos6;  // pos5 not before pos6
 }
 
-TEST_CASE("following should be true for input itetrator",
-	"[forward-iterator]") {
+TEST_CASE("following should work for bidirectional iterator",
+	"[bidirectional][iterator]") {
 
-	pixel_pos_view pos1{2, 3};
+	pixel_pos_view pos1{2,3};
 
 	SECTION("creation") {
 		REQUIRE((*pos1 == pair<size_t, size_t>{0,0}));
@@ -146,25 +192,52 @@ TEST_CASE("following should be true for input itetrator",
 		++pos2;
 		REQUIRE(pos1 == pos2);
 	}
+
+	SECTION("pre decrement") {
+		++pos1;
+		++pos1;
+		++pos1;
+		++pos1;
+		++pos1;
+		REQUIRE((*pos1 == pair<size_t, size_t>{1,2}));
+		--pos1;
+		REQUIRE((*pos1 == pair<size_t, size_t>{0,2}));
+		--pos1;
+		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
+		REQUIRE((*(--pos1) == pair<size_t, size_t>{0,1}));
+	}
+
+	SECTION("post decrement") {
+		++pos1;
+		++pos1;
+		++pos1;
+		++pos1;
+		++pos1;
+		REQUIRE((*pos1 == pair<size_t, size_t>{1,2}));
+		pos1--;
+		REQUIRE((*pos1 == pair<size_t, size_t>{0,2}));
+		pos1--;
+		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
+		REQUIRE((*(pos1--) == pair<size_t, size_t>{1,1}));
+	}
 }
 
 TEST_CASE("we can convert view into iterator",
-	"[input-iterator]") {
-
+	"[iterator]") {
 	pixel_pos_view pos;
 	REQUIRE((*begin(pos) == pair<size_t, size_t>(0, 0)));
 	REQUIRE(end(pos) == pixel_pos_view{});
 }
 
-uint8_t gradient_for(pair<size_t, size_t> pos, size_t w, size_t h) {  // TODO: share implementation
+uint8_t gradient_for(pair<size_t, size_t> pos, size_t w, size_t h) {
 	double x = pos.first / double(w),
 		y = pos.second / double(h),
 		distance = sqrt(x*x + y*y);
 	return static_cast<uint8_t>(ceil(255.0 * distance/sqrt(2.0)));
 }
 
-TEST_CASE("we can use transform with forward iterator",
-	"[input-iterator][transform]") {
+TEST_CASE("we can use transform with bidirectional iterator",
+	"[bidirectional][iterator][transform]") {
 
 	constexpr size_t w = 400,
 		h = 300;
@@ -180,8 +253,8 @@ TEST_CASE("we can use transform with forward iterator",
 	REQUIRE(pixels[w*h-1] == 0xff);
 }
 
-TEST_CASE("we can use parallel transform with forward iterator",
-	"[input-iterator][parallel][transform]") {
+TEST_CASE("we can use parallel transform with bidirectional iterator",
+	"[idirectional][iterator][parallel][transform]") {
 
 	constexpr size_t w = 400,
 		h = 300;

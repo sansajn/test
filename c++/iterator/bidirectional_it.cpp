@@ -91,7 +91,7 @@ struct pixel_pos_view
 private:
 	size_t _w, _h;
 	pair<size_t, size_t> _pos;  //!< (column, row)
-};
+};  // pixel_pos_view
 
 
 TEST_CASE("bidirectional iterator should allow following expressions",
@@ -115,7 +115,7 @@ TEST_CASE("bidirectional iterator should allow following expressions",
 	pos4--;  // post decrement
 }
 
-TEST_CASE("following should work for bidirectional itetrator",
+TEST_CASE("following should work for bidirectional iterator",
 	"[bidirectional][iterator]") {
 
 	pixel_pos_view pos1{2,3};
@@ -209,8 +209,7 @@ TEST_CASE("following should work for bidirectional itetrator",
 }
 
 TEST_CASE("we can convert view into iterator",
-	"[input-iterator]") {
-
+	"[iterator]") {
 	pixel_pos_view pos;
 	REQUIRE((*begin(pos) == pair<size_t, size_t>(0, 0)));
 	REQUIRE(end(pos) == pixel_pos_view{});
@@ -223,8 +222,8 @@ uint8_t gradient_for(pair<size_t, size_t> pos, size_t w, size_t h) {
 	return static_cast<uint8_t>(ceil(255.0 * distance/sqrt(2.0)));
 }
 
-TEST_CASE("we can use transform with forward iterator",
-	"[input-iterator][transform]") {
+TEST_CASE("we can use transform with bidirectional iterator",
+	"[bidirectional][iterator][transform]") {
 
 	constexpr size_t w = 400,
 		h = 300;
@@ -240,8 +239,8 @@ TEST_CASE("we can use transform with forward iterator",
 	REQUIRE(pixels[w*h-1] == 0xff);
 }
 
-TEST_CASE("we can use parallel transform with forward iterator",
-	"[input-iterator][parallel][transform]") {
+TEST_CASE("we can use parallel transform with bidirectional iterator",
+	"[idirectional][iterator][parallel][transform]") {
 
 	constexpr size_t w = 400,
 		h = 300;
