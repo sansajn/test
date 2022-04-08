@@ -60,8 +60,10 @@ struct pixel_pos_view
 			return *this;
 		}
 		else {
-			if (c == 0)
+			if (c == 0) {
 				r -= 1;  // it is safe, r > 0 by defnition there
+				c = _w-1;
+			}
 			else
 				c -= 1;
 		}
@@ -92,7 +94,7 @@ private:
 };
 
 
-TEST_CASE("fidirectional iterator should allow following expressions",
+TEST_CASE("bidirectional iterator should allow following expressions",
 	"[forward][iterator]") {
 
 	pixel_pos_view pos1;  // default constructor
@@ -104,15 +106,19 @@ TEST_CASE("fidirectional iterator should allow following expressions",
 	pos1 == pos2;  // equal operator
 	pos1 != pos2;  // not equal operator
 	pixel_pos_view pos3{pos1};  // copy constructor
-	pos1 = pos2;  // assign operator
-	--pos1;  // pre decrement
-	pos1--;  // post decrement
+	pos3 = pos2;  // assign operator
+
+	pixel_pos_view pos4{2,2};
+	++pos4;
+	++pos4;
+	--pos4;  // pre decrement
+	pos4--;  // post decrement
 }
 
-TEST_CASE("following should be true for bidirectional itetrator",
+TEST_CASE("following should work for bidirectional itetrator",
 	"[bidirectional][iterator]") {
 
-	pixel_pos_view pos1{2, 3};
+	pixel_pos_view pos1{2,3};
 
 	SECTION("creation") {
 		REQUIRE((*pos1 == pair<size_t, size_t>{0,0}));
@@ -173,8 +179,33 @@ TEST_CASE("following should be true for bidirectional itetrator",
 		REQUIRE(pos1 == pos2);
 	}
 
-	SECTION("pre decrement") {}
-	SECTION("post decrement") {}
+	SECTION("pre decrement") {
+		++pos1;
+		++pos1;
+		++pos1;
+		++pos1;
+		++pos1;
+		REQUIRE((*pos1 == pair<size_t, size_t>{1,2}));
+		--pos1;
+		REQUIRE((*pos1 == pair<size_t, size_t>{0,2}));
+		--pos1;
+		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
+		REQUIRE((*(--pos1) == pair<size_t, size_t>{0,1}));
+	}
+
+	SECTION("post decrement") {
+		++pos1;
+		++pos1;
+		++pos1;
+		++pos1;
+		++pos1;
+		REQUIRE((*pos1 == pair<size_t, size_t>{1,2}));
+		pos1--;
+		REQUIRE((*pos1 == pair<size_t, size_t>{0,2}));
+		pos1--;
+		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
+		REQUIRE((*(pos1--) == pair<size_t, size_t>{1,1}));
+	}
 }
 
 TEST_CASE("we can convert view into iterator",
