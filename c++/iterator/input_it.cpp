@@ -2,12 +2,15 @@
 #include <algorithm>
 #include <utility>
 #include <iterator>
+#include <filesystem>
 #include <cmath>
 #include <cstdint>
 #define CATCH_CONFIG_MAIN
 #include <catch.hpp>
 #include "image.hpp"
-using std::transform, std::pair, std::begin, std::end;
+using std::transform, std::pair, std::begin, std::end, std::filesystem::path;
+
+path const gradient_image = "input_gradient.png";
 
 //! Input iterator view implemenation.
 struct pixel_pos_view 
@@ -151,5 +154,5 @@ TEST_CASE("we can use transform with input iterator",
 
 	REQUIRE(pixels[0] == 0x0);
 	REQUIRE(pixels[w*h-1] == 0xff);
-	save_grayscale(pixels, w, h, "input_gradient.png");
+	save_grayscale(pixels, w, h, gradient_image);
 }
