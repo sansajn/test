@@ -1,0 +1,7 @@
+# dependencies: libglibmm-2.4-dev
+cpp17 = Environment(CXXFLAGS=['-std=c++17'],
+	CCFLAGS=['-Wall', '-ggdb3', '-O0'])
+
+cpp17.ParseConfig('pkg-config --cflags --libs glibmm-2.4')
+
+cpp17.Program('main_loop.cpp')
