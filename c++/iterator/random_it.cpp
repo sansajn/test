@@ -275,7 +275,7 @@ TEST_CASE("following should work for bidirectional iterator",
 
 	SECTION("copy constructor") {
 		++pos1; ++pos1; ++pos1;
-		pixel_pos_view pos2{pos1};
+		pixel_pos_view pos2{pos1};  // FIXME: using copy-ctor but ...
 		REQUIRE((*pos2 == pair<size_t, size_t>{1,1}));
 	}
 
