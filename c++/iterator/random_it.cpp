@@ -117,58 +117,72 @@ struct pixel_pos_view
 		return result;
 	}
 
-	difference_type operator-(pixel_pos_view const & pos) {
-		assert(_w == pos._w && _h == pos._h);
-		return (_pos.second * _w + _pos.first) - (pos._pos.second * pos._w + pos._pos.first);
+	difference_type operator-(pixel_pos_view const & pos) const {
+		assert((_w == pos._w && _h == pos._h)
+			|| end_of_range()
+			|| pos.end_of_range());
+
+		assert(*this >= pos);
+
+		if (end_of_range())
+			return (pos._w * pos._h) - (pos._pos.second * pos._w + pos._pos.first);
+		else if (pos.end_of_range())
+			return 0;
+		else
+			return (_pos.second * _w + _pos.first) - (pos._pos.second * pos._w + pos._pos.first);
 	}
 
-	bool operator<(pixel_pos_view const & pos) {
-		assert(_w == pos._w && _h == pos._h);
-		if (_pos.second < pos._pos.second)
-			return true;
-		else if (_pos.second > pos._pos.second)
+	bool operator<(pixel_pos_view const & pos) const {
+		assert((_w == pos._w && _h == pos._h)
+			|| end_of_range()
+			|| pos.end_of_range());
+
+		if (end_of_range())
 			return false;
-		else  // _pos.second == pos._pos.second
-			return _pos.first < pos._pos.second;
+		else if (pos.end_of_range())
+			return true;
+		else {
+			if (_pos.second < pos._pos.second)
+				return true;
+			else if (_pos.second > pos._pos.second)
+				return false;
+			else  // _pos.second == pos._pos.second
+				return _pos.first < pos._pos.second;
+		}
 
 		// TODO: Is this "branching" implementation efficient compared to (y*w+x) < (pos.y*w+pos.x)?
 	}
 
-	bool operator>(pixel_pos_view const & pos) {
-		assert(_w == pos._w && _h == pos._h);
-		if (_pos.second > pos._pos.second)
+	bool operator<=(pixel_pos_view const & pos) const {
+		assert((_w == pos._w && _h == pos._h)
+			|| end_of_range()
+			|| pos.end_of_range());
+
+		if (pos.end_of_range())
 			return true;
-		else if (_pos.second < pos._pos.second)
+		else if (end_of_range())
 			return false;
-		else  // _pos.second == pos._pos.second
-			return _pos.first > pos._pos.first;
+		else {
+			if (_pos.second < pos._pos.second)
+				return true;
+			else if (_pos.second > pos._pos.second)
+				return false;
+			else  // _pos.second == pos._pos.second
+				return _pos.first <= pos._pos.second;
+		}
 	}
 
-	bool operator<=(pixel_pos_view const & pos) {
-		assert(_w == pos._w && _h == pos._h);
-		if (_pos.second < pos._pos.second)
-			return true;
-		else if (_pos.second > pos._pos.second)
-			return false;
-		else  // _pos.second == pos._pos.second
-			return _pos.first <= pos._pos.second;
-
-		// TODO: can we implement <= with <?
+	bool operator>(pixel_pos_view const & pos) const {
+		return !(*this <= pos);
 	}
 
-	bool operator>=(pixel_pos_view const & pos) {
-		assert(_w == pos._w && _h == pos._h);
-		if (_pos.second > pos._pos.second)
-			return true;
-		else if (_pos.second < pos._pos.second)
-			return false;
-		else  // _pos.second == pos._pos.second
-			return _pos.first >= pos._pos.first;
+	bool operator>=(pixel_pos_view const & pos) const {
+		return !(*this < pos);
 	}
 
 	bool operator==(pixel_pos_view const & rhs) const {
 		return (_w == rhs._w && _h == rhs._h && _pos == rhs._pos)
-			|| (_h == _pos.second && rhs._h == rhs._pos.second);  // end-iterator
+			|| (end_of_range() && rhs.end_of_range());
 	}
 
 	bool operator!=(pixel_pos_view const & rhs) const {
@@ -179,6 +193,8 @@ struct pixel_pos_view
 	pixel_pos_view end() {return {};}
 
 private:
+	bool end_of_range() const {return _pos.second == _h;}
+
 	size_t _w, _h;
 	pair<size_t, size_t> _pos;  //!< (column, row)
 };  // pixel_pos_view
@@ -226,7 +242,7 @@ TEST_CASE("random access iterator should allow following expressions",
 	pos5 >= pos6;  // pos5 not before pos6
 }
 
-TEST_CASE("following should work for bidirectional iterator",
+TEST_CASE("following should work for random-access iterator",
 	"[random][iterator]") {
 
 	pixel_pos_view pos1{2,3};
@@ -353,29 +369,34 @@ TEST_CASE("following should work for bidirectional iterator",
 	SECTION("iterator distance") {
 		REQUIRE(((pos1 + 5) - (pos1 + 3)) == 2);
 		REQUIRE(((pos1 + 5) - (pos1 + 2)) == 3);
-		REQUIRE(((pos1 + 2) - (pos1 + 5)) == -3);
+//		REQUIRE(((pos1 + 2) - (pos1 + 5)) == -3);
+		REQUIRE((pos1.end() - pos1.begin()) == 6);
 	}
 
 	SECTION("less operator") {
 		REQUIRE((pos1+3 < pos1+5));
 		REQUIRE_FALSE((pos1+4 < pos1+2));
+		REQUIRE(pos1 < pixel_pos_view{});
 	}
 
-	SECTION("grater operator") {
+	SECTION("greater operator") {
 		REQUIRE((pos1+5 > pos1+3));
 		REQUIRE_FALSE((pos1+2 > pos1+4));
+		REQUIRE(pixel_pos_view{} > pos1);
 	}
 
 	SECTION("less-equal operator") {
 		REQUIRE((pos1+3 <= pos1+5));
 		REQUIRE((pos1+3 <= pos1+3));
 		REQUIRE_FALSE((pos1+4 <= pos1+2));
+		REQUIRE(pos1 <= pixel_pos_view{});
 	}
 
 	SECTION("greater-equal operator") {
 		REQUIRE((pos1+5 >= pos1+3));
 		REQUIRE((pos1+3 >= pos1+3));
 		REQUIRE_FALSE((pos1+2 >= pos1+4));
+		REQUIRE(pixel_pos_view{} >= pos1);
 	}
 }
 
