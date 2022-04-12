@@ -1,6 +1,6 @@
 # Implementing custom iterator
 
-Guide to implement *random access* iterator working with parallel `std::transform` algorithm to support pixel algorithms (such as raytracer) ...
+Guide to implement *random access* iterator working with parallel `std::transform` algorithm to support parallelization for pixel algorithms (such as raytracer) ...
 
 # The story behind
 
