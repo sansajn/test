@@ -120,14 +120,12 @@ struct pixel_pos_view
 		if (end_of_range() && pos.end_of_range())
 			return difference_type{0};
 		else if (end_of_range())
-			return (pos._w * pos._h) - (pos._pos.second * pos._w + pos._pos.first);
+			return pos.size() - pos.distance();
 		else if (pos.end_of_range())
-			return -((_w * _h) - (_pos.second * _w + _pos.first));
+			return distance() - size();
 		else
-			return (_pos.second * _w + _pos.first) - (pos._pos.second * pos._w + pos._pos.first);
+			return distance() - pos.distance();
 	}
-
-	// size_t idx() const
 
 	bool operator<(pixel_pos_view const & pos) const {
 		assert((_w == pos._w && _h == pos._h)
@@ -146,8 +144,6 @@ struct pixel_pos_view
 			else  // _pos.second == pos._pos.second
 				return _pos.first < pos._pos.second;
 		}
-
-		// TODO: Is this "branching" implementation efficient compared to (y*w+x) < (pos.y*w+pos.x)?
 	}
 
 	bool operator<=(pixel_pos_view const & pos) const {
@@ -186,11 +182,14 @@ struct pixel_pos_view
 		return !(*this == rhs);
 	}
 
+	// not part of random access API
 	pixel_pos_view begin() {return *this;}
 	pixel_pos_view end() {return {};}
+	size_t size() const {return _w * _h;}
 
 private:
 	bool end_of_range() const {return _pos.second == _h;}
+	size_t distance() const {return _pos.second * _w + _pos.first;}
 
 	size_t _w, _h;
 	pair<size_t, size_t> _pos;  //!< (column, row)
