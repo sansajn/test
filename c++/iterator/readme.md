@@ -167,8 +167,39 @@ bool operator==(pixel_pos_view const & rhs) const {
 which needs return `true` only in case we compare against *end* iterator (e.g. `it == end(pixel_rng)`), otherwise we can return `false`.
 
 
+In `test_it.hpp` file there is `input_iterator_api_implemented<>` template structure implementation which allows testing input iterator implementation e.g. for *pre-increment* this way
 
+```c++
+TEST_CASE("following should work for input itetrator",
+	"[input][iterator]") {
+	input_iterator_api_implemented<pixel_pos_view> iter;
+	
+	SECTION("pre increment") {
+		REQUIRE(iter.pre_increment());
+	}
+}
+```
 
+We implemented short program to generate grayscale gradient image this way
+
+```c++
+constexpr size_t w = 400,
+	h = 300;
+
+uint8_t pixels[w*h] = {0};  // grayscale pixels 
+pixel_pos_view pos{w, h};
+transform(begin(pos), end(pos), begin(pixels),
+	[w, h](pair<size_t, size_t> const & pos){  // (column, row) position
+		double x = pos.first / double(w),
+			y = pos.second / double(h),
+			distance = sqrt(x*x + y*y);
+		return static_cast<uint8_t>(ceil(255.0 * distance/sqrt(2.0)));
+	});
+
+save_grayscale(pixels, w, h, gradient_image);
+```
+
+see *we can use transform with input iterator* test case in `input_it.cpp` file.
 
 
 # TODOs
