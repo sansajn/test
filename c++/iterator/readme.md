@@ -199,6 +199,10 @@ transform(begin(pos), end(pos), begin(pixels),
 save_grayscale(pixels, w, h, gradient_image);
 ```
 
+which produce following PNG image.
+
+![gradient image](gradient.png)
+
 see *we can use transform with input iterator* test case in `input_it.cpp` file.
 
 
