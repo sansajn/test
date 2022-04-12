@@ -2,6 +2,10 @@
 
 Guide to implement *random access* iterator working with parallel `std::transform` algorithm to support parallelization for pixel algorithms (such as raytracer) ...
 
+- The story behind
+- Implementing input iterator
+
+
 # The story behind
 
 I've recently go through great raytracing related book where "raytracing" loop was implemented more or less this way
@@ -199,19 +203,25 @@ transform(begin(pos), end(pos), begin(pixels),
 save_grayscale(pixels, w, h, gradient_image);
 ```
 
-which produce following PNG image.
+which produce following PNG image
 
 ![gradient image](gradient.png)
 
 see *we can use transform with input iterator* test case in `input_it.cpp` file.
 
 
+# Implementing forward iterator
+
+...
+
+
+
 # TODOs
 
-- [ ] write guide for input iterator
+- [x] write guide for input iterator
 - [ ] write guide for forward iterator
 - [ ] write guide for bidirectional iterator
 - [ ] write guide for random access iterator
-- [ ] set testou pre input, bidirectional, forwarfd a random, kde random musi prejst vsetkymi testami (input, bidi...)
+- [ ] reusable unit tests for input, forward, bidirectional and random iterator implementation
 - [ ] solve *Using copy-ctor but class X has a trivial copy-ctor but non trivial assign operator* clang warning
-- [x] intgracia do raytrace enginu
+- [x] integrate to raytrace engine
