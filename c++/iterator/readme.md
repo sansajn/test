@@ -1,9 +1,8 @@
 # Implementing custom iterator
 
-Guide to implement custom input iterator ...
+Guide to implement *random access* iterator working with parallel `std::transform` algorithm to support pixel algorithms (such as raytracer) ...
 
-
-> TODO: use case (the story behind)
+# The story behind
 
 I've recently go through great raytracing related book where "raytracing" loop was implemented more or less this way
 
