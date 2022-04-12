@@ -9,7 +9,7 @@
 #define CATCH_CONFIG_MAIN
 #include <catch.hpp>
 #include "image.hpp"
-using std::transform, std::pair, std::begin, std::end, std::filesystem::path;
+using std::transform, std::pair, std::begin, std::end, std::filesystem::path, std::max;
 
 path const gradient_image = "random_gradient.png";
 
@@ -81,27 +81,22 @@ struct pixel_pos_view
 	}
 
 	pixel_pos_view & operator+=(int n) {
-		assert(n >= 0);  // FIXME: n can be < 0
-		_pos.first += n%_w;
-		_pos.second += n/_w;
-		assert(_pos.first < _w && _pos.second < _h);
+		size_t dn = _pos.second * _w + _pos.first;
+		dn = std::max(dn + n, size_t{0});  // n can be < 0
+		_pos.first = dn%_w;
+		_pos.second = dn/_w;
+		if (_pos.second >= _h)  // end of range
+			_pos = pair<size_t, size_t>{0, _h};
 		return *this;
 	}
 
 	pixel_pos_view & operator-=(int n) {
-		assert(n >= 0);  // FIXME: n can be < 0
-		size_t dc = n%_w;
-		if (dc <= _pos.first)
-			_pos.first -= dc;
-		else {
-			assert(_pos.second > 0);
-			_pos.second -= 1;
-			_pos.first = 10 + (_pos.first - dc);
-		}
-
-		size_t dr = n/_w;
-		assert(dr <= _h && _pos.second >= dr);
-		_pos.second -= n/_w;
+		size_t dn = _pos.second * _w + _pos.first;
+		dn = std::max(dn - n, size_t{0});
+		_pos.first = dn%_w;
+		_pos.second = dn/_w;
+		if (_pos.second >= _h)  // end of range
+			_pos = pair<size_t, size_t>{0, _h};
 		return *this;
 	}
 
@@ -122,15 +117,17 @@ struct pixel_pos_view
 			|| end_of_range()
 			|| pos.end_of_range());
 
-		assert(*this >= pos);
-
-		if (end_of_range())
+		if (end_of_range() && pos.end_of_range())
+			return difference_type{0};
+		else if (end_of_range())
 			return (pos._w * pos._h) - (pos._pos.second * pos._w + pos._pos.first);
 		else if (pos.end_of_range())
-			return 0;
+			return -((_w * _h) - (_pos.second * _w + _pos.first));
 		else
 			return (_pos.second * _w + _pos.first) - (pos._pos.second * pos._w + pos._pos.first);
 	}
+
+	// size_t idx() const
 
 	bool operator<(pixel_pos_view const & pos) const {
 		assert((_w == pos._w && _h == pos._h)
@@ -343,6 +340,8 @@ TEST_CASE("following should work for random-access iterator",
 		pos1 += 3;
 		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
 		REQUIRE((*(pos1 += 2) == pair<size_t, size_t>{1,2}));
+		pos1 += -2;
+		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
 	}
 
 	SECTION("step n elements backward") {
@@ -352,6 +351,8 @@ TEST_CASE("following should work for random-access iterator",
 		REQUIRE((*pos1 == pair<size_t, size_t>{0,1}));
 		pos1 -= 2;
 		REQUIRE((*pos1 == pair<size_t, size_t>{0,0}));
+		pos1 -= -2;
+		REQUIRE((*pos1 == pair<size_t, size_t>{0,1}));
 	}
 
 	SECTION("n-th next element") {
@@ -367,10 +368,11 @@ TEST_CASE("following should work for random-access iterator",
 	}
 
 	SECTION("iterator distance") {
-		REQUIRE(((pos1 + 5) - (pos1 + 3)) == 2);
-		REQUIRE(((pos1 + 5) - (pos1 + 2)) == 3);
-//		REQUIRE(((pos1 + 2) - (pos1 + 5)) == -3);
+		REQUIRE(((pos1+5) - (pos1+3)) == 2);
+		REQUIRE(((pos1+5) - (pos1+2)) == 3);
+		REQUIRE(((pos1+2) - (pos1+5)) == -3);
 		REQUIRE((pos1.end() - pos1.begin()) == 6);
+		REQUIRE((pos1.begin() - pos1.end()) == -6);
 	}
 
 	SECTION("less operator") {
