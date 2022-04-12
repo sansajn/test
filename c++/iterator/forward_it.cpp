@@ -149,7 +149,7 @@ TEST_CASE("following should be true for forward itetrator",
 }
 
 TEST_CASE("we can convert view into iterator", 
-	"[input-iterator]") {
+	"[input][iterator]") {
 
 	pixel_pos_view pos;
 	REQUIRE((*begin(pos) == pair<size_t, size_t>(0, 0)));

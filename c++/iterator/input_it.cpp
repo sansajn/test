@@ -13,9 +13,10 @@ using std::transform, std::pair, std::begin, std::end, std::filesystem::path;
 
 path const gradient_image = "input_gradient.png";
 
-//! Input iterator view implemenation.
+/*! Input iterator view implemenation.
+\note value_type is const which means reference is not mutable. */
 struct pixel_pos_view 
-	: public std::iterator<std::input_iterator_tag, pair<size_t, size_t>> {
+	: public std::iterator<std::input_iterator_tag, pair<size_t, size_t> const> {
 	
 	pixel_pos_view() : pixel_pos_view{0, 0} {}
 	
@@ -23,7 +24,7 @@ struct pixel_pos_view
 		: _w{w}, _h{h}, _pos{0, 0} 
 	{}
 
-	reference operator*() {  // we do not want to allow modification there
+	reference operator*() {
 		return _pos;
 	}
 
@@ -69,14 +70,11 @@ private:
 
 TEST_CASE("input iterator should allow following expressions", 
 	"[input][iterator]") {
-
 	REQUIRE(input_iterator_api_available<pixel_pos_view>());
 }
 
-
 TEST_CASE("following should work for input itetrator",
 	"[input][iterator]") {
-
 	input_iterator_api_implemented<pixel_pos_view> iter;
 
 	SECTION("creation") {
@@ -105,17 +103,14 @@ TEST_CASE("following should work for input itetrator",
 }
 
 TEST_CASE("we can convert view into iterator", 
-	"[input-iterator]") {
-
+	"[input][iterator]") {
 	pixel_pos_view pos;
 	REQUIRE(begin(pos) == pos.begin());
 	REQUIRE(end(pos) == pos.end());
 }
 
-
 TEST_CASE("we can use transform with input iterator", 
-	"[input-iterator][transform]") {
-
+	"[input][iterator][transform]") {
 	constexpr size_t w = 400,
 		h = 300;
 
