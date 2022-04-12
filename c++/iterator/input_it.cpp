@@ -65,17 +65,22 @@ private:
 };
 
 
+template <typename It>
+void define_input_iterator_api() {
+	It it1, it2;
+	*it1;  // access value
+	it1->first;  // access member variable
+	++it1;  // pre increment
+	it1++;  // post increment
+	it1 == it2;  // equal operator
+	it1 != it2;  // not equal operator
+	It it3{it1};  // copy constructor
+}
+
 TEST_CASE("input iterator should allow following expressions", 
 	"[input][iterator]") {
-	
-	pixel_pos_view pos1, pos2;
-	*pos1;  // access position as (x,y) pair
-	pos1->first;  // access x
-	++pos1;  // pre increment
-	pos1++;  // post increment
-	pos1 == pos2;  // equal operator
-	pos1 != pos2;  // not equal operator
-	pixel_pos_view pos3{pos1};  // copy constructor
+
+	define_input_iterator_api<pixel_pos_view>();
 }
 
 TEST_CASE("following should be true for input itetrator", 
