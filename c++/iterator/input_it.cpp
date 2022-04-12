@@ -8,6 +8,7 @@
 #define CATCH_CONFIG_MAIN
 #include <catch.hpp>
 #include "image.hpp"
+#include "test_it.hpp"
 using std::transform, std::pair, std::begin, std::end, std::filesystem::path;
 
 path const gradient_image = "input_gradient.png";
@@ -65,70 +66,41 @@ private:
 };
 
 
-template <typename It>
-void define_input_iterator_api() {
-	It it1, it2;
-	*it1;  // access value
-	it1->first;  // access member variable
-	++it1;  // pre increment
-	it1++;  // post increment
-	it1 == it2;  // equal operator
-	it1 != it2;  // not equal operator
-	It it3{it1};  // copy constructor
-}
 
 TEST_CASE("input iterator should allow following expressions", 
 	"[input][iterator]") {
 
-	define_input_iterator_api<pixel_pos_view>();
+	REQUIRE(input_iterator_api_available<pixel_pos_view>());
 }
 
-TEST_CASE("following should be true for input itetrator", 
+
+TEST_CASE("following should work for input itetrator",
 	"[input][iterator]") {
 
-	pixel_pos_view pos1{2, 3};
+	input_iterator_api_implemented<pixel_pos_view> iter;
 
 	SECTION("creation") {
-		REQUIRE((*pos1 == pair<size_t, size_t>{0,0}));
-		REQUIRE(pos1->first == 0);
+		REQUIRE(iter.creation());
 	}
 	
 	SECTION("pre increment") {
-		++pos1;
-		REQUIRE((*pos1 == pair<size_t, size_t>{1,0}));
-		++pos1;
-		++pos1;
-		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
-		REQUIRE((*(++pos1) == pair<size_t, size_t>{0,2}));
+		REQUIRE(iter.pre_increment());
 	}
 
 	SECTION("post increment") {
-		pos1++;
-		REQUIRE((*pos1 == pair<size_t, size_t>{1,0}));
-		pos1++;
-		pos1++;
-		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
+		REQUIRE(iter.post_increment());
 	}
 
 	SECTION("equal/not equall operators") {
-		pixel_pos_view pos2;
-		REQUIRE(pos1 != pos2);
+		REQUIRE(iter.equal());
+	}
 
-		pixel_pos_view pos3;
-		REQUIRE(pos2 == pos3);
-
-		pixel_pos_view pos4{1,1};
-		++pos4;
-		++pos4;
-		++pos4;  // (1,1)
-		++pos4;  // {}
-		REQUIRE(pos4 == pixel_pos_view{});
+	SECTION("not equal operator") {
+		REQUIRE(iter.not_equal());
 	}
 
 	SECTION("copy constructor") {
-		++pos1; ++pos1; ++pos1;
-		pixel_pos_view pos2{pos1};
-		REQUIRE((*pos2 == pair<size_t, size_t>{1,1}));
+		REQUIRE(iter.copy_ctor());
 	}
 }
 
@@ -136,8 +108,8 @@ TEST_CASE("we can convert view into iterator",
 	"[input-iterator]") {
 
 	pixel_pos_view pos;
-	begin(pos);
-	end(pos);
+	REQUIRE(begin(pos) == pos.begin());
+	REQUIRE(end(pos) == pos.end());
 }
 
 

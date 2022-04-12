@@ -156,13 +156,6 @@ TEST_CASE("we can convert view into iterator",
 	REQUIRE(end(pos) == pixel_pos_view{});
 }
 
-uint8_t gradient_for(pair<size_t, size_t> pos, size_t w, size_t h) {
-	double x = pos.first / double(w),
-		y = pos.second / double(h),
-		distance = sqrt(x*x + y*y);
-	return static_cast<uint8_t>(ceil(255.0 * distance/sqrt(2.0)));
-}
-
 TEST_CASE("we can use transform with forward iterator",
 	"[input-iterator][transform]") {
 
