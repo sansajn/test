@@ -107,7 +107,7 @@ bool input_iterator_api_available() {
 }
 ```
 
-and we can write Catch2 test for our iterator implementation this way
+We can then write *Catch2* test for our iterator implementation this way
 
 ```c++
 TEST_CASE("input iterator should allow following expressions", 
@@ -115,6 +115,58 @@ TEST_CASE("input iterator should allow following expressions",
 	REQUIRE(input_iterator_api_available<pixel_pos_view>());
 }
 ```
+
+where `pixel_pos_view` class our *input* iterator implementation and besides of iterator API it implements `begin()` and `end()` member functions returning *begin* and *end* iterators. So we can write
+
+```c++
+auto pixel_rng = pixel_pos_view{3,3};
+auto it_beg = begin(pixel_rng),
+	it_end = end(pixel_rng);
+```
+
+to get *begin* and *end* pixel position iterators. We can also use our iterator with`std::transform` (the linear one) algorithm
+
+```c++
+vector<uint8_t> pixels(3*3);  // 9 pixel buffer
+auto pixel_rng = pixel_pos_view{3,3};
+transform(begin(pixels_rng), end(pixel_rng), begin(pixels), 
+	[](pair<size_t, size_t> pixel_pos){
+		return random_value();
+	});
+```
+
+to set `pixels` output buffer/image pixels each to random value.
+
+
+See `input_it.cpp` for the full `pixel_pos_view` implementation, the only interesting part there is *pre-increment* operator implementation
+
+```c++
+pixel_pos_view & operator++() {
+	auto & [c, r] = _pos;
+	c += 1;
+	if (c >= _w) {
+		c = 0;
+
+		r += 1;
+		if (r >= _h)
+			r = _h;  // end of range (0, _h)
+	}
+	return *this;
+}
+```
+
+and comparison operator implementation 
+
+```c++
+//! comparison for for-each loop (works only for it == end(r) where r is pixel_pos_view instance)
+bool operator==(pixel_pos_view const & rhs) const {
+	return _h == _pos.second && (rhs._w == 0 && rhs._h == 0);
+}
+```
+
+which needs return `true` only in case we compare against *end* iterator (e.g. `it == end(pixel_rng)`), otherwise we can return `false`.
+
+
 
 
 

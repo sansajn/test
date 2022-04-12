@@ -40,7 +40,7 @@ struct pixel_pos_view
 
 			r += 1;
 			if (r >= _h)
-				r = _h;  // end of range
+				r = _h;  // end of range (0, _h)
 		}
 		return *this;
 	}
