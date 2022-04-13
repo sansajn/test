@@ -40,7 +40,7 @@ struct pixel_pos_view
 
 			r += 1;
 			if (r >= _h)
-				r = _h;  // end of range (0, _h)
+				r = _h;  // end of range _pos=(0, _h)
 		}
 		return *this;
 	}
@@ -89,7 +89,7 @@ TEST_CASE("following should work for input itetrator",
 		REQUIRE(iter.post_increment());
 	}
 
-	SECTION("equal/not equall operators") {
+	SECTION("equal operator") {
 		REQUIRE(iter.equal());
 	}
 

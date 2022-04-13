@@ -16,6 +16,21 @@ bool input_iterator_api_available() {
 }
 
 template <typename It>
+bool forward_iterator_api_available() {
+	It it1;  // default constructor
+	*it1;  // access position as (x,y) pair
+	it1->first;  // access x
+	++it1;  // pre increment
+	it1++;  // post increment
+	It it2;
+	it1 == it2;  // equal operator
+	it1 != it2;  // not equal operator
+	It it3{it1};  // copy constructor
+	it1 = it2;  // assign operator
+	return true;
+}
+
+template <typename Iter>
 struct input_iterator_api_implemented {
 	bool creation() {
 		REQUIRE((*pos1 == std::pair<size_t, size_t>{0,0}));
@@ -43,30 +58,33 @@ struct input_iterator_api_implemented {
 	}
 
 	bool equal() {
-		It pos2, pos3;
-		REQUIRE(pos2 == pos3);
+		Iter pos2{2, 3};
+		REQUIRE(pos1 == pos2);
 
-		It pos4{1,1};
-		++pos4;
-		++pos4;
-		++pos4;  // (1,1)
-		++pos4;  // {}
-		REQUIRE(pos4 == It{});
+		Iter pos3, pos4;
+		REQUIRE(pos3 == pos4);
+
+		Iter pos5{1,1};
+		++pos5;
+		++pos5;
+		++pos5;  // (1,1)
+		++pos5;  // {}
+		REQUIRE(pos5 == Iter{});
 		return true;
 	}
 
 	bool not_equal() {
-		It pos2;
+		Iter pos2;
 		REQUIRE(pos1 != pos2);
 		return true;
 	}
 
 	bool copy_ctor() {
 		++pos1; ++pos1; ++pos1;
-		It pos2{pos1};
+		Iter pos2{pos1};
 		REQUIRE((*pos2 == std::pair<size_t, size_t>{1,1}));
 		return true;
 	}
 
-	It pos1{2,3};
+	Iter pos1{2,3};
 };  // input_iterator_api_implemented

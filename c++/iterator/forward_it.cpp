@@ -9,13 +9,14 @@
 #define CATCH_CONFIG_MAIN
 #include <catch.hpp>
 #include "image.hpp"
+#include "test_it.hpp"
 using std::transform, std::pair, std::begin, std::end, std::filesystem::path;
 
 path const gradient_image = "forward_gradient.png";
 
 //! Forward iterator view implemenation.
 struct pixel_pos_view 
-	: public std::iterator<std::forward_iterator_tag, pair<size_t, size_t>> {
+	: public std::iterator<std::forward_iterator_tag, pair<size_t, size_t> const> {
 	
 	pixel_pos_view() : pixel_pos_view{0, 0} {}
 	
@@ -52,7 +53,7 @@ struct pixel_pos_view
 
 	bool operator==(pixel_pos_view const & rhs) const {
 		return (_w == rhs._w && _h == rhs._h && _pos == rhs._pos)
-			|| (_h == _pos.second && rhs._h == rhs._pos.second);  // end-iterator
+			|| (end_of_range() && rhs.end_of_range());
 	}
 
 	bool operator!=(pixel_pos_view const & rhs) const {
@@ -63,102 +64,86 @@ struct pixel_pos_view
 	pixel_pos_view end() {return {};}
 
 private:
+	bool end_of_range() const {return _pos.second == _h;}
+
 	size_t _w, _h;
 	pair<size_t, size_t> _pos;  //!< (column, row)
 };
 
 
 TEST_CASE("forward iterator should allow following expressions",
-	"[forward-iterator]") {
-	
-	pixel_pos_view pos1;  // default constructor
-	*pos1;  // access position as (x,y) pair
-	pos1->first;  // access x
-	++pos1;  // pre increment
-	pos1++;  // post increment
-	pixel_pos_view pos2;
-	pos1 == pos2;  // equal operator
-	pos1 != pos2;  // not equal operator
-	pixel_pos_view pos3{pos1};  // copy constructor
-	pos1 = pos2;  // assign operator
+	"[forward][iterator]") {
+	REQUIRE(input_iterator_api_available<pixel_pos_view>());
+	REQUIRE(forward_iterator_api_available<pixel_pos_view>());
 }
+
+
+template <typename Iter>
+struct forward_iterator_api_implemented : public input_iterator_api_implemented<Iter> {
+	using input_iter = input_iterator_api_implemented<Iter>;
+
+	bool creation() {
+		REQUIRE(input_iter::creation());  // check input iterator implementation
+		Iter pos2;
+		REQUIRE((*pos2 == pair<size_t, size_t>{0,0}));
+		return true;
+	}
+
+	bool assign() {
+		Iter pos2;
+		REQUIRE(this->pos1 != pos2);
+		pos2 = this->pos1;
+		REQUIRE(this->pos1 == pos2);
+		++this->pos1;
+		REQUIRE(this->pos1 != pos2);
+		++pos2;
+		REQUIRE(this->pos1 == pos2);
+		return true;
+	}
+};
 
 TEST_CASE("following should be true for forward itetrator",
 	"[forward][iterator]") {
-
-	pixel_pos_view pos1{2, 3};
+	forward_iterator_api_implemented<pixel_pos_view> iter;
 
 	SECTION("creation") {
-		REQUIRE((*pos1 == pair<size_t, size_t>{0,0}));
-		REQUIRE(pos1->first == 0);
-
-		pixel_pos_view pos2;
-		REQUIRE((*pos2 == pair<size_t, size_t>{0,0}));
+		REQUIRE(iter.creation());
 	}
 	
 	SECTION("pre increment") {
-		++pos1;
-		REQUIRE((*pos1 == pair<size_t, size_t>{1,0}));
-		++pos1;
-		++pos1;
-		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
-		REQUIRE((*(++pos1) == pair<size_t, size_t>{0,2}));
+		REQUIRE(iter.pre_increment());
 	}
 
 	SECTION("post increment") {
-		++pos1;
-		REQUIRE((*pos1 == pair<size_t, size_t>{1,0}));
-		pixel_pos_view pos2 = pos1++;
-		REQUIRE((*pos2 == pair<size_t, size_t>{1,0}));
-		++pos1;
-		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
+		REQUIRE(iter.post_increment());
 	}
 
-	SECTION("equal/not equall operators") {
-		pixel_pos_view pos2{2, 3};
-		REQUIRE(pos1 == pos2);
-		++pos1;
-		REQUIRE(pos1 != pos2);
-		++pos2;
-		REQUIRE(pos1 == pos2);
+	SECTION("equal operator") {
+		REQUIRE(iter.equal());
+	}
 
-		pixel_pos_view pos3{1,1};
-		++pos3;
-		++pos3;
-		++pos3;  // (1,1)
-		++pos3;  // {}
-		REQUIRE(pos3 == pixel_pos_view{});
+	SECTION("not equal operators") {
+		REQUIRE(iter.not_equal());
 	}
 
 	SECTION("copy constructor") {
-		++pos1; ++pos1; ++pos1;
-		pixel_pos_view pos2{pos1};
-		REQUIRE((*pos2 == pair<size_t, size_t>{1,1}));
+		REQUIRE(iter.copy_ctor());
 	}
 
 	SECTION("assign operator") {
-		pixel_pos_view pos2;
-		REQUIRE(pos1 != pos2);
-		pos2 = pos1;
-		REQUIRE(pos1 == pos2);
-		++pos1;
-		REQUIRE(pos1 != pos2);
-		++pos2;
-		REQUIRE(pos1 == pos2);
+		REQUIRE(iter.assign());
 	}
 }
 
 TEST_CASE("we can convert view into iterator", 
-	"[input][iterator]") {
-
+	"[forward][iterator]") {
 	pixel_pos_view pos;
 	REQUIRE((*begin(pos) == pair<size_t, size_t>(0, 0)));
 	REQUIRE(end(pos) == pixel_pos_view{});
 }
 
 TEST_CASE("we can use transform with forward iterator",
-	"[input-iterator][transform]") {
-
+	"[forward][iterator][transform]") {
 	constexpr size_t w = 400,
 		h = 300;
 
@@ -174,8 +159,7 @@ TEST_CASE("we can use transform with forward iterator",
 }
 
 TEST_CASE("we can use parallel transform with forward iterator",
-	"[input-iterator][parallel][transform]") {
-
+	"[forward][iterator][parallel][transform]") {
 	constexpr size_t w = 400,
 		h = 300;
 

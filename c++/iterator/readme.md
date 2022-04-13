@@ -80,7 +80,7 @@ The first post is this *the story behind* post, then I will describe *input*, *f
 
 Parallel `std::transform` algorithm requires at least *forward* iterator to work with, but before we can implement *forward* iterator wee need to start with *input* iterator implementation.
 
-I will use *The C++ Standard Library: A Tutorial and Reference* book as a reference for implementing *input* iterator. The book says tahat *input* iterator should support following operations
+I will use *The C++ Standard Library: A Tutorial and Reference* book as a reference for implementing *input* iterator. The book says that *input* iterator should support following operations
 
 > TODO: improve book reference
 
@@ -140,7 +140,6 @@ transform(begin(pixels_rng), end(pixel_rng), begin(pixels),
 ```
 
 to set `pixels` output buffer/image pixels each to random value.
-
 
 See `input_it.cpp` for the full `pixel_pos_view` implementation, the only interesting part there is *pre-increment* operator implementation
 
@@ -212,8 +211,94 @@ see *we can use transform with input iterator* test case in `input_it.cpp` file.
 
 # Implementing forward iterator
 
-...
+In addition to *input* iterator *forward* iterator adds *default constructor*, *assign operator*, *post-increment* operator must return old value and *comparison* operator must work in all cases (not only against *end* iterator).
 
+The *The C++ Standard Library: A Tutorial and Reference* (Table 9.4) book says that *forward* iterator should support following operations
+
+```
+*iter;  // read access to the actual element
+iter->member;  // read accesss to a member of the actual element
+++iter;  // steps forward (returns new position)
+iter++;  // steps forward (returns old position)
+iter1 == iter2;  // returns whether two iterators are equal
+iter1 != iter2;  // returns whether two iterators are not equal
+TYPE();  // default conctructor
+TYPE(iter);  // copy constructor
+iter1 = iter2;  // assigns an iterator
+```
+
+In *C++* these requiremens can be expressed this way
+
+```c++
+template <typename It>
+bool forward_iterator_api_available() {
+	It it1;  // default constructor
+	*it1;  // access position as (x,y) pair
+	it1->first;  // access x
+	++it1;  // pre increment
+	it1++;  // post increment
+	It it2;
+	it1 == it2;  // equal operator
+	it1 != it2;  // not equal operator
+	It it3{it1};  // copy constructor
+	it1 = it2;  // assign operator
+	return true;
+}
+```
+
+implemented again in `test_it.hpp` file. We can then write *Catch2* test for our iterator implementation this way
+
+> TODO: add catch2 reference https://github.com/catchorg/Catch2
+
+```c++
+TEST_CASE("forward iterator should allow following expressions",
+	"[forward][iterator]") {
+	REQUIRE(input_iterator_api_available<pixel_pos_view>());
+	REQUIRE(forward_iterator_api_available<pixel_pos_view>());
+}
+```
+
+where we reused `input_iterator_api_available<>()` template function from previous post to verify *input* iterator behaviour (*forward* iterator should also work as *input* iterator).
+
+
+This time
+
+```
+TEST_CASE("forward iterator should allow following expressions",
+	"[forward][iterator]") {
+	REQUIRE(input_iterator_api_available<pixel_pos_view>());
+	REQUIRE(forward_iterator_api_available<pixel_pos_view>());
+}
+```
+
+In case of template inheritance we need refer to base member variables `pos1` as `this->pos1` or `base::pos1` otherwise compiler become angry to us.
+
+I've tryed to implement `forward_iterator_api_implemented::assign()` test this way
+
+```c++
+bool assign() {
+	Iter pos2;
+	REQUIRE(pos1 != pos2);
+	pos2 = pos1;
+	REQUIRE(pos1 == pos2);
+	++pos1;
+	REQUIRE(pos1 != pos2);
+	++pos2;
+	REQUIRE(pos1 == pos2);
+	return true;
+}
+```
+
+but that ends with *error: 'pos1' was not declared in this scope; did you mean 'pos2'?* compiler error. Even after 18 years *C++* can suprise me from time to time. Thanks to the *stackoverflow* I've found the behaviour description in [Why am I getting errors when my template-derived-class uses a member it inherits from its template-base-class?](https://isocpp.org/wiki/faq/templates#nondependent-name-lookup-members).
+
+*Forward* iterator implementation is available in `forwad_it.cpp` file. As in case of *input* iterator there is also program/test to generate grayscale gradient image which produce followinf PNG image
+
+![gradient image](gradient.png)
+
+see *we can use transform with forward iterator* test case.
+
+
+[Catch2]: https://github.com/catchorg/Catch2
 
 
 # TODOs
