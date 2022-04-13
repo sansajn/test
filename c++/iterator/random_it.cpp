@@ -9,6 +9,7 @@
 #define CATCH_CONFIG_MAIN
 #include <catch.hpp>
 #include "image.hpp"
+#include "test_it.hpp"
 using std::transform, std::pair, std::begin, std::end, std::filesystem::path, std::max;
 
 path const gradient_image = "random_gradient.png";
@@ -205,37 +206,7 @@ pixel_pos_view operator-(int n, pixel_pos_view const & pos) {
 
 TEST_CASE("random access iterator should allow following expressions",
 	"[random][iterator]") {
-
-	pixel_pos_view pos1;  // default constructor
-	*pos1;  // access position as (x,y) pair
-	pos1->first;  // access x
-	++pos1;  // pre increment
-	pos1++;  // post increment
-	pixel_pos_view pos2;
-	pos1 == pos2;  // equal operator
-	pos1 != pos2;  // not equal operator
-	pixel_pos_view pos3{pos1};  // copy constructor
-	pos3 = pos2;  // assign operator
-
-	pixel_pos_view pos4{2,2};
-	++pos4;
-	++pos4;
-	--pos4;  // pre decrement
-	pos4--;  // post decrement
-
-	pixel_pos_view pos5{5,5};
-	pos5[3];  // n-th element access
-	pos5 += 3;  // step n elements forward
-	pos5 - 3;  // nth previous element
-	pos5 -= 3;  // step n elements backward
-	pos5 + 3;  // nth next element
-	3 + pos5;
-	pixel_pos_view pos6 = pos5+3;
-	pos6 - pos5;  // distance
-	pos5 < pos6;  // pos5 before pos6
-	pos5 > pos6;  // pos5 after pos6
-	pos5 <= pos6;  // pos5 not after pos6
-	pos5 >= pos6;  // pos5 not before pos6
+	REQUIRE(random_access_iterator_api_available<pixel_pos_view>());
 }
 
 TEST_CASE("following should work for random-access iterator",

@@ -37,6 +37,25 @@ bool bidirectional_iterator_api_available() {
 }
 
 template <typename Iter>
+bool random_access_iterator_api_available() {
+	REQUIRE(bidirectional_iterator_api_available<Iter>());
+	Iter it5{5,5};
+	it5[3];  // n-th element access
+	it5 += 3;  // step n elements forward
+	it5 - 3;  // nth previous element
+	it5 -= 3;  // step n elements backward
+	it5 + 3;  // nth next element
+	3 + it5;
+	Iter it6 = it5+3;
+	it6 - it5;  // distance
+	it5 < it6;  // pos5 before pos6
+	it5 > it6;  // pos5 after pos6
+	it5 <= it6;  // pos5 not after pos6
+	it5 >= it6;  // pos5 not before pos6
+	return true;
+}
+
+template <typename Iter>
 struct input_iterator_api_implemented {  // rename to _implementation
 	bool creation() {
 		REQUIRE((*pos1 == std::pair<size_t, size_t>{0,0}));

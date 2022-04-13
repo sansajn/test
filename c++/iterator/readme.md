@@ -72,6 +72,8 @@ transform(std::execution::par, begin(pixel_rng), end(pixel_rng), begin(pixels),
 	});
 ```
 
+> **note**: some weeks after the implementation I've saw Matt Godbolt in his [*Path Tracing Three Ways: A Study of C++ Style*](https://www.youtube.com/watch?app=desktop&v=HG6c4Kwbv4I) CppCon talk where he described `cartesian_product` view serving for similar purpose ...
+
 where dereferencing our new pixel position iterator returns `pair<size_t, size_t>` representing pixel position as *(column, row)* pair. The lambda function takes pixel position pair and calculate light for pixel on that position.
 
 This post series will describe how to implement pixel position iterator capable parallelizing pixel algorithms like raytracer described in the book.
@@ -337,8 +339,60 @@ see *we can use parallel transform with bidirectional iterator* test case.
 
 # Implementing random access iterator
 
+Compared to *bidi* RA introuce whole bunch of new operators *random access*, *plus/minus assign*, *plus/minus*, *less/greater* and *less/greater or equal* operators.
+
+The *The C++ Standard Library: A Tutorial and Reference* (Table 9.6) book says that *random access* iterator should support following operations
 
 
+```
+// all bidirectional iterator operations
+iter[n];  // access to the element that has index n 
+iter+=n;  // steps n elements forward (or backward, if n is negative)
+iter-=n;  // steps n elements backward (or forward, if n is negative)
+iter+n;  // returns the iterator of the nth element
+n+iter;
+iter-n;
+n-iter;
+iter1-iter2;
+iter1<iter2;
+iter1>iter2;
+iter1<=iter2;
+iter1>=iter2;
+```
+
+In *C++* these requiremens can be expressed this way
+
+```c++
+template <typename Iter>
+bool random_access_iterator_api_available() {
+	bidirectional_iterator_api_available<Iter>();
+	Iter it5{5,5};
+	it5[3];  // n-th element access
+	it5 += 3;  // step n elements forward
+	it5 - 3;  // nth previous element
+	it5 -= 3;  // step n elements backward
+	it5 + 3;  // nth next element
+	3 + it5;
+	Iter it6 = it5+3;
+	it6 - it5;  // distance
+	it5 < it6;  // pos5 before pos6
+	it5 > it6;  // pos5 after pos6
+	it5 <= it6;  // pos5 not after pos6
+	it5 >= it6;  // pos5 not before pos6
+	return true;
+}
+```
+
+implemented again in `test_it.hpp` file. We can then write [Catch2][Catch2] test for our iterator implementation this way
+
+```c++
+TEST_CASE("random access iterator should allow following expressions",
+	"[random][iterator]") {
+	REQUIRE(random_access_iterator_api_available<pixel_pos_view>());
+}
+```
+
+where `random_access_iterator_api_available<>()` implementation reuse *forward* iterator requrements implementation from `bidirectional_iterator_api_available<>()`.
 
 
 
