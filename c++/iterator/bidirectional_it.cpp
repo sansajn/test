@@ -9,6 +9,7 @@
 #define CATCH_CONFIG_MAIN
 #include <catch.hpp>
 #include "image.hpp"
+#include "test_it.hpp"
 using std::transform, std::pair, std::begin, std::end, std::filesystem::path;
 
 path const gradient_image = "bidi_gradient.png";
@@ -97,116 +98,48 @@ private:
 
 
 TEST_CASE("bidirectional iterator should allow following expressions",
-	"[forward][iterator]") {
-
-	pixel_pos_view pos1;  // default constructor
-	*pos1;  // access position as (x,y) pair
-	pos1->first;  // access x
-	++pos1;  // pre increment
-	pos1++;  // post increment
-	pixel_pos_view pos2;
-	pos1 == pos2;  // equal operator
-	pos1 != pos2;  // not equal operator
-	pixel_pos_view pos3{pos1};  // copy constructor
-	pos3 = pos2;  // assign operator
-
-	pixel_pos_view pos4{2,2};
-	++pos4;
-	++pos4;
-	--pos4;  // pre decrement
-	pos4--;  // post decrement
+	"[bidirectional][iterator]") {
+	REQUIRE(bidirectional_iterator_api_available<pixel_pos_view>());
 }
 
 TEST_CASE("following should work for bidirectional iterator",
 	"[bidirectional][iterator]") {
-
-	pixel_pos_view pos1{2,3};
+	bidirectional_iterator_api_iplemented<pixel_pos_view> iter;
 
 	SECTION("creation") {
-		REQUIRE((*pos1 == pair<size_t, size_t>{0,0}));
-		REQUIRE(pos1->first == 0);
-
-		pixel_pos_view pos2;
-		REQUIRE((*pos2 == pair<size_t, size_t>{0,0}));
+		REQUIRE(iter.creation());
 	}
 
 	SECTION("pre increment") {
-		++pos1;
-		REQUIRE((*pos1 == pair<size_t, size_t>{1,0}));
-		++pos1;
-		++pos1;
-		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
-		REQUIRE((*(++pos1) == pair<size_t, size_t>{0,2}));
+		REQUIRE(iter.pre_increment());
 	}
 
 	SECTION("post increment") {
-		++pos1;
-		REQUIRE((*pos1 == pair<size_t, size_t>{1,0}));
-		pixel_pos_view pos2 = pos1++;
-		REQUIRE((*pos2 == pair<size_t, size_t>{1,0}));
-		++pos1;
-		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
+		REQUIRE(iter.post_increment());
 	}
 
-	SECTION("equal/not equall operators") {
-		pixel_pos_view pos2{2, 3};
-		REQUIRE(pos1 == pos2);
-		++pos1;
-		REQUIRE(pos1 != pos2);
-		++pos2;
-		REQUIRE(pos1 == pos2);
+	SECTION("equal operator") {
+		REQUIRE(iter.equal());
+	}
 
-		pixel_pos_view pos3{1,1};
-		++pos3;
-		++pos3;
-		++pos3;  // (1,1)
-		++pos3;  // {}
-		REQUIRE(pos3 == pixel_pos_view{});
+	SECTION("not equal operators") {
+		REQUIRE(iter.not_equal());
 	}
 
 	SECTION("copy constructor") {
-		++pos1; ++pos1; ++pos1;
-		pixel_pos_view pos2{pos1};
-		REQUIRE((*pos2 == pair<size_t, size_t>{1,1}));
+		REQUIRE(iter.copy_ctor());
 	}
 
 	SECTION("assign operator") {
-		pixel_pos_view pos2;
-		REQUIRE(pos1 != pos2);
-		pos2 = pos1;
-		REQUIRE(pos1 == pos2);
-		++pos1;
-		REQUIRE(pos1 != pos2);
-		++pos2;
-		REQUIRE(pos1 == pos2);
+		REQUIRE(iter.assign());
 	}
 
 	SECTION("pre decrement") {
-		++pos1;
-		++pos1;
-		++pos1;
-		++pos1;
-		++pos1;
-		REQUIRE((*pos1 == pair<size_t, size_t>{1,2}));
-		--pos1;
-		REQUIRE((*pos1 == pair<size_t, size_t>{0,2}));
-		--pos1;
-		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
-		REQUIRE((*(--pos1) == pair<size_t, size_t>{0,1}));
+		REQUIRE(iter.pre_decrement());
 	}
 
 	SECTION("post decrement") {
-		++pos1;
-		++pos1;
-		++pos1;
-		++pos1;
-		++pos1;
-		REQUIRE((*pos1 == pair<size_t, size_t>{1,2}));
-		pos1--;
-		REQUIRE((*pos1 == pair<size_t, size_t>{0,2}));
-		pos1--;
-		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
-		REQUIRE((*(pos1--) == pair<size_t, size_t>{1,1}));
+		REQUIRE(iter.post_decrement());
 	}
 }
 
@@ -219,7 +152,6 @@ TEST_CASE("we can convert view into iterator",
 
 TEST_CASE("we can use transform with bidirectional iterator",
 	"[bidirectional][iterator][transform]") {
-
 	constexpr size_t w = 400,
 		h = 300;
 
@@ -235,8 +167,7 @@ TEST_CASE("we can use transform with bidirectional iterator",
 }
 
 TEST_CASE("we can use parallel transform with bidirectional iterator",
-	"[idirectional][iterator][parallel][transform]") {
-
+	"[bidirectional][iterator][parallel][transform]") {
 	constexpr size_t w = 400,
 		h = 300;
 

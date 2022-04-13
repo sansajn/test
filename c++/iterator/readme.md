@@ -233,17 +233,10 @@ iter1 = iter2;  // assigns an iterator
 In *C++* these requiremens can be expressed this way
 
 ```c++
-template <typename It>
+template <typename Iter>
 bool forward_iterator_api_available() {
-	It it1;  // default constructor
-	*it1;  // access position as (x,y) pair
-	it1->first;  // access x
-	++it1;  // pre increment
-	it1++;  // post increment
-	It it2;
-	it1 == it2;  // equal operator
-	it1 != it2;  // not equal operator
-	It it3{it1};  // copy constructor
+	input_iterator_api_available<Iter>();
+	Iter it1, it2;
 	it1 = it2;  // assign operator
 	return true;
 }
@@ -272,6 +265,8 @@ TEST_CASE("forward iterator should allow following expressions",
 }
 ```
 
+// TODO: we already do not explicitly call `input_iterator_api_available` in code
+
 In case of template inheritance we need refer to base member variables `pos1` as `this->pos1` or `base::pos1` otherwise compiler become angry to us.
 
 I've tryed to implement `forward_iterator_api_implemented::assign()` test this way
@@ -299,7 +294,7 @@ but that ends with *error: 'pos1' was not declared in this scope; did you mean '
 see *we can use transform with forward iterator* test case.
 
 
-> TODO: why we implemented random access iterator (parallel transform require only forward iterator)?
+> TODO: explain why we implemented random access iterator (parallel transform require only forward iterator)?
 
 
 [Catch2]: https://github.com/catchorg/Catch2
@@ -307,7 +302,7 @@ see *we can use transform with forward iterator* test case.
 
 # Implementing bidirectional iterator
 
-In addition to *forward* iterator *bidirectional* iterator adds pre/post decrement operators.
+In addition to *forward* iterator *bidirectional* iterator adds *pre/post decrement* operators.
 
 The *The C++ Standard Library: A Tutorial and Reference* (Table 9.5) book says that *bidirectional* iterator should support following operations in addtion of *forward* iterator
 
@@ -316,6 +311,7 @@ The *The C++ Standard Library: A Tutorial and Reference* (Table 9.5) book says t
 --iter;  // steps backward (returns new position)
 iter--;  // steps backward (returns old position)
 ```
+
 
 
 

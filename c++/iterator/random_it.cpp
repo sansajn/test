@@ -261,12 +261,13 @@ TEST_CASE("following should work for random-access iterator",
 	}
 
 	SECTION("post increment") {
-		++pos1;
+		pos1++;
 		REQUIRE((*pos1 == pair<size_t, size_t>{1,0}));
 		pixel_pos_view pos2 = pos1++;
 		REQUIRE((*pos2 == pair<size_t, size_t>{1,0}));
-		++pos1;
+		pos1++;
 		REQUIRE((*pos1 == pair<size_t, size_t>{1,1}));
+		REQUIRE((*(pos1++) == pair<size_t, size_t>{1,1}));
 	}
 
 	SECTION("equal/not equall operators") {

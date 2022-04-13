@@ -70,37 +70,10 @@ private:
 	pair<size_t, size_t> _pos;  //!< (column, row)
 };
 
-
 TEST_CASE("forward iterator should allow following expressions",
 	"[forward][iterator]") {
-	REQUIRE(input_iterator_api_available<pixel_pos_view>());
 	REQUIRE(forward_iterator_api_available<pixel_pos_view>());
 }
-
-
-template <typename Iter>
-struct forward_iterator_api_implemented : public input_iterator_api_implemented<Iter> {
-	using input_iter = input_iterator_api_implemented<Iter>;
-
-	bool creation() {
-		REQUIRE(input_iter::creation());  // check input iterator implementation
-		Iter pos2;
-		REQUIRE((*pos2 == pair<size_t, size_t>{0,0}));
-		return true;
-	}
-
-	bool assign() {
-		Iter pos2;
-		REQUIRE(this->pos1 != pos2);
-		pos2 = this->pos1;
-		REQUIRE(this->pos1 == pos2);
-		++this->pos1;
-		REQUIRE(this->pos1 != pos2);
-		++pos2;
-		REQUIRE(this->pos1 == pos2);
-		return true;
-	}
-};
 
 TEST_CASE("following should be true for forward itetrator",
 	"[forward][iterator]") {
