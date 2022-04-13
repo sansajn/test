@@ -252,20 +252,11 @@ TEST_CASE("forward iterator should allow following expressions",
 }
 ```
 
+// TODO: we already do not explicitly call `input_iterator_api_available` in code
+
 where we reused `input_iterator_api_available<>()` template function from previous post to verify *input* iterator behaviour (*forward* iterator should also work as *input* iterator).
 
-
-This time
-
-```
-TEST_CASE("forward iterator should allow following expressions",
-	"[forward][iterator]") {
-	REQUIRE(input_iterator_api_available<pixel_pos_view>());
-	REQUIRE(forward_iterator_api_available<pixel_pos_view>());
-}
-```
-
-// TODO: we already do not explicitly call `input_iterator_api_available` in code
+> TODO: missing unit test implementation description
 
 In case of template inheritance we need refer to base member variables `pos1` as `this->pos1` or `base::pos1` otherwise compiler become angry to us.
 
@@ -287,17 +278,14 @@ bool assign() {
 
 but that ends with *error: 'pos1' was not declared in this scope; did you mean 'pos2'?* compiler error. Even after 18 years *C++* can suprise me from time to time. Thanks to the *stackoverflow* I've found the behaviour description in [Why am I getting errors when my template-derived-class uses a member it inherits from its template-base-class?](https://isocpp.org/wiki/faq/templates#nondependent-name-lookup-members).
 
-*Forward* iterator implementation is available in `forwad_it.cpp` file. As in case of *input* iterator there is also program/test to generate grayscale gradient image which produce followinf PNG image
+*Forward* iterator implementation is available in `forwad_it.cpp` file. As in case of *input* iterator there is also program/test (and its parallel version) to generate grayscale gradient image which produce following PNG image
 
 ![gradient image](gradient.png)
 
-see *we can use transform with forward iterator* test case.
+see *we can use parallel transform with forward iterator* test case.
 
 
 > TODO: explain why we implemented random access iterator (parallel transform require only forward iterator)?
-
-
-[Catch2]: https://github.com/catchorg/Catch2
 
 
 # Implementing bidirectional iterator
@@ -312,6 +300,47 @@ The *The C++ Standard Library: A Tutorial and Reference* (Table 9.5) book says t
 iter--;  // steps backward (returns old position)
 ```
 
+In *C++* these requiremens can be expressed this way
+
+```c++
+template <typename Iter>
+bool bidirectional_iterator_api_available() {
+	forward_iterator_api_available<Iter>();
+	Iter pos4{2,2};
+	++pos4;
+	++pos4;
+	--pos4;  // pre decrement
+	pos4--;  // post decrement
+	return true;
+}
+```
+
+implemented again in `test_it.hpp` file. We can then write [Catch2][Catch2] test for our iterator implementation this way
+
+```c++
+TEST_CASE("bidirectional iterator should allow following expressions",
+	"[bidirectional][iterator]") {
+	REQUIRE(bidirectional_iterator_api_available<pixel_pos_view>());
+}
+```
+
+where `bidirectional_iterator_api_available<>()` implementation reuse *forward* iterator requrements implementation from `forward_iterator_api_available<>()`.
+
+In case of verifying iterator implementation only tests for *post/pre decrement* needs to be implemented, see `pre_decrement()` and `post_decrement()` member function implementation for `bidirectional_iterator_api_iplemented<>` template in `test_it.hpp` file (the code is not interesting enough to paste it there). The rest of unit test code is reused from `forward_iterator_api_implemented<>` template implementation.
+
+*Bidirectional* iterator implementation is available in `bidirectional_it.cpp` file. As in case of *input* and *forward* iterators there is also program/test (and its parallel version) to generate grayscale gradient image which produce following PNG image
+
+![gradient image](gradient.png)
+
+see *we can use parallel transform with bidirectional iterator* test case.
+
+
+# Implementing random access iterator
+
+
+
+
+
 
 
 
@@ -324,3 +353,6 @@ iter--;  // steps backward (returns old position)
 - [ ] reusable unit tests for input, forward, bidirectional and random iterator implementation
 - [ ] solve *Using copy-ctor but class X has a trivial copy-ctor but non trivial assign operator* clang warning
 - [x] integrate to raytrace engine
+
+
+[Catch2]: https://github.com/catchorg/Catch2
