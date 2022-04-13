@@ -246,9 +246,7 @@ bool forward_iterator_api_available() {
 }
 ```
 
-implemented again in `test_it.hpp` file. We can then write *Catch2* test for our iterator implementation this way
-
-> TODO: add catch2 reference https://github.com/catchorg/Catch2
+implemented again in `test_it.hpp` file. We can then write [Catch2][Catch2] test for our iterator implementation this way
 
 ```c++
 TEST_CASE("forward iterator should allow following expressions",
