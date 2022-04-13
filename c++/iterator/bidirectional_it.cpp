@@ -52,7 +52,7 @@ struct pixel_pos_view
 
 	pixel_pos_view & operator--() {
 		assert(_w > 0 && _h > 0);
-		assert(_h != _pos.second);  // end of range iterator
+		assert(!end_of_range());
 
 		auto & [c, r] = _pos;
 		if (c == 0 && r == 0) {
@@ -78,7 +78,7 @@ struct pixel_pos_view
 
 	bool operator==(pixel_pos_view const & rhs) const {
 		return (_w == rhs._w && _h == rhs._h && _pos == rhs._pos)
-			|| (_h == _pos.second && rhs._h == rhs._pos.second);  // end-iterator
+			|| (end_of_range() && rhs.end_of_range());
 	}
 
 	bool operator!=(pixel_pos_view const & rhs) const {
@@ -89,6 +89,8 @@ struct pixel_pos_view
 	pixel_pos_view end() {return {};}
 
 private:
+	bool end_of_range() const {return _pos.second == _h;}
+
 	size_t _w, _h;
 	pair<size_t, size_t> _pos;  //!< (column, row)
 };  // pixel_pos_view

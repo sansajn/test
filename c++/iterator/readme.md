@@ -4,7 +4,10 @@ Guide to implement *random access* iterator working with parallel `std::transfor
 
 - The story behind
 - Implementing input iterator
+- Implementing forward iterator
 
+
+> TODO: link implementation files `input_it/forward_it ...` files
 
 # The story behind
 
@@ -296,13 +299,30 @@ but that ends with *error: 'pos1' was not declared in this scope; did you mean '
 see *we can use transform with forward iterator* test case.
 
 
+> TODO: why we implemented random access iterator (parallel transform require only forward iterator)?
+
+
 [Catch2]: https://github.com/catchorg/Catch2
+
+
+# Implementing bidirectional iterator
+
+In addition to *forward* iterator *bidirectional* iterator adds pre/post decrement operators.
+
+The *The C++ Standard Library: A Tutorial and Reference* (Table 9.5) book says that *bidirectional* iterator should support following operations in addtion of *forward* iterator
+
+```
+// all forward iterator operations
+--iter;  // steps backward (returns new position)
+iter--;  // steps backward (returns old position)
+```
+
 
 
 # TODOs
 
 - [x] write guide for input iterator
-- [ ] write guide for forward iterator
+- [x] write guide for forward iterator
 - [ ] write guide for bidirectional iterator
 - [ ] write guide for random access iterator
 - [ ] reusable unit tests for input, forward, bidirectional and random iterator implementation

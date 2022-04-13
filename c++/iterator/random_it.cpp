@@ -52,7 +52,7 @@ struct pixel_pos_view
 
 	pixel_pos_view & operator--() {
 		assert(_w > 0 && _h > 0);
-		assert(_h != _pos.second);  // end of range iterator
+		assert(!end_of_range());
 
 		auto & [c, r] = _pos;
 		if (c == 0 && r == 0) {
