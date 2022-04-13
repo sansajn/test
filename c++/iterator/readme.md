@@ -282,6 +282,8 @@ but that ends with *error: 'pos1' was not declared in this scope; did you mean '
 
 *Forward* iterator implementation is available in `forwad_it.cpp` file. As in case of *input* iterator there is also program/test (and its parallel version) to generate grayscale gradient image which produce following PNG image
 
+> TODO: we introduced also parallel transform version for *forward* iterator, mention it ...
+
 ![gradient image](gradient.png)
 
 see *we can use parallel transform with forward iterator* test case.
