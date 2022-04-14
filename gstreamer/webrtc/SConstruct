@@ -1,6 +1,10 @@
 cpp17 = Environment(
-	CCFLAGS=['-Wall', '-ggdb3'],
-	CXXFLAGS=['-std=c++17'])
+	CCFLAGS=['-Wall', '-ggdb3', '-O0'],
+	CXXFLAGS=['-std=c++17'],
+	LIBS=['boost_stacktrace_backtrace', 'dl'],
+	LINKFLAGS=['-rdynamic'],
+	CPPDEFINES=['BOOST_STACKTRACE_USE_BACKTRACE'],
+)
 
 cpp17.ParseConfig('pkg-config --cflags --libs  glib-2.0 gstreamer-1.0 gstreamer-sdp-1.0 gstreamer-webrtc-1.0 json-glib-1.0 libsoup-2.4')
 
@@ -9,4 +13,5 @@ cpp17.Program('send', ['webrtc-send.cpp'])
 cpp17.Program('webrtc-unidirectional-h264', ['webrtc-unidirectional-h264.c'])
 cpp17.Program(['rtsp_to_webrtc.cpp'])
 cpp17.Program('h264streamer', ['h264streamer.cpp'])
+cpp17.Program('h264streamer_thread', ['h264streamer_thread.cpp'])
 

@@ -4,3 +4,4 @@
 /rtsp_to_webrtc
 /test-webrtc.*
 /h264streamer
+/h264streamer_thread
