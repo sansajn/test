@@ -19,3 +19,5 @@ cpp20.Program('count.cpp')
 cpp20.Program('remove_if.cpp')
 cpp20.Program('remove_if_on_set.cpp')
 cpp20.Program('parallel_transform.cpp')
+cpp20.Program('parallel_transform2.cpp')
+
