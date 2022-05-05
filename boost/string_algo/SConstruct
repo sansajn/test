@@ -1,4 +1,8 @@
-cpp17 = Environment(CCFLAGS=['-std=c++17', '-Wall', '-O0', '-g'])
+cpp17 = Environment(
+	CCFLAGS=['-std=c++17', '-Wall', '-Wextra', '-O0', '-ggdb3'],
+	LIBS=['boost_regex']
+)
 
 cpp17.Program('join.cpp')
 cpp17.Program('join_numbers.cpp')
+cpp17.Program('find_regex.cpp')
