@@ -1,4 +1,4 @@
-// std::ranges::sort() algorithm in action
+// std::ranges::find() algorithm in action
 #include <algorithm>
 #include <array>
 #include <iostream>
