@@ -7,3 +7,5 @@
 /ws_client
 /http_client
 /serve_thread_context
+/wss_client
+/wss_echo_server
