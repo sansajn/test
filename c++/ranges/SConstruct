@@ -12,3 +12,4 @@ cpp20.Program('find_files.cpp')
 
 # algorithm samples
 cpp20.Program('sort.cpp')
+cpp20.Program('find_if.cpp')
