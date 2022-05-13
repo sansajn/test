@@ -1,6 +1,12 @@
 ## `wss_echo_server` sample
 
-WebSocket Secure (WSS) echo server sample. To test it run echo server with
+WebSocket Secure (WSS) echo server sample. Usage
+
+```
+wss_echo_server [PORT=8765][PATH="/"]
+```
+
+To test echo server run
 
 ```bash
 ./wss_echo_server
@@ -18,6 +24,14 @@ WebSocket connection opened
 ^CWebSocket connection closed
 quit
 ```
+
+We can optionaly specify server port and path as first and second arguments, this way
+
+```console
+$ ./wss_echo_server 40001 /client
+listenning on 'wss://127.0.0.1:40001/client' address ...
+```
+
 
 ## `wss_client` sample
 

@@ -1,19 +1,22 @@
-// WebSocket Secure (WSS) echo server sample
+/* WebSocket Secure (WSS) echo server sample
+usage: wss_echo_server [PORT=8765][PATH="/"] */
+#include <string_view>
 #include <string>
 #include <thread>
 #include <chrono>
 #include <iostream>
+#include <cstdlib>
 #include <cassert>
 #include <boost/filesystem/string_file.hpp>
 #include <libsoup/soup.h>
 
-using std::string, std::cout, std::cerr, std::endl;
+using std::string_view, std::string, std::cout, std::cerr, std::endl;
 using namespace std::chrono_literals;
 using namespace std::string_literals;
 //using boost::filesystem::load_string_file;
 
-constexpr int SERVER_PORT = 8765;
-constexpr char const WSS_PATH[] = "/",
+constexpr int DEFAULT_SERVER_PORT = 8765;
+constexpr char const DEFAULT_WSS_PATH[] = "/",
 	ssl_cert_file[] = "localhost.crt",
 	ssl_key_file[] = "localhost.key";
 
@@ -31,6 +34,14 @@ void websocket_message_handler(SoupWebsocketConnection * connection,
 int main(int argc, char * argv[]) {
 //	load_string_file("wss_client.html", page_source);
 
+	int server_port = DEFAULT_SERVER_PORT;
+	if (argc > 1)
+		server_port = atoi(argv[1]);
+
+	string_view server_path = DEFAULT_WSS_PATH;
+	if (argc > 2)
+		server_path = argv[2];
+
 	// load certificate
 	GError * error = nullptr;
 	GTlsCertificate * cert = g_tls_certificate_new_from_files(ssl_cert_file, ssl_key_file, &error);
@@ -46,10 +57,10 @@ int main(int argc, char * argv[]) {
 
 	g_clear_object(&cert);
 
-	soup_server_add_websocket_handler(server, "/", nullptr, nullptr, server_websocket_handler, nullptr, nullptr);
-	soup_server_listen_all(server, SERVER_PORT, (SoupServerListenOptions)SOUP_SERVER_LISTEN_HTTPS, nullptr);
+	soup_server_add_websocket_handler(server, server_path.data(), nullptr, nullptr, server_websocket_handler, nullptr, nullptr);
+	soup_server_listen_all(server, server_port, (SoupServerListenOptions)SOUP_SERVER_LISTEN_HTTPS, nullptr);
 
-	cout << "listenning on 'wss://127.0.0.1:" << SERVER_PORT << WSS_PATH << "' address ...\n";
+	cout << "listenning on 'wss://127.0.0.1:" << server_port << server_path << "' address ...\n";
 
 	GMainLoop * loop = g_main_loop_new(nullptr, FALSE);
 	assert(loop);
