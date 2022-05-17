@@ -25,12 +25,57 @@ WebSocket connection opened
 quit
 ```
 
+or open `wss_client.html` page in a browser window (tested with Firefox 99 and Chrome 80) after you imported `localhost.crt` certificate.
+
+> for *Firefox 99* go to *Settings > Privacy & Security > Certificates > View Certificates...*, then *Autorities* where click to *Import* button. Point to `localhost.crt` and click *OK* button.
+
 We can optionaly specify server port and path as first and second arguments, this way
 
 ```console
 $ ./wss_echo_server 40001 /client
 listenning on 'wss://127.0.0.1:40001/client' address ...
 ```
+
+### self-sign localhost certificate
+
+To test stuff on localhost or private network it is fine to use self-signed certificate. See `localhost.crt`, `localhost.key` files for example. I've used 
+
+```bash
+openssl genrsa -des3 -out localhost.secure.key 2048
+```
+
+to generate private (encripted) key as `localhost.secure.key`, then
+
+```bash
+openssl rsa -in localhost.secure.key -out localhost.key
+```
+
+to generate (unencripted) private key as `localhost.key` so `openssl` will not ask for password anymore, then
+
+
+```bash
+openssl req -new -key localhost.key -out localhost.csr
+```
+
+to generate CSR (Certificate Signing Request) as `localhost.csr` and provide following information during CSR creation
+
+```
+Country Name (2 letter code) [AU]:US
+State or Province Name (full name) [Some-State]:New York
+Locality Name (eg, city) []:New York City
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Bouncy Castles, Inc.
+Organizational Unit Name (eg, section) []:Ministry of Water Slides
+Common Name (e.g. server FQDN or YOUR name) []:localhost
+Email Address []:admin@localhost.com
+```
+
+the most important field is *Common Name*. And finally following
+
+```bash
+openssl x509 -req -days 365 -in localhost.csr -signkey localhost.key -out localhost.crt
+```
+
+command to generate the certificate as `localhost.crt` file.
 
 
 ## `wss_client` sample
