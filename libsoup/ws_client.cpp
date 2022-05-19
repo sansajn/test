@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <cassert>
+#include <csignal>
 #include <libsoup/soup.h>
 
 using std::string;
@@ -11,11 +12,15 @@ constexpr char DEFAULT_ADDRESS[] = "ws://echo.websocket.org:80";
 
 void on_connection(SoupSession * session, GAsyncResult * res, gpointer data);
 void on_message(SoupWebsocketConnection * conn, gint type, GBytes * message, gpointer data);
-void on_close(SoupWebsocketConnection * conn, gpointer data);
+void on_closed(SoupWebsocketConnection * conn, gpointer data);
+void on_ctrlc(int signal);
 
 GMainLoop * loop = nullptr;
+SoupWebsocketConnection * open_conn = nullptr;
 
 int main(int argc, char * argv[]) {
+	signal(SIGINT, on_ctrlc);  // setup ctrl+c handler
+
 	string address;
 	if (argc > 1)
 		address = argv[1];
@@ -33,9 +38,10 @@ int main(int argc, char * argv[]) {
 	loop = g_main_loop_new(nullptr, FALSE);
 	assert(loop);
 
-	g_main_loop_run(loop);
+	g_main_loop_run(loop);  // blocking
 
 	// clean up
+	g_object_unref(client);
 	g_main_loop_unref(loop);
 
 	cout << "done!\n";
@@ -54,7 +60,8 @@ void on_connection(SoupSession * session, GAsyncResult * res, gpointer data) {
 	}
 
 	g_signal_connect(conn, "message", G_CALLBACK(on_message), nullptr);
-	g_signal_connect(conn, "closed", G_CALLBACK(on_close), nullptr);
+	g_signal_connect(conn, "closed", G_CALLBACK(on_closed), nullptr);
+	open_conn = conn;
 
 	cout << "on_connection" << endl;
 
@@ -76,8 +83,25 @@ void on_message(SoupWebsocketConnection * conn, gint type, GBytes * message, gpo
 		cout << "Invalid data type: " << type << "\n";
 }
 
-void on_close(SoupWebsocketConnection * conn, gpointer data) {
+void on_closed(SoupWebsocketConnection * conn, gpointer data) {
 	assert(soup_websocket_connection_get_state(conn) == SOUP_WEBSOCKET_STATE_CLOSED);  // connection is expected to be closed there
-	g_object_unref(conn);  // unref connection	
-	cout << "WebSocket connection closed\n";
+	g_object_unref(conn);  // unref connection
+	cout << "WebSocket connection closed, exit\n";
+	g_main_loop_quit(loop);  // client closed we can quit
+}
+
+void on_ctrlc(int signal) {
+	cout << "ctrl+c press detected, closing client connection ...\n";
+	
+	/* We can close our connection with just calling unref 
+	on connection object, but in this case closed handler is not called.
+
+	g_clear_object(&open_conn);
+	static int count = 1;
+	if (count++ > 1)
+		g_main_loop_quit(loop);
+	*/
+
+	/* or we can call close funcition and provide reason for closing with (in this case closed handler is called) */
+	soup_websocket_connection_close(open_conn, SOUP_WEBSOCKET_CLOSE_GOING_AWAY, "client closed");  // after this on_closed handler is called by glib loop
 }

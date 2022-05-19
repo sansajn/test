@@ -26,8 +26,10 @@ void server_websocket_handler(SoupServer * server, SoupWebsocketConnection * con
 void websocket_message_handler(SoupWebsocketConnection * connection,
 	SoupWebsocketDataType data_type, GBytes * message, gpointer user_data);
 
-int main(int argc, char * argv[])
-{
+void websocket_closed_handler(SoupWebsocketConnection * connection, gpointer user_data);
+
+
+int main(int argc, char * argv[]) {
 	load_string_file("websocket.html", page_source);
 
 	SoupServer * server = soup_server_new(SOUP_SERVER_SERVER_HEADER, "test soap server", nullptr);
@@ -57,8 +59,8 @@ int main(int argc, char * argv[])
 }
 
 void server_http_handler(SoupServer * server, SoupMessage * message,
-	char const * path, GHashTable * query, SoupClientContext * client, gpointer user_data)
-{
+	char const * path, GHashTable * query, SoupClientContext * client, gpointer user_data) {
+
 	cout << "http request received" << endl;
 
 	SoupBuffer * page_buf = soup_buffer_new(SOUP_MEMORY_STATIC, page_source.c_str(), size(page_source));
@@ -73,12 +75,12 @@ void server_http_handler(SoupServer * server, SoupMessage * message,
 }
 
 void server_websocket_handler(SoupServer * server, SoupWebsocketConnection * connection,
-	char const * path, SoupClientContext * client, gpointer user_data)
-{
-	cout << "websocket connection request received" << endl;
+	char const * path, SoupClientContext * client, gpointer user_data) {
 
+	cout << "websocket connection " << static_cast<void *>(connection) << " request received" << endl;
 	g_object_ref(G_OBJECT(connection));
 	g_signal_connect(G_OBJECT(connection), "message", G_CALLBACK(websocket_message_handler), nullptr);
+	g_signal_connect(G_OBJECT(connection), "closed",  G_CALLBACK(websocket_closed_handler), nullptr);
 }
 
 void websocket_message_handler(SoupWebsocketConnection * connection,
@@ -106,4 +108,18 @@ void websocket_message_handler(SoupWebsocketConnection * connection,
 		default:
 			assert(0);
 	}
+}
+
+void websocket_closed_handler(SoupWebsocketConnection * connection, gpointer user_data) {
+	assert(soup_websocket_connection_get_state(connection) == SOUP_WEBSOCKET_STATE_CLOSED);
+	
+	gushort close_code = soup_websocket_connection_get_close_code(connection);
+	char const * what = soup_websocket_connection_get_close_data(connection);
+
+	cout << "connection " << static_cast<void *>(connection) << " closed with code=" << close_code;
+	if (what)
+		cout << ", what: " << what;
+	cout << "\n";
+	
+	// should we unref connection there?
 }
