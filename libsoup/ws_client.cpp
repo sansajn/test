@@ -63,8 +63,7 @@ void on_connection(SoupSession * session, GAsyncResult * res, gpointer data) {
 	cout << "<<< " << msg << "\n";
 }
 
-void on_message(SoupWebsocketConnection * conn, gint type, GBytes * message, gpointer data)
-{
+void on_message(SoupWebsocketConnection * conn, gint type, GBytes * message, gpointer data) {
 	if (type == SOUP_WEBSOCKET_DATA_TEXT) {
 		gsize sz;
 		gchar const * ptr = (gchar const *)g_bytes_get_data(message, &sz);
@@ -78,6 +77,7 @@ void on_message(SoupWebsocketConnection * conn, gint type, GBytes * message, gpo
 }
 
 void on_close(SoupWebsocketConnection * conn, gpointer data) {
-	soup_websocket_connection_close(conn, SOUP_WEBSOCKET_CLOSE_NORMAL, nullptr);
+	assert(soup_websocket_connection_get_state(conn) == SOUP_WEBSOCKET_STATE_CLOSED);  // connection is expected to be closed there
+	g_object_unref(conn);  // unref connection	
 	cout << "WebSocket connection closed\n";
 }
