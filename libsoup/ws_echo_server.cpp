@@ -1,4 +1,5 @@
 // WebSocket echo server sample
+#include <string_view>
 #include <string>
 #include <thread>
 #include <chrono>
@@ -7,7 +8,7 @@
 #include <boost/filesystem/string_file.hpp>
 #include <libsoup/soup.h>
 
-using std::string, std::cout, std::endl;
+using std::string_view, std::string, std::cout, std::endl;
 using namespace std::chrono_literals;
 using namespace std::string_literals;
 using boost::filesystem::load_string_file;
@@ -38,7 +39,8 @@ int main(int argc, char * argv[])
 	soup_server_add_websocket_handler(server, "/ws", nullptr, nullptr, server_websocket_handler, nullptr, nullptr);
 	soup_server_listen_all(server, SERVER_PORT, (SoupServerListenOptions)0, nullptr);
 
-	cout << "page link: http://127.0.0.1:" << SERVER_PORT << "\n";
+	cout << "page link: http://127.0.0.1:" << SERVER_PORT << "\n"
+		<< "WebSocket listenning on ws://localhost:" << SERVER_PORT << "/ws address\n";
 
 	GMainLoop * loop = g_main_loop_new(nullptr, FALSE);
 	assert(loop);
@@ -80,37 +82,28 @@ void server_websocket_handler(SoupServer * server, SoupWebsocketConnection * con
 }
 
 void websocket_message_handler(SoupWebsocketConnection * connection,
-	SoupWebsocketDataType data_type, GBytes * message, gpointer user_data)
-{
-	gchar * msg_str = nullptr;  // received message as string
+	SoupWebsocketDataType data_type, GBytes * message, gpointer user_data) {
 
-	switch (data_type)
-	{
-		case SOUP_WEBSOCKET_DATA_BINARY:
-		{
+	switch (data_type) {
+		case SOUP_WEBSOCKET_DATA_BINARY: {
 			cout << "websocket: unknown binary message received, ignored" << endl;
 			return;
 		}
 
-		case SOUP_WEBSOCKET_DATA_TEXT:
-		{
+		case SOUP_WEBSOCKET_DATA_TEXT: {
+			// receive
 			gsize size;
-			gchar * data = (gchar *)g_bytes_get_data(message, &size);
-			msg_str = g_strndup(data, size);
-			break;
+			gchar * data = (gchar *)g_bytes_get_data(message, &size);  // null terminated string
+			assert(data);
+			cout << ">>> " << data << "\n";
+			
+			// answer
+			soup_websocket_connection_send_text(connection, data);
+			cout << "<<< " << data << "\n";
+			return;
 		}
 
 		default:
 			assert(0);
 	}
-
-	cout << "ws >> " << msg_str << endl;
-
-	// answer message
-	string answer = "Hello "s + msg_str + "!"s;
-	soup_websocket_connection_send_text(connection, answer.c_str());
-
-	cout << "ws << " << answer << endl;
-
-	g_free(msg_str);
 }

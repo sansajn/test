@@ -7,20 +7,26 @@
 using std::string;
 using std::cout, std::endl;
 
+constexpr char DEFAULT_ADDRESS[] = "ws://echo.websocket.org:80";
+
 void on_connection(SoupSession * session, GAsyncResult * res, gpointer data);
 void on_message(SoupWebsocketConnection * conn, gint type, GBytes * message, gpointer data);
 void on_close(SoupWebsocketConnection * conn, gpointer data);
 
 GMainLoop * loop = nullptr;
 
-int main(int argc, char * argv[])
-{
+int main(int argc, char * argv[]) {
+	string address;
+	if (argc > 1)
+		address = argv[1];
+	else
+		address = DEFAULT_ADDRESS;
+	
 	// initialize client
 	SoupSession * client = soup_session_new();
 
 	// connect
-	string const echo_server = "ws://echo.websocket.org:80";
-	SoupMessage * addr_msg = soup_message_new(SOUP_METHOD_GET, echo_server.c_str());
+	SoupMessage * addr_msg = soup_message_new(SOUP_METHOD_GET, address.c_str());
 	soup_session_websocket_connect_async(client, addr_msg, nullptr, nullptr, nullptr,
 		(GAsyncReadyCallback)on_connection, nullptr);
 
@@ -37,12 +43,10 @@ int main(int argc, char * argv[])
 	return 0;
 }
 
-void on_connection(SoupSession * session, GAsyncResult * res, gpointer data)
-{
+void on_connection(SoupSession * session, GAsyncResult * res, gpointer data) {
 	GError * error = nullptr;
 	SoupWebsocketConnection * conn = soup_session_websocket_connect_finish(session, res, &error);
-	if (error)
-	{
+	if (error) {
 		cout << "error: " << error->message << "\n";
 		g_error_free(error);
 		g_main_loop_quit(loop);
@@ -54,19 +58,18 @@ void on_connection(SoupSession * session, GAsyncResult * res, gpointer data)
 
 	cout << "on_connection" << endl;
 
-	soup_websocket_connection_send_text(conn, "Hello Jane!");
+	constexpr char msg[] = "Hello Jane!";
+	soup_websocket_connection_send_text(conn, msg);
+	cout << "<<< " << msg << "\n";
 }
 
 void on_message(SoupWebsocketConnection * conn, gint type, GBytes * message, gpointer data)
 {
-	if (type == SOUP_WEBSOCKET_DATA_TEXT)
-	{
+	if (type == SOUP_WEBSOCKET_DATA_TEXT) {
 		gsize sz;
 		gchar const * ptr = (gchar const *)g_bytes_get_data(message, &sz);
 
-		cout << "Received text data: " << ptr << "\n";
-
-		soup_websocket_connection_send_text(conn, ptr);
+		cout << ">>> " << ptr << "\n";
 	}
 	else if (type == SOUP_WEBSOCKET_DATA_BINARY)
 		cout << "Received binary data (not shown)\n";
@@ -74,8 +77,7 @@ void on_message(SoupWebsocketConnection * conn, gint type, GBytes * message, gpo
 		cout << "Invalid data type: " << type << "\n";
 }
 
-void on_close(SoupWebsocketConnection * conn, gpointer data)
-{
+void on_close(SoupWebsocketConnection * conn, gpointer data) {
 	soup_websocket_connection_close(conn, SOUP_WEBSOCKET_CLOSE_NORMAL, nullptr);
 	cout << "WebSocket connection closed\n";
 }
