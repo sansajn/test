@@ -1,4 +1,5 @@
-// WebSocket secure client (libsoap) sample
+/* WebSocket Secure client (libsoap) sample.
+usage:* ./wss_client [CERT_FILE=localhost.crt][WS_ADDRESS=wss://localhost:8765] */
 #include <string_view>
 #include <string>
 #include <iostream>
@@ -8,9 +9,10 @@
 #include <libsoup/soup.h>
 
 using std::string_view, std::string, std::to_string;
-using std::cerr, std::clog, std::endl;
+using std::cout, std::cerr, std::clog, std::endl;
 
-static gchar const * server_url = "wss://localhost:8765";
+constexpr char const DEFAULT_CERT_FILE[] = "localhost.crt",
+	DEFAULT_ADDRESS[] = "wss://localhost:8765";
 
 // signal handlers
 void on_server_connected(SoupSession * session, GAsyncResult * res, SoupMessage * msg);
@@ -30,6 +32,17 @@ static GMainLoop * loop = nullptr;
 int main(int argc, char * argv[]) {
 	signal(SIGINT, on_close);  // setup ctrl+c handler
 
+	string_view cert_file = DEFAULT_CERT_FILE;
+	if (argc > 1)
+		cert_file = argv[1];
+
+	string_view address = DEFAULT_ADDRESS;
+	if (argc > 2)
+		address = argv[2];
+
+	cout << "certificate: " << cert_file << "\n"
+		<< "connecting to '" << address << "' address\n";
+
 	// init WebSocket connection
 	char const * https_aliases[] = {"wss", nullptr};
 
@@ -37,12 +50,12 @@ int main(int argc, char * argv[]) {
 	SoupSession * session = soup_session_new_with_options(
 		SOUP_SESSION_SSL_STRICT, FALSE,  // https://libsoup.org/libsoup-2.4/SoupSession.html#SoupSession--ssl-strict
 //		SOUP_SESSION_SSL_USE_SYSTEM_CA_FILE, TRUE,  // https://libsoup.org/libsoup-2.4/SoupSession.html#SoupSession--ssl-use-system-ca-file
-		SOUP_SESSION_SSL_CA_FILE, "localhost.crt",  // https://libsoup.org/libsoup-2.4/SoupSession.html#SoupSession--ssl-ca-file
+		SOUP_SESSION_SSL_CA_FILE, cert_file.data(),  // .crt/.pem files are working there, https://libsoup.org/libsoup-2.4/SoupSession.html#SoupSession--ssl-ca-file
 		SOUP_SESSION_HTTPS_ALIASES, https_aliases, // https://libsoup.org/libsoup-2.4/SoupSession.html#SoupSession--https-aliases
 		nullptr);
 	assert(session);
 
-	SoupMessage * message = soup_message_new(SOUP_METHOD_GET, server_url);
+	SoupMessage * message = soup_message_new(SOUP_METHOD_GET, address.data());
 	assert(message);
 
 	soup_session_websocket_connect_async(session, message, NULL, NULL, NULL,
@@ -118,10 +131,8 @@ void ask_quit() {
 			soup_websocket_connection_close(ws_conn, 1000, "");  // this will call us again as part of on_server_closed handler
 			return;
 		}
-		else {
-			g_object_unref(ws_conn);
-			ws_conn = nullptr;
-		}
+		else
+			g_clear_object(&ws_conn);
 	}
 
 	if (loop)
