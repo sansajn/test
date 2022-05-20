@@ -1,6 +1,6 @@
 cpp17 = Environment(
-	CCFLAGS=['-std=c++17', '-Wall', '-O0', '-g'],
-	LIBS=['boost_filesystem', 'boost_system'])
+	CCFLAGS=['-std=c++17', '-Wall', '-O0', '-ggdb3'],
+	LIBS=['boost_filesystem', 'boost_system', 'boost_program_options'])
 
 cpp17.ParseConfig('pkg-config --cflags --libs libsoup-2.4')
 

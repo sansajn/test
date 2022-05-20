@@ -8,22 +8,17 @@ usage: wss_echo_server [PORT=8765][PATH="/"] */
 #include <cstdlib>
 #include <cassert>
 #include <boost/filesystem/string_file.hpp>
+#include <boost/program_options.hpp>
 #include <libsoup/soup.h>
 
 using std::string_view, std::string, std::cout, std::cerr, std::endl;
 using namespace std::chrono_literals;
 using namespace std::string_literals;
-//using boost::filesystem::load_string_file;
+namespace po = boost::program_options;
 
 constexpr int DEFAULT_SERVER_PORT = 8765;
 constexpr char const DEFAULT_WSS_PATH[] = "/",
-	ssl_cert_file[] = "localhost.crt",
-	ssl_key_file[] = "localhost.key";
-
-//string page_source;
-
-//void server_http_handler(SoupServer * server, SoupMessage * message,
-//	char const * path, GHashTable * query, SoupClientContext * client, gpointer user_data);
+	DEFAULT_PEM[] = "localhost.pem";
 
 void server_websocket_handler(SoupServer * server, SoupWebsocketConnection * connection,
 	char const * path, SoupClientContext * client, gpointer user_data);
@@ -32,24 +27,67 @@ void websocket_message_handler(SoupWebsocketConnection * connection,
 	SoupWebsocketDataType data_type, GBytes * message, gpointer user_data);
 
 int main(int argc, char * argv[]) {
-//	load_string_file("wss_client.html", page_source);
+	// process command line options
+	int arg_port;
+	string arg_path,
+		arg_pem;
 
-	int server_port = DEFAULT_SERVER_PORT;
-	if (argc > 1)
-		server_port = atoi(argv[1]);
+	po::options_description desc{"Options"};
+	desc.add_options()
+		("help", "produce this help message")
+		("port", po::value<int>(&arg_port)->default_value(DEFAULT_SERVER_PORT), "WebSocket server port")
+		("path", po::value<string>(&arg_path)->default_value(DEFAULT_WSS_PATH), "WebSocket server path")
+		("crt", po::value<string>(), "specifi certificate file as .crt file")
+		("key", po::value<string>(), "specifi private key as .key file")
+		("pem", po::value<string>(&arg_pem)->default_value(DEFAULT_PEM), "specifi certificate and private key in .pem container file");
 
-	string_view server_path = DEFAULT_WSS_PATH;
-	if (argc > 2)
-		server_path = argv[2];
+	po::variables_map vm;
+	po::store(po::parse_command_line(argc, argv, desc), vm);
+	po::notify(vm);
+
+	if (vm.count("help")) {
+		cout << "Usage: wss_echo_server [OPTION]...\n"
+			<< desc << "\n";
+		return 1;
+	}
+
+	string cert_file = arg_pem;
+
+	// in case crt provided, we expect also key
+	string key_file;
+	if (vm.count("crt") || vm.count("key")) {
+		if (vm.count("crt") && vm.count("key")) {
+			cert_file = vm["crt"].as<string>();
+			key_file = vm["key"].as<string>();
+		}
+		else {
+			cerr << "error: we expect both crt and key files, see --crt and --key options\n";
+			return 1;
+		}
+	}
+
+	cout << "certificate: ";
+	if (!empty(key_file))
+		cout << "(" << cert_file << ", " << key_file << ")\n";
+	else
+		cout << cert_file << "\n";
+
+
+	// create WebSocket server
 
 	// load certificate
 	GError * error = nullptr;
-	GTlsCertificate * cert = g_tls_certificate_new_from_files(ssl_cert_file, ssl_key_file, &error);
-	assert(cert);
+	GTlsCertificate * cert = nullptr;
+	if (!empty(key_file))
+		cert = g_tls_certificate_new_from_files(cert_file.c_str(), key_file.c_str(), &error);
+	else  // use pem
+		cert = g_tls_certificate_new_from_file(cert_file.c_str(), &error);
+
 	if (error) {
 		cerr << "error: unable to load certificate, what:" << error->message << "\n";
 		return 1;
 	}
+	assert(cert);
 
 	SoupServer * server = soup_server_new(SOUP_SERVER_SERVER_HEADER, "WebSocket Secure test server",
 		SOUP_SERVER_TLS_CERTIFICATE, cert, nullptr);
@@ -57,10 +95,10 @@ int main(int argc, char * argv[]) {
 
 	g_clear_object(&cert);
 
-	soup_server_add_websocket_handler(server, server_path.data(), nullptr, nullptr, server_websocket_handler, nullptr, nullptr);
-	soup_server_listen_all(server, server_port, (SoupServerListenOptions)SOUP_SERVER_LISTEN_HTTPS, nullptr);
+	soup_server_add_websocket_handler(server, arg_path.c_str(), nullptr, nullptr, server_websocket_handler, nullptr, nullptr);
+	soup_server_listen_all(server, arg_port, (SoupServerListenOptions)SOUP_SERVER_LISTEN_HTTPS, nullptr);
 
-	cout << "listenning on 'wss://127.0.0.1:" << server_port << server_path << "' address ...\n";
+	cout << "listenning on 'wss://127.0.0.1:" << arg_port << arg_path << "' address ...\n";
 
 	GMainLoop * loop = g_main_loop_new(nullptr, FALSE);
 	assert(loop);
@@ -75,22 +113,6 @@ int main(int argc, char * argv[]) {
 
 	return 0;
 }
-
-//void server_http_handler(SoupServer * server, SoupMessage * message,
-//	char const * path, GHashTable * query, SoupClientContext * client, gpointer user_data)
-//{
-//	cout << "http request received" << endl;
-
-//	SoupBuffer * page_buf = soup_buffer_new(SOUP_MEMORY_STATIC, page_source.c_str(), size(page_source));
-//	assert(page_buf);
-
-//	soup_message_headers_set_content_type(message->response_headers, "text/html", nullptr);
-//	soup_message_body_append_buffer(message->response_body, page_buf);
-
-//	soup_buffer_free(page_buf);
-
-//	soup_message_set_status(message, SOUP_STATUS_OK);
-//}
 
 void server_websocket_handler(SoupServer * server, SoupWebsocketConnection * connection,
 	char const * path, SoupClientContext * client, gpointer user_data) {
