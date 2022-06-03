@@ -1,0 +1,3 @@
+cpp = Environment()
+
+#cpp.Program('span.cpp')
