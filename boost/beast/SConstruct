@@ -1,6 +1,9 @@
 cpp17 = Environment(
 	CXXFLAGS=['-std=c++17'],
-	CCFLAGS=['-O0', '-g', '-Wall'],
+	CCFLAGS=['-O0', '-ggdb3', '-Wall', '-Wextra'],
 	LIBS=['pthread'])
 
 cpp17.Program('ws_sync_client.cpp')
+
+# Boost.Beast samples
+cpp17.Program('http_client_async.cpp')
