@@ -1,9 +1,23 @@
+ccflags = ['-O0', '-ggdb3', '-Wall', '-Wextra']
+cppdefines = ['BOOST_BEAST_USE_STD_STRING_VIEW']
+libs = ['pthread']
+
 cpp17 = Environment(
 	CXXFLAGS=['-std=c++17'],
-	CCFLAGS=['-O0', '-ggdb3', '-Wall', '-Wextra'],
-	LIBS=['pthread'])
+	CCFLAGS=ccflags,
+	CPPDEFINES=cppdefines,
+	LIBS=libs)
 
 cpp17.Program('ws_sync_client.cpp')
 
+cpp20 = Environment(
+	CXXFLAGS=['-std=c++2a'],
+	CCFLAGS=ccflags,
+	CPPDEFINES=cppdefines,
+	LIBS=libs
+)
+
 # Boost.Beast samples
 cpp17.Program('http_client_async.cpp')
+cpp17.Program('http_get.cpp')
+cpp20.Program('http_get_future.cpp')

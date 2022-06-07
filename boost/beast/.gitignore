@@ -1,1 +1,4 @@
 /ws_sync_client
+/http_client_async
+/http_get
+/http_get_future
