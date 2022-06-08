@@ -9,10 +9,16 @@ using std::string;
 using std::cout;
 using boost::algorithm::join;
 
-int main(int argc, char * argv[])
-{
+int main(int argc, char * argv[]) {
+	// joining from container
 	vector<string> data{"one", "two", "three"};
 	string line = join(data, ", ");
 	cout << line << "\n";
+	
+	// joining from initializer-list not working :(
+//	string line2 = join({"four", "five", "six"}, ",");
+//	cout << line2 << "\n";
+	
+	cout << "done\n";
 	return 0;
 }
