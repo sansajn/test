@@ -13,6 +13,8 @@ int main(int argc, char * argv[]) {
 	rectItem->setBrush(Qt::gray);
 
 	QGraphicsSimpleTextItem * textItem = scene.addSimpleText("Foundations of Qt");
+	textItem->setPen(QPen{Qt::white});
+	textItem->setBrush(Qt::white);
 	textItem->setPos(50, 0);
 
 	QGraphicsEllipseItem * ellipseItem = scene.addEllipse(QRectF{170, 20, 100, 75}, QPen{Qt::darkBlue}, Qt::blue);
