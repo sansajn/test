@@ -1,17 +1,18 @@
-env = Environment(
+cpp17 = Environment(
 	CXXFLAGS=['-std=c++17'],
 	CCFLAGS=['-Wall'],
 	LIBS=['boost_filesystem', 'boost_system']
 )
 
-env.Program('hello.cpp')
-env.Program('compare.cpp')
-env.Program('relative.cpp')
-env.Program('path_iter.cpp')
+cpp17.Program('hello.cpp')
+cpp17.Program('compare.cpp')
+cpp17.Program('relative.cpp')
+cpp17.Program('path_iter.cpp')
 #env.Program('playground.cpp')
-env.Program('path_test.cpp')
-env.Program('directory_listing.cpp')
-env.Program('relative_func.cpp')
-env.Program('sub_path.cpp')
-env.Program('directory_first_sort.cpp')
-env.Program('load_file.cpp')
+cpp17.Program('path_test.cpp')
+cpp17.Program('directory_listing.cpp')
+cpp17.Program('relative_func.cpp')
+cpp17.Program('sub_path.cpp')
+cpp17.Program('directory_first_sort.cpp')
+cpp17.Program('load_file.cpp')
+cpp17.Program('weakly_canonical.cpp')
