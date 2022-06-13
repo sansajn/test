@@ -9,3 +9,6 @@ The directory contains
 
 ![transform sample result](transform/result.png)
 
+- `input`: Graphics View Framework input (and custom graphics-item) sample based on *Foundations of Qt Development* book from Chapter 7, Listings 7-22, ..., 7-31
+
+![input sample result](input/result.png)
