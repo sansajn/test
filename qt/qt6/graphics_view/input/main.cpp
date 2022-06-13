@@ -1,12 +1,10 @@
 // Graphics View Framework input (and custom item) sample based on *Foundations of Qt Development* book from Chapter 7, Listings 7-22, ..., 7-31
+#include <array>
 #include <QApplication>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
-
-#include <iostream>
-using std::cout;
-
+using std::array;
 
 class HandleItem : public QGraphicsItem {
 public:
@@ -15,13 +13,13 @@ public:
 	HandleItem(QGraphicsItem * item, QGraphicsScene * scene, QColor color,
 		HandleRole role = HandleRole::CenterHandle, QList<HandleItem *> other_handles = {});
 
-	void paint(QPainter * paint, QStyleOptionGraphicsItem const * option, QWidget * widget) override;  // TODO: use reference there
+	void paint(QPainter * paint, QStyleOptionGraphicsItem const * option, QWidget * widget) override;
 	QRectF boundingRect() const override;
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent * event) override;
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent * event) override;
-	QVariant itemChange(GraphicsItemChange change, QVariant const & data) override;  // TODO: can we use std::variant there?
+	QVariant itemChange(GraphicsItemChange change, QVariant const & data) override;
 
 private:
 	QGraphicsItem * _item;
@@ -81,16 +79,21 @@ void HandleItem::paint(QPainter * paint, QStyleOptionGraphicsItem const * option
 		}
 
 		case HandleRole::RightHandle: {
-			QVector<QPointF> points;  // TODO: we can use std::vector there
-			points << rect.center() + QPointF{3,0} << rect.center() + QPointF{-3, -5} << rect.center() + QPointF{-3, 5};
-			paint->drawConvexPolygon(QPolygonF{points});
+			array<QPointF, 3> points = {
+				rect.center() + QPointF{3,0},
+				rect.center() + QPointF{-3, -5},
+				rect.center() + QPointF{-3, 5}};
+			paint->drawConvexPolygon(points.data(), size(points));
 			break;
 		}
 
 		case HandleRole::TopHandle: {
-			QVector<QPointF> points;  // TODO: we can use std::vector there
-			points << rect.center() + QPointF{0, -3} << rect.center() + QPointF{-5, 3} << rect.center() + QPointF{5, 3};
-			paint->drawConvexPolygon(QPolygonF{points});
+			array <QPointF, 3> points = {
+				rect.center() + QPointF{0, -3},
+				rect.center() + QPointF{-5, 3},
+				rect.center() + QPointF{5, 3}
+			};
+			paint->drawConvexPolygon(points.data(), size(points));
 			break;
 		}
 	}
@@ -168,13 +171,13 @@ int main(int argc, char * argv[]) {
 
 	HandleItem * trh = new HandleItem{rectItem, &scene, Qt::red, HandleItem::HandleRole::TopHandle};
 	HandleItem * rrh = new HandleItem{rectItem, &scene, Qt::red, HandleItem::HandleRole::RightHandle};
-	HandleItem * crh = new HandleItem{rectItem, &scene, Qt::red, HandleItem::HandleRole::CenterHandle,
-		QList<HandleItem *>{} << trh << rrh};  // TODO: initializer-list support?
+	HandleItem * crh = new HandleItem{rectItem, &scene, Qt::red,
+		HandleItem::HandleRole::CenterHandle, {trh, rrh}};
 
 	HandleItem * teh = new HandleItem{elItem, &scene, Qt::green, HandleItem::HandleRole::TopHandle};
 	HandleItem * reh = new HandleItem{elItem, &scene, Qt::green, HandleItem::HandleRole::RightHandle};
-	HandleItem * ceh = new HandleItem{elItem, &scene, Qt::green, HandleItem::HandleRole::CenterHandle,
-		QList<HandleItem *>() << teh << reh};  // TODO: initializer-list support?
+	HandleItem * ceh = new HandleItem{elItem, &scene, Qt::green,
+		HandleItem::HandleRole::CenterHandle, {teh, reh}};
 
 	QGraphicsView view;
 	view.setBackgroundBrush(Qt::white);
