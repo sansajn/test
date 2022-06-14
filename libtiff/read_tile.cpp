@@ -5,17 +5,20 @@ usage: read_tile TIFF_FILE [TILE_IDX] */
 #include <filesystem>
 #include <utility>
 #include <vector>
+#include <memory>
 #include <fstream>
 #include <iostream>
 #include <cstddef>
 #include <cstdint>
 #include <cstdlib>
 #include <cassert>
+#include <boost/format.hpp>  // note STL <format> not yet available
 #include <tiffio.hxx>
 #include <Magick++.h>
 
-using std::span, std::vector, std::pair, std::byte;
+using std::span, std::vector, std::pair, std::unique_ptr, std::byte;
 using std::filesystem::path, std::ifstream, std::cout;
+using boost::format, boost::str;
 using namespace Magick;
 
 void save_image(span<uint16_t> pixels_gray, size_t w, size_t h, path const & fname);
@@ -62,7 +65,7 @@ int main(int argc, char * argv[]) {
 
 	cout << "sample-format=";
 	switch (sample_format) {
-		case SAMPLEFORMAT_UINT: cout << "UINT"; break;  // TODO: how many bits?
+		case SAMPLEFORMAT_UINT: cout << "UINT"; break;
 		default: cout << sample_format;
 	}
 	cout << "\n";
@@ -90,16 +93,15 @@ int main(int argc, char * argv[]) {
 	cout << "\n";
 
 	size_t const tile_size = TIFFTileSize(tiff);
-	byte * tile_data = new byte[tile_size];  // TODO: use unique_ptr there FIXME: we use 16biut UNIT format
+	unique_ptr<byte> tile_data{new byte[tile_size]};
 	
-	int ret = TIFFReadEncodedTile(tiff, tile_idx_arg, tile_data, size_t(-1));
+	int ret = TIFFReadEncodedTile(tiff, tile_idx_arg, tile_data.get(), size_t(-1));
 	assert(ret != -1);
 
 	assert(tile_size % 2 == 0);
-	save_image(span<uint16_t>{reinterpret_cast<uint16_t *>(tile_data), tile_size/2}, tile_w, tile_h, "tile.png");
-	cout << "tile " << tile_idx_arg << " dumped as \"tile.png\"\n";
-
-	delete [] tile_data;
+	path const tile_path = str(format("tile_%1%.png") % tile_idx_arg);
+	save_image(span<uint16_t>{reinterpret_cast<uint16_t *>(tile_data.get()), tile_size/2}, tile_w, tile_h, tile_path);
+	cout << "tile " << tile_idx_arg << " dumped as " << tile_path << "\n";
 
 	TIFFClose(tiff);
 
