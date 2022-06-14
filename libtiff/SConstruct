@@ -1,8 +1,9 @@
-# dependencies: libtiff-dev
+# dependencies: libtiff-dev libmagick++-dev
 
 # List of pkg-config based library dependencies as (library, version) pair or just package name as string (e.g. ('libzmq', '>= 4.3.0') pair or 'libzmq' string). Library package version can be found by running `pkg-config --modversion LIBRARY` command.
 dependencies = [
-	('libtiff-4', '>= 4.3.0')
+	('libtiff-4', '>= 4.3.0'),
+	('Magick++', '>= 6.9.11')
 ]
 
 def build():
@@ -16,7 +17,8 @@ def build():
 	cpp20.Program('strip_count.cpp')
 	cpp20.Program('tile_count.cpp')
 	cpp20.Program('directory_count.cpp')
-	
+	cpp20.Program('read_tile.cpp')  # require Magick++ library
+
 
 def configure(env, dependency_list):
 	conf = env.Configure(
