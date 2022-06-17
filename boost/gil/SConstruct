@@ -35,4 +35,5 @@ cpp11.Program('read_flipped.cpp')
 
 # Ubuntu 22.04 LTS with Boost 1.74
 clang20.Program('gray8_raw.cpp')
+clang20.Program('gray16_raw.cpp')
 clang20.Program(['checker_gen.cpp', 'checker.cpp'])
