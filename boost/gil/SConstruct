@@ -1,21 +1,38 @@
-env = Environment(
+cpp11 = Environment(
 	CPPFLAGS=['-std=c++11', '-g', '-O0', '-Wall'],
 	LIBS=['pthread', 'gtest', 'png']
 )
 
-env.ParseConfig('pkg-config --cflags --libs Magick++')
+cpp11.ParseConfig('pkg-config --cflags --libs Magick++')
 
-env.Program('gradient.cpp')
-env.Program('interleaved_view.cpp')
-env.Program('rgba8_from_raw.cpp')
-env.Program('gil_vs_imagick.cpp')
-env.Program('image_from_file.cpp')
-env.Program('subimage_view.cpp')
-env.Program('pixels_from_image.cpp')
-env.Program('flip_view.cpp')
-env.Program('flipped_pixels.cpp')
-#env.Program('runtime_image.cpp')
-env.Program('read_as_rgba8.cpp')
-env.Program('flipped_image.cpp')
-env.Program('read_to_raw.cpp')
-env.Program('read_flipped.cpp')
+cpp20 = Environment(
+	CXXFLAGS=['-std=c++20'], 
+	CCFLAGS=['-Wall', '-Wextra'], 
+	LIBS=['png'])
+
+clang20 = Environment(
+	CXX='clang++',
+	CXXFLAGS=['-std=c++20'],
+	CCFLAGS=['-Wall', '-Wextra'],
+	LIBS=['png'])
+
+
+cpp11.Program('gradient.cpp')
+cpp11.Program('interleaved_view.cpp')
+cpp11.Program('rgba8_from_raw.cpp')
+cpp11.Program('gil_vs_imagick.cpp')
+cpp11.Program('image_from_file.cpp')
+cpp11.Program('subimage_view.cpp')
+cpp11.Program('pixels_from_image.cpp')
+cpp11.Program('flip_view.cpp')
+cpp11.Program('flipped_pixels.cpp')
+#cpp11.Program('runtime_image.cpp')
+cpp11.Program('read_as_rgba8.cpp')
+cpp11.Program('flipped_image.cpp')
+cpp11.Program('read_to_raw.cpp')
+cpp11.Program('read_flipped.cpp')
+
+
+# Ubuntu 22.04 LTS with Boost 1.74
+clang20.Program('gray8_raw.cpp')
+clang20.Program(['checker_gen.cpp', 'checker.cpp'])
