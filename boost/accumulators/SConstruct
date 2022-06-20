@@ -1,0 +1,7 @@
+cpp20 = Environment(
+	CXXFLAGS=['-std=c++20'], 
+	CCFLAGS=['-Wall', '-Wextra'])
+
+cpp20.Program('hello.cpp')
+cpp20.Program('mean_variance.cpp')
+cpp20.Program('image_stats.cpp')
