@@ -2,3 +2,4 @@
 /http_client_async
 /http_get
 /http_get_future
+/http_server_small

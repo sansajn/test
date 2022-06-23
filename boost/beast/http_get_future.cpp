@@ -10,7 +10,6 @@
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
-#include <boost/utility/string_view.hpp>
 
 using std::promise, std::future, std::thread, std::async;
 using std::string_view, std::string, std::to_string;

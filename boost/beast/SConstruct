@@ -21,3 +21,4 @@ cpp20 = Environment(
 cpp17.Program('http_client_async.cpp')
 cpp17.Program('http_get.cpp')
 cpp20.Program('http_get_future.cpp')
+cpp20.Program('http_server_small.cpp')
