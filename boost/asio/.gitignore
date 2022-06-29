@@ -23,3 +23,5 @@
 /async_loop
 /async_file
 /async_websocket
+/socket_async_connect
+/socket_async_connect_resolver
