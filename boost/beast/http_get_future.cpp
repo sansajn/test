@@ -1,4 +1,4 @@
-// HTTP GET sample (based on `http_client_async.cpp`) with promise/future API
+// HTTP GET sample (based on `http_client_async.cpp`) with STL promise/future API.
 #include <memory>
 #include <string_view>
 #include <future>
@@ -69,7 +69,7 @@ future<string> get_request_session::run(string_view host, unsigned short port,
 			self->on_resolve(ec, result);
 		});
 
-	// note: for std::bind version see http_client_async.cpp sample
+	// NOTE: for std::bind version see http_client_async.cpp sample
 
 	return _result.get_future();
 }
