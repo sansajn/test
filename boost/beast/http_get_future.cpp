@@ -5,16 +5,18 @@
 #include <thread>
 #include <iostream>
 #include <string>
+#include <chrono>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/connect.hpp>
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
 
-using std::promise, std::future, std::thread, std::async;
+using std::promise, std::future, std::future_status, std::thread, std::async;
 using std::string_view, std::string, std::to_string;
 using std::begin, std::end, std::make_shared, std::shared_ptr;
 using std::cerr, std::cout, std::endl;
+using namespace std::chrono_literals;
 using tcp = boost::asio::ip::tcp;
 namespace http = boost::beast::http;
 
@@ -134,7 +136,8 @@ void test_with_thread(string_view host, uint16_t port, string_view target) {
 		ioc.run();
 	}};
 
-	result.wait(); // wait for result, blocking
+	future_status const result_status = result.wait_for(1s);
+	assert(result_status == future_status::ready);
 
 	assert(result.valid());
 	string device = result.get();
@@ -154,11 +157,12 @@ void test_with_async(string_view host, uint16_t port, string_view target) {
 	auto result = async([&request, &ioc, host, port, target]{
 		auto result = request->run(host, port, target);
 		ioc.run();
-		assert(result.valid());
+		assert(result.valid());  // FIXME: we want to forward future<> from run(), not wait for result there
 		return result.get();
 	});
 
-	result.wait();  // wait for result, blocking
+	future_status const result_status = result.wait_for(1s);
+	assert(result_status == future_status::ready);
 
 	assert(result.valid());
 	string device = result.get();
