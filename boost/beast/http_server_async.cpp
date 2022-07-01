@@ -1,3 +1,5 @@
+// NOTE: this sample is too much complex, see http_responder.cpp for something thinier
+
 //
 // Copyright (c) 2016-2019 Vinnie Falco (vinnie dot falco at gmail dot com)
 //
