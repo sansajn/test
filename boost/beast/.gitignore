@@ -1,5 +1,8 @@
 /ws_sync_client
 /http_client_async
 /http_get
+/http_get_d10
 /http_get_future
 /http_server_small
+/http_server_async
+/http_responder
