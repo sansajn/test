@@ -6,3 +6,7 @@
 /http_server_small
 /http_server_async
 /http_responder
+/http_client_async_d10
+/http_client_async_ssl_d10
+/http_server_async_d10
+/http_server_async_ssl_d10

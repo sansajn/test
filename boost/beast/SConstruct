@@ -1,3 +1,5 @@
+# depandancies:
+#	libssl-dev for SSL samples
 ccflags = ['-O0', '-ggdb3', '-Wall', '-Wextra']
 cppdefines = ['BOOST_BEAST_USE_STD_STRING_VIEW']
 libs = ['pthread']
@@ -24,6 +26,8 @@ cpp17_d10 = Environment(
 	LIBS=libs + ['boost_system'],
 	LIBPATH=['/usr/local/lib'])
 
+cpp17_d10.ParseConfig('pkg-config --cflags --libs openssl')
+
 # Ubuntu 20.04 LTS (boost 1.71) samples
 cpp17.Program('http_client_async.cpp')
 cpp17.Program('http_get.cpp')
@@ -34,3 +38,7 @@ cpp20.Program('http_responder.cpp')
 
 # Debian 10 (boost 1.67) samples
 cpp17_d10.Program('http_get_d10.cpp')
+cpp17_d10.Program('http_server_async_d10.cpp')
+cpp17_d10.Program('http_client_async_d10.cpp')
+cpp17_d10.Program('http_client_async_ssl_d10.cpp')
+cpp17_d10.Program('http_server_async_ssl_d10.cpp')
