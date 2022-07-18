@@ -25,3 +25,5 @@
 /async_websocket
 /socket_async_connect
 /socket_async_connect_resolver
+/ssl_client_d10
+/ssl_server_d10

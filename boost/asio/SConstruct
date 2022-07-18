@@ -1,3 +1,6 @@
+ccflags = ['-O0', '-ggdb3', '-Wall', '-Wextra']
+libs = ['pthread']
+
 cpp20 = Environment(
 	#CC='clang',
 	#CXX='clang++',
@@ -10,6 +13,16 @@ cpp20 = Environment(
 		'pthread'
 	]
 )
+
+cpp17_d10 = Environment(  # Debian 10 cpp invironment (on not Debian 10 systems we expect boost to be installed in /usr/local).
+	CXXFLAGS=['-std=c++17'],
+	CCFLAGS=ccflags,
+	CPPDEFINES='',
+	LIBS=libs + ['boost_system'],
+	LIBPATH=['/usr/local/lib'])
+
+cpp17_d10.ParseConfig('pkg-config --cflags --libs openssl')
+
 
 cpp20.Program('daytime1.cpp')
 cpp20.Program('tcp_sync_echo_client.cpp')
@@ -33,3 +46,7 @@ cpp20.Program('async_loop.cpp')
 cpp20.Program('async_file.cpp')
 cpp20.Program('socket_async_connect.cpp')
 cpp20.Program('socket_async_connect_resolver.cpp')
+
+# Debian 10 boost samples
+cpp17_d10.Program('ssl_client_d10.cpp')
+cpp17_d10.Program('ssl_server_d10.cpp')
