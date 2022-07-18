@@ -2,7 +2,7 @@
 #	libssl-dev for SSL samples
 ccflags = ['-O0', '-ggdb3', '-Wall', '-Wextra']
 cppdefines = ['BOOST_BEAST_USE_STD_STRING_VIEW']
-libs = ['pthread']
+libs = ['pthread', 'boost_coroutine']
 
 cpp17 = Environment(
 	CXXFLAGS=['-std=c++17'],
@@ -18,6 +18,8 @@ cpp20 = Environment(
 	CPPDEFINES=cppdefines,
 	LIBS=libs
 )
+
+cpp20.ParseConfig('pkg-config --cflags --libs openssl')
 
 cpp17_d10 = Environment(
 	CXXFLAGS=['-std=c++17'],
@@ -35,10 +37,15 @@ cpp20.Program('http_get_future.cpp')
 cpp20.Program('http_server_small.cpp')
 cpp20.Program('http_server_async.cpp')
 cpp20.Program('http_responder.cpp')
+cpp20.Program('http_client_async_ssl_cert.cpp')
 
 # Debian 10 (boost 1.67) samples
 cpp17_d10.Program('http_get_d10.cpp')
 cpp17_d10.Program('http_server_async_d10.cpp')
 cpp17_d10.Program('http_client_async_d10.cpp')
 cpp17_d10.Program('http_client_async_ssl_d10.cpp')
+cpp17_d10.Program('http_client_async_ssl_cert_d10.cpp')
+cpp17_d10.Program('http_client_coro_ssl_cert_d10.cpp')
+cpp17_d10.Program('http_client_sync_ssl_cert_d10.cpp')
 cpp17_d10.Program('http_server_async_ssl_d10.cpp')
+cpp17_d10.Program('http_server_async_ssl_cert_d10.cpp')
