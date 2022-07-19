@@ -1,3 +1,8 @@
+# httplib
+
+Library allows to handle HTTP/S server/client stuff, see [cpp-httplib](https://github.com/yhirose/cpp-httplib) for more details.
+
+
 The directory containts
 
 - `client.cpp`/`serv.cpp`: HTTP client/server samples.
