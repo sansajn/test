@@ -1,0 +1,8 @@
+cpp17 = Environment(CXXFLAGS=['-std=c++17'], LIBS=['pthread'])
+cpp17.ParseConfig('pkg-config --cflags --libs openssl')
+
+cpp17.Program('serv.cpp')
+cpp17.Program('client.cpp')
+cpp17.Program('sserv.cpp')
+cpp17.Program('sclient.cpp')
+cpp17.Program('client_callback.cpp')
