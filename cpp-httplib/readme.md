@@ -9,10 +9,15 @@ The directory containts
 
 - `sclient.cpp`/`sserv.cpp`: HTTPS client/server samples workignwith custom certificate (`server.crt`, `server.key` for server are expected and `myCA.pem` for client).
 
-> TODO: describe how to generate certificate and add sample ones ...
+> TODO: describe how to generate certificate and add sample one ...
 
 - `client_callback.cpp`: HTTP client with callback API sample.
 
 
-
 samples.
+
+
+## TODO
+
+- error handling (in sserv for example there is no any log errro/warning in case certificate files are not present)
+
