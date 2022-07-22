@@ -1,6 +1,6 @@
 # httplib
 
-Library allows to handle HTTP/S server/client stuff, see [cpp-httplib](https://github.com/yhirose/cpp-httplib) for more details.
+Library allows to handle HTTP/S server/client in a synchronized (blocking) fashion, see [cpp-httplib](https://github.com/yhirose/cpp-httplib) for more details.
 
 
 The directory containts
@@ -20,4 +20,6 @@ samples.
 ## TODO
 
 - error handling (in sserv for example there is no any log errro/warning in case certificate files are not present)
+
+- provide sample to handle generic path for server (not only `/hi`)
 

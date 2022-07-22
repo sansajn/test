@@ -1,4 +1,7 @@
-cpp17 = Environment(CXXFLAGS=['-std=c++17'], LIBS=['pthread'])
+cpp17 = Environment(
+	CXXFLAGS=['-std=c++17'], 
+	CCFLAGS=['-Wall', '-Wextra'],
+	LIBS=['pthread', 'boost_program_options'])
 cpp17.ParseConfig('pkg-config --cflags --libs openssl')
 
 cpp17.Program('serv.cpp')
