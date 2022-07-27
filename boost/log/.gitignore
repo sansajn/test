@@ -11,4 +11,6 @@
 /custom_backend_sink
 /custom_feature_mt
 /extension_record_tagger
-
+/tutorial_file
+/tofile_append
+/tofile_rotate

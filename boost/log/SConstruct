@@ -1,25 +1,37 @@
-env = Environment(
-	CCFLAGS=['-std=c++14', '-Wall', '-g', '-O0'],
-	LIBS=['boost_log', 'boost_system', 'boost_thread', 'pthread'],
-	CPPDEFINES=['BOOST_LOG_DYN_LINK']
-)
+# requirements: libboost-log-dev (tested with 1.71 version)
+ccflags = ['-Wall', '-Wextra', '-ggdb3', '-O0']
+libs = ['boost_log', 'boost_log_setup', 'boost_system', 'boost_thread', 'pthread']
+cppdefines = ['BOOST_LOG_DYN_LINK']
 
-env.Program('trivial.cpp')
-env.Program('trivial_filters.cpp')
-env.Program('tofile.cpp')
-env.Program('custom_backend_sink.cpp')
-env.Program('console_log.cpp')
-env.Program('constant_attribute.cpp')
-env.Program('mutable_constant_attribute.cpp')
-env.Program('error_code_attribute.cpp')
-env.Program('error_code_attribute2.cpp')
-env.Program('error_attrib.cpp')
-env.Program('two_loggers.cpp')
-env.Program('custom_logger.cpp')
-env.Program('line_id_attrib.cpp')
-env.Program('custom_feature.cpp')
-env.Program('custom_attribute.cpp')
-env.Program('custom_feature_mt.cpp')
+cpp14 = Environment(
+	CXXFLAFS=['-std=c++14'],
+	CCFLAGS=ccflags,
+	LIBS=libs,
+	CPPDEFINES=cppdefines)
 
-# log examples
-env.Program('extension_record_tagger.cpp')
+cpp17 = Environment(
+	CXXCFLAGS=['-std=c++17'],
+	CCFLAGS=ccflags,
+	LIBS=libs,
+	CPPDEFINES=cppdefines)
+
+cpp14.Program('trivial.cpp')
+cpp14.Program('trivial_filters.cpp')
+cpp14.Program('custom_backend_sink.cpp')
+cpp14.Program('console_log.cpp')
+cpp14.Program('constant_attribute.cpp')
+cpp14.Program('mutable_constant_attribute.cpp')
+cpp14.Program('error_code_attribute.cpp')
+cpp14.Program('error_code_attribute2.cpp')
+cpp14.Program('error_attrib.cpp')
+cpp14.Program('two_loggers.cpp')
+cpp14.Program('custom_logger.cpp')
+cpp14.Program('line_id_attrib.cpp')
+cpp14.Program('custom_feature.cpp')
+cpp14.Program('custom_attribute.cpp')
+cpp14.Program('custom_feature_mt.cpp')
+cpp14.Program('extension_record_tagger.cpp')
+cpp17.Program('tutorial_file.cpp')
+cpp17.Program('tofile.cpp')
+cpp17.Program('tofile_append.cpp')
+cpp17.Program('tofile_rotate.cpp')

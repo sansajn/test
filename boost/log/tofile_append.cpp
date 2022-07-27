@@ -1,4 +1,4 @@
-// basic file logging, where log file is recreated on sample execution
+// basic file logging, where log file is appended
 #include <boost/log/trivial.hpp>  // BOOST_LOG_TRIVIAL()
 #include <boost/log/utility/setup/file.hpp>  // add_file_log()
 #include <boost/log/utility/setup/common_attributes.hpp>  // add_common_attributes()
@@ -13,7 +13,8 @@ int main() {
    // NOTE: rotation_size needs to be set otherwise, 00000 log file is produced no metter of file_name keyword setup (in boost 1.71)
 	logging::add_file_log(
 		keywords::file_name=log_file_name,
-		keywords::rotation_size = 1 * 1024 * 1024  // rotate every 1MB
+		keywords::rotation_size = 1 * 1024 * 1024,  // rotate every 1MB
+		keywords::open_mode = std::ios_base::app  // append
 	);
 
 	logging::core::get()->set_filter(
