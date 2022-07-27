@@ -1,5 +1,5 @@
 /* WebSocket Secure client (libsoap) sample.
-usage:* ./wss_client [CERT_FILE=localhost.crt][WS_ADDRESS=wss://localhost:8765] */
+usage:* ./wss_client [CA_CERT_FILE=cacert.crt][WS_ADDRESS=wss://localhost:8765] */
 #include <string_view>
 #include <string>
 #include <iostream>
@@ -11,7 +11,7 @@ usage:* ./wss_client [CERT_FILE=localhost.crt][WS_ADDRESS=wss://localhost:8765] 
 using std::string_view, std::string, std::to_string;
 using std::cout, std::cerr, std::clog, std::endl;
 
-constexpr char const DEFAULT_CERT_FILE[] = "localhost.crt",
+constexpr char const DEFAULT_CERT_FILE[] = "cacert.crt",
 	DEFAULT_ADDRESS[] = "wss://localhost:8765";
 
 // signal handlers
@@ -48,7 +48,7 @@ int main(int argc, char * argv[]) {
 
 	/* works also with pure WebSocket with ws://... address */
 	SoupSession * session = soup_session_new_with_options(
-		SOUP_SESSION_SSL_STRICT, FALSE,  // https://libsoup.org/libsoup-2.4/SoupSession.html#SoupSession--ssl-strict
+		SOUP_SESSION_SSL_STRICT, TRUE,  // https://libsoup.org/libsoup-2.4/SoupSession.html#SoupSession--ssl-strict
 //		SOUP_SESSION_SSL_USE_SYSTEM_CA_FILE, TRUE,  // https://libsoup.org/libsoup-2.4/SoupSession.html#SoupSession--ssl-use-system-ca-file
 		SOUP_SESSION_SSL_CA_FILE, cert_file.data(),  // .crt/.pem files are working there, https://libsoup.org/libsoup-2.4/SoupSession.html#SoupSession--ssl-ca-file
 		SOUP_SESSION_HTTPS_ALIASES, https_aliases, // https://libsoup.org/libsoup-2.4/SoupSession.html#SoupSession--https-aliases
@@ -72,6 +72,21 @@ int main(int argc, char * argv[]) {
 }
 
 void on_server_connected(SoupSession * session, GAsyncResult * res, SoupMessage * msg) {
+
+	// check message
+	//read "tls-errors" properties from msg   	SOUP_MESSAGE_TLS_ERRORS
+	SoupMessageFlags const flags = soup_message_get_flags(msg);
+	bool const is_trusted = flags|SOUP_MESSAGE_CERTIFICATE_TRUSTED,
+		is_new_connection = flags|SOUP_MESSAGE_NEW_CONNECTION;
+
+	clog << "message received with: "
+		<< "htt-version=" << (soup_message_get_http_version(msg) == SOUP_HTTP_1_1 ? "1.1" : "1.0") << ", "
+		<< "new-connection=" << (is_new_connection ? "yes" : "no") << ", "
+		<< "certificate-trusted=" << (is_trusted ? "yes" : "no")	<< "\n";
+
+	assert(is_new_connection);
+	assert(is_trusted);
+
 	GError * error = nullptr;
 	ws_conn = soup_session_websocket_connect_finish(session, res, &error);
 	if (error) {

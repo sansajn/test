@@ -1,4 +1,4 @@
-/* WebSocket Secure (WSS) echo server sample
+/* WebSocket Secure (WSS) echo server sample.
 usage: wss_echo_server [PORT=8765][PATH="/"] */
 #include <string_view>
 #include <string>
