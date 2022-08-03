@@ -9,3 +9,6 @@
 /serve_thread_context
 /wss_client
 /wss_echo_server
+/ask
+/answer
+/ask_and_answer

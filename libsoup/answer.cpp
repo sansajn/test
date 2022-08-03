@@ -1,4 +1,5 @@
-// WebSocket echo server sample
+/*! Single response WebSocket server sample (based on `ws_echo_server.cpp` sample).
+Usage: answer */
 #include <string_view>
 #include <string>
 #include <thread>
@@ -16,6 +17,11 @@ using boost::filesystem::load_string_file;
 constexpr int SERVER_PORT = 40001;
 
 string page_source;
+GMainLoop * loop = nullptr;
+SoupServer * server = nullptr;
+SoupWebsocketConnection * client_conn = nullptr;
+
+void quit_server();
 
 void server_http_handler(SoupServer * server, SoupMessage * message,
 	char const * path, GHashTable * query, SoupClientContext * client, gpointer user_data);
@@ -32,7 +38,7 @@ void websocket_closed_handler(SoupWebsocketConnection * connection, gpointer use
 int main(int argc, char * argv[]) {
 	load_string_file("websocket.html", page_source);
 
-	SoupServer * server = soup_server_new(SOUP_SERVER_SERVER_HEADER, "test soap server", nullptr);
+	server = soup_server_new(SOUP_SERVER_SERVER_HEADER, "test soap server", nullptr);
 	assert(server);
 
 	// we want to serve HTML page with WS handlers
@@ -44,19 +50,31 @@ int main(int argc, char * argv[]) {
 	cout << "page link: http://127.0.0.1:" << SERVER_PORT << "\n"
 		<< "WebSocket listenning on ws://localhost:" << SERVER_PORT << "/ws address\n";
 
-	GMainLoop * loop = g_main_loop_new(nullptr, FALSE);
+	loop = g_main_loop_new(nullptr, FALSE);
 	assert(loop);
 
-	g_main_loop_run(loop);
+	g_main_loop_run(loop);  // blocking
 
 	// clean up
-	g_object_unref(G_OBJECT(server));
 	g_main_loop_unref(loop);
 
 	cout << "done!\n";
-
 	return 0;
 }
+
+void quit_server() {
+	// close client connection and inform client what happened
+	assert(client_conn);
+	soup_websocket_connection_close(client_conn, SOUP_WEBSOCKET_CLOSE_GOING_AWAY, "server closed");
+
+	soup_server_disconnect(server);  // NOTE: this will not close server connections
+
+	g_object_unref(G_OBJECT(server));
+	server = nullptr;
+
+	// NOTE: connections are unrefered in closed handler
+}
+
 
 void server_http_handler(SoupServer * server, SoupMessage * message,
 	char const * path, GHashTable * query, SoupClientContext * client, gpointer user_data) {
@@ -79,6 +97,7 @@ void server_websocket_handler(SoupServer * server, SoupWebsocketConnection * con
 
 	cout << "websocket connection " << static_cast<void *>(connection) << " request received" << endl;
 	g_object_ref(G_OBJECT(connection));
+	client_conn = connection;
 	g_signal_connect(G_OBJECT(connection), "message", G_CALLBACK(websocket_message_handler), nullptr);
 	g_signal_connect(G_OBJECT(connection), "closed",  G_CALLBACK(websocket_closed_handler), nullptr);
 }
@@ -102,6 +121,8 @@ void websocket_message_handler(SoupWebsocketConnection * connection,
 			// answer
 			soup_websocket_connection_send_text(connection, data);
 			cout << "<<< " << data << "\n";
+
+			quit_server();  // answered, close server and quit
 			return;
 		}
 
@@ -111,8 +132,10 @@ void websocket_message_handler(SoupWebsocketConnection * connection,
 }
 
 void websocket_closed_handler(SoupWebsocketConnection * connection, gpointer user_data) {
+	assert(connection == client_conn);
 	assert(soup_websocket_connection_get_state(connection) == SOUP_WEBSOCKET_STATE_CLOSED);
 	
+	// inform client connection was closed
 	gushort close_code = soup_websocket_connection_get_close_code(connection);
 	char const * what = soup_websocket_connection_get_close_data(connection);
 
@@ -123,4 +146,8 @@ void websocket_closed_handler(SoupWebsocketConnection * connection, gpointer use
 	
 	// we want to unref connection there, otherwise client is not informed connection was closed
 	g_object_unref(connection);
+	client_conn = nullptr;
+
+	if (!client_conn)  // in case all connections are closed, we can quit loop
+		g_main_loop_quit(loop);
 }

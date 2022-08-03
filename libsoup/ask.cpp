@@ -1,20 +1,17 @@
-// WebSocket client sample
-#include <thread>
+/* Single request WebSocket client sample (based on `ws_client.cpp` sample).
+Usage: ask [ADDRESS=ws://localhost:40001/ws] */
 #include <string>
-#include <chrono>
 #include <sstream>
 #include <iostream>
 #include <cassert>
 #include <csignal>
 #include <libsoup/soup.h>
 
-using std::string, std::to_string;
+using std::string;
 using std::cout, std::endl, std::ostringstream;
-using namespace std::chrono_literals;
 
-constexpr char DEFAULT_ADDRESS[] = "ws://echo.websocket.org:80";
+constexpr char DEFAULT_ADDRESS[] = "ws://localhost:40001/ws";
 
-void ask(SoupWebsocketConnection & conn);
 void on_connection(SoupSession * session, GAsyncResult * res, gpointer data);
 void on_message(SoupWebsocketConnection * conn, gint type, GBytes * message, gpointer data);
 void on_closed(SoupWebsocketConnection * conn, gpointer data);
@@ -22,7 +19,6 @@ void on_ctrlc(int signal);
 
 GMainLoop * loop = nullptr;
 SoupWebsocketConnection * open_conn = nullptr;
-size_t message_counter = 0;
 
 int main(int argc, char * argv[]) {
 	signal(SIGINT, on_ctrlc);  // setup ctrl+c handler
@@ -55,14 +51,6 @@ int main(int argc, char * argv[]) {
 	return 0;
 }
 
-void ask(SoupWebsocketConnection & conn) {
-	if (soup_websocket_connection_get_state(&conn) == SOUP_WEBSOCKET_STATE_OPEN) {  // due to ctrl_c handling we need to check connection is still open before send
-		string const msg = "Hello Jane (" + to_string(message_counter++) + ")!";
-		soup_websocket_connection_send_text(&conn, msg.c_str());
-		cout << "<<< " << msg << "\n";
-	}
-}
-
 void on_connection(SoupSession * session, GAsyncResult * res, gpointer data) {
 	GError * error = nullptr;
 	SoupWebsocketConnection * conn = soup_session_websocket_connect_finish(session, res, &error);
@@ -79,7 +67,9 @@ void on_connection(SoupSession * session, GAsyncResult * res, gpointer data) {
 
 	cout << "on_connection" << endl;
 
-	ask(*conn);
+	constexpr char msg[] = "Hello Jane!";
+	soup_websocket_connection_send_text(conn, msg);
+	cout << "<<< " << msg << "\n";
 }
 
 void on_message(SoupWebsocketConnection * conn, gint type, GBytes * message, gpointer data) {
@@ -88,9 +78,6 @@ void on_message(SoupWebsocketConnection * conn, gint type, GBytes * message, gpo
 		gchar const * ptr = (gchar const *)g_bytes_get_data(message, &sz);
 
 		cout << ">>> " << ptr << "\n";
-
-		ask(*conn);
-		std::this_thread::sleep_for(500ms);
 	}
 	else if (type == SOUP_WEBSOCKET_DATA_BINARY)
 		cout << "Received binary data (not shown)\n";
@@ -99,6 +86,7 @@ void on_message(SoupWebsocketConnection * conn, gint type, GBytes * message, gpo
 }
 
 void on_closed(SoupWebsocketConnection * conn, gpointer data) {
+	assert(conn == open_conn);
 	assert(soup_websocket_connection_get_state(conn) == SOUP_WEBSOCKET_STATE_CLOSED);  // connection is expected to be closed there
 
 	// inform connection closed
@@ -115,7 +103,7 @@ void on_closed(SoupWebsocketConnection * conn, gpointer data) {
 	cout << sout.str();
 
 	g_object_unref(conn);  // unref connection
-	g_main_loop_quit(loop);  // client closed we can quit loop
+	g_main_loop_quit(loop);  // client closed we can quit
 }
 
 void on_ctrlc(int signal) {

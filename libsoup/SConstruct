@@ -14,3 +14,10 @@ cpp17.Program('serve_thread_context.cpp')
 cpp17.Program('simple-httpd.c')
 cpp17.Program('wss_client.cpp')
 cpp17.Program('wss_echo_server.cpp')
+cpp17.Program('ask.cpp')
+cpp17.Program('answer.cpp')
+
+# some helpers to speed-up prototyping
+common_objs = cpp17.Object(['loop.cpp', 'timeout_callback.cpp'])
+
+cpp17.Program(['ask_and_answer.cpp', common_objs])

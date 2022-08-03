@@ -1,3 +1,13 @@
+## `ws_client` sample
+
+To test `ws_client` against `ws_echo_server` run client with
+
+```bash
+./ws_client ws://localhost:40001/ws
+```
+
+command.
+
 ## `wss_echo_server` sample
 
 WebSocket Secure (WSS) echo server sample. Usage
