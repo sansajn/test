@@ -4,7 +4,7 @@
 #include <iterator>
 #include <iostream>
 #include <cassert>
-using std::remove_if, std::erase, std::copy, std::vector, 
+using std::remove_if, std::copy, std::vector, 
 	std::ostream_iterator, std::cout;
 
 int main(int argc, char * argv[]) {

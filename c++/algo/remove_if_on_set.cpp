@@ -4,8 +4,7 @@
 #include <iterator>
 #include <iostream>
 #include <cassert>
-using std::remove_if, std::erase, std::copy, std::set, 
-	std::ostream_iterator, std::cout;
+using std::remove_if, std::set, std::ostream_iterator, std::cout;
 
 int main(int argc, char * argv[]) {
 	set s{1,9,2,3,7,4,5,8,6};
