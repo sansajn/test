@@ -1,7 +1,8 @@
-skompiluj ako
+Build with
 
-	$ mkdir build
-	$ cd build
-	$ cmake ..
-	$ make
- 
+```cmake
+cmake -B build-static_library_use -S static_library_use
+cmake --build build-static_library_use -j16
+```
+
+commands.

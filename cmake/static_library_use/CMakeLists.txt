@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.16)
 
-project(main)
+project(static-lib)
 
-add_library(version version.cpp)
+add_library(version STATIC version.cpp)
 
 include_directories(.)
 
