@@ -8,6 +8,9 @@ out/
 *.log
 /out.ppm
 
+# cmake build directories
+**/build-*
+
 # scons
 .sconsign.dblite
 
