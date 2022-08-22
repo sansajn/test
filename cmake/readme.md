@@ -33,3 +33,5 @@ $ make
 cmake -B build-ctest_hello -S ctest_hello
 cmake --build build-ctest_hello -j16
 ```
+
+- `coverage_report`: Generating coverage report sample for CMake and Catch2 library.
