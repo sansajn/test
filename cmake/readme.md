@@ -27,3 +27,9 @@ $ cmake ..
 $ make
 ```
 
+- `ctest_hello`: Sample with CTest integration for Catch2 library.
+
+```bash
+cmake -B build-ctest_hello -S ctest_hello
+cmake --build build-ctest_hello -j16
+```
