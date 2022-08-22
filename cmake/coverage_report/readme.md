@@ -1,5 +1,13 @@
 This directory contains (test) coverage sample for CMake and Catch2 library.
 
+Install *lcov* package with
+
+```bash
+sudo apt install lcov
+```
+
+command.
+
 Build with
 
 ```bash
