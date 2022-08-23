@@ -11,8 +11,8 @@ command.
 Build with
 
 ```bash
-cmake -B build-coverage_report -S coverage_report
-cmake --build build-coverage_report -j16 -DCMAKE_BUILD_TYPE=Debug
+cmake -B build-coverage_report -S coverage_report -DCMAKE_BUILD_TYPE=Debug
+cmake --build build-coverage_report -j16 -t coverage
 ```
 
 > **note**: `-DCMAKE_BUILD_TYPE=Debug` needs to be provided to support coverage 
