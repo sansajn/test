@@ -1,4 +1,4 @@
-This directory contains doxygen integration sample.
+This directory contains CMake doxygen (document generation) integration sample.
 
 Requires *doxygen*, *graphviz* packages to be installed with
 
