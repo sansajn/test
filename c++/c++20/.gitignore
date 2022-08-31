@@ -2,3 +2,5 @@
 /latch_hello
 /latch_ready
 /barrier_hello
+/semaphore_counting
+/semaphore_binary
