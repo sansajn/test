@@ -5,3 +5,4 @@
 /semaphore_counting
 /semaphore_binary
 /atomic_ref
+/atomic_shared
