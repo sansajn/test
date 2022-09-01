@@ -4,3 +4,4 @@
 /barrier_hello
 /semaphore_counting
 /semaphore_binary
+/atomic_ref
