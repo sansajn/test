@@ -6,3 +6,4 @@
 /semaphore_binary
 /atomic_ref
 /atomic_shared
+/atomic_wait
