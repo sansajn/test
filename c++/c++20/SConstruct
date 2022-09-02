@@ -5,14 +5,20 @@ cpp20.ParseConfig('pkg-config --cflags --libs fmt')  # std::format support
 
 cpp20.Program('hello_ranges.cpp')
 cpp20.Program('spaceship_oper.cpp')
+
+# concepts
 cpp20.Program('concept_hello.cpp')
+cpp20.Program('concept_add.cpp')
+
+# concurrency
 cpp20.Program('latch_hello.cpp')
 cpp20.Program('latch_ready.cpp')
 cpp20.Program('barrier_hello.cpp')
 cpp20.Program('semaphore_counting.cpp')
 cpp20.Program('semaphore_binary.cpp')
+
+# concurrency with atomic
 cpp20.Program('atomic_ref.cpp')
 cpp20.Program('atomic_shared.cpp')
 cpp20.Program('atomic_wait.cpp')
 cpp20.Program('atomic_ticket.cpp')
-
