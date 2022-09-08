@@ -14,6 +14,7 @@ cpp20.Program('concept_add.cpp')
 cpp20.Program('latch_hello.cpp')
 cpp20.Program('latch_ready.cpp')
 cpp20.Program('barrier_hello.cpp')
+cpp20.Program('barrier_stop.cpp')
 cpp20.Program('semaphore_counting.cpp')
 cpp20.Program('semaphore_binary.cpp')
 

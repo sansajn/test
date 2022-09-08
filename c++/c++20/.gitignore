@@ -9,3 +9,4 @@
 /atomic_shared
 /atomic_wait
 /atomic_ticket
+/barrier_stop
