@@ -7,7 +7,6 @@ if GetOption('build_release'):
 else:
 	cc_flags.extend(['-O0', '-ggdb3'])
 
-
 cpp17 = Environment(
 	CXXFLAGS=['-std=c++17'],
 	CCFLAGS=cc_flags,
@@ -16,12 +15,14 @@ cpp17 = Environment(
 		#'boost_stacktrace_addr2line',
 		#'boost_stacktrace_basic',
 		'dl',
+		'backtrace',
 		'boost_system', 
 		'boost_filesystem', 
 	],
-	LINKFLAGS=['-rdynamic'],
+	LINKFLAGS=['-rdynamic'],  # backtrace works without '-rdynamc' under Ubuntu 20.04 LTS
 	CPPDEFINES=[
-		'BOOST_STACKTRACE_USE_BACKTRACE',  # requires 'boost_stacktrace_backtrace' and 'dl'
+		'BOOST_STACKTRACE_DYN_LINK',
+		'BOOST_STACKTRACE_USE_BACKTRACE',  # requires 'boost_stacktrace_backtrace', 'dl' and 'backtrace'
 		#"BOOST_STACKTRACE_USE_ADDR2LINE"
 	]
 )
