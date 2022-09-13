@@ -1,18 +1,27 @@
+AddOption('--build-release', action='store_true', dest='build_release', help='create optimized build ment for release', default=False)
+
+cc_flags = ['-Wall', '-Wextra']
+
+if GetOption('build_release'):
+	cc_flags.extend(['-O2', '-DNDEBUG'])
+else:
+	cc_flags.extend(['-O0', '-ggdb3'])
+
+
 cpp17 = Environment(
-	CCFLAGS=['-std=c++17', '-Wall', '-ggdb3', '-Og'],
+	CXXFLAGS=['-std=c++17'],
+	CCFLAGS=cc_flags,
 	LIBS=[
 		'boost_stacktrace_backtrace', 
 		#'boost_stacktrace_addr2line',
 		#'boost_stacktrace_basic',
+		'dl',
 		'boost_system', 
 		'boost_filesystem', 
-		'dl'
 	],
-	LINKFLAGS=[
-		'-rdynamic', 
-	],
+	LINKFLAGS=['-rdynamic'],
 	CPPDEFINES=[
-		"BOOST_STACKTRACE_USE_BACKTRACE",
+		'BOOST_STACKTRACE_USE_BACKTRACE',  # requires 'boost_stacktrace_backtrace' and 'dl'
 		#"BOOST_STACKTRACE_USE_ADDR2LINE"
 	]
 )
