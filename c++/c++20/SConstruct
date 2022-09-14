@@ -1,10 +1,12 @@
 cpp20 = Environment(
-	CCFLAGS=['-std=c++2a', '-Wall', '-Wextra', '-O0', '-ggdb3'])
+	CXXFLAGS=['-std=c++2a'],
+	CCFLAGS=['-Wall', '-Wextra', '-O0', '-ggdb3'])
 
 cpp20.ParseConfig('pkg-config --cflags --libs fmt')  # std::format support
 
 cpp20.Program('hello_ranges.cpp')
 cpp20.Program('spaceship_oper.cpp')
+cpp20.Program('char8_t.cpp')
 
 # concepts
 cpp20.Program('concept_hello.cpp')
