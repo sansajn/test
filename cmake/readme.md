@@ -35,3 +35,7 @@ cmake --build build-ctest_hello -j16
 ```
 
 - `coverage_report`: Generating coverage report sample for CMake and Catch2 library.
+
+- `sanitizers`: Address sanitizer integration sample (for debug build).
+
+- `clang_tidy`: Clang tidy static analyze tool integration sample.
