@@ -27,6 +27,9 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char * argv[]) {
 	// conversions
 	cout << format("'{0}' has value {0:02X} {0:+4d} {0:03o}\n", '?');  // "'?' has value 3F  +63 077"
 
+	// pointer formatting
+	cout << format("{}\n", static_cast<void const *>(&s));
+
 	cout << "done!\n";
 	return 0;
 }
