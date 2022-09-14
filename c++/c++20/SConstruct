@@ -7,6 +7,7 @@ cpp20.ParseConfig('pkg-config --cflags --libs fmt')  # std::format support
 cpp20.Program('hello_ranges.cpp')
 cpp20.Program('spaceship_oper.cpp')
 cpp20.Program('char8_t.cpp')
+cpp20.Program('format_hello.cpp')
 
 # concepts
 cpp20.Program('concept_hello.cpp')
