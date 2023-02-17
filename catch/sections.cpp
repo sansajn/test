@@ -6,23 +6,20 @@
 
 using std::cout;
 
-/* we expect following output
+/* following code produce
 
 AA
 AB
 
-*/
-TEST_CASE("sample test case")
-{
+output. */
+TEST_CASE("sample test case") {
 	cout << "A";  // setup
 
-	SECTION("test case section 1")
-	{
+	SECTION("test case section 1") {
 		cout << "A";
 	}
 
-	SECTION("test case section 2")
-	{
+	SECTION("test case section 2") {
 		cout << "B";
 	}
 
