@@ -25,6 +25,7 @@ add_executable(reverse reverse.cpp)
 add_executable(serch_rotated search_rotated.cpp)
 add_executable(sorted_squares sorted_squares.cpp)
 add_executable(transform_count_lines transform_count_lines.cpp)
+add_executable(mismatch mismatch.cpp)
 
 # TODO: do not compile sample in case TBB not installed with a message
 find_package(TBB 2020.1 REQUIRED)
