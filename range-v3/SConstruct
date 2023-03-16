@@ -1,2 +1,10 @@
-Program('hello.cpp')
-Program('for_each.cpp')
+# dependencies: libfmt-dev
+cpp20 = Environment(
+	CXXFLAGS=['-std=c++2a'],
+	CCFLAGS=['-Wall', '-Wextra', '-O0', '-ggdb3'])
+
+cpp20.ParseConfig('pkg-config --cflags --libs fmt')  # std::format support
+
+cpp20.Program('hello.cpp')
+cpp20.Program('for_each.cpp')
+cpp20.Program('zip.cpp')
