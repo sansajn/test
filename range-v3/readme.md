@@ -6,7 +6,7 @@ Run
 scons -j16
 ```
 
-to build samples or
+to build all samples or
 
 ```bash
 scons -j16 SAMPLE
