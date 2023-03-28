@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  server:
+    build: http_serv/
+    image: test/http_serv
+    networks:
+      - test_net
+    expose:
+      - "8000"
+
+  client:
+    build: http_client/
+    image: test/http_client
+    networks:
+      - test_net
+
+networks:
+  test_net: {}
