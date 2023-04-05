@@ -2,8 +2,6 @@
 # directory in HTML format and cobertura XML report (`coverage.xml`).
 # Dependencies: gcovr package
 function(AddCoverage target)
-	find_program(LCOV_PATH lcov REQUIRED)
-	find_program(GENHTML_PATH genhtml REQUIRED)
 	find_program(GCOVR_PATH gcovr REQUIRED)
 
 	add_custom_target(coverage
