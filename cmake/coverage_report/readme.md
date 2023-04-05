@@ -19,6 +19,8 @@ cmake --build build-coverage_report -j16 -t coverage
 
 commands.
 
+Coverage report is generated to `build-coverage_report/coverage` direcotry in HTML format.
+
 To run unit tests go to the build directory and run `ctest` command this way
 
 ```bash
