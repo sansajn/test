@@ -1,9 +1,9 @@
 This directory contains (test) coverage sample for CMake and Catch2 library.
 
-Install *lcov* package with
+Install *gcovr* package with
 
 ```bash
-sudo apt install lcov
+sudo apt install gcovr
 ```
 
 command.
@@ -19,7 +19,7 @@ cmake --build build-coverage_report -j16 -t coverage
 
 commands.
 
-Coverage report is generated to `build-coverage_report/coverage` direcotry in HTML format.
+Coverage report is generated to `build-coverage_report/coverage` direcotry in HTML format and cobertura XML report (`coverage.xml`).
 
 To run unit tests go to the build directory and run `ctest` command this way
 
