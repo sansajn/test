@@ -1,4 +1,6 @@
-This directory contains Clang Tidy analyze integration.
+# About
+
+This directory contains *CppCheck* analyze integration sample.
 
 Requires *cppcheck* package to be installed with
 
@@ -17,7 +19,7 @@ cmake --build build-cppcheck -j16
 
 commands.
 
-Cppcheck complains should be part of the build output, like this
+*CppCheck* complains should be part of the build output, like this
 
 ```console
 $ cmake --build build-cppcheck
@@ -31,3 +33,5 @@ Checking /home/ja/devel/test/cmake/cppcheck/main.cpp ...
  int a10 = arr[10];
            ^
 ```
+
+and despite errors in *CppCheck* output binary file is generated as `build-cppcheck/main`.
