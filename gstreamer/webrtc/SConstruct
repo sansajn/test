@@ -1,8 +1,18 @@
+# samples tested under debian 10
+AddOption('--with-thread-sanitizer', action='store_true', dest='with_thread_sanitizer', help='build with thread sanitizer enabled' , default=False)
+
+cxx_flags = ['-std=c++17']
+link_flags = ['-rdynamic']
+
+if GetOption('with_thread_sanitizer'):
+	cxx_flags.append('-fsanitize=thread')
+	link_flags.append('-fsanitize=thread')
+
 cpp17 = Environment(
 	CCFLAGS=['-Wall', '-ggdb3', '-O0'],
-	CXXFLAGS=['-std=c++17'],
+	CXXFLAGS=cxx_flags,
 	LIBS=['boost_stacktrace_backtrace', 'dl'],
-	LINKFLAGS=['-rdynamic'],
+	LINKFLAGS=link_flags,
 	CPPDEFINES=['BOOST_STACKTRACE_USE_BACKTRACE'],
 )
 
@@ -12,6 +22,6 @@ cpp17.Program('sendrecv', ['webrtc-sendrecv.c'])
 cpp17.Program('send', ['webrtc-send.cpp'])
 cpp17.Program('webrtc-unidirectional-h264', ['webrtc-unidirectional-h264.c'])
 cpp17.Program(['rtsp_to_webrtc.cpp'])
-cpp17.Program('h264streamer', ['h264streamer.cpp'])
+cpp17.Program('h264streamer', ['h264streamer.cpp']) # compilable under debian 10
 cpp17.Program('h264streamer_thread', ['h264streamer_thread.cpp'])
 
