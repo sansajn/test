@@ -1,8 +1,20 @@
-# dependencies: libgstreamer1.0-dev libgstrtspserver-1.0-dev
+# dependencies: libgstreamer1.0-dev libgstrtspserver-1.0-dev libgtk-3-dev (Debian 10)
+AddOption('--with-thread-sanitizer', action='store_true', dest='with_thread_sanitizer', help='build with thread sanitizer enabled' , default=False)
+
+cxx_flags = ['-std=c++17']
+link_flags = ['-rdynamic']
+
+if GetOption('with_thread_sanitizer'):
+	cxx_flags.append('-fsanitize=thread')
+	link_flags.append('-fsanitize=thread')
+
 env = Environment(
-	CXXFLAGS=['-std=c++17', '-Wall', '-g', '-O0'])
+	CCFLAGS=['-Wall', '-ggdb3', '-O0'],
+	CXXFLAGS=cxx_flags,
+	LINKFLAGS=link_flags)
 
 env.ParseConfig('pkg-config --cflags --libs gstreamer-1.0 gstreamer-pbutils-1.0 gstreamer-video-1.0 gstreamer-rtsp-server-1.0 gtk+-3.0')
+
 
 env.Program('initialization.cpp')
 env.Program('test-readme.c')
