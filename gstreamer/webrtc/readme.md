@@ -1,5 +1,17 @@
 # WebRTC samples
 
+## Single WebRTC
+
+`single_webrtc` sample is WebRTC (h264) stream server sample for one client and with a combination with `client_reload.html` it can be used to test GStreamer pipeline creation/destruction stability by
+
+```bash
+./single_webrtc client_reload.html
+```
+
+commmand.
+
+
+
 ## sendrecv
 
 can send video/audio stream to a webbrowser and receive video stream from a webbrowser
