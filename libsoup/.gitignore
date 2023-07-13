@@ -2,6 +2,7 @@
 .qtc_clangd
 /serve
 /websocket
+/websocket_reload
 /websocket_nb
 /ws_echo_server
 /ws_client

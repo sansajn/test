@@ -1,14 +1,19 @@
+# dependancies (Debian 10): libsoup2.4-dev libspdlog-dev (1.3.1)
 cpp17 = Environment(
 	CCFLAGS=['-std=c++17', '-Wall', '-O0', '-ggdb3'],
 	LIBS=['boost_filesystem', 'boost_system', 'boost_program_options'])
 
-cpp17.ParseConfig('pkg-config --cflags --libs libsoup-2.4')
+cpp17.ParseConfig('pkg-config --cflags --libs libsoup-2.4 spdlog')
 
 cpp17.Program('serve.cpp')
+
+# websocket samples
 cpp17.Program('websocket.cpp')
+cpp17.Program('websocket_reload.cpp')
 cpp17.Program('websocket_nb.cpp')
 cpp17.Program('ws_echo_server.cpp')
 cpp17.Program('ws_client.cpp')
+
 cpp17.Program('http_client.cpp')
 cpp17.Program('serve_thread_context.cpp')
 cpp17.Program('simple-httpd.c')
