@@ -47,7 +47,7 @@ int main(int argc, char * argv[]) {
 	GMainLoop * loop = g_main_loop_new(nullptr, FALSE);
 	assert(loop);
 
-	g_main_loop_run(loop);
+	g_main_loop_run(loop);  // blocking
 
 	// clean up
 	g_object_unref(G_OBJECT(server));
