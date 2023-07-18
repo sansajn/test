@@ -201,11 +201,14 @@ void on_ice_candidate_cb([[maybe_unused]] GstElement * webrtcbin, guint mline_in
 ReceiverEntry * create_receiver_entry(SoupWebsocketConnection * connection);
 void destroy_receiver_entry(gpointer receiver_entry_ptr);
 
-ReceiverEntry * pipeline = nullptr;  // pipeline
-
 // helpers
 void crash_handler(int signal);
+void quit_handler(int signal);  // ctrl+c handler
 gchar * get_string_from_json_object(JsonObject * object);
+void quit_loop();
+
+GMainLoop * loop = nullptr;
+ReceiverEntry * pipeline = nullptr;  // pipeline
 
 
 int main(int argc, char * argv[]) {
@@ -232,16 +235,22 @@ int main(int argc, char * argv[]) {
 
 	spdlog::info("page link: http://127.0.0.1:{}", SERVER_PORT);
 
-	GMainLoop * loop = g_main_loop_new(nullptr, FALSE);
+	loop = g_main_loop_new(nullptr, FALSE);
 	assert(loop);
 
 	signal(SIGSEGV|SIGFPE, crash_handler);  // install signal handler
+	signal(SIGINT, quit_handler);  // install ctrl+c signal handler
 
 	g_main_loop_run(loop);  // blocking
 
 	spdlog::info("main loop stopped");
 
 	// clean up
+	if (pipeline) {
+		destroy_receiver_entry(pipeline);
+		pipeline = nullptr;
+	}
+
 	g_object_unref(G_OBJECT(server));
 	g_main_loop_unref(loop);
 
@@ -293,6 +302,8 @@ void websocket_closed_handler(SoupWebsocketConnection * connection, gpointer use
 	spdlog::info("client disconnected, what: {}", close_code);
 	destroy_receiver_entry(pipeline);
 	pipeline = nullptr;
+
+	quit_loop();  // TODO; just for a valgrind output
 }
 
 gchar * get_string_from_json_object(JsonObject * object) {
@@ -397,8 +408,6 @@ void destroy_receiver_entry(gpointer receiver_entry_ptr) {
   g_slice_free1 (sizeof (ReceiverEntry), receiver_entry);
 }
 
-
-
 void on_offer_created_cb(GstPromise * promise, gpointer user_data) {
 	gchar *sdp_string;
 	gchar *json_string;
@@ -483,4 +492,13 @@ void crash_handler(int signal) {
 		<< endl;
 
 	exit(signal);
+}
+
+void quit_handler(int signal) {
+	spdlog::warn("ctrl+c ({}) signal catched", strsignal(signal));
+	g_main_loop_quit(loop);
+}
+
+void quit_loop() {
+	g_main_loop_quit(loop);
 }

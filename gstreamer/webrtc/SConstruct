@@ -36,3 +36,4 @@ cpp17.Program(['rtsp_to_webrtc.cpp'])
 cpp17.Program('h264streamer', ['h264streamer.cpp']) # compilable under debian 10
 cpp17.Program('h264streamer_thread', ['h264streamer_thread.cpp'])
 cpp17.Program('single_webrtc.cpp')
+cpp17.Program('init.cpp')
