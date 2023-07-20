@@ -206,6 +206,7 @@ void crash_handler(int signal);
 void quit_handler(int signal);  // ctrl+c handler
 gchar * get_string_from_json_object(JsonObject * object);
 void quit_loop();
+void print_gstreamer_version();
 
 GMainLoop * loop = nullptr;
 ReceiverEntry * pipeline = nullptr;  // pipeline
@@ -218,11 +219,12 @@ int main(int argc, char * argv[]) {
 	spdlog::info("page: {}", page_file);
 
 	if (!fs::exists(page_file)) {
-		spdlog::critical("page-file '{}' can't be opened", page_file);
+		spdlog::critical("page file '{}' can't be opened", page_file);
 		return 1;
 	}
 
 	gst_init(&argc, &argv);
+	print_gstreamer_version();
 
 	load_string_file(page_file, page_source);
 
@@ -303,7 +305,7 @@ void websocket_closed_handler(SoupWebsocketConnection * connection, gpointer use
 	destroy_receiver_entry(pipeline);
 	pipeline = nullptr;
 
-	quit_loop();  // TODO; just for a valgrind output
+	// quit_loop();  // TODO; just for a valgrind output
 }
 
 gchar * get_string_from_json_object(JsonObject * object) {
@@ -352,7 +354,7 @@ ReceiverEntry * create_receiver_entry(SoupWebsocketConnection * connection) {
   sprintf(pipe_desc, format.c_str());
 
 //   g_print("pipeline: %s\n", pipe_desc);
-  spdlog::info("Pipeline created");
+  spdlog::info("pipeline created");
 
   error = NULL;
   receiver_entry->pipeline =
@@ -501,4 +503,19 @@ void quit_handler(int signal) {
 
 void quit_loop() {
 	g_main_loop_quit(loop);
+}
+
+void print_gstreamer_version() {
+	guint major, minor, micro, nano;
+	gst_version(&major, &minor, &micro, &nano);
+	
+	gchar const * nano_str = nullptr;
+	if (nano == 1)
+		nano_str = "(CVS)";
+	else if (nano == 2)
+		nano_str = "(Prerelease)";
+	else
+		nano_str = "";
+	
+	spdlog::info("linked against GStreamer {}.{}.{} {}", major, minor, micro, nano_str);
 }
