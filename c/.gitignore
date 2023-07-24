@@ -1,0 +1,10 @@
+*.o
+
+/1_1_getting_started
+/1_2_bad
+/3_1_heron
+/6_1_swap_double
+/6_2_string
+/enum
+/struct_typedef
+/struct_visibility

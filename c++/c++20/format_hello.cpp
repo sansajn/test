@@ -1,5 +1,5 @@
 /*! format() sample .
-/note format is  not available for 11 therefore we use fmt library instead*/
+/note format is  not available for GCC 11 therefore we use fmt library instead*/
 
 #include <string>
 #include <iostream>

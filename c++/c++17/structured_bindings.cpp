@@ -7,8 +7,8 @@ using std::map;
 using std::string;
 using std::cout;
 
-int main(int argc, char * argv[])
-{
+int main(int argc, char * argv[]) {
+	// from map
 	map<int, string> m;
 	m[1] = "one";
 	m[2] = "two";

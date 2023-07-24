@@ -1,0 +1,8 @@
+Program('1_1_getting_started.c')
+Program('1_2_bad.c')
+Program('3_1_heron.c')
+Program('enum.c')
+Program('6_1_swap_double.c')
+Program('6_2_string.c')
+Program('struct_visibility.c')
+Program('struct_typedef.c')

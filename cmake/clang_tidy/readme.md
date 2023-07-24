@@ -1,4 +1,4 @@
-This directory contains Clang Tidy analyze integration.
+This directory contains *ClangTidy* analyze integration sample.
 
 Requires *clang-tidy* package to be installed with
 

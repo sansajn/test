@@ -9,10 +9,9 @@ add_compile_options(-Wall -Wextra)
 
 enable_testing()
 
+# following lines handles library dependencies
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
-
-find_package(Catch2 2.13.8 REQUIRED)
 
 add_executable(hello hello.cpp)
 target_link_libraries(hello PRIVATE ${CONAN_LIBS})

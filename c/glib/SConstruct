@@ -1,0 +1,4 @@
+c = Environment()
+c.ParseConfig('pkg-config --libs --cflags glib-2.0')
+
+c.Program('list.c')
