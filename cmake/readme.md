@@ -1,14 +1,17 @@
-# Ukážky
+# Samples
 
-library: vygeneruje statickú knižnicu (add_library)
+For something to startup please see sample from `ctest_hello` directory.
 
-library_output: statická knižnica zo zmeneným výstupom (LIBRARY_OUTPUT_PATH)
 
-shared_library: zdielatelná knižnica (add_library)
+library: vygeneruje statickú knižnicu (`add_library`)
 
-library_install: knižnica umožnujúca inštaláciu
+`library_output`: statická knižnica zo zmeneným výstupom (`LIBRARY_OUTPUT_PATH`)
 
-extern_compiled_library: externá knižnica skompilovaná zo zdrojakov
+`shared_library`: zdielatelná knižnica (`add_library`)
+
+`library_install`: knižnica umožnujúca inštaláciu
+
+`extern_compiled_library`: externá knižnica skompilovaná zo zdrojakov
 
 **use_shared**: program používajúci dynamickú knižnicu, skompilujem príkazom
 

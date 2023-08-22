@@ -36,3 +36,5 @@ Test project /home/ja/devel/test/build-catch
 
 Total Test time (real) =   0.01 sec
 ```
+
+or use `--test-dir path/to/tests` option to run tests from outside of build directory.
