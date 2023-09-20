@@ -5,8 +5,12 @@ cmake -B buildtree
 cmake --build buildtree
 ```
 
-commands, which builds hello sample to `./buildtree` directory and run with
+commands, which builds hello sample to `./buildtree` directory. 
+
+Run with
 
 ```bash
 ./buildtree/hello
 ```
+
+command.
