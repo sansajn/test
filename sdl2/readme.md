@@ -2,10 +2,10 @@
 
 SDL samples.
 
-Install SDL2 with
+Install SDL2 and other dependencies with
 
 ```bash
-sudo apt install libsdl2-dev libsdl2-mixer-dev
+sudo apt install libsdl2-dev libsdl2-mixer-dev libgles-dev
 ```
 
 command.
@@ -20,10 +20,10 @@ command to build samples (e.g. `scons hello` to build `hello.cpp` sample).
 
 
 **ToDo**:
-- add CMake project
-- opengl 
-- triangle
+- add CMake project (so we can define library versions)
 - animated triangle
+- animated piramid (kind of camera)
 - full screen sample
 - mouse events
 - keyboard events
+- imgui integration
