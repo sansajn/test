@@ -15,8 +15,9 @@ mixer_env.Program(['mixer.cpp'])
 
 # for OpenGL samples
 ogl_env = Environment(CXXFLAGS=['-std=c++17'])
-ogl_env.ParseConfig('pkg-config --cflags --libs sdl2 glesv2')
+ogl_env.ParseConfig('pkg-config --cflags --libs sdl2 glesv2 glm')
 
 ogl_env.Program(['ogles32.cpp'])
 ogl_env.Program(['triangle.cpp'])
+ogl_env.Program(['axis.cpp'])
 
