@@ -20,4 +20,5 @@ ogl_env.ParseConfig('pkg-config --cflags --libs sdl2 glesv2 glm')
 ogl_env.Program(['ogles32.cpp'])
 ogl_env.Program(['triangle.cpp'])
 ogl_env.Program(['axis.cpp'])
+ogl_env.Program(['triangle_anim.cpp'])
 

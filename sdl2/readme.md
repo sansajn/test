@@ -21,8 +21,6 @@ command to build samples (e.g. `scons hello` to build `hello.cpp` sample).
 
 **ToDo**:
 - add CMake project (so we can define library versions)
-- animated triangle
-- animated piramid (kind of camera)
 - full screen sample
 - mouse events
 - keyboard events
