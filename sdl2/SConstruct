@@ -1,5 +1,13 @@
-env = Environment(CXXFLAGS=['-std=c++11'])
-env.ParseConfig('pkg-config --cflags --libs sdl2 SDL2_mixer')
-env.Program(['hello.cpp'])
-env.Program(['audio.cpp'])
-env.Program(['mixer.cpp'])
+sdl_env = Environment(CXXFLAGS=['-std=c++11'])
+sdl_env.ParseConfig('pkg-config --cflags --libs sdl2')
+
+sdl_env.Program(['hello.cpp'])
+sdl_env.Program(['hello_poll.cpp'])
+sdl_env.Program(['error_processing.cpp'])
+
+
+#mixer_env = sdl_env.Clone()
+#mixer_env.ParseConfig('pkg-config --cflags --libs sdl2 SDL2_mixer')
+
+#mixer_env.Program(['audio.cpp'])
+#mixer_env.Program(['mixer.cpp'])

@@ -1,4 +1,4 @@
-// creates window with red background refreshed every ~10ms 
+// creates window with red background with poll event loop 
 #include <cassert>
 #include <SDL.h>
 
@@ -20,9 +20,9 @@ int main(int argc, char * argv[]) {
 	
 	bool running = true;
 
-	SDL_Event event = {};
-	do {
-		if (SDL_WaitEventTimeout(&event, 10)) {  // 10ms timeout
+	while (running) {
+		SDL_Event event = {};
+		while (SDL_PollEvent(&event)) {  // process all events
 			// process event
 			switch (event.type) {
 				case SDL_QUIT: {
@@ -31,11 +31,10 @@ int main(int argc, char * argv[]) {
 				}
 			}
 		}
-		else {  // not any event, refresh window
-			SDL_RenderClear(renderer);
-			SDL_RenderPresent(renderer);
-		}
-	} while (running);
+
+		SDL_RenderClear(renderer);
+		SDL_RenderPresent(renderer);
+	}
 
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
