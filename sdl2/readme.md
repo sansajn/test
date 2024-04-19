@@ -5,7 +5,7 @@ SDL samples.
 Install SDL2 with
 
 ```bash
-sudo apt install libsdl2-dev
+sudo apt install libsdl2-dev libsdl2-mixer-dev
 ```
 
 command.
