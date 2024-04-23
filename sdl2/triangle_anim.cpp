@@ -22,19 +22,20 @@ using glm::mat4,
 constexpr GLuint WIDTH = 800,
 	HEIGHT = 600;
 
-// TODO: is version correct for OpenGL ES 3.2 shader
 GLchar const * vertex_shader_source = R"(
-#version 100
-attribute vec3 position;
+#version 320 es
+in vec3 position;
 uniform mat4 local_to_screen;
 void main() {
 	gl_Position = local_to_screen * vec4(position, 1.0);
 })";
 
 GLchar const * fragment_shader_source = R"(
-#version 100
+#version 320 es
+precision mediump float;
+out vec4 frag_color;
 void main() {
-	gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+	frag_color = vec4(1.0, 0.0, 0.0, 1.0);
 })";
 
 
