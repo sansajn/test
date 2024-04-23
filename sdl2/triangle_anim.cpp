@@ -1,4 +1,6 @@
-// OpenGL ES 3.2, animated triangle and static axis object
+/* OpenGL ES 3.2, animated triangle and static axis object sample. The sample
+program shows how to use VBO a VAO to render two objects (triangle and axis). */
+#include <chrono>
 #include <iostream>
 #include <cassert>
 #include <SDL.h>
@@ -8,6 +10,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 using std::cout, std::endl;
+using std::chrono::steady_clock, std::chrono::duration_cast, std::chrono::milliseconds;
 using glm::mat4, 
 	glm::vec3, 
 	glm::value_ptr,
@@ -19,6 +22,7 @@ using glm::mat4,
 constexpr GLuint WIDTH = 800,
 	HEIGHT = 600;
 
+// TODO: is version correct for OpenGL ES 3.2 shader
 GLchar const * vertex_shader_source = R"(
 #version 100
 attribute vec3 position;
@@ -69,8 +73,7 @@ int main(int argc, char * argv[]) {
 		<< "GLSL_VERSION: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl;
 	
 	GLuint const shader_program = get_shader_program(vertex_shader_source, fragment_shader_source);
-	glUseProgram(shader_program);
-
+	
 	GLint const position_loc = glGetAttribLocation(shader_program, "position");
 	GLint const local_to_screen_loc = glGetUniformLocation(shader_program, "local_to_screen");
 	
@@ -109,14 +112,16 @@ int main(int argc, char * argv[]) {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);  // unbind buffer
 	glBindVertexArray(0);  // unbind vertex array
 
-	uint64_t t_prev = SDL_GetTicks64();
+	glUseProgram(shader_program);
+
+	auto t_prev = steady_clock::now();
 
 	mat4 R_triangle{1};  // triangle rotation
 
 	while (true) {
-		// we need dt there ...
-		uint64_t t_now = SDL_GetTicks64();
-		double dt = (t_now - t_prev) / 1000.0;  // in ms, TODO: use chrono
+		auto t_now = steady_clock::now();
+		
+		double const dt = duration_cast<milliseconds>(t_now - t_prev).count() / 1000.0;
 		t_prev = t_now;
 
 		SDL_Event event;
