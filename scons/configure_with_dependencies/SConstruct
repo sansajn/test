@@ -26,7 +26,7 @@ def configure(env, dependency_list):
 	conf_env = conf.Finish()
 
 	pkg_conf = 'pkg-config --cflags --libs ' + ' '.join(
-		map(lambda dep: dep[0] if type(dep) == tuple else dep, dependencies))
+		map(lambda dep: dep[0] if type(dep) == tuple else dep, dependency_list))
 
 	conf_env.ParseConfig(pkg_conf)
 
