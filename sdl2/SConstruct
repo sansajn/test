@@ -53,6 +53,18 @@ def build():
 	ogl_env.Program(['xy_plane_panzoom.cpp'])
 	ogl_env.Program(['xy_plane_grid.cpp'])
 
+	img_deps = [
+		('fmt', '>= 8.1.1'),
+		('glm', '>= 0.9.9.5'),
+		('sdl2', '>= 2.0.20'),
+		('glesv2', '>= 3.2'),
+		('Magick++', '>= 6.9.11')
+	]
+
+	img_env = cpp20_env.Clone()
+	img_env = configure(img_env, img_deps)
+	img_env.Program('texture_storage.cpp')
+
 
 def configure(env, dependency_list):
 	conf = env.Configure(
