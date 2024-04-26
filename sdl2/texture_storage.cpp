@@ -1,5 +1,6 @@
 // rendering texture with glTexStorage2D() sample
 #include <string>
+#include <tuple>
 #include <cassert>
 #include <iostream>
 #include <SDL.h>
@@ -7,6 +8,7 @@
 #include <Magick++.h>
 
 using std::cout, std::endl;
+using std::tuple;
 
 std::string const texture_path = "lena.jpg";
 
@@ -15,7 +17,7 @@ constexpr GLuint WIDTH = 800,
 
 char const * vs_src = R"(
 #version 320 es
-in vec3 position;
+in vec3 position;  // we expect (-1,-1), (1,1) rectangle
 out vec2 st;
 void main() {
 	st = position.xy/2.0 + 0.5;
@@ -32,13 +34,9 @@ void main() {
 	frag_color = texture(s, st);
 })";
 
-void create_mesh();
+tuple<GLuint, GLuint, GLuint, unsigned> create_mesh();
 GLuint create_texture(std::string const & fname);
 GLint get_shader_program(char const * vertex_shader_source, char const * fragment_shader_source);
-
-GLuint vs, fs;
-GLuint vao, vbo, ibo;
-unsigned index_count;
 
 int main(int argc, char * argv[]) {
 	SDL_Init(SDL_INIT_VIDEO);
@@ -61,7 +59,7 @@ int main(int argc, char * argv[]) {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glViewport(0, 0, WIDTH, HEIGHT);
 
-	create_mesh();
+	auto [vao, vbo, ibo, index_count] = create_mesh();
 	GLuint tbo = create_texture(texture_path);
 
 	// rendering ...
@@ -91,10 +89,8 @@ int main(int argc, char * argv[]) {
 	glDeleteTextures(1, &tbo);
 	glDeleteBuffers(1, &vbo);
 	glDeleteBuffers(1, &ibo);
-	glDeleteShader(vs);
-	glDeleteShader(fs);
-	glDeleteProgram(shader_program);
 	glDeleteVertexArrays(1, &vao);
+	glDeleteProgram(shader_program);
 
 	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);
@@ -119,30 +115,34 @@ GLuint create_texture(std::string const & fname) {
 	return tbo;
 }
 
-void create_mesh()
-{
-	GLfloat vertices[] = {
+tuple<GLuint, GLuint, GLuint, unsigned> create_mesh() {
+	constexpr GLfloat vertices[] = {
 		-1, -1, 0,
 		 1, -1, 0,
 		 1,  1, 0,
 		-1,  1, 0};
 
-	GLuint indices[] = {
+	constexpr GLuint indices[] = {
 		0, 1, 2,  2, 3, 0
 	};
 
-	index_count = sizeof(indices)/sizeof(GLuint);
+	unsigned index_count = sizeof(indices)/sizeof(GLuint);
 
+	GLuint vao;
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
+	GLuint vbo;
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, 4*3*sizeof(GLfloat), vertices, GL_STATIC_DRAW);
 
+	GLuint ibo;
 	glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6*sizeof(GLuint), indices, GL_STATIC_DRAW);
+
+	return {vao, vbo, ibo, index_count};
 }
 
 GLint get_shader_program(char const * vertex_shader_source, char const * fragment_shader_source) {

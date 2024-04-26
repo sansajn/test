@@ -154,7 +154,10 @@ int main(int argc, char * argv[]) {
 	}
 	
 	glDeleteBuffers(1, &axis_vbo);
+	glDeleteVertexArrays(1, &axis_vao);
+
 	glDeleteBuffers(1, &triangle_vbo);
+	glDeleteVertexArrays(1, &triangle_vao);
 	glDeleteProgram(shader_program);
 
 	SDL_GL_DeleteContext(context);
