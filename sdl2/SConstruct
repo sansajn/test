@@ -6,16 +6,22 @@ def build():
 	cpp20_env = Environment(CXXFLAGS=['-std=c++20'], CFLAGS=['-Wall'])
 
 	# pure SDL samples
-	sdl_deps = [('sdl2', '>= 2.0.20')]
+	sdl_deps = [
+		('fmt', '>= 8.1.1'),
+		('sdl2', '>= 2.0.20')
+	]
 	sdl_env = cpp20_env.Clone()
 	sdl_env = configure(sdl_env, sdl_deps)
 
 	sdl_env.Program(['hello.cpp'])
 	sdl_env.Program(['hello_poll.cpp'])
 	sdl_env.Program(['error_processing.cpp'])
+	sdl_env.Program(['event_wheel.cpp'])
+	sdl_env.Program(['event_mouse_move.cpp'])
 
 	# SDL mixer samples
 	mixer_deps = [
+		('fmt', '>= 8.1.1'),
 		('sdl2', '>= 2.0.20'),
 		('SDL2_mixer', '>= 2.0.4')
 	]
@@ -30,6 +36,7 @@ def build():
 
 	# List of pkg-config based library dependencies as (library, version) pair or just package name as string (e.g. ('libzmq', '>= 4.3.0') pair or 'libzmq' string). Library package version can be found by running `pkg-config --modversion LIBRARY` command.
 	ogl_deps = [
+		('fmt', '>= 8.1.1'),
 		('glm', '>= 0.9.9.5'),
 		('sdl2', '>= 2.0.20'),
 		('glesv2', '>= 3.2')
@@ -42,6 +49,8 @@ def build():
 	ogl_env.Program(['triangle.cpp'])
 	ogl_env.Program(['axis.cpp'])
 	ogl_env.Program(['triangle_anim.cpp'])
+	ogl_env.Program(['xy_plane.cpp'])
+	ogl_env.Program(['xy_plane_zoom.cpp'])
 
 
 def configure(env, dependency_list):

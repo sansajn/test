@@ -1,6 +1,8 @@
 // creates window with red background with poll event loop 
 #include <cassert>
 #include <SDL.h>
+#include <fmt/core.h>
+using fmt::print;
 
 int main(int argc, char * argv[]) {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -17,11 +19,16 @@ int main(int argc, char * argv[]) {
 	assert(renderer && "unable to create a renderer");
 	
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-
+	
 	while (true) {
 		SDL_Event event;
 		if (SDL_PollEvent(&event) && event.type == SDL_QUIT)
 			break;
+
+		if (event.type == SDL_MOUSEMOTION) {
+			print("Mouse moved to ({},{})\n", event.motion.x, event.motion.y);
+			print("   with relative movement ({},{})\n", event.motion.xrel, event.motion.yrel);
+		}
 
 		SDL_RenderClear(renderer);
 		SDL_RenderPresent(renderer);

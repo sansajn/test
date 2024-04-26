@@ -7,3 +7,7 @@
 /triangle
 /axis
 /triangle_anim
+/xy_plane
+/event_wheel
+/event_mouse_move
+/xy_plane_panzoom

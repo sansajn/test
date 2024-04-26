@@ -5,7 +5,7 @@ SDL samples.
 Install SDL2 and other dependencies with
 
 ```bash
-sudo apt install libsdl2-dev libsdl2-mixer-dev libgles-dev libglm-dev
+sudo apt install libsdl2-dev libsdl2-mixer-dev libgles-dev libglm-dev libfmt-dev
 ```
 
 command.
