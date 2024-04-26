@@ -34,9 +34,10 @@ void main() {
 GLchar const * fragment_shader_source = R"(
 #version 320 es
 precision mediump float;
+uniform vec3 color;
 out vec4 frag_color;
 void main() {
-	frag_color = vec4(1.0, 0.0, 0.0, 1.0);
+	frag_color = vec4(color, 1.0);
 })";
 
 GLfloat const xy_plane_verts[] = {
@@ -74,12 +75,12 @@ int main(int argc, char * argv[]) {
 	
 	GLint const position_loc = glGetAttribLocation(shader_program, "position");
 	GLint const local_to_screen_loc = glGetUniformLocation(shader_program, "local_to_screen");
+	GLint const color_loc = glGetUniformLocation(shader_program, "color");
 	
 	glUseProgram(shader_program);
 
 	mat4 P = perspective(radians(60.f), WIDTH/(float)HEIGHT, 0.01f, 1000.f);
-	mat4 M = scale(translate(mat4{1}, vec3{-1,-1,0}), vec3{2,2,1});  // T*S
-
+	
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glViewport(0, 0, WIDTH, HEIGHT);
 
@@ -137,13 +138,26 @@ int main(int argc, char * argv[]) {
 		vec3 position = vec3{xy_offset,0} + vec3{0, 0, distance};
 		mat4 V = inverse(translate(mat4{1}, position));  // we can also use lookAt there
 		
-		mat4 local_to_screen = P*V*M;
-		glUniformMatrix4fv(local_to_screen_loc, 1, GL_FALSE, value_ptr(local_to_screen));
-
 		// render
 		glClear(GL_COLOR_BUFFER_BIT);  // clear buffer
 
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		constexpr unsigned grid_size = 51;  // note this should be odd number
+
+		// draw grid of xy planes
+		for (unsigned row = 0; row < grid_size; ++row) {
+			for (unsigned col = 0; col < grid_size; ++col) {
+				float const model_scale = 2.0f;
+				vec2 model_pos = (vec2{col, row} - (grid_size/2.0f)) * model_scale;
+				mat4 M = scale(translate(mat4{1}, vec3{model_pos,0}), vec3{model_scale, model_scale, 1});  // T*S
+				mat4 local_to_screen = P*V*M;
+				glUniformMatrix4fv(local_to_screen_loc, 1, GL_FALSE, value_ptr(local_to_screen));
+				
+				vec3 color = (col + (row*grid_size)) % 2 ? vec3{1, 0, 0} : vec3{0, 0, 1};
+				glUniform3f(color_loc, color.r, color.g, color.b);
+				
+				glDrawArrays(GL_TRIANGLES, 0, 6);
+			}
+		}
 
 		SDL_GL_SwapWindow(window);
 	}

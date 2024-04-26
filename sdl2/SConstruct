@@ -50,7 +50,8 @@ def build():
 	ogl_env.Program(['axis.cpp'])
 	ogl_env.Program(['triangle_anim.cpp'])
 	ogl_env.Program(['xy_plane.cpp'])
-	ogl_env.Program(['xy_plane_zoom.cpp'])
+	ogl_env.Program(['xy_plane_panzoom.cpp'])
+	ogl_env.Program(['xy_plane_grid.cpp'])
 
 
 def configure(env, dependency_list):
