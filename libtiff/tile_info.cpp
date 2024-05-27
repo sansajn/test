@@ -18,10 +18,10 @@ int main(int argc, char * argv[]) {
 	TIFF * tiff = TIFFStreamOpen("memory", &fin);
 	assert(tiff);
 
-	uint32_t image_w, 
-		image_h, 
-		tile_w, 
-		tile_h;
+	uint32_t image_w = 0, 
+		image_h = 0, 
+		tile_w = 0, 
+		tile_h = 0;
 
 	TIFFGetField(tiff, TIFFTAG_IMAGEWIDTH, &image_w);
 	TIFFGetField(tiff, TIFFTAG_IMAGELENGTH, &image_h);
@@ -37,6 +37,10 @@ int main(int argc, char * argv[]) {
 		<< "tile-length=" << tile_h << "\n"
 		<< "tile-size=" << tile_size << "\n"
 		<< "tile-count=" << tile_count << "\n";
+
+	// number of strips
+	unsigned const strip_count = TIFFNumberOfStrips(tiff);
+	cout << "strips=" << strip_count << "\n";
 
 	// pixel format?
 	uint16_t bits_per_sample = 0;

@@ -1,6 +1,6 @@
 /* Tile-oriented Image reading sample see [Tile-oriented Image I/O](http://www.libtiff.org/libtiff.html#Tiles).
 The program reads 300th tile (from Landsat 8 tile).
-usage: read_tile TIFF_FILE [TILE_IDX] */
+usage: read_tile TIFF_FILE=test.tiff [TILE_IDX=300] */
 #include <span>
 #include <filesystem>
 #include <utility>

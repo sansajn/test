@@ -18,6 +18,7 @@ def build():
 	cpp20.Program('tile_count.cpp')
 	cpp20.Program('directory_count.cpp')
 	cpp20.Program('read_tile.cpp')  # require Magick++ library
+	cpp20.Program('tile_info.cpp')
 
 
 def configure(env, dependency_list):
