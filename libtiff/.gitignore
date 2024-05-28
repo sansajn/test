@@ -3,3 +3,5 @@
 /strip_count
 /tile_count
 /read_tile
+/tile_info
+/read_strip

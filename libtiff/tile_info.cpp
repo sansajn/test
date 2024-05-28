@@ -38,6 +38,8 @@ int main(int argc, char * argv[]) {
 		<< "tile-size=" << tile_size << "\n"
 		<< "tile-count=" << tile_count << "\n";
 
+	// TODO: how to recognize data are saved as strips or tiles?
+
 	// number of strips
 	unsigned const strip_count = TIFFNumberOfStrips(tiff);
 	cout << "strips=" << strip_count << "\n";
