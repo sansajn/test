@@ -18,6 +18,9 @@ target_link_libraries(basic_test PRIVATE GTest::gtest)
 add_executable(fixture_test fixture_test.cpp)
 target_link_libraries(fixture_test PRIVATE GTest::gtest)
 
+add_executable(parametrized_test parametrized_test.cpp)
+target_link_libraries(parametrized_test PRIVATE GTest::gtest)
+
 # automatic test registration for hello target
 include(GoogleTest)
 gtest_discover_tests(basic_test)
