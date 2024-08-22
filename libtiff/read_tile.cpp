@@ -44,7 +44,7 @@ int main(int argc, char * argv[]) {
 	// tiles
 	uint32_t const tile_count = TIFFNumberOfTiles(tiff);
 	cout << "tiles=" << tile_count << "\n";
-	assert(tile_idx_arg < tile_count);
+	//assert(tile_idx_arg < tile_count);
 
 	// tile-width/height?
 	uint32_t tile_w = 0,
