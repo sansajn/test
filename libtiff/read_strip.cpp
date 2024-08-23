@@ -8,6 +8,7 @@ usage: read_tile TIFF_FILE=test.tiff */
 #include <utility>
 #include <vector>
 #include <memory>
+#include <string>
 #include <fstream>
 #include <iostream>
 #include <cstddef>
@@ -19,13 +20,24 @@ usage: read_tile TIFF_FILE=test.tiff */
 #include <tiffio.hxx>
 #include <Magick++.h>
 
-using std::span, std::vector, std::pair, std::unique_ptr, std::byte;
+using std::span, std::string, std::vector, std::pair, std::unique_ptr, std::byte;
 using std::filesystem::path, std::ifstream, std::cout;
 using boost::format, boost::str;
 using namespace Magick;
 
-void save_image_gray(span<uint16_t> pixels_gray, size_t w, size_t h, path const & fname);
-void save_image_rgb(span<uint16_t> pixels_gray, size_t w, size_t h, path const & fname);
+/*! Save to PNG image.
+\param[in] fmt Use "I" for gray sacle and "RGB" for RGB images. */
+template <typename PixelType>
+void save_image_exp(span<PixelType> pixels, size_t w, size_t h, string const & fmt, path const & fname) {
+	Image im;
+
+	static_assert(sizeof(PixelType) <= 2, "only 8 and 16bit images supported");
+	auto storage_type = sizeof(PixelType) == 2 ? StorageType::ShortPixel : StorageType::CharPixel;
+	im.read(w, h, fmt.c_str(), storage_type, pixels.data());
+	
+	im.write(fname);
+}
+
 
 //! Create grayscale test image and returns dimension as (width, height) pair.
 pair<size_t, size_t> create_test_image(vector<byte> & pixels);
@@ -131,35 +143,25 @@ int main(int argc, char * argv[]) {
 
 	// now save to png in case of 16bit tif images
 	// TODO: implement saving also 8bit images and RGB files
+	path const strip_path = "strip_image.png"; //str(format("strip_%1%.png") % strip_idx_arg);
+	string const png_format = (samples_per_pixel == 3) ? "RGB" : "I";
+	
 	if (bits_per_sample == 16) {
-		path const strip_path = "strip_image.png"; //str(format("strip_%1%.png") % strip_idx_arg);
-		if (samples_per_pixel == 1)
-			save_image_gray(span<uint16_t>{
-				reinterpret_cast<uint16_t *>(image_data.get()), image_w*image_h}, image_w, image_h, strip_path);
-		else
-			save_image_rgb(span<uint16_t>{
-				reinterpret_cast<uint16_t *>(image_data.get()), image_w*image_h}, image_w, image_h, strip_path);
-
-		// cout << "strip " << strip_idx_arg << " dumped as " << strip_path << "\n";
+		save_image_exp(span<uint16_t>{
+			reinterpret_cast<uint16_t *>(image_data.get()), image_w*image_h}, image_w, image_h, png_format, strip_path);
 	}
+	else if (bits_per_sample == 8) {
+		save_image_exp(span<uint8_t>{
+			reinterpret_cast<uint8_t *>(image_data.get()), image_w*image_h}, image_w, image_h, png_format, strip_path);
+	}
+
+	// cout << "strip " << strip_idx_arg << " dumped as " << strip_path << "\n";
 
 	TIFFClose(tiff);
 
 	cout <<"done!\n";
 
 	return 0;
-}
-
-void save_image_rgb(span<uint16_t> pixels_gray, size_t w, size_t h, path const & fname) {
-	Image im;
-	im.read(w, h, "RGB", StorageType::ShortPixel, pixels_gray.data());
-	im.write(fname);
-}
-
-void save_image_gray(span<uint16_t> pixels_gray, size_t w, size_t h, path const & fname) {
-	Image im;
-	im.read(w, h, "I", StorageType::ShortPixel, pixels_gray.data());
-	im.write(fname);
 }
 
 pair<size_t, size_t> create_test_image(vector<byte> & pixels) {
