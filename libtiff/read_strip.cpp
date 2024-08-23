@@ -1,5 +1,5 @@
 /* Strip-oriented Image reading sample see [Strip-oriented Image I/O](http://www.libtiff.org/libtiff.html#strip-oriented-image-i-o).
-The program reads tiff file strip afer the strip and save it into 
+The program reads tiff 16b file strip afer the strip and save it into 
 one png file (`strip_image.png`). To verify image you need to stretch 
 color levels e.g. in Gimp.
 usage: read_tile TIFF_FILE=test.tiff */
@@ -24,7 +24,8 @@ using std::filesystem::path, std::ifstream, std::cout;
 using boost::format, boost::str;
 using namespace Magick;
 
-void save_image(span<uint16_t> pixels_gray, size_t w, size_t h, path const & fname);
+void save_image_gray(span<uint16_t> pixels_gray, size_t w, size_t h, path const & fname);
+void save_image_rgb(span<uint16_t> pixels_gray, size_t w, size_t h, path const & fname);
 
 //! Create grayscale test image and returns dimension as (width, height) pair.
 pair<size_t, size_t> create_test_image(vector<byte> & pixels);
@@ -69,7 +70,7 @@ int main(int argc, char * argv[]) {
 
 	//assert(strip_idx_arg < strip_count && "out of strip index");
 
-	tmsize_t const strip_size = TIFFStripSize(tiff);
+	tmsize_t const strip_size = TIFFStripSize(tiff);  // in bytes
 	cout << "strip-size=" << strip_size << '\n';
 
 	uint32_t rows_per_strip = 0;
@@ -116,26 +117,31 @@ int main(int argc, char * argv[]) {
 
 	assert(tile_h == 0 && tile_w == 0 && "we expect strips not tiles");
 
-	assert(strip_size % 2 == 0);
-
 	// read strip by strip and store it into whole image
 	unsigned const image_size = image_w*image_h*(bits_per_sample/8)*samples_per_pixel;
 	unique_ptr<byte> image_data{new byte[image_size]};
-	memset(image_data.get(), 0xff, image_size);
+	memset(image_data.get(), 0xff, image_size);   // clear buffer
 	for (tstrip_t strip = 0; strip < strip_count; ++strip) {
-		unsigned offset = strip*(strip_size/2);
-		uint16_t * buf = reinterpret_cast<uint16_t *>(image_data.get()) + offset;
+		unsigned const offset = strip*strip_size;
+		uint8_t * buf = reinterpret_cast<uint8_t *>(image_data.get()) + offset;
 		cout << "#" << std::dec << strip << ". buf=" << std::hex << uint64_t(buf) << ", offset=" << offset << '\n';
 		tmsize_t ret = TIFFReadEncodedStrip(tiff, strip, buf, (tsize_t)-1);
 		assert(ret != -1 && ret > 0);
 	}
 
-	// now save to png
-	assert(bits_per_sample == 16 && "we are expecting 16bit samples");
-	path const strip_path = "strip_image.png"; //str(format("strip_%1%.png") % strip_idx_arg);
-	save_image(span<uint16_t>{
-		reinterpret_cast<uint16_t *>(image_data.get()), image_w*image_h}, image_w, image_h, strip_path);
-	// cout << "strip " << strip_idx_arg << " dumped as " << strip_path << "\n";
+	// now save to png in case of 16bit tif images
+	// TODO: implement saving also 8bit images and RGB files
+	if (bits_per_sample == 16) {
+		path const strip_path = "strip_image.png"; //str(format("strip_%1%.png") % strip_idx_arg);
+		if (samples_per_pixel == 1)
+			save_image_gray(span<uint16_t>{
+				reinterpret_cast<uint16_t *>(image_data.get()), image_w*image_h}, image_w, image_h, strip_path);
+		else
+			save_image_rgb(span<uint16_t>{
+				reinterpret_cast<uint16_t *>(image_data.get()), image_w*image_h}, image_w, image_h, strip_path);
+
+		// cout << "strip " << strip_idx_arg << " dumped as " << strip_path << "\n";
+	}
 
 	TIFFClose(tiff);
 
@@ -144,7 +150,13 @@ int main(int argc, char * argv[]) {
 	return 0;
 }
 
-void save_image(span<uint16_t> pixels_gray, size_t w, size_t h, path const & fname) {
+void save_image_rgb(span<uint16_t> pixels_gray, size_t w, size_t h, path const & fname) {
+	Image im;
+	im.read(w, h, "RGB", StorageType::ShortPixel, pixels_gray.data());
+	im.write(fname);
+}
+
+void save_image_gray(span<uint16_t> pixels_gray, size_t w, size_t h, path const & fname) {
 	Image im;
 	im.read(w, h, "I", StorageType::ShortPixel, pixels_gray.data());
 	im.write(fname);
