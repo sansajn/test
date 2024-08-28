@@ -23,6 +23,7 @@ int main(int argc, char * argv[])
 		cout << (int)at_c<0>(p) << "," << (int)at_c<1>(p) << "," << (int)at_c<2>(p) << "\n";
 	}
 
+	// be aware, this is not working in case of transoformation view e.g. flipped_up_down_view()
 	cout << "from begin() approach\n";
 	it = v.begin();
 	rgb8_pixel_t & p = *it;
@@ -35,6 +36,7 @@ int main(int argc, char * argv[])
 		cout << r << "," << g << "," << b << "\n";
 	}
 
+	// be aware, this is not working in case of transoformation view e.g. flipped_up_down_view()
 	cout << "direct cast begin()\n";
 	uint8_t * data = (uint8_t *)&(*v.begin());
 	for (int i = 0; i < 4; ++i)

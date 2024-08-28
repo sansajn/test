@@ -1,15 +1,17 @@
-#include <boost/gil/gil_all.hpp>
-#include <boost/gil/extension/io/png_io.hpp>
+/* Sample to use flipped_up_down_view() view. 
+for a documentation [Image View Transformation](https://www.boost.org/doc/libs/1_83_0/libs/gil/doc/html/reference/group___image_view_transformations.html) page.
+Tested with Boost 1.83 */
+#include <boost/gil.hpp>
+#include <boost/gil/extension/io/png.hpp>
 
 char const * image_path = "girl.png";
 
 using namespace boost::gil;
 
-int main(int argc, char * argv[])
-{
+int main(int argc, char * argv[]) {
 	rgb8_image_t im;
-	png_read_image(image_path, im);
+	read_image(image_path, im, png_tag{});
 	rgb8_image_t::view_t flipped_v = flipped_up_down_view(view(im));
-	png_write_view("out_flipped.png", flipped_v);
+	write_view("out_flipped.png", flipped_v, png_tag{});
 	return 0;
 }

@@ -28,7 +28,7 @@ using namespace Magick;
 /*! Save to PNG image.
 \param[in] fmt Use "I" for gray sacle and "RGB" for RGB images. */
 template <typename PixelType>
-void save_image_exp(span<PixelType> pixels, size_t w, size_t h, string const & fmt, path const & fname) {
+void save_image(span<PixelType> pixels, size_t w, size_t h, string const & fmt, path const & fname) {
 	Image im;
 
 	static_assert(sizeof(PixelType) <= 2, "only 8 and 16bit images supported");
@@ -147,11 +147,11 @@ int main(int argc, char * argv[]) {
 	string const png_format = (samples_per_pixel == 3) ? "RGB" : "I";
 	
 	if (bits_per_sample == 16) {
-		save_image_exp(span<uint16_t>{
+		save_image(span<uint16_t>{
 			reinterpret_cast<uint16_t *>(image_data.get()), image_w*image_h}, image_w, image_h, png_format, strip_path);
 	}
 	else if (bits_per_sample == 8) {
-		save_image_exp(span<uint8_t>{
+		save_image(span<uint8_t>{
 			reinterpret_cast<uint8_t *>(image_data.get()), image_w*image_h}, image_w, image_h, png_format, strip_path);
 	}
 

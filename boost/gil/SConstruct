@@ -24,7 +24,6 @@ cpp11.Program('gil_vs_imagick.cpp')
 cpp11.Program('image_from_file.cpp')
 cpp11.Program('subimage_view.cpp')
 cpp11.Program('pixels_from_image.cpp')
-cpp11.Program('flip_view.cpp')
 cpp11.Program('flipped_pixels.cpp')
 #cpp11.Program('runtime_image.cpp')
 cpp11.Program('read_as_rgba8.cpp')
@@ -34,6 +33,8 @@ cpp11.Program('read_flipped.cpp')
 
 
 # Ubuntu 22.04 LTS with Boost 1.74 (GCC can't build GIL PNG support headers)
+cpp20.Program('flip_view.cpp')  # tested with boost 1.83
+cpp20.Program('flip_pixels.cpp')  # tested with boost 1.83
 clang20.Program('gray8_raw.cpp')
 clang20.Program('gray8_stats.cpp')
 clang20.Program('gray16_raw.cpp')

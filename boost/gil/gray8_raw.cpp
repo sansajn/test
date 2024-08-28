@@ -1,4 +1,5 @@
-//! Create gray 8bit view from array of pixels and save it to a png file (working with boost 1.74).
+/*! Create gray 8bit view from array of pixels and save it to a png file.
+Tested with Boost 1.74 */
 #include <vector>
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/png.hpp>

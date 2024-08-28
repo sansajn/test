@@ -1,6 +1,11 @@
 #include <iostream>
+#include <cstdint>
 #include <cstddef>
 using std::cout;
+
+struct rgb8 {
+	uint8_t r, g, b;
+};
 
 
 int main(int argc, char * argv[])
@@ -21,5 +26,10 @@ int main(int argc, char * argv[])
 		<< "double *:" << sizeof(double *) << "\n"  // 8
 		<< "size_t:" << sizeof(size_t) << "\n"  // 8
 		<< "ptrdiff_t:" << sizeof(ptrdiff_t) << "\n";  // 8
+
+	cout << "char[3]:" << sizeof(char[3]) << '\n'  //= 3
+		<< "rgb8:" << sizeof(rgb8) << '\n';  //= 3
+
+
 	return 0;
 }
