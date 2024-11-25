@@ -12,3 +12,10 @@ env.Program('point.cpp')
 env.Program('polygon.cpp')
 env.Program('ring.cpp')
 env.Program('envelope.cpp')
+
+cpp20 = Environment(
+	CCFLAGS=['-std=c++20', '-Wall', '-O0', '-g']
+)
+
+cpp20.Program('point_box_intersection.cpp')  # woring with Boost 1.83 (Ubuntu 24.4 LTS)
+
