@@ -8,7 +8,7 @@
 using std::array;
 using boost::algorithm::iota;
 
-TEST_CASE("copy_if algorithm usage sample", 
+TEST_CASE("iota algorithm usage sample",
 	"[algorithm][iota]")
 {
 	array<int, 5> a;

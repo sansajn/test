@@ -8,8 +8,7 @@ using std::vector;
 using std::views::iota, std::views::iota, std::views::take;
 using std::cout;
 
-int main(int argc, char * argv[])
-{
+int main(int argc, char * argv[]) {
 	vector<int> v, v2;
 	for (int i : iota(0, 10)) v.push_back(i);
 	for (int i: iota(0) | take(10)) v2.push_back(i);
