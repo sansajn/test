@@ -12,6 +12,7 @@ struct node {
 	bool is_leaf() const {return children[0] == nullptr;}
 };
 
+// iterate over tree leafs
 void iterate(node const & root) {
 	if (root.is_leaf())
 		cout << root.data << ", ";
@@ -22,6 +23,28 @@ void iterate(node const & root) {
 		iterate(*root.children[3]);
 	}
 }
+
+
+void iterate_depth(node const & root, int depth, int max_depth) {
+	if (depth == max_depth && root.is_leaf())
+		cout << root.data << ", ";
+	else {
+		if (!root.is_leaf() && depth < max_depth) {
+			iterate_depth(*root.children[0], depth+1, max_depth);
+			iterate_depth(*root.children[1], depth+1, max_depth);
+			iterate_depth(*root.children[2], depth+1, max_depth);
+			iterate_depth(*root.children[3], depth+1, max_depth);
+		}
+	}
+}
+
+// iterate over tree leafs in specified depth
+void iterate(node const & root, int depth) {
+	iterate_depth(root, 0, depth);
+}
+
+// TODO: How to implement a range for iterating leafs?
+
 
 int main(int argc, char * argv[]) {
 	// build a simple tree
@@ -43,6 +66,12 @@ int main(int argc, char * argv[]) {
 
 	// iterare tree
 	iterate(root);  //= 5, 6, 7, 8, 2, 3, 4
+	cout << '\n';
+
+	iterate(root, 1);  //= 2, 3, 4
+	cout << '\n';
+
+	iterate(root, 2);  //= 5, 6, 7, 8
 	cout << '\n';
 
 	return 0;
