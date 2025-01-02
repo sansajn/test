@@ -12,23 +12,22 @@ struct node {
 	bool is_leaf() const {return children[0] == nullptr;}
 };
 
-void dfs_leaf_traverse(const node * root) {
+void dfs_leaf_traverse(node const * root) {
 	if (!root) return;
 
-	stack<const node *> stack;
+	stack<node const *> stack;
 	stack.push(root);
 
 	while (!stack.empty()) {
 		const node *current = stack.top();
 		stack.pop();
 
-		if (current->is_leaf()) {
-            cout << current->data << ", ";
-		} else {
-			for (const node *child : current->children) {
-                if (child) {
-                    stack.push(child);
-                }
+		if (current->is_leaf())
+			cout << current->data << ", ";
+		else {
+			for (node const * child : current->children) {
+				if (child)
+					stack.push(child);
 			}
 		}
 	}
@@ -44,10 +43,10 @@ void bfs_leaf_traverse(const node *root) {
 		const node *current = q.front();
 		q.pop();
 
-		if (current->is_leaf()) {
+		if (current->is_leaf())
 			cout << current->data << ", ";
-		} else {
-			for (const node *child : current->children) {
+		else {
+			for (node const * child : current->children) {
 				if (child) {
 					q.push(child);
 				}
