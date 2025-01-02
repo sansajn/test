@@ -1,4 +1,4 @@
-// iterating quad tree sample
+// iterating quad tree sample, see also qtree_dfs_and_bfs.cpp sample
 #include <array>
 #include <iostream>
 #include <cstddef>
@@ -42,9 +42,6 @@ void iterate_depth(node const & root, int depth, int max_depth) {
 void iterate(node const & root, int depth) {
 	iterate_depth(root, 0, depth);
 }
-
-// TODO: How to implement a range for iterating leafs?
-
 
 int main(int argc, char * argv[]) {
 	// build a simple tree

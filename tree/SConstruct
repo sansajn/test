@@ -1,2 +1,9 @@
 Program('octree.cpp')
-Program('qtree_iterate.cpp')
+
+cpp20 = Environment(
+	CXXFLAGS=['-std=c++2a'],
+	CCFLAGS=['-Wall', '-Wextra', '-O0', '-ggdb3'])
+
+cpp20.Program('qtree_iterate.cpp')
+cpp20.Program('qtree_view.cpp')
+cpp20.Program('qtree_dfs_and_bfs.cpp')
