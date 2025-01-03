@@ -14,9 +14,9 @@ struct node {
 	bool is_leaf() const {return children[0] == nullptr;}
 };
 
-// Leaf traversal view depth-first search (DFS) implementation.
+//! Quadtree leaf traversal (depth-first search (DFS)) view implementation.
 template <typename Node>
-struct leaf_view : std::ranges::view_base {
+struct leaf_view : public std::ranges::view_interface<leaf_view<Node>> {
 	explicit leaf_view(Node & root) : _root(&root) {}
 
 	struct iterator {
@@ -27,7 +27,7 @@ struct leaf_view : std::ranges::view_base {
 
 		std::stack<Node *> nodes;
 
-		explicit iterator(Node * root) {
+		explicit iterator(Node * root = nullptr) {
 			if (root) {
 				nodes.push(root);
 				advance_to_leaf();
@@ -63,12 +63,12 @@ struct leaf_view : std::ranges::view_base {
 		}
 	};
 
-	iterator begin() { return iterator(_root); }
-	iterator end() { return iterator(nullptr); }
+	iterator begin() {return iterator{_root};}
+	iterator end() {return iterator{};}
 
 private:
 	Node * _root;
-};
+};  // leaf_view
 
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char * argv[]) {
@@ -89,18 +89,17 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char * argv[]) {
 	r00.children[2] = &pool[6];  // leaf
 	r00.children[3] = &pool[7];  // leaf
 	
-	leaf_view leaves(root);
+	leaf_view leaves{root};
 	for (int data : leaves)  //= 4, 3, 2, 8, 7, 6, 5,
 		std::cout << data << ", ";
 	cout << '\n';
 
 	// view for const tree
 	node const & croot = root;
-	leaf_view cleaves(croot);
-	for (int data : cleaves)  //= 4, 3, 2, 8, 7, 6, 5,
+	leaf_view cleaves{croot};
+	for (int const & data : cleaves)  //= 4, 3, 2, 8, 7, 6, 5,
 		std::cout << data << ", ";
 	cout << '\n';
-
 
 	return 0;
 }
