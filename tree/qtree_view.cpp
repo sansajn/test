@@ -7,28 +7,38 @@ using std::array, std::cout;
 
 // quad tree
 struct node {
+	using value_type = int;
+
 	array<node *, 4> children = {0};
-	int data = -1;
+	value_type data = -1;
 	bool is_leaf() const {return children[0] == nullptr;}
 };
 
 // Leaf traversal view depth-first search (DFS) implementation.
+template <typename Node>
 struct leaf_view : std::ranges::view_base {
-	explicit leaf_view(node & root) : _root(&root) {}
+	explicit leaf_view(Node & root) : _root(&root) {}
 
 	struct iterator {
-		std::stack<node *> nodes;
+		using value_type = Node::value_type;
+		using reference = std::conditional_t<std::is_const_v<Node>, value_type const &, value_type &>;
+		using pointer = std::conditional_t<std::is_const_v<Node>, value_type const *, value_type *>;
+		using iterator_category = std::input_iterator_tag;
 
-		explicit iterator(node * root) {
-			if (root) nodes.push(root);
-			advance_to_leaf();
+		std::stack<Node *> nodes;
+
+		explicit iterator(Node * root) {
+			if (root) {
+				nodes.push(root);
+				advance_to_leaf();
+			}
 		}
 
-		int & operator*() const { 
-			return nodes.top()->data; // Dereference the leaf node's data
+		reference operator*() const { 
+			return nodes.top()->data;  // Dereference the leaf node's data
 		}
 
-		int * operator->() const { 
+		pointer operator->() const { 
 			return &nodes.top()->data; // Access the data of the leaf node
 		}
 
@@ -45,9 +55,9 @@ struct leaf_view : std::ranges::view_base {
 	private:
 		void advance_to_leaf() {
 			while (!nodes.empty() && !nodes.top()->is_leaf()) {
-				node * current = nodes.top();
+				Node * current = nodes.top();
 				nodes.pop();
-				for (node * child : current->children)
+				for (Node * child : current->children)
 					nodes.push(child);
 			}
 		}
@@ -57,7 +67,7 @@ struct leaf_view : std::ranges::view_base {
 	iterator end() { return iterator(nullptr); }
 
 private:
-	node * _root;
+	Node * _root;
 };
 
 
@@ -83,6 +93,14 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char * argv[]) {
 	for (int data : leaves)  //= 4, 3, 2, 8, 7, 6, 5,
 		std::cout << data << ", ";
 	cout << '\n';
+
+	// view for const tree
+	node const & croot = root;
+	leaf_view cleaves(croot);
+	for (int data : cleaves)  //= 4, 3, 2, 8, 7, 6, 5,
+		std::cout << data << ", ";
+	cout << '\n';
+
 
 	return 0;
 }

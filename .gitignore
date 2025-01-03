@@ -23,6 +23,7 @@ out/
 *.cxxflags
 *.includes
 .vscode/
+.qtcreator/
 .qtc_clangd/
 
 # doc
