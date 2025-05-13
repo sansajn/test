@@ -1,3 +1,4 @@
+# TODO: catch2 library dependencies are missing
 env = Environment(CCFLAGS=['-std=c++17', '-Wall', '-ggdb3', '-Og'])
 
 env.Program('hello.cpp')
