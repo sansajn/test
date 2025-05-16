@@ -18,4 +18,3 @@ cpp20 = Environment(
 )
 
 cpp20.Program('point_box_intersection.cpp')  # woring with Boost 1.83 (Ubuntu 24.4 LTS)
-
