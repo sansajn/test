@@ -1,7 +1,8 @@
 # SConstruct: use scons --build-release in case optimized binary required
+import os
 
 AddOption('--build-release', action='store_true', dest='build_release', 
-	help='generate optimized binary', default=False)
+	help='Generate optimized binary.', default=False)
 
 build_path = 'build-debug'
 if GetOption('build_release'):
@@ -17,4 +18,4 @@ if not GetOption('build_release'):
 else: # --build-release
 	env.Append(CCFLAGS=['-Os', '-DNDEBUG'])
 
-env.Program('%s/%s' % (build_path, 'main.cpp'))
+env.Program(os.path.join(build_path, 'main.cpp'))

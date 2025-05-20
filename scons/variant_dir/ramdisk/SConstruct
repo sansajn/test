@@ -1,0 +1,10 @@
+# Building to RAM disk setup with VariantDir function.
+import os
+
+build_dir='/mnt/ramdisk'
+VariantDir(build_dir, 'source', duplicate=0)
+
+main = Program(
+    os.path.join(build_dir, 'main'),  # target
+    [os.path.join(build_dir, 'main.cpp')])  # source files
+Alias('main', main)
