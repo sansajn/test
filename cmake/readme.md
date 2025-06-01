@@ -1,5 +1,8 @@
 # Samples
 
+`hello`: the simpliest CMake project
+
+
 For something to startup please see sample from `ctest_hello` directory.
 
 

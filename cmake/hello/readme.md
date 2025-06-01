@@ -1,7 +1,7 @@
 Build with
 
 ```bash
-cmake -B build-hello
+cmake -B build-hello -S hello
 cmake --build buil-hello
 ```
 
